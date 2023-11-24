@@ -16,6 +16,7 @@ const Input = ({
   value,
   label,
   onChange,
+  error,
   ...rest
 }) => {
   const inputType = "text" || "email";
@@ -34,6 +35,7 @@ const Input = ({
         onChange={onChange}
         {...rest}
       />
+      {error && <span htmlFor={rest.id}>{error}</span>}
     </InputDiv>
   ) : variant === "password" ? (
     <InputDiv>

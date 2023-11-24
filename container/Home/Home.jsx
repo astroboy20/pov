@@ -13,13 +13,13 @@ import { Button } from "@/components/Button";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Spinner } from "@/components/Spinner";
-import {useSelector,useDispatch} from "react-redux"
-import { logout,reset } from "@/feature/slices/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { logout, reset } from "@/feature/slices/authSlice";
 
 const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -30,7 +30,7 @@ const HomePage = () => {
   const handleRoute = () => {
     router.push("/login");
   };
-  
+
   return (
     <>
       {loading ? (
@@ -38,7 +38,7 @@ const HomePage = () => {
       ) : (
         <Homestyle>
           <>
-            <Image height={50} width={50} alt="" src={"/images/logo.svg"}/>
+            <Image height={50} width={50} alt="" src={"/images/logo.svg"} />
             <Swiper
               spaceBetween={30}
               centeredSlides={true}
@@ -54,22 +54,28 @@ const HomePage = () => {
             >
               <SwiperSlide>
                 <Image
-                  src={"/images/namecheap.jpg"}
+                  src={"/images/one.jpg"}
                   width={100}
-                  height={"100"}
+                  height={100}
                   alt="."
                 />
               </SwiperSlide>
-              <SwiperSlide>Slide 3</SwiperSlide>
+              <SwiperSlide>
+                <Image
+                  src={"/images/two.jpg"}
+                  width={100}
+                  height={100}
+                  alt="."
+                />
+              </SwiperSlide>
               <SwiperSlide>Slide 4</SwiperSlide>
               <SwiperSlide>Slide 5</SwiperSlide>
             </Swiper>
           </>
-             
+
           <Button onClick={handleRoute} type="submit" variant="defaultButton">
-          Get Started
+            Get Started
           </Button>
-         
         </Homestyle>
       )}
     </>

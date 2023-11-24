@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "@/feature/slices/authSlice";
 import { useRouter } from "next/router";
+import Link from "next/link"
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,9 @@ const Dashboard = () => {
       <Button onClick={handleLogout} type="submit" variant="defaultButton">
         Logout
       </Button>
+      <Link target="_blank" href={"/verify"}>
+        Verify Email
+      </Link>
     </>
   );
 };

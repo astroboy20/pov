@@ -22,16 +22,17 @@ const Register = () => {
 
   const router = useRouter();
   const dispatch = useDispatch();
+
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-
+  
   useEffect(() => {
     if (isError) {
       toast.error(message);
     }
     if (isSuccess || user) {
-      router.push("/dashboard");
+      router.push("/verify");
     }
     dispatch(reset);
   }, [router, user, isSuccess, isError, message, dispatch]);
@@ -51,7 +52,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const stringify = JSON.stringify(formData);
+
     if (formData.password < 8) {
       toast.error(
         "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character."
@@ -61,7 +62,6 @@ const Register = () => {
       toast.success("Registration Successful !");
     }
 
-    console.log(JSON.stringify(formData));
   };
 
   // if (isLoading) {
@@ -134,19 +134,6 @@ const Register = () => {
               onChange={handleChange}
               name="password"
             />
-
-            {/* <div className="checkbox">
-              <input
-                type="checkbox"
-                checked={formData.agreeTerms}
-                onChange={handleChange}
-                name="agreeTerms"
-              />
-              <CustomText weight={"400"} type={"Htype"} variant={"h5"}>
-                By creating an account you have to agree with our terms &
-                conditions
-              </CustomText>
-            </div> */}
 
             <Button type="submit" variant="defaultButton">
               {isLoading ? <Spinner /> : "Register"}

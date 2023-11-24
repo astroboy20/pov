@@ -21,7 +21,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      toast.warning(message || "Email or password does not exist");
     }
     if (isSuccess || user) {
       router.push("/dashboard");
@@ -46,8 +46,6 @@ const Login = () => {
 
     dispatch(login(data));
     toast.success("Welcome back to your account.");
-
-    console.log(JSON.stringify(data));
   };
   const handleRoute = () => {
     router.push("/register");
