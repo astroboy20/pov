@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+
 // import required modules
 import { Autoplay, Pagination } from "swiper/modules";
 import { Button } from "@/components/Button";
@@ -15,6 +16,7 @@ import Image from "next/image";
 import { Spinner } from "@/components/Spinner";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "@/feature/slices/authSlice";
+import { CustomText } from "@/components/CustomText";
 
 const HomePage = () => {
   const [loading, setLoading] = useState(true);
@@ -38,7 +40,7 @@ const HomePage = () => {
       ) : (
         <Homestyle>
           <>
-            <Image height={50} width={50} alt="" src={"/images/logo.svg"} />
+            
             <Swiper
               spaceBetween={30}
               centeredSlides={true}
@@ -53,23 +55,54 @@ const HomePage = () => {
               className="mySwiper"
             >
               <SwiperSlide>
+                <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
+                  Guests scan a QR to open an instant camera
+                </CustomText>
+                <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+                  no app required for the guest
+                </CustomText>
                 <Image
-                  src={"/images/one.jpg"}
-                  width={100}
+                  src={"/images/one.svg"}
+                  width={2200}
                   height={100}
                   alt="."
+                  objectPosition="center"
+                  objectFit="cover"
                 />
               </SwiperSlide>
               <SwiperSlide>
+                <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
+                  Guests scan a QR to open an instant camera
+                </CustomText>
+                <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+                  no app required for the guest
+                </CustomText>
                 <Image
-                  src={"/images/two.jpg"}
+                  src={"/images/two.svg"}
                   width={100}
                   height={100}
                   alt="."
+                  objectPosition="center"
+                  objectFit="cover"
                 />
               </SwiperSlide>
-              <SwiperSlide>Slide 4</SwiperSlide>
-              <SwiperSlide>Slide 5</SwiperSlide>
+              <SwiperSlide>
+                <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
+                  Guests scan a QR to open an instant camera
+                </CustomText>
+                <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+                  no app required for the guest
+                </CustomText>
+                <Image
+                  src={"/images/three.svg"}
+                  width={100}
+                  height={100}
+                  alt="."
+                  objectPosition="center"
+                  objectFit="cover"
+                />
+              </SwiperSlide>
+              
             </Swiper>
           </>
 
