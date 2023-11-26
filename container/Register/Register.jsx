@@ -29,7 +29,7 @@ const Register = () => {
   
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      // toast.error(message);
     }
     if (isSuccess || user) {
       router.push("/verify");

@@ -4,7 +4,9 @@ const REGISTER_URL = "https://api-cliqpod.koyeb.app/auth/signup";
 const LOGIN_URL = "https://api-cliqpod.koyeb.app/auth/login";
 const VERIFY_EMAIL_URL =
   "https://api-cliqpod.koyeb.app/auth/emailVerification/:token";
-
+const RESET_PASSWORD = "https://api-cliqpod.koyeb.app/auth/reset-password";
+const OTP = "https://api-cliqpod.koyeb.app/auth/confirm-otp";
+const NEW_PASS = "https://api-cliqpod.koyeb.app/auth/setNewPassword";
 //register user
 const register = async (userData) => {
   const response = await axios.post(REGISTER_URL, userData);
@@ -43,12 +45,34 @@ const verifyEmail = async (token) => {
     throw error;
   }
 };
+//verify email
+const resetPassword = async (email) => {
+  const response = await axios.post(RESET_PASSWORD, email);
+
+  return response.data;
+};
+//verify email
+const otp = async (otp) => {
+  const response = await axios.post(OTP, otp);
+
+  return response.data;
+};
+
+//verify email
+const newPassword = async (newPass) => {
+  const response = await axios.post(OTP, newPass);
+
+  return response.data;
+};
 
 const authService = {
   register,
   logout,
   login,
   verifyEmail,
+  resetPassword,
+  otp,
+  newPassword,
 };
 
 export default authService;

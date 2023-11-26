@@ -3,6 +3,9 @@ import { CustomText } from "@/components/CustomText";
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { Container } from "./ForgotPass.style";
+import axios from "axios";
+import {toast} from "react-toastify"
+import { useRouter } from "next/navigation";
 
 const InputContainer = styled.div`
   display: flex;
@@ -23,9 +26,10 @@ const InputBox = styled.input`
 `;
 
 const OTPInput = () => {
-  const numInputs = 6; // Number of OTP input fields
+  const numInputs = 5; // Number of OTP input fields
   const [otpValues, setOtpValues] = useState(Array(numInputs).fill(""));
   const inputRefs = useRef([]);
+  const router = useRouter()
 
   const handleInputChange = (index, event) => {
     const { value } = event.target;
@@ -52,6 +56,25 @@ const OTPInput = () => {
     setOtpValues(newValues);
   };
 
+  const handleOPT = async () => {
+    try {
+      const otp = otpValues.join('');
+        
+      const response = await axios.post("", { otp });
+  
+      if (response.status === 200) {
+        const data = response.data;
+        toast.success("Valid OTP, proceed to change your password")
+        router.push("/forgotpassword/savepassword")
+      } else {
+        toast.error("OTP verification failed");
+      }
+    } catch (error) {
+      toast.error("Error verifying OTP:", error);
+    }
+  };
+  
+
   return (
     <>
       <div></div>
@@ -77,7 +100,7 @@ const OTPInput = () => {
             />
           ))}
         </InputContainer>
-        <Button type="submit" variant="defaultButton">
+        <Button type="button" variant="defaultButton" onClick={handleOPT}>
           Send
         </Button>
       </Container>

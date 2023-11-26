@@ -5,32 +5,28 @@ export const Homestyle = styled.div`
   display: none;
 
   @media screen and (max-width: 800px) {
-    padding-top:15% ;
+    padding:2% ;
     display: flex;
     flex-direction: column;
-    gap:30px;
-    height: 100dvh;
+    gap: 30px;
+    height: auto;
 
-    .swiper {
-      height: 70vh;
-      
+    .span {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      height: 100%;
     }
-
 
     .swiper-slide img {
-      display: flex;
-      justify-content: center;
-      align-items: center;
       width: 100%;
-      height: 70%;
-      object-fit: cover;
+      height: auto;
     }
-    .mySwiper{
-      display:flex ;
-      align-items: center;
-      justify-content:center ;
-      width:100% ;
-      text-align:center ;
+    .mySwiper {
+      display: flex;
+      text-align: center;
+      width: 100%;
+      height: 80vh;
     }
   }
 `;

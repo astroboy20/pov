@@ -35,82 +35,102 @@ const HomePage = () => {
 
   return (
     <>
-      {loading ? (
-        <div style={{ color: "white" }}>POV</div>
-      ) : (
-        <Homestyle>
-          <>
-            
-            <Swiper
-              spaceBetween={30}
-              centeredSlides={true}
-              autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-              }}
-              pagination={{
-                clickable: true,
-              }}
-              modules={[Autoplay, Pagination]}
-              className="mySwiper"
-            >
-              <SwiperSlide>
-                <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                  Guests scan a QR to open an instant camera
-                </CustomText>
-                <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                  no app required for the guest
-                </CustomText>
-                <Image
-                  src={"/images/one.svg"}
-                  width={2200}
-                  height={100}
-                  alt="."
-                  objectPosition="center"
-                  objectFit="cover"
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                  Guests scan a QR to open an instant camera
-                </CustomText>
-                <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                  no app required for the guest
-                </CustomText>
-                <Image
-                  src={"/images/two.svg"}
-                  width={100}
-                  height={100}
-                  alt="."
-                  objectPosition="center"
-                  objectFit="cover"
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                  Guests scan a QR to open an instant camera
-                </CustomText>
-                <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                  no app required for the guest
-                </CustomText>
-                <Image
-                  src={"/images/three.svg"}
-                  width={100}
-                  height={100}
-                  alt="."
-                  objectPosition="center"
-                  objectFit="cover"
-                />
-              </SwiperSlide>
-              
-            </Swiper>
-          </>
+      <Homestyle>
+        <>
+          <Swiper
+            spaceBetween={30}
+            centeredSlides={true}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[Autoplay, Pagination]}
+            className="mySwiper"
+          >
+            <SwiperSlide>
+              <div className="span">
+                <div>
+                  <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
+                    Welcome to Lense
+                  </CustomText>
+                  <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+                    A disposable camera for events
+                  </CustomText>
+                </div>
 
-          <Button onClick={handleRoute} type="submit" variant="defaultButton">
-            Get Started
-          </Button>
-        </Homestyle>
-      )}
+                <Image
+                  src={"/images/logo.png"}
+                  width={100}
+                  height={100}
+                  alt="."
+                />
+              </div>
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <div className="span">
+                <div>
+                  <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
+                    Guests scan a QR to open an instant camera
+                  </CustomText>
+                  <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+                    no app required for the guest
+                  </CustomText>
+                </div>
+
+                <Image
+                  src={"/images/QR.png"}
+                  width={100}
+                  height={100}
+                  alt="."
+                />
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="span">
+                <div>
+                  <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
+                    Easily accessible on your guests lockscreen
+                  </CustomText>
+                  <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+                    Guest access the camera with one click and can take pictures
+                    right away
+                  </CustomText>
+                </div>
+
+                <Image src={"/images/2.png"} width={100} height={100} alt="." />
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="span">
+                <div>
+                  <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
+                    Your event gallery will reveal after a set delay
+                  </CustomText>
+                  <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+                    The photos will reveal after adelay you choose. All guest
+                    can view photos
+                  </CustomText>
+                </div>
+
+                <Image
+                  src={"/images/1.png"}
+                  width={100}
+                  height={6600}
+                  alt="."
+                />
+              </div>
+            </SwiperSlide>
+          </Swiper>
+        </>
+
+        <Button onClick={handleRoute} type="submit" variant="defaultButton">
+          Get Started
+        </Button>
+      </Homestyle>
     </>
   );
 };
