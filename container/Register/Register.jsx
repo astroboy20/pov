@@ -16,7 +16,6 @@ const Register = () => {
     lastname: "",
     middlename: "",
     email: "",
-    username: "",
     password: "",
   });
 
@@ -114,15 +113,7 @@ const Register = () => {
               onChange={handleChange}
               name="email"
             />
-            <Input
-              type="text"
-              label="Username"
-              variant="text"
-              required
-              value={formData.username}
-              onChange={handleChange}
-              name="username"
-            />
+           
 
             <Input
               type="password"

@@ -11,8 +11,21 @@ export const InputStyle = styled.input`
   border-radius: 5px;
   padding: 10px;
   border: 1.5px solid white;
-  background: none;
+  background: transparent;
   color: white;
+  &:focus{
+    background-color:transparent ;
+  }
+  &:active{
+    background-color: transparent;
+  }
+  &:-webkit-autofill,
+&:-webkit-autofill:hover, 
+&:-webkit-autofill:focus, 
+&:-webkit-autofill:active {
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0 0px rgba(30, 300, 30, 0) inset;
+}
 `;
 
 export const Container = styled.div`
@@ -22,18 +35,17 @@ export const Container = styled.div`
   border: 1px solid rgba(30, 30, 30, 0.35);
   border-radius: 5px;
   border: 1px solid white;
-  /* color: white; */
   background: none;
   span {
     background: white;
-    padding: 10px;
+    padding: 8px;
     border-radius: 0 5px 5px 0;
   }
 `;
 export const InputPasswordStyle = styled.input`
   color: white;
-  width: 100%;
-  border: none;
-  /* background-color: none; */
-  padding-left: 10px;
+  width: calc(100% - 40px); /* Adjust input width for icon */
+  border: transparent;
+  padding: 12px;
+  background-color: transparent; /* Apply a transparent background */
 `;

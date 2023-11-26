@@ -16,18 +16,20 @@ body{
     background-repeat: no-repeat;
     padding: 5%;
     color: white;
-    height: 120dvh;
+    
   }
 }
-@media screen and (max-width:767px) {
+@media screen and (max-width:769px) {
   body { 
     display:block ;
+    width:100% ;
     transition: all 1s linear;
     background-image: linear-gradient(180deg, #1d1465,black) ;
     background-repeat: no-repeat;
     padding: 5%;
     color: white;
-    height: 120dvh;
+    height:100vh ;
+    
   }
 }
   

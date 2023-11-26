@@ -54,7 +54,7 @@ const HomePage = () => {
               <div className="span">
                 <div>
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                    Welcome to Lense
+                    Welcome to Cliqpod
                   </CustomText>
                   <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
                     A disposable camera for events

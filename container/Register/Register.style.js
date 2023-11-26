@@ -4,7 +4,7 @@ const FormData = styled.div`
   display: none;
   @media screen and (max-width: 800px) {
     display: flex;
-    /* height:120dvh ; */
+   width:100% ;
     flex-direction: column;
     .sign-in {
       margin: 5% 0;
