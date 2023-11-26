@@ -16,7 +16,7 @@ body{
     background-repeat: no-repeat;
     padding: 5%;
     color: white;
-    height: 100dvh;
+    height: 120dvh;
   }
 }
 @media screen and (max-width:767px) {
@@ -27,7 +27,7 @@ body{
     background-repeat: no-repeat;
     padding: 5%;
     color: white;
-    height: 100dvh;
+    height: 120dvh;
   }
 }
   
