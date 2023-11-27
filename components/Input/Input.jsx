@@ -35,7 +35,7 @@ const Input = ({
         onChange={onChange}
         {...rest}
       />
-      {error && <span htmlFor={rest.id}>{error}</span>}
+      <div>{error && <span style={{color:"red"}} htmlFor={rest.id}>{error}</span>}</div>
     </InputDiv>
   ) : variant === "password" ? (
     <InputDiv>
@@ -48,9 +48,11 @@ const Input = ({
           onChange={onChange}
           {...rest}
           style={{background:"none"}}
+          error={error}
         />
         <span onClick={handleChange}>{show ? <Show /> : <Hide />}</span>
       </Container>
+     {error && <span style={{color:"red"}} htmlFor={rest.id}>{error}</span>}
     </InputDiv>
   ) : null;
 };

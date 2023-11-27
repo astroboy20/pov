@@ -7,21 +7,21 @@ const VERIFY_EMAIL_URL =
 const RESET_PASSWORD = "https://api-cliqpod.koyeb.app/auth/reset-password";
 const OTP = "https://api-cliqpod.koyeb.app/auth/confirm-otp";
 const NEW_PASS = "https://api-cliqpod.koyeb.app/auth/setNewPassword";
+
 //register user
 const register = async (userData) => {
   const response = await axios.post(REGISTER_URL, userData);
-
-  if (response.data) {
+  if (response.ok) {
     localStorage.setItem("user", JSON.stringify(response.data));
+  }else {
+    console.log(response.data)
   }
-
   return response.data;
 };
 
 //register user
 const login = async (userData) => {
   const response = await axios.post(LOGIN_URL, userData);
-
   if (response.data) {
     localStorage.setItem("user", JSON.stringify(response.data));
   }
@@ -54,7 +54,6 @@ const resetPassword = async (email) => {
 //verify email
 const otp = async (otp) => {
   const response = await axios.post(OTP, otp);
-
   return response.data;
 };
 

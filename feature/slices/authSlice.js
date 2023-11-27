@@ -24,9 +24,18 @@ export const register = createAsyncThunk(
       const message =
         (error.response &&
           error.response.data &&
-          error.response.data.message) ||
+          error.response.data.error) ||
         error.message ||
         error.toString();
+
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message === "User with this email already exists"
+      ) {
+        return thunkAPI.rejectWithValue("User with this email already exists");
+      }
+
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -38,9 +47,10 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
     return await authService.login(user);
   } catch (error) {
     const message =
-      (error.response && error.response.data && error.response.data.message) ||
+      (error.response && error.response.data && error.response.data.error) ||
       error.message ||
       error.toString();
+
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -79,6 +89,7 @@ export const resetPassword = createAsyncThunk(
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
+        response.error.data ||
         error.message ||
         error.toString();
       return thunkAPI.rejectWithValue(message);
@@ -100,17 +111,22 @@ export const otp = createAsyncThunk("auth/otp", async (email, thunkAPI) => {
 });
 
 //new password
-export const newPassword = createAsyncThunk("auth/newPassword", async (newPass, thunkAPI) => {
-  try {
-    return await authService.newPassword(newPass);
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-    return thunkAPI.rejectWithValue(message);
+export const newPassword = createAsyncThunk(
+  "auth/newPassword",
+  async (newPass, thunkAPI) => {
+    try {
+      return await authService.newPassword(newPass);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -131,12 +147,13 @@ const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        state.message = action.payload;
         state.user = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.message = action.payload;
+        state.message = action.payload || " Registration Failed";
         state.user = null;
       })
 

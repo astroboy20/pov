@@ -9,63 +9,60 @@ import { useSelector, useDispatch } from "react-redux";
 import { register, reset } from "@/feature/slices/authSlice";
 import { toast } from "react-toastify";
 import { Spinner } from "@/components/Spinner";
+import { useFormik } from "formik";
+import { Validate } from "@/components/validate";
+import * as Yup from "yup";
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
-    middlename: "",
-    email: "",
-    password: "",
-  });
-
-  const router = useRouter();
   const dispatch = useDispatch();
-
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const router = useRouter();
+  const { user, isError, isSuccess, isLoading, message } = useSelector(
     (state) => state.auth
   );
-  
-  useEffect(() => {
-    if (isError) {
-      // toast.error(message);
-    }
-    if (isSuccess || user) {
-      router.push("/verify");
-    }
-    dispatch(reset);
-  }, [router, user, isSuccess, isError, message, dispatch]);
 
   const handleRoute = () => {
     router.push("/login");
   };
+  
+  const formik = useFormik({
+    initialValues: {
+      firstname: "",
+      lastname: "",
+      middlename: "",
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object().shape({
+      firstname: Yup.string().required("Required"),
+      lastname: Yup.string().required("Required"),
+      middlename: Yup.string().required("Required"),
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string()
+        .required("Required")
+        .min(8, "Must be at least 8 characters")
+        .matches(
+          /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+={}\[\]:;<>.,?])[A-Za-z0-9!@#$%^&*()_+={}\[\]:;<>.,?]{8,}$/,
+          "Must contain at least one uppercase letter and one special character"
+        ),
+    }),
+    onSubmit: async (values) => {
+      await dispatch(register(values));
+    },
+  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (formData.password < 8) {
-      toast.error(
-        "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character."
-      );
-    } else {
-      dispatch(register(formData));
-      toast.success("Registration Successful !");
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
     }
 
-  };
+    if (isSuccess || user) {
+      // router.push('/');
+      toast.success(message);
+    }
 
-  // if (isLoading) {
-  //   return <Spinner />;
-  // }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, router, dispatch]);
+
   return (
     <>
       <RegisterContainer>
@@ -76,44 +73,62 @@ const Register = () => {
           Create a new account
         </CustomText>
         <FormContainer>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={formik.handleSubmit}>
             <Input
               type="text"
               label="First name"
               variant="text"
-              required
-              value={formData.firstname}
-              onChange={handleChange}
               name="firstname"
+              value={formik.values.firstname}
+              onChange={formik.handleChange}
+              error={
+                formik.errors?.firstname && formik.errors.firstname
+                  ? `${formik.errors.firstname}`
+                  : null
+              }
             />
             <Input
               type="text"
               label="Last name"
               variant="text"
               required
-              value={formData.lastname}
-              onChange={handleChange}
               name="lastname"
+              value={formik.values.lastname}
+              onChange={formik.handleChange}
+              error={
+                formik.errors?.lastname && formik.errors.lastname
+                  ? `${formik.errors.lastname}`
+                  : null
+              }
             />
             <Input
               type="text"
               label="Middle name"
               variant="text"
               required
-              value={formData.middlename}
-              onChange={handleChange}
               name="middlename"
+              value={formik.values.middlename}
+              onChange={formik.handleChange}
+              error={
+                formik.errors?.middlename && formik.errors.middlename
+                  ? `${formik.errors.middlename}`
+                  : null
+              }
             />
             <Input
               type="email"
               label="Email address"
               variant="text"
               required
-              value={formData.email}
-              onChange={handleChange}
+              value={formik.values.email}
               name="email"
+              onChange={formik.handleChange}
+              error={
+                formik.errors?.email && formik.errors.email
+                  ? `${formik.errors.email}`
+                  : null
+              }
             />
-           
 
             <Input
               type="password"
@@ -121,13 +136,18 @@ const Register = () => {
               label="Create password"
               id="password-input"
               required
-              value={formData.password}
-              onChange={handleChange}
+              value={formik.values.password}
               name="password"
+              onChange={formik.handleChange}
+              error={
+                formik.errors?.password && formik.errors.password
+                  ? `${formik.errors.password}`
+                  : null
+              }
             />
 
             <Button type="submit" variant="defaultButton">
-              {isLoading ? <Spinner /> : "Register"}
+              {"Register"}
             </Button>
             <div className="sign-in">
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>

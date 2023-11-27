@@ -41,6 +41,9 @@ export const Container = styled.div`
     padding: 8px;
     border-radius: 0 5px 5px 0;
   }
+  .error{
+    color:red ;
+  }
 `;
 export const InputPasswordStyle = styled.input`
   color: white;
