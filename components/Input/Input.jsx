@@ -5,6 +5,7 @@ import {
   Container,
   InputDiv,
   RadioStyle,
+  ConfirmPasswordStyle,
 } from "./Input.style";
 import PropTypes from "prop-types";
 import { Hide, Show } from "@/assets";
@@ -54,6 +55,23 @@ const Input = ({
       </Container>
      {error && <span style={{color:"red"}} htmlFor={rest.id}>{error}</span>}
     </InputDiv>
+  ) : variant === "confirmPassword" ? (
+    <InputDiv>
+    {label && <label htmlFor={rest.id}>{label}</label>}
+    <Container>
+      <ConfirmPasswordStyle
+        type={show ? "text" : "password"}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+        {...rest}
+        style={{background:"none"}}
+        error={error}
+      />
+      <span onClick={handleChange}>{show ? <Show /> : <Hide />}</span>
+    </Container>
+   {error && <span style={{color:"red"}} htmlFor={rest.id}>{error}</span>}
+  </InputDiv>
   ) : null;
 };
 

@@ -23,19 +23,16 @@ const Register = () => {
   const handleRoute = () => {
     router.push("/login");
   };
-  
+
   const formik = useFormik({
     initialValues: {
-      firstname: "",
-      lastname: "",
-      middlename: "",
+      usernameusername: "",
       email: "",
       password: "",
+      confirmpassword: "",
     },
     validationSchema: Yup.object().shape({
-      firstname: Yup.string().required("Required"),
-      lastname: Yup.string().required("Required"),
-      middlename: Yup.string().required("Required"),
+      username: Yup.string().required("Required"),
       email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string()
         .required("Required")
@@ -44,6 +41,9 @@ const Register = () => {
           /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+={}\[\]:;<>.,?])[A-Za-z0-9!@#$%^&*()_+={}\[\]:;<>.,?]{8,}$/,
           "Must contain at least one uppercase letter and one special character"
         ),
+      confirmpassword: Yup.string()
+        .oneOf([Yup.ref("password"), null], "Passwords must match")
+        .required("Required"),
     }),
     onSubmit: async (values) => {
       await dispatch(register(values));
@@ -56,7 +56,7 @@ const Register = () => {
     }
 
     if (isSuccess || user) {
-      router.push('/dashboard');
+      router.push("/dashboard");
       toast.success("Account created sucessfully");
     }
 
@@ -76,42 +76,15 @@ const Register = () => {
           <form onSubmit={formik.handleSubmit}>
             <Input
               type="text"
-              label="First name"
-              variant="text"
-              name="firstname"
-              value={formik.values.firstname}
-              onChange={formik.handleChange}
-              error={
-                formik.errors?.firstname && formik.errors.firstname
-                  ? `${formik.errors.firstname}`
-                  : null
-              }
-            />
-            <Input
-              type="text"
-              label="Last name"
+              label="Username"
               variant="text"
               required
-              name="lastname"
-              value={formik.values.lastname}
+              name="username"
+              value={formik.values.username}
               onChange={formik.handleChange}
               error={
-                formik.errors?.lastname && formik.errors.lastname
-                  ? `${formik.errors.lastname}`
-                  : null
-              }
-            />
-            <Input
-              type="text"
-              label="Middle name"
-              variant="text"
-              required
-              name="middlename"
-              value={formik.values.middlename}
-              onChange={formik.handleChange}
-              error={
-                formik.errors?.middlename && formik.errors.middlename
-                  ? `${formik.errors.middlename}`
+                formik.errors?.username && formik.errors.username
+                  ? `${formik.errors.username}`
                   : null
               }
             />
@@ -145,13 +118,27 @@ const Register = () => {
                   : null
               }
             />
+            <Input
+              type="password"
+              variant="confirmPassword"
+              label="Confirm password"
+              required
+              value={formik.values.confirmpassword}
+              name="confirmpassword"
+              onChange={formik.handleChange}
+              error={
+                formik.errors?.confirmpassword && formik.errors.confirmpassword
+                  ? `${formik.errors.confirmpassword}`
+                  : null
+              }
+            />
 
             <Button type="submit" variant="defaultButton">
-              {"Register"}
+              {isLoading? (<Spinner/>) : "Register"}
             </Button>
             <div className="sign-in">
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                Have an account? <span  onClick={handleRoute}>Sign in</span>
+                Have an account? <span onClick={handleRoute}>Sign in</span>
               </CustomText>
             </div>
           </form>

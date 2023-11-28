@@ -94,7 +94,8 @@ const HomePage = () => {
               <div className="span">
                 <div>
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                    Your event gallery will reveal after a set delay
+                    Mobile freindly access to take several cliqs with your
+                    created digital backdrop banner.
                   </CustomText>
                   <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
                     The photos will reveal after adelay you choose. All guest
@@ -114,7 +115,7 @@ const HomePage = () => {
                 <div>
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
                     A digital album of your event from all cliqs taken with your
-                    digital backdrop will be avialable after the event.
+                    digital backdrop will be available after the event.
                   </CustomText>
                 </div>
 

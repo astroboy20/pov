@@ -1,18 +1,18 @@
-import styles from"./Spinner.module.css";
+import { TailSpin } from "react-loader-spinner";
 
 const Spinner = () => {
   return (
     <>
-      <div className={styles["lds-roller"]}>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <TailSpin
+        height="30"
+        width="30"
+        color="#fff"
+        ariaLabel="tail-spin-loading"
+        radius="1"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
     </>
   );
 };

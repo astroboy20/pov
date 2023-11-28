@@ -52,3 +52,11 @@ export const InputPasswordStyle = styled.input`
   padding: 12px;
   background-color: transparent; /* Apply a transparent background */
 `;
+
+export const ConfirmPasswordStyle = styled.input`
+  color: white;
+  width: calc(100% - 40px); /* Adjust input width for icon */
+  border: transparent;
+  padding: 12px;
+  background-color: transparent; /* Apply a transparent background */
+`;

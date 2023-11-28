@@ -11,6 +11,8 @@ import { login, reset } from "@/feature/slices/authSlice";
 import { toast } from "react-toastify";
 import { Spinner } from "@/components/Spinner";
 import Link from "next/link";
+import { useFormik } from "formik";
+import * as Yup from "yup"
 
 const Login = () => {
   const router = useRouter();
@@ -18,6 +20,26 @@ const Login = () => {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object().shape({
+      email: Yup.string().email("Invalid email address").required("Required"),
+      password: Yup.string()
+        .required("Required")
+        .min(8, "Must be at least 8 characters")
+        .matches(
+          /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+={}\[\]:;<>.,?])[A-Za-z0-9!@#$%^&*()_+={}\[\]:;<>.,?]{8,}$/,
+          "Must contain at least one uppercase letter and one special character"
+        ),
+    }),
+    onSubmit: async (values) => {
+      await dispatch(login(values));
+    },
+  });
+
 
   useEffect(() => {
     if (isError) {
@@ -25,29 +47,11 @@ const Login = () => {
     }
     if (isSuccess || user) {
       router.push("/dashboard");
-      toast.success("Login succesful" );
-    
+      toast.success("Login succesful");
     }
     dispatch(reset);
   }, [router, user, isSuccess, isError, message, dispatch]);
 
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    dispatch(login(data));
-  };
   const handleRoute = () => {
     router.push("/register");
   };
@@ -61,11 +65,11 @@ const Login = () => {
           Please do well to login
         </CustomText>
         <FormContainer>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={formik.handleSubmit}>
             <Input
               type="email"
-              value={data.email}
-              onChange={handleOnChange}
+              value={formik.values.email}
+              onChange={formik.handleChange}
               label="Email address"
               name="email"
               variant={"text"}
@@ -74,8 +78,8 @@ const Login = () => {
             <Input
               type="password"
               variant={"password"}
-              value={data.password}
-              onChange={handleOnChange}
+              value={formik.values.password}
+              onChange={formik.handleChange}
               label="Enter password"
               name="password"
               required
@@ -89,7 +93,7 @@ const Login = () => {
             </div>
 
             <Button type={"submit"} variant={"defaultButton"}>
-              Login
+              {isLoading ? <Spinner /> : "Login"}
             </Button>
           </form>
         </FormContainer>

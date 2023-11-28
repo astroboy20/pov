@@ -29,7 +29,7 @@ body{
     overflow-y:auto ;
     padding: 5%;
     color: white;
-    height:115vh ;
+    height:100vh ;
     
   }
 }
