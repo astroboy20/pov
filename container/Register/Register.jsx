@@ -56,8 +56,8 @@ const Register = () => {
     }
 
     if (isSuccess || user) {
-      // router.push('/');
-      toast.success(message);
+      router.push('/dashboard');
+      toast.success("Account created sucessfully");
     }
 
     dispatch(reset());
@@ -151,7 +151,7 @@ const Register = () => {
             </Button>
             <div className="sign-in">
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                Have an account? <span onClick={handleRoute}>Sign in</span>
+                Have an account? <span  onClick={handleRoute}>Sign in</span>
               </CustomText>
             </div>
           </form>

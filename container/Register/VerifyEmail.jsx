@@ -45,10 +45,10 @@ export const Verify = () => {
             Hey, {username}
           </CustomText>
           <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-            Thank you for signing up for the platform
+            Thank you for signing up for the cliqpod
           </CustomText>
           <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-            Complete the verification process to access your account by by
+            Complete the verification process to access your account by 
             clicking on the Button!
           </CustomText>
         </div>

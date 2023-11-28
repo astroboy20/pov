@@ -27,6 +27,9 @@ export const LoginContainer = styled.div`
       text-decoration: none;
       color: white;
     }
+    span{
+      font-weight:800 ;
+    }
   }
 
   /* .text-style {

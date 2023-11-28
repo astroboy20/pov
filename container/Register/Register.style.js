@@ -10,6 +10,9 @@ const FormData = styled.div`
       margin: 5% 0;
       text-align: center;
     }
+    span{
+      font-weight:800 ;
+    }
   }
 `;
 export const RegisterContainer = styled(FormData)`

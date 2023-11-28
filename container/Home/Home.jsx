@@ -54,11 +54,11 @@ const HomePage = () => {
               <div className="span">
                 <div>
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                    Welcome to Cliqpod
+                  Welcome to Cliqpod moments and memories captured with digital backdrop.
                   </CustomText>
-                  <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                    A disposable camera for events
-                  </CustomText>
+                  {/* <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+                 
+                  </CustomText> */}
                 </div>
 
                 <Image
@@ -74,11 +74,11 @@ const HomePage = () => {
               <div className="span">
                 <div>
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                    Guests scan a QR to open an instant camera
+                    Event guests scan a QR code to access the digital backdrop for your event.
                   </CustomText>
-                  <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                    no app required for the guest
-                  </CustomText>
+                  {/* <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+                    
+                  </CustomText> */}
                 </div>
 
                 <Image
@@ -93,12 +93,12 @@ const HomePage = () => {
               <div className="span">
                 <div>
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                    Easily accessible on your guests lockscreen
+                   A digital album of your event from all cliqs taken with your digital backdrop will be avialable after the event.
                   </CustomText>
-                  <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+                  {/* <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
                     Guest access the camera with one click and can take pictures
                     right away
-                  </CustomText>
+                  </CustomText> */}
                 </div>
 
                 <Image src={"/images/2.png"} width={100} height={100} alt="." />

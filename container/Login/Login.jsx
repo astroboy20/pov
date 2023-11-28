@@ -25,6 +25,8 @@ const Login = () => {
     }
     if (isSuccess || user) {
       router.push("/dashboard");
+      toast.success("Login succesful" );
+    
     }
     dispatch(reset);
   }, [router, user, isSuccess, isError, message, dispatch]);
