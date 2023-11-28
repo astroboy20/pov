@@ -54,7 +54,7 @@ const HomePage = () => {
               <div className="span">
                 <div>
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                  Welcome to Cliqpod moments and memories captured with digital backdrop.
+                    Capture moments and memories captured with digital backdrop
                   </CustomText>
                   {/* <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
                  
@@ -74,7 +74,8 @@ const HomePage = () => {
               <div className="span">
                 <div>
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                    Event guests scan a QR code to access the digital backdrop for your event.
+                    Event guests scan a QR code to access the digital backdrop
+                    for your event.
                   </CustomText>
                   {/* <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
                     
@@ -93,7 +94,11 @@ const HomePage = () => {
               <div className="span">
                 <div>
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                   A digital album of your event from all cliqs taken with your digital backdrop will be avialable after the event.
+                    Your event gallery will reveal after a set delay
+                  </CustomText>
+                  <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+                    The photos will reveal after adelay you choose. All guest
+                    can view photos
                   </CustomText>
                   {/* <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
                     Guest access the camera with one click and can take pictures
@@ -108,11 +113,8 @@ const HomePage = () => {
               <div className="span">
                 <div>
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                    Your event gallery will reveal after a set delay
-                  </CustomText>
-                  <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                    The photos will reveal after adelay you choose. All guest
-                    can view photos
+                    A digital album of your event from all cliqs taken with your
+                    digital backdrop will be avialable after the event.
                   </CustomText>
                 </div>
 
