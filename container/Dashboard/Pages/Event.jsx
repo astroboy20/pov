@@ -21,8 +21,9 @@ const Event = () => {
           </CustomText>
         </div>
         <div className="new-event">
-          <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-            <FaPlus /> New event
+          <FaPlus />
+          <CustomText weight={"500"} type={"Htype"} variant={"h6"}>
+            New event
           </CustomText>
         </div>
       </HeaderStyle>
@@ -32,7 +33,7 @@ const Event = () => {
           create event
         </CustomText>
         <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-          let's start set up your first Event
+          let's set up your first Event
         </CustomText>
 
         <Button type="submit" variant="defaultButton">

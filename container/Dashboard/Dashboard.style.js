@@ -14,7 +14,7 @@ export const HeaderStyle = styled.div`
     border-radius: 15px;
     padding: 0%  2%;
     border: 50%;
-    /* gap:10px; */
+    gap:5px;
     align-items:center ;
   }
 `;
@@ -32,7 +32,7 @@ export const BodyStyle = styled.div`
 `;
 export const FeatureStyle = styled.div`
   background:  #f5fbff;
-  color:blue ;
+  color:#1d1465 ;
   position: fixed;
   bottom: 0;
   left: 0;
