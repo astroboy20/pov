@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Homestyle } from "./Home.style";
 import React, { useRef } from "react";
+import { useParams } from "next/navigation";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -22,6 +23,10 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const dispatch = useDispatch();
+  const params = useParams()
+  console.log("params",params)
+  const data = router.query
+console.log(data) 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);

@@ -1,5 +1,5 @@
 import React from "react";
-import { DefaultButton, TransparentButton } from "./Button.style";
+import { DefaultButton, TransparentButton, WhiteButton } from "./Button.style";
 
 const Button = ({ type, variant, onClick, children, ...rest }) => {
   return variant === "defaultButton" ? (
@@ -10,7 +10,11 @@ const Button = ({ type, variant, onClick, children, ...rest }) => {
     <TransparentButton type={type} onClick={onClick} rest={rest}>
       {children}
     </TransparentButton>
-  ) : "";
+  ) : variant === "white" ? (
+    <WhiteButton type={type} onClick={onClick} rest={rest}>
+      {children}
+    </WhiteButton>
+  ) : ""
 };
 
 export { Button };

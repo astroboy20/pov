@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService";
+import {toast} from "react-toastify"
 
 const user =
   typeof window !== "undefined" && JSON.parse(localStorage.getItem("user"));
-
+console.log(user)
 const initialState = {
   user: user ? user : null,
   isError: false,
@@ -64,9 +65,9 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 //verify email
 export const verifyEmail = createAsyncThunk(
   "auth/verifyEmail",
-  async (user, thunkAPI) => {
+  async (token, thunkAPI) => {
     try {
-      return await authService.verifyEmail(user);
+      return await authService.verifyEmail(token);
     } catch (error) {
       const message =
         (error.response &&
@@ -174,6 +175,22 @@ const authSlice = createSlice({
         state.user = null;
       })
 
+      .addCase(verifyEmail.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(verifyEmail.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user =user
+        state.message = action.payload;
+        toast.success(action.payload);
+      })
+      .addCase(verifyEmail.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        toast.error(action.payload);
+      })
       //resetpassword
       .addCase(resetPassword.pending, (state) => {
         state.isLoading = true;

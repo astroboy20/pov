@@ -13,6 +13,7 @@ import { Spinner } from "@/components/Spinner";
 import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup"
+import axios from "axios"
 
 const Login = () => {
   const router = useRouter();
@@ -49,11 +50,26 @@ const Login = () => {
       router.push("/dashboard");
       toast.success("Login succesful");
     }
-    dispatch(reset);
+    // dispatch(reset);
   }, [router, user, isSuccess, isError, message, dispatch]);
 
   const handleRoute = () => {
     router.push("/register");
+  };
+  const handlLoginwithgoogle = async() => {
+   
+    
+      try {
+  
+        // Send the ID token to your backend for verification
+        const response = await axios.get('https://api-cliqpod.koyeb.app/auth/google');
+        
+        // Handle response from the server after successful login
+        console.log(response.data);
+      } catch (error) {
+        // Handle error
+        console.error('Error during login:', error);
+      }
   };
   return (
     <>
@@ -98,7 +114,7 @@ const Login = () => {
           </form>
         </FormContainer>
         <div className="login-with-google">
-          <Button type={"button"} variant={"transparent"}>
+          <Button onClick={handlLoginwithgoogle} type={"button"} variant={"transparent"}>
             <div className="button-style">
               <Image src="/images/google.svg" width={25} height={25} alt={""} />{" "}
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>

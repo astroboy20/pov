@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
 import { CustomText } from "@/components/CustomText";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import {
@@ -10,27 +10,23 @@ import {
   VerifyContainer,
 } from "./Register.style";
 import { useRouter } from "next/router";
+import { verifyEmail } from "@/feature/slices/authSlice";
+import { useParams } from "next/navigation";
 
 export const Verify = () => {
-  const { user } = useSelector((state) => state.auth);
-  const verificationToken = user ? user.emailVerificationToken : "";
+  const { user, isError } = useSelector((state) => state.auth);
+  const verificationToken = user ? user : "nothing";
+  console.log(verificationToken)
+  const userData =
+    typeof window !== "undefined" && (localStorage.getItem("user"));
+  console.log("ver", verificationToken, userData);
   const username = user ? user.username : "";
-  console.log(verificationToken);
-  console.log(username);
-  const URL = `https://api-cliqpod.koyeb.app/auth/emailVerification/${verificationToken}`;
+  const dispatch = useDispatch();
+  
   const router = useRouter();
-  if (!user || !user.emailVerificationToken) {
-    console.log("User or verification token not available");
-  }
 
   const handleVerify = () => {
-    try {
-      axios.post(URL);
-      toast.success("Email registration successful!");
-      router.push("/dashboard");
-    } catch (error) {
-      toast.error(error);
-    }
+    dispatch(verifyEmail( userData.emailVerificationToken ));
   };
 
   return (
@@ -40,7 +36,7 @@ export const Verify = () => {
           Verify Your Email Address
         </CustomText>
 
-        <div className="verify-text" >
+        <div className="verify-text">
           <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
             Hey, {username}
           </CustomText>
@@ -48,8 +44,8 @@ export const Verify = () => {
             Thank you for signing up for the cliqpod
           </CustomText>
           <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-            Complete the verification process to access your account by 
-            clicking on the Button!
+            Complete the verification process to access your account by clicking
+            on the Button!
           </CustomText>
         </div>
 

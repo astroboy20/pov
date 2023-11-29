@@ -22,3 +22,11 @@ export const TransparentButton = styled(ButtonStyle)`
   font-weight: 400;
   border: 1px solid white;
 `;
+
+export const WhiteButton = styled(ButtonStyle)`
+  background: white;
+  color:black ;
+  font-size: 14px;
+  font-weight: 400;
+  border:none ;
+`;
