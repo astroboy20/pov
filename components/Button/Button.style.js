@@ -11,7 +11,7 @@ export const ButtonStyle = styled.button`
   width: 100%;
 `;
 export const DefaultButton = styled(ButtonStyle)`
-  background: blue;
+  background: #1d1465;
   color: #fff;
   border: none;
   

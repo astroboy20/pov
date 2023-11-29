@@ -9,8 +9,8 @@ export const HeaderStyle = styled.div`
   justify-content: space-between;
   .new-event {
     display:flex ;
-    background: white;
-    color: blue;
+    background: #f5fbff ;
+    color: #1d1465;
     border-radius: 15px;
     padding: 0%  2%;
     border: 50%;
@@ -21,8 +21,8 @@ export const HeaderStyle = styled.div`
 export const BodyStyle = styled.div`
   display: flex;
   flex-direction: column;
-  background: white;
-  color:blue ;
+  background: #f5fbff;
+  color:#1d1465 ;
   border-radius: 15px;
   padding: 6%;
   gap: 10px;
@@ -31,7 +31,7 @@ export const BodyStyle = styled.div`
   margin-top: 5%;
 `;
 export const FeatureStyle = styled.div`
-  background: white;
+  background:  #f5fbff;
   color:blue ;
   position: fixed;
   bottom: 0;
