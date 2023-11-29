@@ -43,6 +43,13 @@ export const HType = styled.p`
           font-weight: 400;
           line-height: normal;
         `
+      : variant === "p"
+      ? css`
+          font-size: 24px;
+          font-style: normal;
+          font-weight: 800;
+          line-height: normal;
+        `
       : css`
           width: 10px;
         `}

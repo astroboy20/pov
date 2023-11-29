@@ -13,7 +13,7 @@ const Event = () => {
     <>
       <HeaderStyle>
         <div>
-          <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
+          <CustomText weight={"500"} type={"Htype"} variant={"p"}>
             Events
           </CustomText>
           <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
@@ -28,8 +28,14 @@ const Event = () => {
       </HeaderStyle>
       <BodyStyle>
         <CiCirclePlus size={"50px"} />
-        create event let's start set up your first Event
-        <Button type="submit" variant="white">
+        <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
+          create event
+        </CustomText>
+        <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+          let's start set up your first Event
+        </CustomText>
+
+        <Button type="submit" variant="defaultButton">
           Setup my event
         </Button>
       </BodyStyle>
