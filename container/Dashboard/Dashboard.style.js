@@ -7,15 +7,14 @@ export const DashboardStyle = styled.div`
 export const HeaderStyle = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items:center ;
   .new-event {
-    display:flex ;
     background: #f5fbff ;
     color: #1d1465;
+    display:flex ;
+    padding:2% ;
     border-radius: 15px;
-    padding: 0%  2%;
-    border: 50%;
-    gap:5px;
-    align-items:center ;
+    gap:10px;
   }
 `;
 export const BodyStyle = styled.div`
@@ -28,7 +27,7 @@ export const BodyStyle = styled.div`
   gap: 10px;
   text-align: center;
   align-items: center;
-  margin-top: 5%;
+  margin: 20% auto;
 `;
 export const FeatureStyle = styled.div`
   background:  #f5fbff;
@@ -43,4 +42,11 @@ export const FeatureStyle = styled.div`
   /* margin: 0 10%; */
 `;
 
-export const OptionItem = styled.div``;
+export const OptionItem = styled.div`
+   padding: 13px;
+  cursor: pointer;
+  border-radius:15px ;
+  background-color: ${(props) => (props.selected ? '#1d1465' : 'white')};
+  color: ${(props) => (props.selected ? 'white' : '#1d1465')};
+`;
+

@@ -57,12 +57,11 @@ const Dashboard = () => {
             key={optionItem.value}
             value={optionItem.value}
             label={optionItem.label}
-            selected={option === OptionItem.value}
+            selected={option === optionItem.value}
             setValue={handleClick}
           />
         ))}
-        {/* <div onClick={handleEventOption}>Events</div>
-        <div onClick={handleSettingsOption}>Profile</div> */}
+        
         
       </FeatureStyle>
     </>
