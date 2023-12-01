@@ -16,6 +16,7 @@ import { optionItems } from "./data";
 import Option from "./Option";
 import { useOptionContext } from "@/context/option-context";
 import Event from "./Pages/Event";
+import Setting from "./Pages/Setting";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const Dashboard = () => {
         <Event/>
       )}
       {option === "Setting" && (
-        "hello i am settings"
+        <Setting/>
       )}
 
       <FeatureStyle>

@@ -50,3 +50,11 @@ export const OptionItem = styled.div`
   color: ${(props) => (props.selected ? 'white' : '#1d1465')};
 `;
 
+export const SettingStyle = styled.div`
+  display:flex ;
+  flex-direction:column ;
+  gap:10px;
+  .setting-type{
+  }
+`;
+
