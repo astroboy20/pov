@@ -26,33 +26,27 @@ const Dashboard = () => {
     router.push("/login");
   };
 
-  // useEffect(() => {
-  //   if (!isAuthenticated) {
-
-  //   }
-  // }, [router, isAuthenticated]);
-
   return (
     <>
-      {!isAuthenticated ? null : (
-        <>
-          {option === "Events" && <Event />}
-          {option === "Setting" && <Setting />}
-          {option === "Gallery" && <Gallery />}
+      (
+      <>
+        {option === "Events" && <Event />}
+        {option === "Setting" && <Setting />}
+        {option === "Gallery" && <Gallery />}
 
-          <FeatureStyle>
-            {optionItems.map((optionItem) => (
-              <Option
-                key={optionItem.value}
-                value={optionItem.value}
-                label={optionItem.label}
-                selected={option === optionItem.value}
-                setValue={handleClick}
-              />
-            ))}
-          </FeatureStyle>
-        </>
-      )}
+        <FeatureStyle>
+          {optionItems.map((optionItem) => (
+            <Option
+              key={optionItem.value}
+              value={optionItem.value}
+              label={optionItem.label}
+              selected={option === optionItem.value}
+              setValue={handleClick}
+            />
+          ))}
+        </FeatureStyle>
+      </>
+      )
     </>
   );
 };
