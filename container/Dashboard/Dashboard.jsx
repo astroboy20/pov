@@ -18,7 +18,6 @@ import { useOptionContext } from "@/context/option-context";
 import Event from "./Pages/Event";
 import Setting from "./Pages/Setting";
 import Gallery from "./Pages/Gallery";
-import { Spinner } from "@/components/Spinner";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -39,11 +38,9 @@ const Dashboard = () => {
   if (!isAuthenticated){
     router.push("/login")
     console.log("you are not logged in")
-    return null
   }
-  }, [router, isAuthenticated])
+  }, [router])
   return (
-    
     <>
       {option === "Events" && <Event />}
       {option === "Setting" && <Setting />}
