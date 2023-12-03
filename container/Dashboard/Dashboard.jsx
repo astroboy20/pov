@@ -28,12 +28,12 @@ const Dashboard = () => {
 
   return (
     <>
-      (
+      
       <>
         {option === "Events" && <Event />}
         {option === "Setting" && <Setting />}
         {option === "Gallery" && <Gallery />}
-
+        <div onClick={handleLogout}>Logout</div>
         <FeatureStyle>
           {optionItems.map((optionItem) => (
             <Option
@@ -46,7 +46,7 @@ const Dashboard = () => {
           ))}
         </FeatureStyle>
       </>
-      )
+      
     </>
   );
 };
