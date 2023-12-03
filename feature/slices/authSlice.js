@@ -9,6 +9,7 @@ const initialState = {
   user: user ? user : null,
   isError: false,
   isSuccess: false,
+  isAuthenticated:false,
   isLoading: false,
   message: "",
   isNewpasswordSuccess: false,
@@ -140,6 +141,9 @@ const authSlice = createSlice({
         (state.isLoading = false),
         (state.message = "");
     },
+    setAuthenticated: (state, action) => {
+      state.isAuthenticated = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -150,6 +154,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.message = action.payload;
+        state.isAuthenticated = true
         state.user = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
@@ -166,12 +171,14 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        state.isAuthenticated = true
         state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        state.isAuthenticated = false
         state.user = null;
       })
 

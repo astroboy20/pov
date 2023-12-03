@@ -90,6 +90,11 @@ const Login = () => {
               name="email"
               variant={"text"}
               required
+              error={
+                formik.errors?.email && formik.errors.email
+                  ? `${formik.errors.email}`
+                  : null
+              }
             />
             <Input
               type="password"
@@ -99,6 +104,11 @@ const Login = () => {
               label="Enter password"
               name="password"
               required
+              error={
+                formik.errors?.password && formik.errors.password
+                  ? `${formik.errors.password}`
+                  : null
+              }password
             />
             <div className="link">
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
