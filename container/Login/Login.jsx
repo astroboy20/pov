@@ -65,6 +65,7 @@ const Login = () => {
         const response = await axios.get('https://api-cliqpod.koyeb.app/auth/google');
         
         // Handle response from the server after successful login
+        window.location.href = response.data.redirectUrl;
         console.log(response.data);
       } catch (error) {
         // Handle error
