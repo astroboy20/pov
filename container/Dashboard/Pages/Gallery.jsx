@@ -14,7 +14,10 @@ import { Input } from "@chakra-ui/input";
 import { PhotoData, RevealData } from "../Options/data";
 import Option from "../Options/Options";
 import { ItemStyle } from "../Options/Options.style";
+import { IoCloudUploadOutline } from "react-icons/io5";
+import Image from "next/image"
 const Gallery = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
   const [data, setData] = useState({
     eventName: "",
     subName: "",
@@ -47,11 +50,50 @@ const Gallery = () => {
       photosPerPerson: newValue,
     }));
   };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0]; // Get the selected file
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        // Set the image to display before sending
+        setSelectedImage(e.target.result);
+      };
+
+      reader.readAsDataURL(file); // Read the image file as a data URL
+    }
+  };
+
   return (
     <>
       <GalleryStyle>
         <div className="header">
           <div className="header-head">{data.eventName}</div>
+          <IoCloudUploadOutline />
+          <div>
+            <input
+              type="file"
+              accept="image/*" // Specify that only image files are allowed
+              onChange={handleImageChange}
+            />
+            <div>
+              {selectedImage && (
+                <Image
+                  src={selectedImage}
+                  alt="Selected"
+                  width = {100}
+                  height={100}
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "200px",
+                    marginTop: "10px",
+                  }}
+                />
+              )}
+            </div>
+          </div>
         </div>
         <div className="body">
           <Accordion allowToggle>
@@ -86,7 +128,7 @@ const Gallery = () => {
                   name="eventName"
                   value={data.eventName}
                   onChange={handleChange}
-                  className = "input"
+                  className="input"
                 />
               </AccordionPanel>
             </AccordionItem>
@@ -122,8 +164,8 @@ const Gallery = () => {
                   type="text"
                   name="subName"
                   value={data.subName}
-                  onChange= {handleChange}
-                  className = "input"
+                  onChange={handleChange}
+                  className="input"
                 />
               </AccordionPanel>
             </AccordionItem>
