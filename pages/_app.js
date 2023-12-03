@@ -7,8 +7,7 @@ import store from "@/feature/store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { OptionProvider } from "@/context/option-context";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { ChakraProvider } from '@chakra-ui/react'
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   style: ["normal", "italic"],
@@ -16,7 +15,7 @@ const poppins = Poppins({
 });
 export default function App({ Component, pageProps }) {
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    
       <OptionProvider>
         <ThemeProvider theme={theme}>
           <GlobalStyles />
@@ -28,6 +27,5 @@ export default function App({ Component, pageProps }) {
           </main>
         </ThemeProvider>
       </OptionProvider>
-    </LocalizationProvider>
   );
 }

@@ -67,27 +67,29 @@ export const GalleryStyle = styled.div`
   left: 0;
   top: 0;
   color:white ;
+  overflow:auto ;
   .header {
     height: 60vh;
   }
   .header-head {
     background-color: #201d24;
     height: 50px;
+    padding:3% ;
+    text-align:center ;
   }
   .body {
-    height:50vh;
+    height:80vh;
     display: flex;
     flex-direction: column;
     background-color: #201d24;
-    padding:6% ;
+    padding:3% ;
     gap:5px;
   }
   .item{
     display:flex ;
-    /* flex-direction:column ; */
-    align-items:center ;
-    gap:5px;
-    color:white ;
+    flex-direction:column ;
+    /* align-items:center ; */
+    text-align:left ;
   }
   .hr{
     background-color:white ;

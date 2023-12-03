@@ -8,6 +8,10 @@
     "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
+    "@chakra-ui/accordion": "^2.3.1",
+    "@chakra-ui/input": "^2.1.2",
+    "@chakra-ui/next-js": "^2.2.0",
+    "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.19",
@@ -21,6 +25,7 @@
     "eslint": "8.54.0",
     "eslint-config-next": "14.0.3",
     "formik": "^2.4.5",
+    "framer-motion": "^10.16.12",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "next": "14.0.3",

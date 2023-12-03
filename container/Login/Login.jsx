@@ -50,7 +50,7 @@ const Login = () => {
       router.push("/dashboard");
       toast.success("Login succesful");
     }
-    // dispatch(reset);
+    dispatch(reset());
   }, [router, user, isSuccess, isError, message, dispatch]);
 
   const handleRoute = () => {
