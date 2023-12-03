@@ -61,13 +61,13 @@ export const SettingStyle = styled.div`
 export const GalleryStyle = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 120dvh;
   position: absolute;
   width: 100%;
   left: 0;
   top: 0;
   color:white ;
-  overflow:auto ;
+ 
   .header {
     height: 60vh;
   }
@@ -79,6 +79,7 @@ export const GalleryStyle = styled.div`
   }
   .body {
     height:80vh;
+    overflow:scroll ;
     display: flex;
     flex-direction: column;
     background-color: #201d24;
@@ -91,10 +92,12 @@ export const GalleryStyle = styled.div`
     /* align-items:center ; */
     text-align:left ;
   }
-  .hr{
-    background-color:white ;
-    opacity:0.3 ;
-    width:100% ;
-    height:1px ;
+  .input{
+    border-radius: 5px;
+  padding: 10px;
+  border: 1.5px solid white;
+  background: transparent;
+  color: white;
+  width:100%;
   }
 `;
