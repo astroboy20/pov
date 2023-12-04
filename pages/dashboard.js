@@ -1,14 +1,15 @@
 import { Dashboard } from '@/container/Dashboard';
+import { ProtectedRoute } from '@/container/ProtectedRoutes/ProtectedRoute';
 import React from 'react'
 
 
 const dashboard = () => {
     
   return (
-    <div>
+    <ProtectedRoute>
         <Dashboard/>
         
-    </div>
+    </ProtectedRoute>
   )
 }
 
