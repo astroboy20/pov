@@ -28,7 +28,7 @@ const Input = ({
   };
   return variant === "text" ? (
     <InputDiv>
-      {label && <label htmlFor={rest.id}>{label}</label>}
+      {/* {label && <label htmlFor={rest.id}>{label}</label>} */}
       <InputStyle
         type={inputType}
         value={value}
@@ -40,7 +40,7 @@ const Input = ({
     </InputDiv>
   ) : variant === "password" ? (
     <InputDiv>
-      {label && <label htmlFor={rest.id}>{label}</label>}
+      {/* {label && <label htmlFor={rest.id}>{label}</label>} */}
       <Container>
         <InputPasswordStyle
           type={show ? "text" : "password"}
@@ -57,7 +57,7 @@ const Input = ({
     </InputDiv>
   ) : variant === "confirmPassword" ? (
     <InputDiv>
-    {label && <label htmlFor={rest.id}>{label}</label>}
+    {/* {label && <label htmlFor={rest.id}>{label}</label>} */}
     <Container>
       <ConfirmPasswordStyle
         type={show ? "text" : "password"}
@@ -78,7 +78,7 @@ const Input = ({
 Input.propTypes = {
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  // label: PropTypes.string.isRequired,
   variant: PropTypes.string.isRequired,
 };
 

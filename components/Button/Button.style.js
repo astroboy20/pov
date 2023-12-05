@@ -6,8 +6,8 @@ export const ButtonStyle = styled.button`
   align-items: center;
   font-size: 14px;
   font-weight: 400;
-  border-radius: 13px;
-  padding: 15px;
+  border-radius: 12px;
+  padding: 13px 24px;
   width: 100%;
 `;
 export const DefaultButton = styled(ButtonStyle)`
@@ -20,7 +20,8 @@ export const TransparentButton = styled(ButtonStyle)`
   background: none;
   font-size: 14px;
   font-weight: 400;
-  border: 1px solid white;
+  color:#0F1115 ;
+  border: 1px solid #C5C6CC ;
 `;
 
 export const WhiteButton = styled(ButtonStyle)`

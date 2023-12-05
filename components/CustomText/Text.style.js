@@ -3,9 +3,9 @@ export const HType = styled.p`
   ${({ variant }) =>
     variant === "h1"
       ? css`
-          font-size: 30px;
+          font-size: 28px;
           font-style: normal;
-          font-weight: 400;
+          font-weight: 800;
           line-height: normal;
         `
       : variant === "h2"
@@ -24,9 +24,9 @@ export const HType = styled.p`
         `
       : variant === "h4"
       ? css`
-          font-size: 14px;
+          font-size: 13.3px;
           font-style: normal;
-          font-weight: 300;
+          font-weight: 400;
           line-height: normal;
         `
       : variant === "h5"

@@ -12,11 +12,8 @@ body{
   body { 
     display:block ;
     transition: all 1s linear;
-    background-image: linear-gradient(180deg, #1d1465,black) ;
     background-repeat: no-repeat;
     padding: 5%;
-    color: white;
-    height:"auto";
     
   }
 }
@@ -25,12 +22,8 @@ body{
     display:block ;
     width:100% ;
     transition: all 1s linear;
-    background-image: linear-gradient(180deg, #1d1465,black) ;
     overflow-y:auto ;
     padding: 5%;
-    color: white;
-    height:100vh ;
-    
   }
 }
   

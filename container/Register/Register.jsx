@@ -55,7 +55,7 @@ const Register = () => {
       toast.error(message);
     }
 
-    if (isSuccess || user) {
+    if (isSuccess && user) {
       router.push("/dashboard");
       toast.success("Account created sucessfully");
     }
@@ -66,17 +66,14 @@ const Register = () => {
   return (
     <>
       <RegisterContainer>
-        <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-          Register
-        </CustomText>
-        <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-          Create a new account
+        <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
+          Sign Up
         </CustomText>
         <FormContainer>
           <form onSubmit={formik.handleSubmit}>
             <Input
               type="text"
-              label="Username"
+              placeholder="Username"
               variant="text"
               required
               name="username"
@@ -90,7 +87,7 @@ const Register = () => {
             />
             <Input
               type="email"
-              label="Email address"
+              placeholder="Email"
               variant="text"
               required
               value={formik.values.email}
@@ -106,7 +103,7 @@ const Register = () => {
             <Input
               type="password"
               variant="password"
-              label="Create password"
+              placeholder="Password"
               id="password-input"
               required
               value={formik.values.password}
@@ -121,7 +118,7 @@ const Register = () => {
             <Input
               type="password"
               variant="confirmPassword"
-              label="Confirm password"
+              placeholder="Confirm password"
               required
               value={formik.values.confirmpassword}
               name="confirmpassword"

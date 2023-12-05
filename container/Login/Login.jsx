@@ -12,8 +12,8 @@ import { toast } from "react-toastify";
 import { Spinner } from "@/components/Spinner";
 import Link from "next/link";
 import { useFormik } from "formik";
-import * as Yup from "yup"
-import axios from "axios"
+import * as Yup from "yup";
+import axios from "axios";
 
 const Login = () => {
   const router = useRouter();
@@ -38,17 +38,17 @@ const Login = () => {
     }),
     onSubmit: async (values) => {
       await dispatch(login(values));
+      
     },
   });
-
 
   useEffect(() => {
     if (isError) {
       toast.error(message || "Email or password does not exist");
     }
-    if (isSuccess || user) {
+    if (isSuccess && user) {
       router.push("/dashboard");
-      toast.success("Login succesful");
+      toast.success("Login Successful");
     }
     dispatch(reset());
   }, [router, user, isSuccess, isError, message, dispatch]);
@@ -56,38 +56,35 @@ const Login = () => {
   const handleRoute = () => {
     router.push("/register");
   };
-  const handlLoginwithgoogle = async() => {
-   
-    
-      try {
-  
-        // Send the ID token to your backend for verification
-        const response = await axios.get('https://api-cliqpod.koyeb.app/auth/google');
-        
-        // Handle response from the server after successful login
-        window.location.href ='/dashboard';
-        console.log(response.data);
-      } catch (error) {
-        // Handle error
-        console.error('Error during login:', error);
-      }
+  const handlLoginwithgoogle = async () => {
+    try {
+      // Send the ID token to your backend for verification
+      const response = await axios.get(
+        "https://api-cliqpod.koyeb.app/auth/google"
+      );
+
+      // Handle response from the server after successful login
+      window.location.href = "/dashboard";
+      console.log(response.data);
+    } catch (error) {
+      // Handle error
+      console.error("Error during login:", error);
+    }
   };
   return (
     <>
       <LoginContainer>
-        <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-          Welcome!
+        <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
+          Sign In
         </CustomText>
-        <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-          Please do well to login
-        </CustomText>
+
         <FormContainer>
           <form onSubmit={formik.handleSubmit}>
             <Input
               type="email"
               value={formik.values.email}
               onChange={formik.handleChange}
-              label="Email address"
+              placeholder="Email"
               name="email"
               variant={"text"}
               required
@@ -102,14 +99,15 @@ const Login = () => {
               variant={"password"}
               value={formik.values.password}
               onChange={formik.handleChange}
-              label="Enter password"
+              placeholder="Password"
               name="password"
               required
               error={
                 formik.errors?.password && formik.errors.password
                   ? `${formik.errors.password}`
                   : null
-              }password
+              }
+              password
             />
             <div className="link">
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
@@ -125,7 +123,11 @@ const Login = () => {
           </form>
         </FormContainer>
         <div className="login-with-google">
-          <Button onClick={handlLoginwithgoogle} type={"button"} variant={"transparent"}>
+          <Button
+            onClick={handlLoginwithgoogle}
+            type={"button"}
+            variant={"transparent"}
+          >
             <div className="button-style">
               <Image src="/images/google.svg" width={25} height={25} alt={""} />{" "}
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
@@ -134,8 +136,7 @@ const Login = () => {
             </div>
           </Button>
           <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-            Don`t have an account?{" "}
-            <span onClick={handleRoute}>Create account</span>
+            Don`t have an account? <span onClick={handleRoute}>Sign Up</span>
           </CustomText>
         </div>
       </LoginContainer>

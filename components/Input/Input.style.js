@@ -8,11 +8,10 @@ export const InputDiv = styled.div`
   gap: 5px;
 `;
 export const InputStyle = styled.input`
-  border-radius: 5px;
-  padding: 10px;
-  border: 1.5px solid white;
+  border-radius: 12px;
+  padding: 12px 16px;
+  border: 1.5px solid #878E9C;
   background: transparent;
-  color: white;
   &:focus{
     background-color:transparent ;
   }
@@ -32,31 +31,29 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  border: 1px solid rgba(30, 30, 30, 0.35);
-  border-radius: 5px;
-  border: 1px solid white;
-  background: none;
-  span {
-    background: white;
-    padding: 8px;
-    border-radius: 0 5px 5px 0;
-  }
+  border-radius: 12px;
+  border: 1.5px solid #878E9C;
+  background: transparent;
+  
   .error{
     color:red ;
   }
 `;
 export const InputPasswordStyle = styled.input`
+
   color: white;
-  width: calc(100% - 40px); /* Adjust input width for icon */
+  width: calc(100% - 40px); 
   border: transparent;
   padding: 12px;
-  background-color: transparent; /* Apply a transparent background */
+  background-color: transparent; 
+  color:black;
 `;
 
 export const ConfirmPasswordStyle = styled.input`
   color: white;
-  width: calc(100% - 40px); /* Adjust input width for icon */
+  width: calc(100% - 40px);
   border: transparent;
-  padding: 12px;
-  background-color: transparent; /* Apply a transparent background */
+  background-color: transparent; 
+  padding:12px ;
+  color:black;
 `;
