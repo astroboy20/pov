@@ -89,19 +89,20 @@ export const ProfileIcon = () => (
     <path
       d="M12.1601 10.87C12.0601 10.86 11.9401 10.86 11.8301 10.87C9.45006 10.79 7.56006 8.84 7.56006 6.44C7.56006 3.99 9.54006 2 12.0001 2C14.4501 2 16.4401 3.99 16.4401 6.44C16.4301 8.84 14.5401 10.79 12.1601 10.87Z"
       stroke="#A5AAB5"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M7.15997 14.56C4.73997 16.18 4.73997 18.82 7.15997 20.43C9.90997 22.27 14.42 22.27 17.17 20.43C19.59 18.81 19.59 16.17 17.17 14.56C14.43 12.73 9.91997 12.73 7.15997 14.56Z"
       stroke="#A5AAB5"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
+
 export const EmailIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +113,7 @@ export const EmailIcon = () => (
   >
     <mask
       id="mask0_705_5491"
-      style="mask-type:alpha"
+      style={{ maskType: "alpha" }}
       maskUnits="userSpaceOnUse"
       x="0"
       y="1"
@@ -129,6 +130,7 @@ export const EmailIcon = () => (
     </g>
   </svg>
 );
+
 export const PassIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -139,7 +141,7 @@ export const PassIcon = () => (
   >
     <mask
       id="mask0_705_5502"
-      style="mask-type:alpha"
+      style={{ maskType: "alpha" }}
       maskUnits="userSpaceOnUse"
       x="1"
       y="0"
@@ -147,8 +149,8 @@ export const PassIcon = () => (
       height="20"
     >
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M7.22396 1.11446C7.97049 0.412166 8.97012 0.0278473 10.0001 0.0278473C11.0301 0.0278473 12.0297 0.412166 12.7762 1.11446C13.5249 1.81878 13.9584 2.78812 13.9584 3.81334V8.59583C13.9584 9.17113 13.4921 9.6375 12.9168 9.6375C12.3415 9.6375 11.8751 9.17113 11.8751 8.59583V3.81334C11.8751 3.38315 11.694 2.95669 11.3487 2.63187C11.0013 2.30502 10.5172 2.11118 10.0001 2.11118C9.48298 2.11118 8.99888 2.30502 8.65145 2.63187C8.30617 2.95669 8.1251 3.38315 8.1251 3.81334V8.59583C8.1251 9.17113 7.65873 9.6375 7.08343 9.6375C6.50814 9.6375 6.04177 9.17113 6.04177 8.59583V3.81334C6.04177 2.78812 6.47527 1.81878 7.22396 1.11446Z"
         fill="#006FFD"
       />
@@ -162,6 +164,7 @@ export const PassIcon = () => (
     </g>
   </svg>
 );
+
 export const BackIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -172,7 +175,7 @@ export const BackIcon = () => (
   >
     <mask
       id="mask0_705_5486"
-      style="mask-type:alpha"
+      style={{ maskType: "alpha" }}
       maskUnits="userSpaceOnUse"
       x="5"
       y="0"
@@ -180,20 +183,14 @@ export const BackIcon = () => (
       height="24"
     >
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M18.5489 0.939615C19.151 1.5254 19.151 2.47515 18.5489 3.06093L9.36108 12.0003L18.5489 20.9396C19.151 21.5254 19.151 22.4751 18.5489 23.0609C17.9469 23.6467 16.9707 23.6467 16.3686 23.0609L5.00049 12.0003L16.3686 0.939615C16.9707 0.353828 17.9469 0.353828 18.5489 0.939615Z"
         fill="#006FFD"
       />
     </mask>
     <g mask="url(#mask0_705_5486)">
-      <rect
-        x="0.000488281"
-        y="-0.00164795"
-        width="24"
-        height="24"
-        fill="#1D1465"
-      />
+      <rect x="0" y="0" width="24" height="24" fill="#1D1465" />
     </g>
   </svg>
 );

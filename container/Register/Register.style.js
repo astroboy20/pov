@@ -6,6 +6,7 @@ const FormData = styled.div`
     display: flex;
     width: 100%;
     flex-direction: column;
+    height:100vh ;
     .sign-in {
       margin: 5% 0;
       text-align: center;
@@ -20,8 +21,11 @@ export const RegisterContainer = styled(FormData)`
   height: 100vh;
 `;
 
-export const FormHeader = styled(FormData)`
-  gap: 10px;
+export const FormHeader = styled.header`
+  gap: 30px;
+  padding:30px 0;
+  display:flex ;
+  flex-direction:column ;
 `;
 export const FormContainer = styled(FormData)``;
 export const VerifyContainer = styled(FormData)`

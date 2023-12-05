@@ -1,144 +1,143 @@
-import { useState, useEffect } from "react";
-import { Homestyle } from "./Home.style";
-import React, { useRef } from "react";
-import { useParams } from "next/navigation";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-
-// import required modules
-import { Autoplay, Pagination } from "swiper/modules";
+import { useState } from "react";
+import { Container, StepOnestyle } from "./Home.style";
 import { Button } from "@/components/Button";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { Spinner } from "@/components/Spinner";
-import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "@/feature/slices/authSlice";
 import { CustomText } from "@/components/CustomText";
+import MultiStep from "react-multistep";
 
 const HomePage = () => {
-  const [loading, setLoading] = useState(true);
+  const [step, setStep] = useState(1);
   const router = useRouter();
-  const dispatch = useDispatch();
-  const params = useParams()
-  console.log("params",params)
-  const data = router.query
-console.log(data) 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
+ 
 
   const handleRoute = () => {
-    router.push("/login");
+    router.push("/auth");
+  };
+
+  const handleNext = () => {
+    setStep((prevStep) => prevStep + 1);
+  };
+  const handlePrev = () => {
+    setStep((prevStep) => prevStep - 1);
   };
 
   return (
     <>
-      <Homestyle>
         <>
-          <Swiper
-            spaceBetween={30}
-            centeredSlides={true}
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Autoplay, Pagination]}
-            className="mySwiper"
-          >
-            <SwiperSlide>
-              <div className="span">
-                <div>
+          {step === 1 && (
+            <>
+              <Container>
+                <StepOnestyle>
+                  <Image
+                    src={"/images/capture.png"}
+                    width={340}
+                    height={700}
+                    alt="."
+                  />
+                </StepOnestyle>
+                <div className="text">
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                    Capture moments and memories captured with digital backdrop
+                    Capture moments and memories on your big day
                   </CustomText>
-                  {/* <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                 
-                  </CustomText> */}
+                  <div>
+                    <Button
+                      type="submit"
+                      variant="defaultButton"
+                      onClick={handleNext}
+                    >
+                      Next
+                    </Button>
+                  </div>
                 </div>
-
-                <Image
-                  src={"/images/logo.png"}
-                  width={100}
-                  height={100}
-                  alt="."
-                />
-              </div>
-            </SwiperSlide>
-
-            <SwiperSlide>
-              <div className="span">
-                <div>
+              </Container>
+            </>
+          )}
+          {step === 2 && (
+            <>
+              <Container>
+                <StepOnestyle>
+                  <Image
+                    src={"/images/several.svg"}
+                    width={340}
+                    height={700}
+                    alt="."
+                  />
+                </StepOnestyle>
+                <div className="text">
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                    Event guests scan a QR code to access the digital backdrop
-                    for your event.
+                    Take several cliqs with your created digital backdrops
                   </CustomText>
-                  {/* <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                    
-                  </CustomText> */}
+                  <div >
+                    <Button
+                      type="submit"
+                      variant="defaultButton"
+                      onClick={handleNext}
+                    >
+                      Next
+                    </Button>
+                  </div>
                 </div>
-
-                <Image
-                  src={"/images/QR.png"}
-                  width={100}
-                  height={100}
-                  alt="."
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="span">
-                <div>
+              </Container>
+            </>
+          )}
+          {step === 3 && (
+            <>
+              <Container>
+                <StepOnestyle>
+                  <Image
+                    src={"/images/qr.svg"}
+                    width={400}
+                    height={700}
+                    alt="."
+                  />
+                </StepOnestyle>
+                <div className="text">
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                    Mobile freindly access to take several cliqs with your
-                    created digital backdrop banner.
+                    Guest scan barcode to access your digital backdrop
                   </CustomText>
-                  <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                    The photos will reveal after adelay you choose. All guest
-                    can view photos
-                  </CustomText>
-                  {/* <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                    Guest access the camera with one click and can take pictures
-                    right away
-                  </CustomText> */}
+                  <div >
+                    <Button
+                      type="submit"
+                      variant="defaultButton"
+                      onClick={handleNext}
+                    >
+                      Next
+                    </Button>
+                  </div>
                 </div>
-
-                <Image src={"/images/2.png"} width={100} height={100} alt="." />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="span">
-                <div>
+              </Container>
+            </>
+          )}
+          {step === 4 && (
+            <>
+              <Container>
+                <StepOnestyle>
+                  <Image
+                    src={"/images/album.svg"}
+                    width={400}
+                    height={700}
+                    alt="."
+                  />
+                </StepOnestyle>
+                <div className="text">
                   <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
-                    A digital album of your event from all cliqs taken with your
-                    digital backdrop will be available after the event.
+                    A digital album from cliqs taken at your event
                   </CustomText>
+                  <div >
+                    <Button
+                      type="submit"
+                      variant="defaultButton"
+                      onClick={handleRoute}
+                    >
+                      Next
+                    </Button>
+                  </div>
                 </div>
-
-                <Image
-                  src={"/images/1.png"}
-                  width={100}
-                  height={6600}
-                  alt="."
-                />
-              </div>
-            </SwiperSlide>
-          </Swiper>
+              </Container>
+            </>
+          )}
         </>
-
-        <Button onClick={handleRoute} type="submit" variant="defaultButton">
-          Get Started
-        </Button>
-      </Homestyle>
     </>
   );
 };

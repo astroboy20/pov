@@ -6,9 +6,10 @@ import {
   InputDiv,
   RadioStyle,
   ConfirmPasswordStyle,
+  TextContainer,
 } from "./Input.style";
 import PropTypes from "prop-types";
-import { Hide, Show } from "@/assets";
+import { Hide, PassIcon, Show } from "@/assets";
 
 const Input = ({
   type,
@@ -18,6 +19,7 @@ const Input = ({
   label,
   onChange,
   error,
+  icon,
   ...rest
 }) => {
   const inputType = "text" || "email";
@@ -28,57 +30,55 @@ const Input = ({
   };
   return variant === "text" ? (
     <InputDiv>
-      {/* {label && <label htmlFor={rest.id}>{label}</label>} */}
-      <InputStyle
-        type={inputType}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-        {...rest}
-      />
-      <div>{error && <span style={{color:"red"}} htmlFor={rest.id}>{error}</span>}</div>
+      <Container>
+        {icon}
+        <InputStyle
+          type={inputType}
+          value={value}
+          placeholder={placeholder}
+          onChange={onChange}
+          {...rest}
+          icon={icon}
+        />
+      </Container>
+
+      <div>
+        {error && (
+          <span style={{ color: "red" }} htmlFor={rest.id}>
+            {error}
+          </span>
+        )}
+      </div>
     </InputDiv>
   ) : variant === "password" ? (
     <InputDiv>
-      {/* {label && <label htmlFor={rest.id}>{label}</label>} */}
       <Container>
-        <InputPasswordStyle
+        <span onClick={handleChange}>
+          <PassIcon />
+        </span>
+        <InputStyle
           type={show ? "text" : "password"}
           value={value}
           placeholder={placeholder}
           onChange={onChange}
           {...rest}
-          style={{background:"none"}}
+          style={{ background: "none" }}
           error={error}
         />
         <span onClick={handleChange}>{show ? <Show /> : <Hide />}</span>
       </Container>
-     {error && <span style={{color:"red"}} htmlFor={rest.id}>{error}</span>}
+      {error && (
+        <span style={{ color: "red" }} htmlFor={rest.id}>
+          {error}
+        </span>
+      )}
     </InputDiv>
-  ) : variant === "confirmPassword" ? (
-    <InputDiv>
-    {/* {label && <label htmlFor={rest.id}>{label}</label>} */}
-    <Container>
-      <ConfirmPasswordStyle
-        type={show ? "text" : "password"}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-        {...rest}
-        style={{background:"none"}}
-        error={error}
-      />
-      <span onClick={handleChange}>{show ? <Show /> : <Hide />}</span>
-    </Container>
-   {error && <span style={{color:"red"}} htmlFor={rest.id}>{error}</span>}
-  </InputDiv>
   ) : null;
 };
 
 Input.propTypes = {
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  // label: PropTypes.string.isRequired,
   variant: PropTypes.string.isRequired,
 };
 

@@ -1,6 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from "react";
-import { FormContainer, Linkstyle, LoginContainer } from "./Login.style";
+import {
+  FormContainer,
+  FormHeader,
+  Linkstyle,
+  LoginContainer,
+} from "./Login.style";
 import { CustomText } from "@/components/CustomText";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
@@ -14,6 +19,7 @@ import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { BackIcon, EmailIcon } from "@/assets";
 
 const Login = () => {
   const router = useRouter();
@@ -38,7 +44,6 @@ const Login = () => {
     }),
     onSubmit: async (values) => {
       await dispatch(login(values));
-      
     },
   });
 
@@ -74,9 +79,15 @@ const Login = () => {
   return (
     <>
       <LoginContainer>
-        <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
-          Sign In
-        </CustomText>
+        <FormHeader>
+          <span onClick={handleRoute}>
+            <BackIcon />
+          </span>
+
+          <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
+            Sign In
+          </CustomText>
+        </FormHeader>
 
         <FormContainer>
           <form onSubmit={formik.handleSubmit}>
@@ -86,6 +97,7 @@ const Login = () => {
               onChange={formik.handleChange}
               placeholder="Email"
               name="email"
+              icon={<EmailIcon />}
               variant={"text"}
               required
               error={
@@ -122,6 +134,9 @@ const Login = () => {
             </Button>
           </form>
         </FormContainer>
+
+        <div className="or">or</div>
+
         <div className="login-with-google">
           <Button
             onClick={handlLoginwithgoogle}

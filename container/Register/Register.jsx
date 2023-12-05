@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { CustomText } from "@/components/CustomText";
 import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
-import { RegisterContainer, FormContainer } from "./Register.style";
+import { RegisterContainer, FormContainer, FormHeader } from "./Register.style";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { register, reset } from "@/feature/slices/authSlice";
@@ -11,7 +11,9 @@ import { toast } from "react-toastify";
 import { Spinner } from "@/components/Spinner";
 import { useFormik } from "formik";
 import { Validate } from "@/components/validate";
+import Image from "next/image";
 import * as Yup from "yup";
+import { BackIcon, EmailIcon, ProfileIcon } from "@/assets";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -22,6 +24,9 @@ const Register = () => {
 
   const handleRoute = () => {
     router.push("/login");
+  };
+  const handleAuthRoute = () => {
+    router.push("/auth");
   };
 
   const formik = useFormik({
@@ -66,9 +71,16 @@ const Register = () => {
   return (
     <>
       <RegisterContainer>
-        <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
-          Sign Up
-        </CustomText>
+        <FormHeader>
+          <span onClick={handleAuthRoute}>
+            <BackIcon />
+          </span>
+
+          <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
+            Sign Up
+          </CustomText>
+        </FormHeader>
+
         <FormContainer>
           <form onSubmit={formik.handleSubmit}>
             <Input
@@ -76,6 +88,7 @@ const Register = () => {
               placeholder="Username"
               variant="text"
               required
+              icon={<ProfileIcon />}
               name="username"
               value={formik.values.username}
               onChange={formik.handleChange}
@@ -90,6 +103,7 @@ const Register = () => {
               placeholder="Email"
               variant="text"
               required
+              icon={<EmailIcon />}
               value={formik.values.email}
               name="email"
               onChange={formik.handleChange}
@@ -117,7 +131,7 @@ const Register = () => {
             />
             <Input
               type="password"
-              variant="confirmPassword"
+              variant="password"
               placeholder="Confirm password"
               required
               value={formik.values.confirmpassword}
@@ -131,7 +145,7 @@ const Register = () => {
             />
 
             <Button type="submit" variant="defaultButton">
-              {isLoading? (<Spinner/>) : "Register"}
+              {isLoading ? <Spinner /> : "Sign Up"}
             </Button>
             <div className="sign-in">
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
