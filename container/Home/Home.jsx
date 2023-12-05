@@ -27,8 +27,8 @@ const HomePage = () => {
               <StepOnestyle>
                 <Image
                   src={"/images/capture.png"}
-                  width={380}
-                  height={600}
+                  width={300}
+                  height={500}
                   alt="."
                 />
               </StepOnestyle>
@@ -61,8 +61,8 @@ const HomePage = () => {
               <StepOnestyle>
                 <Image
                   src={"/images/several.svg"}
-                  width={380}
-                  height={600}
+                  width={300}
+                  height={500}
                   alt="."
                 />
               </StepOnestyle>
@@ -95,8 +95,8 @@ const HomePage = () => {
               <StepOnestyle>
                 <Image
                   src={"/images/qr.svg"}
-                  width={380}
-                  height={600}
+                  width={300}
+                  height={500}
                   alt="."
                 />
               </StepOnestyle>
@@ -129,8 +129,8 @@ const HomePage = () => {
               <StepOnestyle>
                 <Image
                   src={"/images/album.svg"}
-                  width={380}
-                  height={600}
+                  width={300}
+                  height={500}
                   alt="."
                 />
               </StepOnestyle>

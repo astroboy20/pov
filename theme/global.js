@@ -24,6 +24,7 @@ body{
     transition: all 1s linear;
     overflow-y:auto ;
     padding: 5%;
+    height:100dvh ;
   }
 }
   
