@@ -26,7 +26,7 @@ import Option, { GuestOption } from "./Options/Options";
 import { useRouter } from "next/router";
 import { Button } from "@/components/Button";
 import axios from "axios";
-import { PurpleSpinner } from "@/components/Spinner/Spinner";
+import { PurpleSpinner, Spinner } from "@/components/Spinner/Spinner";
 import { toast } from "react-toastify";
 const CreateEvent = () => {
   const { user } = useSelector((state) => state.auth);
@@ -144,9 +144,10 @@ const CreateEvent = () => {
       });
   }, [accessToken]);
 
-  const handleSubmit = () => {
-    console.log(data);
 
+const [loading, setLoading] = useState(false)
+  const handleSubmit = () => {
+    setLoading(true)
     axios
       .post("https://api-cliqpod.koyeb.app/create-event", data, {
         headers: {
@@ -157,10 +158,12 @@ const CreateEvent = () => {
         const userData = response.data;
         router.push(userData?.authorization_url);
         toast.success("Event created succesfully!");
+        setLoading(false)
       })
       .catch((error) => {
         console.log("error", error);
         toast.error(error);
+        setLoading(true)
       });
   };
 
@@ -535,7 +538,8 @@ const CreateEvent = () => {
                 type={"submit"}
                 variant={"defaultButton"}
               >
-                Publish
+                {loading ? (<Spinner/> ): (" Publish")}
+               
               </Button>
             </>
           )}
