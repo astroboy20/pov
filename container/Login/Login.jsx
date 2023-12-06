@@ -61,21 +61,23 @@ const Login = () => {
   const handleRoute = () => {
     router.push("/register");
   };
-  const handlLoginwithgoogle = async () => {
-    try {
-      // Send the ID token to your backend for verification
-      const response = await axios.get(
-        "https://api-cliqpod.koyeb.app/auth/google"
-      );
 
-      // Handle response from the server after successful login
-      window.location.href = "/dashboard";
-      console.log(response.data);
-    } catch (error) {
-      // Handle error
-      console.error("Error during login:", error);
-    }
-  };
+const handleLoginWithGoogle = async (req, res) => {
+  try {
+    const response = await fetch("https://api-cliqpod.koyeb.app/auth/google");
+    const data = await response.json();
+
+    // Set CORS headers in the response
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Set the appropriate origin
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
+    res.setHeader('Content-Type', 'application/json');
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
   return (
     <>
       <LoginContainer>
