@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled,{css} from "styled-components";
 
 export const ButtonStyle = styled.button`
   display: flex;
@@ -14,6 +14,13 @@ export const DefaultButton = styled(ButtonStyle)`
   background: #1d1465;
   color: #fff;
   border: none;
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      opacity: 0.6;
+      cursor: not-allowed;
+    `}
   
 `;
 export const TransparentButton = styled(ButtonStyle)`

@@ -22,6 +22,13 @@ export const HType = styled.p`
           font-weight: 500;
           line-height: normal;
         `
+      : variant === "h2-b"
+      ? css`
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        `
       : variant === "h3"
       ? css`
           font-size: 19.2px;

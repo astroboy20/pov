@@ -108,11 +108,18 @@ const CreateEvent = () => {
     setStep((prevStep) => prevStep - 1);
   };
 
+  const isStepOneValid = () => {
+    const { image,subName, startDate, endDate, revealTime, photosPerPerson } = data;
+  
+    // Check if any required field in step one is empty
+    return subName !== '' && startDate !== '' && endDate !== '' && revealTime !== '' && photosPerPerson !== '' && image !=="";
+  };
+
   const [prices, setPrices] = useState([]);
-  const [isloading,setIsLoading] = useState (false)
+  const [isloading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     axios
       .get("https://api-cliqpod.koyeb.app/expected-guest", {
         headers: {
@@ -122,17 +129,17 @@ const CreateEvent = () => {
       .then((response) => {
         const data = response.data.guestsExpected;
         setPrices(data);
-        setIsLoading(false)
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching prices:", error);
-        setIsLoading(false)
+        setIsLoading(false);
       });
   }, [accessToken]);
 
-  const handleSubmit = () =>{
-    console.log(data)
-  }
+  const handleSubmit = () => {
+    console.log(data);
+  };
 
   return (
     <>
@@ -186,6 +193,7 @@ const CreateEvent = () => {
                       background: "none",
                       border: "none",
                       gap: "10px",
+                      fontSize:"16px"
                     }}
                   >
                     <div className="item">
@@ -194,7 +202,7 @@ const CreateEvent = () => {
                         <CustomText
                           weight={"500"}
                           type={"Htype"}
-                          variant={"h5"}
+                          variant={"h2-b"}
                         >
                           Sub Name
                         </CustomText>{" "}
@@ -202,7 +210,7 @@ const CreateEvent = () => {
                           <CustomText
                             weight={"500"}
                             type={"Htype"}
-                            variant={"h5"}
+                            variant={"h2-b"}
                           >
                             {data.subName}
                           </CustomText>
@@ -238,7 +246,7 @@ const CreateEvent = () => {
                         <CustomText
                           weight={"500"}
                           type={"Htype"}
-                          variant={"h5"}
+                          variant={"h2-b"}
                         >
                           Start Date
                         </CustomText>{" "}
@@ -246,7 +254,7 @@ const CreateEvent = () => {
                           <CustomText
                             weight={"500"}
                             type={"Htype"}
-                            variant={"h5"}
+                            variant={"h2-b"}
                           >
                             {data.startDate}
                           </CustomText>
@@ -282,7 +290,7 @@ const CreateEvent = () => {
                         <CustomText
                           weight={"500"}
                           type={"Htype"}
-                          variant={"h5"}
+                          variant={"h2-b"}
                         >
                           End Date
                         </CustomText>{" "}
@@ -290,7 +298,7 @@ const CreateEvent = () => {
                           <CustomText
                             weight={"500"}
                             type={"Htype"}
-                            variant={"h5"}
+                            variant={"h2-b"}
                           >
                             {data.endDate}
                           </CustomText>
@@ -327,10 +335,19 @@ const CreateEvent = () => {
                         <CustomText
                           weight={"500"}
                           type={"Htype"}
-                          variant={"h5"}
+                          variant={"h2-b"}
                         >
                           Reveal Photo
                         </CustomText>{" "}
+                        {data.revealTime && (
+                          <CustomText
+                            weight={"500"}
+                            type={"Htype"}
+                            variant={"h2-b"}
+                          >
+                            {data.revealTime} hours
+                          </CustomText>
+                        )}
                       </div>
                     </div>
                   </AccordionButton>
@@ -365,10 +382,19 @@ const CreateEvent = () => {
                         <CustomText
                           weight={"500"}
                           type={"Htype"}
-                          variant={"h5"}
+                          variant={"h2-b"}
                         >
                           Photo per person
                         </CustomText>{" "}
+                        {data.photosPerPerson && (
+                          <CustomText
+                            weight={"500"}
+                            type={"Htype"}
+                            variant={"h2-b"}
+                          >
+                            {data.photosPerPerson} photos
+                          </CustomText>
+                        )}
                       </div>
                     </div>
                   </AccordionButton>
@@ -391,6 +417,7 @@ const CreateEvent = () => {
                 onClick={handleNext}
                 type={"submit"}
                 variant={"defaultButton"}
+                disabled = {!isStepOneValid()}
               >
                 Continue
               </Button>
@@ -418,17 +445,58 @@ const CreateEvent = () => {
                 participate too!
               </CustomText>
 
-             {isloading ? (<PurpleSpinner/>) : (<> {prices.map((price) => (
-                <GuestOption
-                  key={price._id}
-                  value={price._id}
-                  price={price.price}
-                  guest={price.expectedGuest}
-                  setValue={handleIDValue}
-                  selected={data.expectedGuests === price._id}
-                />
-              ))}</>)}
-             
+              <Accordion allowToggle>
+                <AccordionItem>
+                  <AccordionButton
+                    style={{
+                      background: "none",
+                      border: "none",
+                      gap: "10px",
+                    }}
+                  >
+                    <div className="item">
+                      <GuestIcon />
+                      <div className="sub-item">
+                        <CustomText
+                          weight={"500"}
+                          type={"Htype"}
+                          variant={"h2-b"}
+                        >
+                          Select Guest
+                        </CustomText>{" "}
+                        {data.expectedGuests && (
+                          <CustomText
+                            weight={"500"}
+                            type={"Htype"}
+                            variant={"h2-b"}
+                          >
+                            {data.expectedGuests}
+                          </CustomText>
+                        )}
+                      </div>
+                    </div>
+                  </AccordionButton>
+                  <AccordionPanel background="none" style={{ display: "flex", flexDirection:"column", gap: "10px" }} gap={10} p={10}>
+                    {isloading ? (
+                      <PurpleSpinner />
+                    ) : (
+                      <>
+                        {" "}
+                        {prices.map((price) => (
+                          <GuestOption
+                            key={price._id}
+                            value={price._id}
+                            price={price.price}
+                            guest={price.expectedGuest}
+                            setValue={handleIDValue}
+                            selected={data.expectedGuests === price._id}
+                          />
+                        ))}
+                      </>
+                    )}
+                  </AccordionPanel>
+                </AccordionItem>
+              </Accordion>
 
               <Button
                 onClick={handleSubmit}
