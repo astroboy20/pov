@@ -7,6 +7,18 @@ export const OptionItem = styled.div`
   border-radius: 15px;
   background-color: ${(props) => (props.selected ? "white" : "#1d1465")};
   color: ${(props) => (props.selected ? "#1d1465" : "white")};
+  border: 2px solid #1d1465;
+`;
+export const GuestItem = styled.div`
+  padding: 10px 15px;
+  display:flex ;
+  justify-content:space-between ;
+  align-items:center ;
+  cursor: pointer;
+  border-radius: 15px;
+  background-color: ${(props) => (props.selected ? "white" : "#1d1465")};
+  color: ${(props) => (props.selected ? "#1d1465" : "white")};
+  border: 2px solid #1d1465;
 `;
 
 export const ItemStyle = styled.div`

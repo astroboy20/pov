@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Accordion,
   AccordionItem,
@@ -11,20 +11,25 @@ import { CustomText } from "@/components/CustomText";
 import { PhotoData, RevealData } from "./Options/data";
 import { ItemStyle } from "./Options/Options.style";
 import { Input } from "@chakra-ui/input";
-import { CiCalendarDate, CiCamera } from "react-icons/ci";
 import { SiNamebase } from "react-icons/si";
+import { useSelector } from "react-redux";
 import {
   BackArrow,
   BlueBackIcon,
   EndIcon,
+  GuestIcon,
   ImageIcon,
   PIcon,
   RevealIcon,
 } from "@/assets";
-import Option from "./Options/Options";
+import Option, { GuestOption } from "./Options/Options";
 import { useRouter } from "next/router";
 import { Button } from "@/components/Button";
+import axios from "axios";
+import { PurpleSpinner } from "@/components/Spinner/Spinner";
 const CreateEvent = () => {
+  const { user } = useSelector((state) => state.auth);
+  const accessToken = user ? user.token : "";
   const eventName =
     typeof window !== "undefined" && localStorage.getItem("eventName");
 
@@ -66,6 +71,13 @@ const CreateEvent = () => {
     }));
   };
 
+  const handleIDValue = (newValue) => {
+    setData((prevData) => ({
+      ...prevData,
+      expectedGuests: newValue,
+    }));
+  };
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
 
@@ -95,6 +107,33 @@ const CreateEvent = () => {
   const handlePrev = () => {
     setStep((prevStep) => prevStep - 1);
   };
+
+  const [prices, setPrices] = useState([]);
+  const [isloading,setIsLoading] = useState (false)
+
+  useEffect(() => {
+    setIsLoading(true)
+    axios
+      .get("https://api-cliqpod.koyeb.app/expected-guest", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        const data = response.data.guestsExpected;
+        setPrices(data);
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        console.error("Error fetching prices:", error);
+        setIsLoading(false)
+      });
+  }, [accessToken]);
+
+  const handleSubmit = () =>{
+    console.log(data)
+  }
+
   return (
     <>
       <GalleryStyle>
@@ -374,13 +413,25 @@ const CreateEvent = () => {
 
               <CustomText weight={"500"} type={"Htype"} variant={"h3-c"}>
                 Pricing scales for more guests. Upgrade at any time (even after
-                publishing). Guests can participate without doenloadin the app
+                publishing). Guests can participate without downloading the app
                 by scanning a QR code or opening a link. iPhone users can
                 participate too!
               </CustomText>
-              <progress  max={100}></progress>
+
+             {isloading ? (<PurpleSpinner/>) : (<> {prices.map((price) => (
+                <GuestOption
+                  key={price._id}
+                  value={price._id}
+                  price={price.price}
+                  guest={price.expectedGuest}
+                  setValue={handleIDValue}
+                  selected={data.expectedGuests === price._id}
+                />
+              ))}</>)}
+             
+
               <Button
-                onClick={handleNext}
+                onClick={handleSubmit}
                 type={"submit"}
                 variant={"defaultButton"}
               >

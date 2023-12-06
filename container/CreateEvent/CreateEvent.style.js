@@ -44,7 +44,6 @@ export const GalleryStyle = styled.div`
     border-radius: 12px;
     /* padding: 5px 16px 0 16px; */
     border: 1.5px solid #878e9c;
-    color: white;
     width: 100%;
   }
   .icon-style {

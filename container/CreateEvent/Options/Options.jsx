@@ -1,6 +1,5 @@
 import React from "react";
-import { OptionItem } from "./Options.style";
-
+import { GuestItem, OptionItem } from "./Options.style";
 
 const Option = ({ value, label, selected, setValue }) => {
   const handleClick = () => {
@@ -15,6 +14,29 @@ const Option = ({ value, label, selected, setValue }) => {
   );
 };
 
-const GuestOption = Option
+export const GuestOption = ({
+ 
+  price,
+  guest,
+  value,
+  selected,
+  setValue,
+}) => {
+  const handleClick = () => {
+    setValue(value);
+  };
+  return (
+    <>
+      <GuestItem selected={selected} onClick={handleClick}>
+        <div>
+          {guest}
+        </div>
+        {price}
+      </GuestItem>
+    </>
+  );
+};
+
+// const GuestOption = Option
 
 export default Option;
