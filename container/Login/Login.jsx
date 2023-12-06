@@ -141,7 +141,7 @@ const handleLoginWithGoogle = async (req, res) => {
 
         <div className="login-with-google">
           <Button
-            onClick={handlLoginwithgoogle}
+            onClick={handleLoginWithGoogle}
             type={"button"}
             variant={"transparent"}
           >
