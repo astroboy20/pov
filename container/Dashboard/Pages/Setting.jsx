@@ -1,8 +1,18 @@
 import React from "react";
 import { SettingStyle } from "../Dashboard.style";
 import { CustomText } from "@/components/CustomText";
-
+import { useRouter } from "next/router";
+import {useDispatch} from "react-redux"
+import { logout,reset } from "@/feature/slices/authSlice";
 const Setting = () => {
+  
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    router.push("/login");
+  };
   return (
     <>
       <SettingStyle>
@@ -42,7 +52,8 @@ const Setting = () => {
           <CustomText weight={"500"} type={"Htype"} variant={"h3"}>
             Account
           </CustomText>{" "}
-          Log Out
+          <div onClick={handleLogout}>Logout</div>
+          
         </div>
         <div className="setting-type">
           {" "}

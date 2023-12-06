@@ -4,26 +4,20 @@ import { logout, reset } from "@/feature/slices/authSlice";
 import { useRouter } from "next/router";
 import Event from "./Pages/Event";
 import Setting from "./Pages/Setting";
-import Gallery from "./Pages/Gallery";
 import Option from "./Option";
 import { FeatureStyle } from "./Dashboard.style";
 import { optionItems } from "./data";
 import { useOptionContext } from "@/context/option-context";
+import { Gallery } from "./Pages/Gallery";
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
-  const router = useRouter();
   const { option, switchOption } = useOptionContext();
 
   const handleClick = (value) => {
     switchOption(value);
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
-    dispatch(reset());
-    router.push("/login");
-  };
+
 
   return (
     <>
@@ -32,7 +26,7 @@ const Dashboard = () => {
         {option === "Events" && <Event />}
         {option === "Setting" && <Setting />}
         {option === "Gallery" && <Gallery />}
-        <div onClick={handleLogout}>Logout</div>
+      
         <FeatureStyle>
           {optionItems.map((optionItem) => (
             <Option

@@ -27,6 +27,7 @@ import { useRouter } from "next/router";
 import { Button } from "@/components/Button";
 import axios from "axios";
 import { PurpleSpinner } from "@/components/Spinner/Spinner";
+import { toast } from "react-toastify";
 const CreateEvent = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
@@ -109,10 +110,16 @@ const CreateEvent = () => {
   };
 
   const isStepOneValid = () => {
-    const { image,subName, startDate, endDate, revealTime, photosPerPerson } = data;
-  
-    // Check if any required field in step one is empty
-    return subName !== '' && startDate !== '' && endDate !== '' && revealTime !== '' && photosPerPerson !== '' && image !=="";
+    const { image, subName, startDate, endDate, revealTime, photosPerPerson } =
+      data;
+    return (
+      subName !== "" &&
+      startDate !== "" &&
+      endDate !== "" &&
+      revealTime !== "" &&
+      photosPerPerson !== "" &&
+      image !== ""
+    );
   };
 
   const [prices, setPrices] = useState([]);
@@ -139,6 +146,22 @@ const CreateEvent = () => {
 
   const handleSubmit = () => {
     console.log(data);
+
+    axios
+      .post("https://api-cliqpod.koyeb.app/create-event", data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((response) => {
+        const userData = response.data;
+        router.push(userData?.authorization_url);
+        toast.success("Event created succesfully!");
+      })
+      .catch((error) => {
+        console.log("error", error);
+        toast.error(error);
+      });
   };
 
   return (
@@ -193,7 +216,7 @@ const CreateEvent = () => {
                       background: "none",
                       border: "none",
                       gap: "10px",
-                      fontSize:"16px"
+                      fontSize: "16px",
                     }}
                   >
                     <div className="item">
@@ -417,7 +440,7 @@ const CreateEvent = () => {
                 onClick={handleNext}
                 type={"submit"}
                 variant={"defaultButton"}
-                disabled = {!isStepOneValid()}
+                disabled={!isStepOneValid()}
               >
                 Continue
               </Button>
@@ -464,7 +487,7 @@ const CreateEvent = () => {
                         >
                           Select Guest
                         </CustomText>{" "}
-                        {data.expectedGuests && (
+                        {/* {data.expectedGuests && (
                           <CustomText
                             weight={"500"}
                             type={"Htype"}
@@ -472,11 +495,20 @@ const CreateEvent = () => {
                           >
                             {data.expectedGuests}
                           </CustomText>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </AccordionButton>
-                  <AccordionPanel background="none" style={{ display: "flex", flexDirection:"column", gap: "10px" }} gap={10} p={10}>
+                  <AccordionPanel
+                    background="none"
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "10px",
+                    }}
+                    gap={10}
+                    p={10}
+                  >
                     {isloading ? (
                       <PurpleSpinner />
                     ) : (

@@ -15,6 +15,5 @@ const Option = ({ value, label, selected, setValue,icon }) => {
   );
 };
 
-const GuestOption = Option
 
 export default Option;

@@ -3,11 +3,10 @@ import styled from "styled-components";
 export const DashboardStyle = styled.div`
   display: flex;
   flex-direction: column;
-  overflow:scroll ;
-  
+  overflow: scroll;
 `;
 export const HeaderStyle = styled.div`
-  background:url("/images/dashboard.png") ;
+  background: url("/images/dashboard.png");
   border-radius: 0px 0px 10px 10px;
   height: 50dvh;
 `;
@@ -18,7 +17,7 @@ export const BodyStyle = styled.div`
   color: #1d1465;
   border-radius: 15px;
   text-align: left;
-  
+
   padding: 5%;
 `;
 export const FeatureStyle = styled.div`
@@ -43,11 +42,10 @@ export const OptionItem = styled.div`
 `;
 
 export const SettingStyle = styled.div`
+  padding: 5%;
   display: flex;
   flex-direction: column;
   gap: 10px;
   .setting-type {
   }
 `;
-
-
