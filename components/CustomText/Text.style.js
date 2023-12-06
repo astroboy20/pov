@@ -8,6 +8,13 @@ export const HType = styled.p`
           font-weight: 800;
           line-height: normal;
         `
+      : variant === "h1-b"
+      ? css`
+          font-size: 28px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        `
       : variant === "h2"
       ? css`
           font-size: 20px;
@@ -21,6 +28,22 @@ export const HType = styled.p`
           color:#1D1465 ;
           font-style: normal;
           font-weight: 800;
+          line-height: normal;
+        `
+      : variant === "h3-b"
+      ? css`
+          font-size: 19.2px;
+          color:#1D1465 ;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        `
+      : variant === "h3-c"
+      ? css`
+          font-size: 17px;
+          color:#1D1465 ;
+          font-style: normal;
+          font-weight: 400;
           line-height: normal;
         `
       : variant === "h4"

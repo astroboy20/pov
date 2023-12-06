@@ -53,4 +53,10 @@ export const GalleryStyle = styled.div`
     align-items: center;
     justify-content: center;
   }
+  progress {
+    accent-color: #1d1465;
+    width: 100%;
+    height: 20px;
+  }
+
 `;

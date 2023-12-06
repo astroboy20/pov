@@ -13,15 +13,23 @@ import { ItemStyle } from "./Options/Options.style";
 import { Input } from "@chakra-ui/input";
 import { CiCalendarDate, CiCamera } from "react-icons/ci";
 import { SiNamebase } from "react-icons/si";
-import { BlueBackIcon, EndIcon, ImageIcon, PIcon, RevealIcon } from "@/assets";
+import {
+  BackArrow,
+  BlueBackIcon,
+  EndIcon,
+  ImageIcon,
+  PIcon,
+  RevealIcon,
+} from "@/assets";
 import Option from "./Options/Options";
 import { useRouter } from "next/router";
 import { Button } from "@/components/Button";
 const CreateEvent = () => {
   const eventName =
     typeof window !== "undefined" && localStorage.getItem("eventName");
-  
+
   const [selectedImage, setSelectedImage] = useState(null);
+  const [step, setStep] = useState(1);
 
   const [data, setData] = useState({
     eventName: eventName,
@@ -62,19 +70,14 @@ const CreateEvent = () => {
     const file = event.target.files[0];
 
     if (file) {
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        setSelectedImage(e.target.result);
-
-        // Update the 'image' property in the 'data' state with the selected image
-        setData((prevData) => ({
-          ...prevData,
-          image: e.target.result, // Set 'image' to the selected image
-        }));
-      };
-
-      reader.readAsDataURL(file);
+      const fileName = file.name;
+      const imageURL = URL.createObjectURL(file);
+      setSelectedImage(imageURL);
+      console.log(fileName);
+      setData((prevData) => ({
+        ...prevData,
+        image: imageURL,
+      }));
     }
   };
   const handleImageClick = () => {
@@ -85,13 +88,23 @@ const CreateEvent = () => {
   const handleRoute = () => {
     router.push("/dashboard");
   };
+
+  const handleNext = () => {
+    setStep((prevStep) => prevStep + 1);
+  };
+  const handlePrev = () => {
+    setStep((prevStep) => prevStep - 1);
+  };
   return (
     <>
       <GalleryStyle>
         <div className="header">
           <div className="header-head">
-            <span onClick = {handleRoute}> <BlueBackIcon /></span>
-           
+            <span onClick={handleRoute}>
+              {" "}
+              <BlueBackIcon />
+            </span>
+
             <CustomText type={"Htype"} variant={"h3"}>
               {eventName}
             </CustomText>
@@ -125,187 +138,256 @@ const CreateEvent = () => {
           </div>
         </div>
         <div className="body">
-          <Accordion allowToggle>
-            <AccordionItem>
-              <AccordionButton
-                style={{
-                  background: "none",
-                  border: "none",
-                  gap: "10px",
-                }}
-              >
-                <div className="item">
-                  <SiNamebase />
-                  <div className="sub-item">
-                    <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                      Sub Name
-                    </CustomText>{" "}
-                    {data.subName && (
-                      <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                        {data.subName}
-                      </CustomText>
-                    )}
-                  </div>
-                </div>
-              </AccordionButton>
-              <AccordionPanel background="none" p={10}>
-                <Input
-                  placeholder="Event name"
-                  size="md"
-                  type="text"
-                  name="subName"
-                  value={data.subName}
-                  onChange={handleChange}
-                  className="input"
-                />
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-          <Accordion allowToggle>
-            <AccordionItem>
-              <AccordionButton
-                style={{
-                  background: "none",
-                  border: "none",
-                  gap: "10px",
-                }}
-              >
-                <div className="item">
-                  <EndIcon />
-                  <div className="sub-item">
-                    <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                      Start Date
-                    </CustomText>{" "}
-                    {data.startDate && (
-                      <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                        {data.startDate}
-                      </CustomText>
-                    )}
-                  </div>
-                </div>
-              </AccordionButton>
-              <AccordionPanel background="none" p={10}>
-                <Input
-                  placeholder="Select Date and Time"
-                  size="md"
-                  name="startDate"
-                  type="datetime-local"
-                  value={data.startDate}
-                  onChange={handleChange}
-                  className="input"
-                />
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-          <Accordion allowToggle>
-            <AccordionItem>
-              <AccordionButton
-                style={{
-                  background: "none",
-                  border: "none",
-                  gap: "10px",
-                }}
-              >
-                <div className="item">
-                  <EndIcon />
-                  <div className="sub-item">
-                    <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                      End Date
-                    </CustomText>{" "}
-                    {data.endDate && (
-                      <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                        {data.endDate}
-                      </CustomText>
-                    )}
-                  </div>
-                </div>
-              </AccordionButton>
-              <AccordionPanel background="none" p={10}>
-                <Input
-                  placeholder="Select Date and Time"
-                  size="md"
-                  name="endDate"
-                  type="datetime-local"
-                  value={data.endDate}
-                  onChange={handleChange}
-                  className="input"
-                />
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-
-          <Accordion allowToggle>
-            <AccordionItem>
-              <AccordionButton
-                style={{
-                  background: "none",
-                  border: "none",
-                  gap: "10px",
-                }}
-              >
-                 <div className="item">
-                  <RevealIcon />
-                  <div className="sub-item">
-                    <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                      Reveal Photo
-                    </CustomText>{" "}
-                  </div>
-                </div>
-              </AccordionButton>
-              <AccordionPanel background="none" p={10}>
-                <ItemStyle>
-                  {RevealData.map((reveal) => (
-                    <Option
-                      key={reveal.id}
-                      label={reveal.label}
-                      value={reveal.value}
-                      setValue={handleRevealValue}
-                      selected={data.revealTime === reveal.value}
+          {step === 1 && (
+            <>
+              <Accordion allowToggle>
+                <AccordionItem>
+                  <AccordionButton
+                    style={{
+                      background: "none",
+                      border: "none",
+                      gap: "10px",
+                    }}
+                  >
+                    <div className="item">
+                      <SiNamebase />
+                      <div className="sub-item">
+                        <CustomText
+                          weight={"500"}
+                          type={"Htype"}
+                          variant={"h5"}
+                        >
+                          Sub Name
+                        </CustomText>{" "}
+                        {data.subName && (
+                          <CustomText
+                            weight={"500"}
+                            type={"Htype"}
+                            variant={"h5"}
+                          >
+                            {data.subName}
+                          </CustomText>
+                        )}
+                      </div>
+                    </div>
+                  </AccordionButton>
+                  <AccordionPanel background="none" p={10}>
+                    <Input
+                      placeholder="Event name"
+                      size="md"
+                      type="text"
+                      name="subName"
+                      value={data.subName}
+                      onChange={handleChange}
+                      className="input"
                     />
-                  ))}
-                </ItemStyle>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-
-          <Accordion allowToggle>
-            <AccordionItem>
-              <AccordionButton
-                style={{
-                  background: "none",
-                  border: "none",
-                  gap: "10px",
-                }}
-              >
-                <div className="item">
-                  <PIcon />
-                  <div className="sub-item">
-                    <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                      Photo per person
-                    </CustomText>{" "}
-                  </div>
-                </div>
-              </AccordionButton>
-              <AccordionPanel background="none" p={10}>
-                <ItemStyle>
-                  {PhotoData.map((photo) => (
-                    <Option
-                      key={photo.id}
-                      label={photo.label}
-                      value={photo.value}
-                      selected={data.photosPerPerson === photo.value}
-                      setValue={handlePhotoValue}
+                  </AccordionPanel>
+                </AccordionItem>
+              </Accordion>
+              <Accordion allowToggle>
+                <AccordionItem>
+                  <AccordionButton
+                    style={{
+                      background: "none",
+                      border: "none",
+                      gap: "10px",
+                    }}
+                  >
+                    <div className="item">
+                      <EndIcon />
+                      <div className="sub-item">
+                        <CustomText
+                          weight={"500"}
+                          type={"Htype"}
+                          variant={"h5"}
+                        >
+                          Start Date
+                        </CustomText>{" "}
+                        {data.startDate && (
+                          <CustomText
+                            weight={"500"}
+                            type={"Htype"}
+                            variant={"h5"}
+                          >
+                            {data.startDate}
+                          </CustomText>
+                        )}
+                      </div>
+                    </div>
+                  </AccordionButton>
+                  <AccordionPanel background="none" p={10}>
+                    <Input
+                      placeholder="Select Date and Time"
+                      size="md"
+                      name="startDate"
+                      type="datetime-local"
+                      value={data.startDate}
+                      onChange={handleChange}
+                      className="input"
                     />
-                  ))}
-                </ItemStyle>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-          <Button
-            onClick={""}
-            type={"submit"}
-            variant={"defaultButton"}
-          >Continue</Button>
+                  </AccordionPanel>
+                </AccordionItem>
+              </Accordion>
+              <Accordion allowToggle>
+                <AccordionItem>
+                  <AccordionButton
+                    style={{
+                      background: "none",
+                      border: "none",
+                      gap: "10px",
+                    }}
+                  >
+                    <div className="item">
+                      <EndIcon />
+                      <div className="sub-item">
+                        <CustomText
+                          weight={"500"}
+                          type={"Htype"}
+                          variant={"h5"}
+                        >
+                          End Date
+                        </CustomText>{" "}
+                        {data.endDate && (
+                          <CustomText
+                            weight={"500"}
+                            type={"Htype"}
+                            variant={"h5"}
+                          >
+                            {data.endDate}
+                          </CustomText>
+                        )}
+                      </div>
+                    </div>
+                  </AccordionButton>
+                  <AccordionPanel background="none" p={10}>
+                    <Input
+                      placeholder="Select Date and Time"
+                      size="md"
+                      name="endDate"
+                      type="datetime-local"
+                      value={data.endDate}
+                      onChange={handleChange}
+                      className="input"
+                    />
+                  </AccordionPanel>
+                </AccordionItem>
+              </Accordion>
+
+              <Accordion allowToggle>
+                <AccordionItem>
+                  <AccordionButton
+                    style={{
+                      background: "none",
+                      border: "none",
+                      gap: "10px",
+                    }}
+                  >
+                    <div className="item">
+                      <RevealIcon />
+                      <div className="sub-item">
+                        <CustomText
+                          weight={"500"}
+                          type={"Htype"}
+                          variant={"h5"}
+                        >
+                          Reveal Photo
+                        </CustomText>{" "}
+                      </div>
+                    </div>
+                  </AccordionButton>
+                  <AccordionPanel background="none" p={10}>
+                    <ItemStyle>
+                      {RevealData.map((reveal) => (
+                        <Option
+                          key={reveal.id}
+                          label={reveal.label}
+                          value={reveal.value}
+                          setValue={handleRevealValue}
+                          selected={data.revealTime === reveal.value}
+                        />
+                      ))}
+                    </ItemStyle>
+                  </AccordionPanel>
+                </AccordionItem>
+              </Accordion>
+
+              <Accordion allowToggle>
+                <AccordionItem>
+                  <AccordionButton
+                    style={{
+                      background: "none",
+                      border: "none",
+                      gap: "10px",
+                    }}
+                  >
+                    <div className="item">
+                      <PIcon />
+                      <div className="sub-item">
+                        <CustomText
+                          weight={"500"}
+                          type={"Htype"}
+                          variant={"h5"}
+                        >
+                          Photo per person
+                        </CustomText>{" "}
+                      </div>
+                    </div>
+                  </AccordionButton>
+                  <AccordionPanel background="none" p={10}>
+                    <ItemStyle>
+                      {PhotoData.map((photo) => (
+                        <Option
+                          key={photo.id}
+                          label={photo.label}
+                          value={photo.value}
+                          selected={data.photosPerPerson === photo.value}
+                          setValue={handlePhotoValue}
+                        />
+                      ))}
+                    </ItemStyle>
+                  </AccordionPanel>
+                </AccordionItem>
+              </Accordion>
+              <Button
+                onClick={handleNext}
+                type={"submit"}
+                variant={"defaultButton"}
+              >
+                Continue
+              </Button>
+            </>
+          )}
+          {step === 2 && (
+            <>
+              <div style={{ display: "flex", gap: "10px" }}>
+                <span onClick={handlePrev}>
+                  <BackArrow />
+                </span>
+                <CustomText weight={"500"} type={"Htype"} variant={"h1-b"}>
+                  Finish Up
+                </CustomText>
+              </div>
+
+              <CustomText weight={"500"} type={"Htype"} variant={"h3-b"}>
+                How many guest are participating?
+              </CustomText>
+
+              <CustomText weight={"500"} type={"Htype"} variant={"h3-c"}>
+                Pricing scales for more guests. Upgrade at any time (even after
+                publishing). Guests can participate without doenloadin the app
+                by scanning a QR code or opening a link. iPhone users can
+                participate too!
+              </CustomText>
+              <progress  max={100}></progress>
+              <Button
+                onClick={handleNext}
+                type={"submit"}
+                variant={"defaultButton"}
+              >
+                Publish
+              </Button>
+            </>
+          )}
         </div>
       </GalleryStyle>
     </>
