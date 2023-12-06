@@ -64,11 +64,6 @@ const Login = () => {
 
 const handleLoginWithGoogle = async (req, res) => {
   try {
-    // Set CORS headers in the response
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Set the appropriate origin
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
-    res.setHeader('Content-Type', 'application/json');
-
     const response = await fetch("https://api-cliqpod.koyeb.app/auth/google");
 
     // Check for errors in the fetch request
