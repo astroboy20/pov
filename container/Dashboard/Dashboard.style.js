@@ -3,31 +3,23 @@ import styled from "styled-components";
 export const DashboardStyle = styled.div`
   display: flex;
   flex-direction: column;
+  overflow:scroll ;
+  
 `;
 export const HeaderStyle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .new-event {
-    background: #f5fbff;
-    color: #1d1465;
-    display: flex;
-    padding: 2%;
-    border-radius: 15px;
-    gap: 10px;
-  }
+  background:url("/images/dashboard.png") ;
+  border-radius: 0px 0px 10px 10px;
+  height: 50dvh;
 `;
 export const BodyStyle = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  background: #f5fbff;
   color: #1d1465;
   border-radius: 15px;
-  padding: 6%;
-  gap: 10px;
-  text-align: center;
-  align-items: center;
-  margin: 20% auto;
+  text-align: left;
+  
+  padding: 5%;
 `;
 export const FeatureStyle = styled.div`
   background: #f5fbff;
@@ -58,46 +50,4 @@ export const SettingStyle = styled.div`
   }
 `;
 
-export const GalleryStyle = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 120dvh;
-  position: absolute;
-  width: 100%;
-  left: 0;
-  top: 0;
-  color:white ;
- 
-  .header {
-    height: 60vh;
-  }
-  .header-head {
-    background-color: #201d24;
-    height: 50px;
-    padding:3% ;
-    text-align:center ;
-  }
-  .body {
-    height:80vh;
-    overflow:scroll ;
-    display: flex;
-    flex-direction: column;
-    background-color: #201d24;
-    padding:3% ;
-    gap:5px;
-  }
-  .item{
-    display:flex ;
-    flex-direction:column ;
-    /* align-items:center ; */
-    text-align:left ;
-  }
-  .input{
-    border-radius: 5px;
-  padding: 10px;
-  border: 1.5px solid white;
-  background: transparent;
-  color: white;
-  width:100%;
-  }
-`;
+

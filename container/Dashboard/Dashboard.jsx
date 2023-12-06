@@ -12,7 +12,6 @@ import { useOptionContext } from "@/context/option-context";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  // const { isAuthenticated } = useSelector((state) => state.auth);
   const router = useRouter();
   const { option, switchOption } = useOptionContext();
 

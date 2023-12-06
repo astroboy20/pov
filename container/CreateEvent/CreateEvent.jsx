@@ -1,25 +1,30 @@
 import React, { useState } from "react";
-import { GalleryStyle } from "../Dashboard.style";
-import { CiCalendarDate } from "react-icons/ci";
-import { FaRegHourglass } from "react-icons/fa";
-import { CiCamera } from "react-icons/ci";
-import { CustomText } from "@/components/CustomText";
 import {
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
 } from "@chakra-ui/accordion";
+import Image from "next/image";
+import { GalleryStyle } from "./CreateEvent.style";
+import { CustomText } from "@/components/CustomText";
+import { PhotoData, RevealData } from "./Options/data";
+import { ItemStyle } from "./Options/Options.style";
 import { Input } from "@chakra-ui/input";
-import { PhotoData, RevealData } from "../../CreateEvent/Options/data";
-import Option from "../../CreateEvent/Options/Options";
-import { ItemStyle } from "../../CreateEvent/Options/Options.style";
-import { IoCloudUploadOutline } from "react-icons/io5";
-import Image from "next/image"
-const Gallery = () => {
+import { CiCalendarDate, CiCamera } from "react-icons/ci";
+import { SiNamebase } from "react-icons/si";
+import { BlueBackIcon, EndIcon, ImageIcon, PIcon, RevealIcon } from "@/assets";
+import Option from "./Options/Options";
+import { useRouter } from "next/router";
+import { Button } from "@/components/Button";
+const CreateEvent = () => {
+  const eventName =
+    typeof window !== "undefined" && localStorage.getItem("eventName");
+  
   const [selectedImage, setSelectedImage] = useState(null);
+
   const [data, setData] = useState({
-    eventName: "",
+    eventName: eventName,
     subName: "",
     photosPerPerson: "",
     expectedGuests: "",
@@ -38,12 +43,14 @@ const Gallery = () => {
     }));
     console.log(data);
   };
+
   const handleRevealValue = (newValue) => {
     setData((prevData) => ({
       ...prevData,
       revealTime: newValue,
     }));
   };
+
   const handlePhotoValue = (newValue) => {
     setData((prevData) => ({
       ...prevData,
@@ -52,47 +59,69 @@ const Gallery = () => {
   };
 
   const handleImageChange = (event) => {
-    const file = event.target.files[0]; // Get the selected file
+    const file = event.target.files[0];
 
     if (file) {
       const reader = new FileReader();
 
       reader.onload = (e) => {
-        // Set the image to display before sending
         setSelectedImage(e.target.result);
+
+        // Update the 'image' property in the 'data' state with the selected image
+        setData((prevData) => ({
+          ...prevData,
+          image: e.target.result, // Set 'image' to the selected image
+        }));
       };
 
-      reader.readAsDataURL(file); // Read the image file as a data URL
+      reader.readAsDataURL(file);
     }
   };
+  const handleImageClick = () => {
+    document.getElementById("selectFile").click();
+  };
 
+  const router = useRouter();
+  const handleRoute = () => {
+    router.push("/dashboard");
+  };
   return (
     <>
       <GalleryStyle>
         <div className="header">
-          <div className="header-head">{data.eventName}</div>
-          <IoCloudUploadOutline />
-          <div>
+          <div className="header-head">
+            <span onClick = {handleRoute}> <BlueBackIcon /></span>
+           
+            <CustomText type={"Htype"} variant={"h3"}>
+              {eventName}
+            </CustomText>
+            <span style={{ color: "white" }}>.</span>
+          </div>
+          <div htmlFor="customFileInput" className="image-input">
             <input
               type="file"
-              accept="image/*" // Specify that only image files are allowed
+              accept="image/*"
               onChange={handleImageChange}
+              hidden
+              id="selectFile"
             />
-            <div>
-              {selectedImage && (
-                <Image
-                  src={selectedImage}
-                  alt="Selected"
-                  width = {100}
-                  height={100}
-                  style={{
-                    maxWidth: "100%",
-                    maxHeight: "200px",
-                    marginTop: "10px",
-                  }}
-                />
-              )}
-            </div>
+            {selectedImage ? (
+              <Image
+                src={selectedImage}
+                alt="Selected"
+                width={100}
+                height={100}
+                style={{
+                  width: "100%",
+                  height: "30vh",
+                }}
+              />
+            ) : (
+              <span className="icon-style" onClick={handleImageClick}>
+                <ImageIcon />
+              </span>
+            )}
+            <div></div>
           </div>
         </div>
         <div className="body">
@@ -101,60 +130,22 @@ const Gallery = () => {
               <AccordionButton
                 style={{
                   background: "none",
-                  color: "white",
                   border: "none",
                   gap: "10px",
                 }}
               >
-                <div>
-                  <CiCalendarDate />
-                </div>
                 <div className="item">
-                  <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                    Event Name
-                  </CustomText>{" "}
-                  {data.eventName && (
+                  <SiNamebase />
+                  <div className="sub-item">
                     <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                      {data.eventName}
-                    </CustomText>
-                  )}
-                </div>
-              </AccordionButton>
-              <AccordionPanel background="none" p={10}>
-                <Input
-                  placeholder="Select Date and Time"
-                  size="md"
-                  type="text"
-                  name="eventName"
-                  value={data.eventName}
-                  onChange={handleChange}
-                  className="input"
-                />
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-          <Accordion allowToggle>
-            <AccordionItem>
-              <AccordionButton
-                style={{
-                  background: "none",
-                  color: "white",
-                  border: "none",
-                  gap: "10px",
-                }}
-              >
-                <div>
-                  <CiCalendarDate />
-                </div>
-                <div className="item">
-                  <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                    Sub Name
-                  </CustomText>{" "}
-                  {data.subName && (
-                    <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                      {data.subName}
-                    </CustomText>
-                  )}
+                      Sub Name
+                    </CustomText>{" "}
+                    {data.subName && (
+                      <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
+                        {data.subName}
+                      </CustomText>
+                    )}
+                  </div>
                 </div>
               </AccordionButton>
               <AccordionPanel background="none" p={10}>
@@ -175,26 +166,25 @@ const Gallery = () => {
               <AccordionButton
                 style={{
                   background: "none",
-                  color: "white",
                   border: "none",
                   gap: "10px",
                 }}
               >
-                <div>
-                  <CiCalendarDate />
-                </div>
                 <div className="item">
-                  <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                    Start Date
-                  </CustomText>{" "}
-                  {data.startDate && (
+                  <EndIcon />
+                  <div className="sub-item">
                     <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                      {data.startDate}
-                    </CustomText>
-                  )}
+                      Start Date
+                    </CustomText>{" "}
+                    {data.startDate && (
+                      <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
+                        {data.startDate}
+                      </CustomText>
+                    )}
+                  </div>
                 </div>
               </AccordionButton>
-              <AccordionPanel background="none">
+              <AccordionPanel background="none" p={10}>
                 <Input
                   placeholder="Select Date and Time"
                   size="md"
@@ -212,23 +202,22 @@ const Gallery = () => {
               <AccordionButton
                 style={{
                   background: "none",
-                  color: "white",
                   border: "none",
                   gap: "10px",
                 }}
               >
-                <div>
-                  <CiCalendarDate />
-                </div>
                 <div className="item">
-                  <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                    End Date
-                  </CustomText>{" "}
-                  {data.endDate && (
+                  <EndIcon />
+                  <div className="sub-item">
                     <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                      {data.endDate}
-                    </CustomText>
-                  )}
+                      End Date
+                    </CustomText>{" "}
+                    {data.endDate && (
+                      <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
+                        {data.endDate}
+                      </CustomText>
+                    )}
+                  </div>
                 </div>
               </AccordionButton>
               <AccordionPanel background="none" p={10}>
@@ -250,15 +239,18 @@ const Gallery = () => {
               <AccordionButton
                 style={{
                   background: "none",
-                  color: "white",
                   border: "none",
                   gap: "10px",
                 }}
               >
-                <FaRegHourglass />{" "}
-                <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                  Reveal Photo
-                </CustomText>{" "}
+                 <div className="item">
+                  <RevealIcon />
+                  <div className="sub-item">
+                    <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
+                      Reveal Photo
+                    </CustomText>{" "}
+                  </div>
+                </div>
               </AccordionButton>
               <AccordionPanel background="none" p={10}>
                 <ItemStyle>
@@ -281,15 +273,18 @@ const Gallery = () => {
               <AccordionButton
                 style={{
                   background: "none",
-                  color: "white",
                   border: "none",
                   gap: "10px",
                 }}
               >
-                <CiCamera />{" "}
-                <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
-                  Photo per person
-                </CustomText>{" "}
+                <div className="item">
+                  <PIcon />
+                  <div className="sub-item">
+                    <CustomText weight={"500"} type={"Htype"} variant={"h5"}>
+                      Photo per person
+                    </CustomText>{" "}
+                  </div>
+                </div>
               </AccordionButton>
               <AccordionPanel background="none" p={10}>
                 <ItemStyle>
@@ -306,10 +301,15 @@ const Gallery = () => {
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
+          <Button
+            onClick={""}
+            type={"submit"}
+            variant={"defaultButton"}
+          >Continue</Button>
         </div>
       </GalleryStyle>
     </>
   );
 };
 
-export default Gallery;
+export { CreateEvent };

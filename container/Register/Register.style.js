@@ -2,8 +2,10 @@ import styled from "styled-components";
 
 const FormData = styled.div`
   display: none;
+  padding: 5%;
   @media screen and (max-width: 800px) {
     display: flex;
+
     width: 100%;
     flex-direction: column;
     height:100vh ;

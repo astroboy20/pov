@@ -4,6 +4,7 @@ import { responsive } from "@/theme/responsive";
 export const Homestyle = styled.div``;
 export const Container = styled.div`
   display: flex;
+  padding: 5%;
   flex-direction: column;
   text-align: center;
   gap: 10px;
