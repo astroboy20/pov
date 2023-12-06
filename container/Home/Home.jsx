@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Container, StepOnestyle } from "./Home.style";
+import {
+  Container,
+  StepFourstyle,
+  StepOnestyle,
+  StepThreestyle,
+  StepTwostyle,
+} from "./Home.style";
 import { Button } from "@/components/Button";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -24,15 +30,13 @@ const HomePage = () => {
         {step === 1 && (
           <>
             <Container>
-              <StepOnestyle>
-                <Image
-                  src={"/images/capture.png"}
-                  width={300}
-                  height={500}
-                  alt="."
-                />
-              </StepOnestyle>
-              <div className="text">
+              <StepOnestyle></StepOnestyle>
+              <div
+                className="text"
+                style={{
+                  padding: "5%",
+                }}
+              >
                 <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
                   Capture moments and memories on your big day
                 </CustomText>
@@ -58,15 +62,13 @@ const HomePage = () => {
         {step === 2 && (
           <>
             <Container>
-              <StepOnestyle>
-                <Image
-                  src={"/images/several.svg"}
-                  width={300}
-                  height={500}
-                  alt="."
-                />
-              </StepOnestyle>
-              <div className="text">
+              <StepTwostyle></StepTwostyle>
+              <div
+                className="text"
+                style={{
+                  padding: "5%",
+                }}
+              >
                 <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
                   Take several cliqs with your created digital backdrops
                 </CustomText>
@@ -92,15 +94,13 @@ const HomePage = () => {
         {step === 3 && (
           <>
             <Container>
-              <StepOnestyle>
-                <Image
-                  src={"/images/qr.svg"}
-                  width={300}
-                  height={500}
-                  alt="."
-                />
-              </StepOnestyle>
-              <div className="text">
+              <StepThreestyle></StepThreestyle>
+              <div
+                className="text"
+                style={{
+                  padding: "5%",
+                }}
+              >
                 <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
                   Guest scan barcode to access your digital backdrop
                 </CustomText>
@@ -126,15 +126,13 @@ const HomePage = () => {
         {step === 4 && (
           <>
             <Container>
-              <StepOnestyle>
-                <Image
-                  src={"/images/album.svg"}
-                  width={300}
-                  height={500}
-                  alt="."
-                />
-              </StepOnestyle>
-              <div className="text">
+              <StepFourstyle></StepFourstyle>
+              <div
+                className="text"
+                style={{
+                  padding: "5%",
+                }}
+              >
                 <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
                   A digital album from cliqs taken at your event
                 </CustomText>

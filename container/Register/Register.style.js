@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const FormData = styled.div`
   display: none;
-  padding: 5%;
+  /* padding: 5%; */
   @media screen and (max-width: 800px) {
     display: flex;
 
@@ -19,7 +19,7 @@ const FormData = styled.div`
   }
 `;
 export const RegisterContainer = styled(FormData)`
-  /* padding: 5%; */
+  padding: 5%;
   height: 100vh;
 `;
 

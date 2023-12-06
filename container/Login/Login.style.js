@@ -7,6 +7,7 @@ export const Linkstyle = {
 };
 export const LoginContainer = styled.div`
  color:black ;
+ padding:5% ;
   .login-with-google {
     margin-top: 5%;
     text-align: center;

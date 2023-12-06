@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const AuthContainer = styled.div`
 display:flex ;
+padding:5% ;
 flex-direction:column ;
 gap:70px;
 margin-top:5% ;
