@@ -6,10 +6,10 @@ import React from 'react'
 const dashboard = () => {
     
   return (
-    <ProtectedRoute>
+    <>
         <Dashboard/>
         
-    </ProtectedRoute>
+    </>
   )
 }
 

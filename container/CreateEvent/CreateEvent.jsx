@@ -156,8 +156,7 @@ const [loading, setLoading] = useState(false)
       })
       .then((response) => {
         const userData = response.data;
-        router.push(userData?.authorization_url);
-        toast.success("Event created succesfully!");
+        router.push(userData?.authorization_url); 
         setLoading(false)
       })
       .catch((error) => {

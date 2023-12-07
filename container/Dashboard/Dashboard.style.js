@@ -49,3 +49,65 @@ export const SettingStyle = styled.div`
   .setting-type {
   }
 `;
+export const GalleryStyle = styled.div`
+ 
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .header{
+    display:flex ;
+    justify-content:space-between ;
+    align-items:center ;
+    padding: 5%;
+  }
+  .join {
+    display: flex;
+    padding: 16px 20px 16px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    background-color: #ECE6F0 ;
+    border-radius:100px ;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.30), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+
+  }
+  .hr{
+    width:100% ;
+    color:black ;
+  }
+  .body-text{
+    color:#000;
+    padding:2%  5%;
+    font-weight:500 ;
+    font-size:24px ;
+  }
+  .info{
+    display:flex ;
+    justify-content:space-between ;
+    padding:5% 3%;
+    background-color: #ECE6F0 ;
+  }
+  .sub-info{
+    display:flex ;
+    gap:20px;
+  }
+  .text{
+    display:flex ;
+    flex-direction: column;
+  }
+  .text .a{
+    font-size: 14px;
+    color:#1D1B20 ;
+    font-weight:500 ;
+    
+  }
+  .text .b{
+    font-size: 14px;
+    color:#49454F ;
+  }
+  .icons{
+    display:flex ;
+    flex-direction:column;
+    gap:20px;
+  }
+`;
