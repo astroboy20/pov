@@ -81,15 +81,12 @@ const CreateEvent = () => {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-
     if (file) {
-      const fileName = file.name;
       const imageURL = URL.createObjectURL(file);
-      setSelectedImage(imageURL);
-      console.log(fileName);
+      setSelectedImage(imageURL); 
       setData((prevData) => ({
         ...prevData,
-        image: imageURL,
+        image: file, 
       }));
     }
   };
@@ -144,39 +141,60 @@ const CreateEvent = () => {
       });
   }, [accessToken]);
 
-
-const [loading, setLoading] = useState(false)
-  const handleSubmit = () => {
-    setLoading(true)
-    axios
-      .post("https://api-cliqpod.koyeb.app/create-event", data, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((response) => {
-        const userData = response.data;
-<<<<<<< HEAD
-        router.push(userData?.authorization_url); 
-=======
-        if(userData?.authorization_url){
-        router.push(userData?.authorization_url);
-        toast.success("Please proceed to payment!");
-        setLoading(false)
-        }else{
-        toast.success("Event created succesfully!");
->>>>>>> 0b1e741ff9126e319786d7e577cdc7f85aa5cc0f
-        setLoading(false)
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+  
+      // Upload the image to Cloudinary
+      const imageData = new FormData();
+      imageData.append("file", data.image);
+      imageData.append("upload_preset", "za8tsrje");
+  
+      const imageResponse = await axios.post(
+        "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+        imageData
+      );
+  
+      // Check if image upload was successful
+      if (imageResponse && imageResponse.data.secure_url) {
+        // Set the Cloudinary URL to the image in the data
+        setData((prevData) => ({
+          ...prevData,
+          image: imageResponse.data.secure_url,
+        }));
+  
+        // Submit the event data to create an event
+        const eventResponse = await axios.post(
+          "https://api-cliqpod.koyeb.app/create-event",
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+  
+        // Handle event creation response
+        if (eventResponse) {
+          const userData = eventResponse.data;
+          if (userData?.authorization_url) {
+            router.push(userData.authorization_url);
+            toast.success("Please proceed to payment!");
+            setLoading(false);
+          } else {
+            toast.success("Event created successfully!");
+            setLoading(false);
+          }
         }
-
-      })
-      .catch((error) => {
-        console.log("error", error);
-        toast.error(error);
-        setLoading(true)
-      });
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Failed to create event.");
+      setLoading(false);
+    }
   };
-
+  
   return (
     <>
       <GalleryStyle>
@@ -200,7 +218,7 @@ const [loading, setLoading] = useState(false)
               hidden
               id="selectFile"
             />
-            {selectedImage ? (
+            {data.image ? (
               <Image
                 src={selectedImage}
                 alt="Selected"
@@ -548,8 +566,7 @@ const [loading, setLoading] = useState(false)
                 type={"submit"}
                 variant={"defaultButton"}
               >
-                {loading ? (<Spinner/> ): (" Publish")}
-               
+                {loading ? <Spinner /> : " Publish"}
               </Button>
             </>
           )}

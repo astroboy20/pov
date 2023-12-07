@@ -5,6 +5,7 @@ import { GalleryStyle } from "../Dashboard.style";
 import { CustomText } from "@/components/CustomText";
 import { EditIcon, JoinIcon } from "@/assets";
 import Image from "next/image";
+import { PurpleSpinner } from "@/components/Spinner/Spinner";
 
 const Gallery = () => {
   const { user } = useSelector((state) => state.auth);
@@ -49,35 +50,50 @@ const Gallery = () => {
 
         <div className="body">
           <div className="body-text"> Hosting</div>
-          {events.map((event) => {
-            console.log("event:", event._id);
-            return (
-              <div key={event._id}>
-                {" "}
-                <div>
-                  <div className="info">
-                    <div className="sub-info">
-                      
-                      <Image
-                        width={56}
-                        height={45}
-                        src={event.event_image}
-                        alt="event_banner"
-                      />
-                      <div className="text">
-                        <div className="a">{event.eventName}</div>
-                        <div className="b"> Ending {event.end_date}</div>
+          {isLoading ? (
+            <div
+              style={{
+                display: "flex",
+                alighnItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <PurpleSpinner />
+            </div>
+          ) : (
+            <>
+              {events.map((event) => {
+                return (
+                  <div key={event._id}>
+                    {" "}
+                    <div>
+                      <div className="info">
+                        <div className="sub-info">
+                          <Image
+                            width={80}
+                            height={80}
+                            src={event.event_image}
+                            alt="event_banner"
+                          />
+                          <div className="text">
+                            <div className="a">{event.eventName}</div>
+                            <div className="b"> Ending {event.end_date}</div>
+                          </div>
+                        </div>
+                        <div className="icons">
+                          <JoinIcon />
+                          <EditIcon />
+                        </div>
                       </div>
+                      <hr className="hr" />
                     </div>
-                    <div className="icons">
-                      <JoinIcon />
-                      <EditIcon />
-                    </div>
+                   
                   </div>
-                </div>
-              </div>
-            );
-          })}
+                  
+                );
+              })}
+            </>
+          )}
         </div>
       </GalleryStyle>
     </div>

@@ -10,9 +10,10 @@ export const Container = styled.div`
   gap: 10px;
 `;
 export const StepOnestyle = styled.div`
-  background: url("/images/capture.png");
+  background: url("/images/test.jpg");
+  background-repeat:no-repeat ;
   width: 100%;
-  height:70vh ;
+  height:500px ;
   .text {
     display: flex;
     flex-direction: column;
@@ -23,6 +24,7 @@ export const StepOnestyle = styled.div`
 
 export const StepTwostyle = styled.div`
   background: url("/images/several.png");
+  background-repeat:no-repeat ;
   height:70vh ;
   .text {
     display: flex;
@@ -32,6 +34,7 @@ export const StepTwostyle = styled.div`
 `;
 export const StepThreestyle = styled.div`
   background: url("/images/qr.png");
+  background-repeat:no-repeat ;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,6 +49,7 @@ export const StepThreestyle = styled.div`
 `;
 export const StepFourstyle = styled.div`
   background: url("/images/album.png");
+  background-repeat:no-repeat ;
   display: flex;
   flex-direction: column;
   align-items: center;

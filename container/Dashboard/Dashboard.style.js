@@ -54,6 +54,7 @@ export const GalleryStyle = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow:scroll ;
   .header{
     display:flex ;
     justify-content:space-between ;
