@@ -156,8 +156,19 @@ const [loading, setLoading] = useState(false)
       })
       .then((response) => {
         const userData = response.data;
+<<<<<<< HEAD
         router.push(userData?.authorization_url); 
+=======
+        if(userData?.authorization_url){
+        router.push(userData?.authorization_url);
+        toast.success("Please proceed to payment!");
         setLoading(false)
+        }else{
+        toast.success("Event created succesfully!");
+>>>>>>> 0b1e741ff9126e319786d7e577cdc7f85aa5cc0f
+        setLoading(false)
+        }
+
       })
       .catch((error) => {
         console.log("error", error);

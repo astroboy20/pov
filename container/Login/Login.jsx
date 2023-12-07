@@ -65,12 +65,16 @@ const Login = () => {
 const handleLoginWithGoogle = async (req, res) => {
   try {
     const response = await fetch("https://api-cliqpod.koyeb.app/auth/google");
+
+    // Check for errors in the fetch request
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
     const data = await response.json();
 
-    // Set CORS headers in the response
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Set the appropriate origin
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
-    res.setHeader('Content-Type', 'application/json');
+    // Log the content of the response for debugging
+    console.log("Response:", await response.text());
 
     res.status(200).json(data);
   } catch (error) {
@@ -78,6 +82,7 @@ const handleLoginWithGoogle = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
   return (
     <>
       <LoginContainer>
