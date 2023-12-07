@@ -5,8 +5,9 @@ import { resetPassword } from "@/feature/slices/authSlice";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container } from "./ForgotPass.style";
+import { Container, FormHeader } from "./ForgotPass.style";
 import { toast } from "react-toastify";
+import { BackIcon, EmailIcon } from "@/assets";
 const ForgotPass = () => {
   const [email, setEmail] = useState("");
   const router = useRouter();
@@ -15,12 +16,14 @@ const ForgotPass = () => {
     (state) => state.auth
   );
 
-  const handleRoute = () => {};
+  const handleRoute = () => {
+    router.push("/login");
+  };
 
   const reset = async (e) => {
     e.preventDefault();
     if (email) {
-      await dispatch(resetPassword({email}));
+      await dispatch(resetPassword({ email }));
     } else {
       toast.error("something went wrong!");
     }
@@ -38,20 +41,22 @@ const ForgotPass = () => {
   return (
     <>
       <Container>
-        <div>
-          <CustomText weight={"500"} type={"Htype"} variant={"h2"}>
+        <FormHeader>
+          <span onClick={handleRoute}>
+            <BackIcon />
+          </span>
+
+          <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
             Reset Your Password
           </CustomText>
+        </FormHeader>
 
-          <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-            Regain Access to Your Account in Just a Few Steps
-          </CustomText>
-        </div>
         <form onSubmit={reset}>
           <Input
             type="email"
-            label="Email address"
+            placeholder="Email address"
             variant="text"
+            icon={<EmailIcon />}
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}

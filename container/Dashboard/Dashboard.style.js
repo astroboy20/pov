@@ -21,9 +21,10 @@ export const BodyStyle = styled.div`
   padding: 5%;
 `;
 export const FeatureStyle = styled.div`
-  background: #f5fbff;
-  color: #1d1465;
+  background: #fff;
+  color: black;
   position: fixed;
+  align-items:center ;
   bottom: 0;
   left: 0;
   display: flex;
@@ -76,9 +77,14 @@ export const GalleryStyle = styled.div`
     width:100% ;
     color:black ;
   }
+  .body{
+    /* height:200vh ; */
+    margin-bottom:20% ;
+    overflow:scroll ;
+  }
   .body-text{
     color:#000;
-    padding:2%  5%;
+    padding:4%  5%;
     font-weight:500 ;
     font-size:24px ;
   }

@@ -9,37 +9,49 @@ import { FeatureStyle } from "./Dashboard.style";
 import { optionItems } from "./data";
 import { useOptionContext } from "@/context/option-context";
 import { Gallery } from "./Pages/Gallery";
+import Link from "next/link";
+import styled from "./Dashboard.module.css";
 
 const Dashboard = () => {
-  const { option, switchOption } = useOptionContext();
-
-  const handleClick = (value) => {
-    switchOption(value);
-  };
-
-
+  const router = useRouter();
 
   return (
     <>
-      
       <>
-        {option === "Events" && <Event />}
-        {option === "Setting" && <Setting />}
-        {option === "Gallery" && <Gallery />}
-      
+        <Event />
         <FeatureStyle>
-          {optionItems.map((optionItem) => (
-            <Option
-              key={optionItem.value}
-              value={optionItem.value}
-              label={optionItem.label}
-              selected={option === optionItem.value}
-              setValue={handleClick}
-            />
-          ))}
+          <Link
+            href="/dashboard"
+            className={
+              router.pathname === "/dashboard"
+                ? `${styled.active}`
+                : `${styled.link}`
+            }
+          >
+            Event
+          </Link>
+          <Link
+            href="/gallery"
+            className={
+              router.pathname === "/gallery"
+                ? `${styled.active}`
+                : `${styled.link}`
+            }
+          >
+            Gallery
+          </Link>
+          <Link
+            href="/setting"
+            className={
+              router.pathname === "/setting"
+                ? `${styled.active}`
+                : `${styled.link}`
+            }
+          >
+            Setting
+          </Link>
         </FeatureStyle>
       </>
-      
     </>
   );
 };

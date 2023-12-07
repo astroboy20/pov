@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { GalleryStyle } from "../Dashboard.style";
+import { FeatureStyle, GalleryStyle } from "../Dashboard.style";
 import { CustomText } from "@/components/CustomText";
 import { EditIcon, JoinIcon } from "@/assets";
 import Image from "next/image";
 import { PurpleSpinner } from "@/components/Spinner/Spinner";
+import Link from "next/link"
+import styled from "../Dashboard.module.css"
+import { useRouter } from "next/router";
+import { MdDelete } from "react-icons/md";
 
 const Gallery = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const [isLoading, setIsLoading] = useState(false);
   const [events, setEvent] = useState([]);
-
+  const ActiveLink = ({isActive}) => (isActive ? `${styled.active}` : "")
+  const router = useRouter()
   useEffect(() => {
     setIsLoading(true);
     axios
@@ -25,15 +30,15 @@ const Gallery = () => {
         // console.log(response.data.events);
         const data = response.data.events;
         setEvent(data);
-        console.log("events", events);
+        // console.log("events", events);
         setIsLoading(false);
       })
       .catch((error) => {
         console.log("error:", error);
       });
-  }, []);
+  }, [accessToken]);
   return (
-    <div>
+    <>
       <GalleryStyle>
         <div className="header">
           <CustomText type={"Htype"} variant={"h1"}>
@@ -82,7 +87,7 @@ const Gallery = () => {
                         </div>
                         <div className="icons">
                           <JoinIcon />
-                          <EditIcon />
+                          <MdDelete />
                         </div>
                       </div>
                       <hr className="hr" />
@@ -96,7 +101,39 @@ const Gallery = () => {
           )}
         </div>
       </GalleryStyle>
-    </div>
+      <FeatureStyle>
+        <Link
+          href="/dashboard"
+          className={
+            router.pathname === "/dashboard"
+              ? `${styled.active}`
+              : `${styled.link}`
+          }
+        >
+          Event
+        </Link>
+        <Link
+          href="/gallery"
+          className={
+            router.pathname === "/gallery"
+              ? `${styled.active}`
+              : `${styled.link}`
+          }
+        >
+          Gallery
+        </Link>
+        <Link
+          href="/setting"
+          className={
+            router.pathname === "/setting"
+              ? `${styled.active}`
+              : `${styled.link}`
+          }
+        >
+          Setting
+        </Link>
+      </FeatureStyle>
+    </>
   );
 };
 

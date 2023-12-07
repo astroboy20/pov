@@ -1,11 +1,13 @@
 import React from "react";
-import { SettingStyle } from "../Dashboard.style";
+import { FeatureStyle, SettingStyle } from "../Dashboard.style";
 import { CustomText } from "@/components/CustomText";
 import { useRouter } from "next/router";
-import {useDispatch} from "react-redux"
-import { logout,reset } from "@/feature/slices/authSlice";
+import { useDispatch } from "react-redux";
+import { logout, reset } from "@/feature/slices/authSlice";
+import Link from "next/link";
+import styled from "../Dashboard.module.css";
 const Setting = () => {
-  
+  const ActiveLink = ({ isActive }) => (isActive ? `${styled.active}` : "");
   const dispatch = useDispatch();
   const router = useRouter();
   const handleLogout = () => {
@@ -53,7 +55,6 @@ const Setting = () => {
             Account
           </CustomText>{" "}
           <div onClick={handleLogout}>Logout</div>
-          
         </div>
         <div className="setting-type">
           {" "}
@@ -63,6 +64,38 @@ const Setting = () => {
           Request Acccount Deletion
         </div>
       </SettingStyle>
+      <FeatureStyle>
+        <Link
+          href="/dashboard"
+          className={
+            router.pathname === "/dashboard"
+              ? `${styled.active}`
+              : `${styled.link}`
+          }
+        >
+          Event
+        </Link>
+        <Link
+          href="/gallery"
+          className={
+            router.pathname === "/gallery"
+              ? `${styled.active}`
+              : `${styled.link}`
+          }
+        >
+          Gallery
+        </Link>
+        <Link
+          href="/setting"
+          className={
+            router.pathname === "/setting"
+              ? `${styled.active}`
+              : `${styled.link}`
+          }
+        >
+          Setting
+        </Link>
+      </FeatureStyle>
     </>
   );
 };

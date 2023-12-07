@@ -30,7 +30,9 @@ const HomePage = () => {
         {step === 1 && (
           <>
             <Container>
-              <StepOnestyle></StepOnestyle>
+              <StepOnestyle>
+                {/* <Image alt="" src={"/images/home.png"} width={300} height={500}/> */}
+              </StepOnestyle>
               <div
                 className="text"
                 style={{

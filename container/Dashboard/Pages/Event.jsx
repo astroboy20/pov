@@ -6,6 +6,8 @@ import { CustomText } from "@/components/CustomText";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { useRouter } from "next/router";
+import NavLink from "next/link"
+import styled from "../Dashboard.module.css"
 
 const Event = () => {
   const { option } = useOptionContext();

@@ -156,9 +156,7 @@ const CreateEvent = () => {
         imageData
       );
   
-      // Check if image upload was successful
       if (imageResponse && imageResponse.data.secure_url) {
-        // Set the Cloudinary URL to the image in the data
         setData((prevData) => ({
           ...prevData,
           image: imageResponse.data.secure_url,
@@ -189,8 +187,6 @@ const CreateEvent = () => {
         }
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
-      toast.error("Failed to create event.");
       setLoading(false);
     }
   };
