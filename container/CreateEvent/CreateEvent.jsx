@@ -190,7 +190,7 @@ const CreateEvent = () => {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error("Failed to create event.");
+      toast.error("Failed to create event, please retry.");
       setLoading(false);
     }
   };
