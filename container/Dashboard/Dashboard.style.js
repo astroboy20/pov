@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { MdDelete } from "react-icons/md";
 
 export const DashboardStyle = styled.div`
   display: flex;
@@ -116,5 +117,11 @@ export const GalleryStyle = styled.div`
     display:flex ;
     flex-direction:column;
     gap:20px;
+    align-items:center ;
   }
 `;
+
+export const Delete = styled(  MdDelete  )`
+width:24px ;
+height:24px ;
+`

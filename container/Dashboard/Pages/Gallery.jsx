@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { FeatureStyle, GalleryStyle } from "../Dashboard.style";
+import { Delete, FeatureStyle, GalleryStyle } from "../Dashboard.style";
 import { CustomText } from "@/components/CustomText";
 import { EditIcon, JoinIcon } from "@/assets";
 import Image from "next/image";
@@ -27,16 +27,30 @@ const Gallery = () => {
         },
       })
       .then((response) => {
-        // console.log(response.data.events);
         const data = response.data.events;
         setEvent(data);
-        // console.log("events", events);
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log("error:", error);
+        // console.log("error:", error);
       });
-  }, [accessToken]);
+  }, []);
+
+  // const deleteEvent = async (eventId) => {
+  //   try {
+  //     setIsLoading(true);
+  //     await axios.post(`https://api-cliqpod.koyeb.app/deleteEvent/${eventId}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //     });
+      
+  //   } catch (error) {
+  //     // console.error("Error deleting event:", error);
+  //     setIsLoading(false);
+  //   }
+  // };
+  
   return (
     <>
       <GalleryStyle>
@@ -87,7 +101,7 @@ const Gallery = () => {
                         </div>
                         <div className="icons">
                           <JoinIcon />
-                          <MdDelete />
+                          <Delete  />
                         </div>
                       </div>
                       <hr className="hr" />
