@@ -62,8 +62,8 @@ const Login = () => {
     router.push("/register");
   };
 
-const handleLoginWithGoogle = (req, res) => {
-window.open("https://api-cliqpod.koyeb.app/auth/google")
+const handleLoginWithGoogle = () => {
+window.location.href = "https://api-cliqpod.koyeb.app/auth/google"
 
 };
 
