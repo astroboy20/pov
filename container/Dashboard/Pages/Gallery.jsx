@@ -10,6 +10,7 @@ import Link from "next/link";
 import styled from "../Dashboard.module.css";
 import { useRouter } from "next/router";
 import { MdDelete } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const Gallery = () => {
   const { user } = useSelector((state) => state.auth);
@@ -37,22 +38,28 @@ const Gallery = () => {
   }, []);
 
   const deleteEvent = async (event) => {
-     event.preventDefault()
-     const eventId = event.target.elements.eventId.value;
+    event.preventDefault();
+    const eventId = event.target.elements.eventId.value;
 
-    await axios.post("https://api-cliqpod.koyeb.app/deleteEvent", 
-{
-        eventId: eventId,
-      },
-{
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }).then(response=>{
-      console.log("response",response)
-    }).catch(error=>{
-      console.log("error",error)
-    })
+    await axios
+      .post(
+        "https://api-cliqpod.koyeb.app/deleteEvent",
+        {
+          eventId: eventId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        toast.sucess(response.data);
+        setEvent(response.data.event);
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
   };
 
   return (
@@ -83,6 +90,14 @@ const Gallery = () => {
             >
               <PurpleSpinner />
             </div>
+          ) : events.length === 0 ? (
+            <>
+              <div className="no-events-message">
+                <CustomText weight={"500"} type={"Htype"} variant={"p"}>
+                  No events available.
+                </CustomText>
+              </div>
+            </>
           ) : (
             <>
               {events.map((event) => {
@@ -104,7 +119,7 @@ const Gallery = () => {
                           </div>
                         </div>
                         <div className="icons">
-                          <JoinIcon/>
+                          <JoinIcon />
                           <form onSubmit={deleteEvent}>
                             <input
                               type="hidden"
@@ -112,7 +127,10 @@ const Gallery = () => {
                               name="eventId"
                             />
 
-                            <button type="submit" style={{border:"none", background:"none"}}>
+                            <button
+                              type="submit"
+                              style={{ border: "none", background: "none" }}
+                            >
                               <Delete />
                             </button>
                           </form>
