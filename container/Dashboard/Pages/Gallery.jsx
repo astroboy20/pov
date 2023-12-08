@@ -36,10 +36,10 @@ const Gallery = () => {
       });
   }, []);
 
-  const deleteEvent = async (event) => {
+  const deleteEvent = async (eventId) => {
     await axios.post(`https://api-cliqpod.koyeb.app/deleteEvent`, 
 {
-        event: event,
+        eventId: eventId,
       },
 {
       headers: {
@@ -106,7 +106,7 @@ const Gallery = () => {
                             <input
                               type="hidden"
                               value={event._id}
-                              name="event"
+                              name="eventId"
                             />
 
                             <button style={{border:"none", background:"none"}}>
