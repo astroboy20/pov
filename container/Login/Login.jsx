@@ -62,32 +62,9 @@ const Login = () => {
     router.push("/register");
   };
 
-const handleLoginWithGoogle = async (req, res) => {
+const handleLoginWithGoogle = (req, res) => {
+window.open("https://api-cliqpod.koyeb.app/auth/google")
 
-  try {
-    const response = await fetch("https://api-cliqpod.koyeb.app/auth/google");
-
-    // Check for errors in the fetch request
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    // Extract the token from the response data
-    const token = accessToken.token;
-
-    // Store the token in local storage
-    localStorage.setItem('accessToken', token);
-
-    // Redirect to the user dashboard
-       router.push("/dashboard");
-
-    console.log(data);
-  } catch (error) {
-    console.error("Error during login:", error);
-    console.log('Internal Server Error');
-  }
 };
 
 
