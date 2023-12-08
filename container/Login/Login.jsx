@@ -63,7 +63,6 @@ const Login = () => {
   };
 
 const handleLoginWithGoogle = async (req, res) => {
-  const history = useHistory();
 
   try {
     const response = await fetch("https://api-cliqpod.koyeb.app/auth/google");
