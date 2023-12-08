@@ -9,7 +9,7 @@ export const Container = styled.div`
   gap: 10px;
 `;
 export const StepOnestyle = styled.div`
-  background: url("/images/home.png") ;
+  background: url("https://res.cloudinary.com/dm42ixhsz/image/upload/v1702011790/home_eikfqn.png") ;
   background-repeat: no-repeat;
   height:70vh;
   background-size: cover;
@@ -35,7 +35,7 @@ export const StepTwostyle = styled.div`
   }
 `;
 export const StepThreestyle = styled.div`
-  background: url("/images/real-qr.png");
+  background: url("https://res.cloudinary.com/dm42ixhsz/image/upload/v1702011827/real-qr_nlcisi.png");
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
@@ -50,7 +50,7 @@ export const StepThreestyle = styled.div`
   }
 `;
 export const StepFourstyle = styled.div`
-  background: url("/images/gallery.png");
+  background: url("https://res.cloudinary.com/dm42ixhsz/image/upload/v1702011822/gallery_nfhr7h.png");
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;

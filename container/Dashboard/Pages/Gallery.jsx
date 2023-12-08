@@ -6,8 +6,8 @@ import { CustomText } from "@/components/CustomText";
 import { EditIcon, JoinIcon } from "@/assets";
 import Image from "next/image";
 import { PurpleSpinner } from "@/components/Spinner/Spinner";
-import Link from "next/link"
-import styled from "../Dashboard.module.css"
+import Link from "next/link";
+import styled from "../Dashboard.module.css";
 import { useRouter } from "next/router";
 import { MdDelete } from "react-icons/md";
 
@@ -16,8 +16,8 @@ const Gallery = () => {
   const accessToken = user ? user.token : "";
   const [isLoading, setIsLoading] = useState(false);
   const [events, setEvent] = useState([]);
-  const ActiveLink = ({isActive}) => (isActive ? `${styled.active}` : "")
-  const router = useRouter()
+  const ActiveLink = ({ isActive }) => (isActive ? `${styled.active}` : "");
+  const router = useRouter();
   useEffect(() => {
     setIsLoading(true);
     axios
@@ -36,21 +36,18 @@ const Gallery = () => {
       });
   }, []);
 
-  // const deleteEvent = async (eventId) => {
-  //   try {
-  //     setIsLoading(true);
-  //     await axios.post(`https://api-cliqpod.koyeb.app/deleteEvent/${eventId}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //     });
-      
-  //   } catch (error) {
-  //     // console.error("Error deleting event:", error);
-  //     setIsLoading(false);
-  //   }
-  // };
-  
+  const deleteEvent = async () => {
+    await axios.post(`https://api-cliqpod.koyeb.app/deleteEvent`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then(response=>{
+      console.log("response",response)
+    }).catch(error=>{
+      console.log("error",error)
+    })
+  };
+
   return (
     <>
       <GalleryStyle>
@@ -100,15 +97,23 @@ const Gallery = () => {
                           </div>
                         </div>
                         <div className="icons">
-                          <JoinIcon />
-                          <Delete  />
+                          <JoinIcon/>
+                          <form onSubmit={deleteEvent}>
+                            <input
+                              type="hidden"
+                              value={event._id}
+                              name="event"
+                            />
+
+                            <button style={{border:"none", background:"none"}}>
+                              <Delete />
+                            </button>
+                          </form>
                         </div>
                       </div>
                       <hr className="hr" />
                     </div>
-                   
                   </div>
-                  
                 );
               })}
             </>
