@@ -13,6 +13,12 @@ const Auth = () => {
   const handleLoginRoute = () => {
     router.push("/login");
   };
+
+  const handleLoginWithGoogle = () => {
+window.location.href = "https://api-cliqpod.koyeb.app/auth/google"
+
+};
+
   return (
     <>
       <AuthContainer>
@@ -34,7 +40,7 @@ const Auth = () => {
         <div>
           {" "}
           <div className="login-with-google">
-            <Button type={"button"} variant={"transparent"}>
+            <Button type={"button"} variant={"transparent"} onClick = {handleLoginWithGoogle}>
               <div className="button-style">
                 <Image
                   src="/images/google.svg"
