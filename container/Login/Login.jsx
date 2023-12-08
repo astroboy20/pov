@@ -86,7 +86,7 @@ const handleLoginWithGoogle = async (req, res) => {
     console.log(data);
   } catch (error) {
     console.error("Error during login:", error);
-    res.json({ error: 'Internal Server Error' });
+    console.log({ error: 'Internal Server Error' });
   }
 };
 
