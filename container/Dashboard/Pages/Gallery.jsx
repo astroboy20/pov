@@ -109,7 +109,7 @@ const Gallery = () => {
                               name="eventId"
                             />
 
-                            <button style={{border:"none", background:"none"}}>
+                            <button type="submit" style={{border:"none", background:"none"}}>
                               <Delete />
                             </button>
                           </form>
