@@ -63,6 +63,8 @@ const Login = () => {
   };
 
 const handleLoginWithGoogle = async (req, res) => {
+  const history = useHistory();
+
   try {
     const response = await fetch("https://api-cliqpod.koyeb.app/auth/google");
 
@@ -73,15 +75,22 @@ const handleLoginWithGoogle = async (req, res) => {
 
     const data = await response.json();
 
-    // Log the content of the response for debugging
-    console.log("Response:", await response.text());
+    // Extract the token from the response data
+    const token = accessToken.token;
 
-    res.status(200).json(data);
+    // Store the token in local storage
+    localStorage.setItem('accessToken', token);
+
+    // Redirect to the user dashboard
+       router.push("/dashboard");
+
+    console.log(data);
   } catch (error) {
     console.error("Error during login:", error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.json({ error: 'Internal Server Error' });
   }
 };
+
 
   return (
     <>
