@@ -37,6 +37,7 @@ const Gallery = () => {
   }, []);
 
   const deleteEvent = async (event) => {
+     event.preventDefault()
      const eventId = event.target.elements.eventId.value;
 
     await axios.post("https://api-cliqpod.koyeb.app/deleteEvent", 
