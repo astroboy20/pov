@@ -10,10 +10,19 @@ const GoogleAuth = () => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get("token");
   };
-    const storeTokenInLocalStorage = (token) => {
-        const stringifyToken = JSON.stringify(token);
-    typeof window !== "undefined" && localStorage.setItem("user", {token:stringifyToken}));
-  };
+const storeTokenInLocalStorage = (token) => {
+  const stringifyToken = JSON.stringify(token);
+  
+  // Retrieve the existing user object from localStorage or create a new one
+  const existingUser = JSON.parse(localStorage.getItem("user")) || {};
+
+  // Update the user object with the stringified token
+  existingUser.token = stringifyToken;
+
+  // Store the updated user object back in localStorage
+  typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(existingUser));
+};
+
 
   useEffect(() => {
     const token = getTokenFromURL();
