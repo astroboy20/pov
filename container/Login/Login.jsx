@@ -12,7 +12,7 @@ import { Button } from "@/components/Button";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
-import { login, reset, googleLogin } from "@/feature/slices/authSlice";
+import { login, reset } from "@/feature/slices/authSlice";
 import { toast } from "react-toastify";
 import { Spinner } from "@/components/Spinner";
 import Link from "next/link";
@@ -62,18 +62,9 @@ const Login = () => {
     router.push("/register");
   };
 
-
-
   const handleGoogleLogin = async () => {
-    try {
-      await dispatch(googleLogin());
-      dispatch(reset());
-    } catch (error) {
-      
-    }
+    window.location.href = "https://api-cliqpod.koyeb.app/auth/google";
   };
-
-
 
   return (
     <>

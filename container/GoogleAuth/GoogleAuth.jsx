@@ -1,12 +1,10 @@
 import { PurpleSpinner } from "@/components/Spinner/Spinner";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { setUser } from "@/feature/slices/authSlice";
-import { useDispatch } from "react-redux";
+
 
 const GoogleAuth = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
   const getTokenFromURL = () => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get("token");
@@ -21,7 +19,7 @@ const GoogleAuth = () => {
     if (token) {
       storeTokenInLocalStorage(token);
       router.push("/dashboard");
-      dispatch(setUser({token}));
+    //   dispatch(setUser({token}));
     }
   }, []);
   return (

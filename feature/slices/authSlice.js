@@ -131,21 +131,21 @@ export const newPassword = createAsyncThunk(
   }
 );
 
-export const googleLogin = createAsyncThunk(
-  "auth/login_google",
-  async (_, thunkAPI) => {
-    try {
-      return await authService.login_google() // Call your authService method for Google login
-    } catch (error) {
-      const message =
-        (error.response && error.response.data && error.response.data.error) ||
-        error.message ||
-        error.toString();
+// export const googleLogin = createAsyncThunk(
+//   "auth/login_google",
+//   async (_, thunkAPI) => {
+//     try {
+//       return await authService.login_google() // Call your authService method for Google login
+//     } catch (error) {
+//       const message =
+//         (error.response && error.response.data && error.response.data.error) ||
+//         error.message ||
+//         error.toString();
 
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
+//       return thunkAPI.rejectWithValue(message);
+//     }
+//   }
+// );
 
 const authSlice = createSlice({
   name: "auth",
@@ -269,20 +269,20 @@ const authSlice = createSlice({
       })
 
       //login with google
-      .addCase(googleLogin.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(googleLogin.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.user = action.payload; // Update Redux state with user data upon successful Google login
-      })
-      .addCase(googleLogin.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload || "Google Login Failed";
-        state.user = null;
-      });
+      // .addCase(googleLogin.pending, (state) => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(googleLogin.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isSuccess = true;
+      //   state.user = action.payload; // Update Redux state with user data upon successful Google login
+      // })
+      // .addCase(googleLogin.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isError = true;
+      //   state.message = action.payload || "Google Login Failed";
+      //   state.user = null;
+      // });
   },
 });
 
