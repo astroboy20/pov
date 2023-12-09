@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+
 const useAuth = () => {
   const { user } = useSelector((state) => state.auth);
-  const googleToken = typeof window !== "undefined" && localStorage.getItem("token")
-  const [currentUser, setCurrentUser] = useState({});
-  // console.log("hey",currentUser, user)
-  console.log("hey",googleToken)
+  const googleToken = typeof window !== "undefined" && localStorage.getItem("token");
+  const [currentUser, setCurrentUser] = useState(null);
+
   useEffect(() => {
-    if (user || googleToken) {
-      setCurrentUser({user} || googleToken);
+    if (user) {
+      setCurrentUser(user);
+    } else if (googleToken) {
+      setCurrentUser({ token: googleToken }); 
     } else {
       setCurrentUser(null);
     }
   }, [user, googleToken]);
+
   return { currentUser };
 };
 
-export  {useAuth};
+export default useAuth;
