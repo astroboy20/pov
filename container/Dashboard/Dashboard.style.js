@@ -9,7 +9,7 @@ export const DashboardStyle = styled.div`
 export const HeaderStyle = styled.div`
   background: url("/images/dashboard.png");
   background-size: cover;
-  background-repeat:no-repeat ;
+  background-repeat: no-repeat;
   border-radius: 0px 0px 10px 10px;
   height: 50dvh;
 `;
@@ -27,7 +27,7 @@ export const FeatureStyle = styled.div`
   background: #fff;
   color: black;
   position: fixed;
-  align-items:center ;
+  align-items: center;
   bottom: 0;
   left: 0;
   display: flex;
@@ -54,15 +54,14 @@ export const SettingStyle = styled.div`
   }
 `;
 export const GalleryStyle = styled.div`
- 
   display: flex;
   flex-direction: column;
   gap: 10px;
-  overflow:scroll ;
-  .header{
-    display:flex ;
-    justify-content:space-between ;
-    align-items:center ;
+  overflow: scroll;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 5%;
   }
   .join {
@@ -71,59 +70,63 @@ export const GalleryStyle = styled.div`
     justify-content: center;
     align-items: center;
     gap: 12px;
-    background-color: #ECE6F0 ;
-    border-radius:100px ;
-    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.30), 0px 4px 8px 3px rgba(0, 0, 0, 0.15);
-
+    background-color: #ece6f0;
+    border-radius: 100px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3),
+      0px 4px 8px 3px rgba(0, 0, 0, 0.15);
   }
-  .hr{
-    width:100% ;
-    color:black ;
+  .hr {
+    width: 100%;
+    color: black;
   }
-  .body{
+  .body {
     /* height:200vh ; */
-    margin-bottom:20% ;
-    overflow:scroll ;
+    margin-bottom: 20%;
+    overflow: scroll;
   }
-  .body-text{
-    color:#000;
-    padding:4%  5%;
-    font-weight:500 ;
-    font-size:24px ;
+  .body-text {
+    color: #000;
+    padding: 4% 5%;
+    font-weight: 500;
+    font-size: 24px;
   }
-  .info{
-    display:flex ;
-    justify-content:space-between ;
-    padding:5% 3%;
-    background-color: #ECE6F0 ;
+  .info {
+    display: flex;
+    justify-content: space-between;
+    padding: 5% 3%;
+    background-color: #ece6f0;
   }
-  .sub-info{
-    display:flex ;
-    gap:20px;
+  .sub-info {
+    display: flex;
+    gap: 20px;
   }
-  .text{
-    display:flex ;
+  .text {
+    display: flex;
     flex-direction: column;
   }
-  .text .a{
+  .text .a {
     font-size: 14px;
-    color:#1D1B20 ;
-    font-weight:500 ;
-    
+    color: #1d1b20;
+    font-weight: 500;
   }
-  .text .b{
+  .text .b {
     font-size: 14px;
-    color:#49454F ;
+    color: #49454f;
   }
-  .icons{
-    display:flex ;
-    flex-direction:column;
-    gap:20px;
-    align-items:center ;
+  .icons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  .centered-style {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
-export const Delete = styled(  MdDelete  )`
-width:24px ;
-height:24px ;
-`
+export const Delete = styled(MdDelete)`
+  width: 24px;
+  height: 24px;
+`;

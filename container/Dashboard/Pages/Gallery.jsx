@@ -18,32 +18,39 @@ const Gallery = () => {
   console.log(accessToken);
   const [isLoading, setIsLoading] = useState(false);
   const [events, setEvent] = useState([]);
-  const ActiveLink = ({ isActive }) => (isActive ? `${styled.active}` : "");
   const router = useRouter();
   useEffect(() => {
-    setIsLoading(true);
-    axios
-      .get("https://api-cliqpod.koyeb.app/events", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((response) => {
+    // Function to fetch events
+    const fetchEvents = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(
+          "https://api-cliqpod.koyeb.app/events",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
         const data = response.data.events;
         setEvent(data);
         setIsLoading(false);
-      })
-      .catch((error) => {
-        // console.log("error:", error);
-      });
-  }, []);
+      } catch (error) {
+        // Handle error
+        setIsLoading(false);
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchEvents(); // Call fetchEvents on component mount
+  }, [accessToken]);
 
   const deleteEvent = async (event) => {
     event.preventDefault();
     const eventId = event.target.elements.eventId.value;
 
-    await axios
-      .post(
+    try {
+      const response = await axios.post(
         "https://api-cliqpod.koyeb.app/deleteEvent",
         {
           eventId: eventId,
@@ -53,15 +60,14 @@ const Gallery = () => {
             Authorization: `Bearer ${accessToken}`,
           },
         }
-      )
-      .then((response) => {
-        toast.success(response.data);
-        setEvent(response.data.event);
-         window.location.reload();
-      })
-      .catch((error) => {
-        toast.error(error);
-      });
+      );
+
+      toast.success(response.data);
+      setEvent(response.data.event);
+      // No need to refresh window. Update state will rerender component and show updated list
+    } catch (error) {
+      toast.error(error);
+    }
   };
 
   return (
@@ -84,65 +90,55 @@ const Gallery = () => {
           <div className="body-text"> Hosting</div>
           {isLoading ? (
             <div
-              style={{
-                display: "flex",
-                alighnItems: "center",
-                justifyContent: "center",
-              }}
+              className="centered-style"
             >
               <PurpleSpinner />
             </div>
-          ) : events.length === 0 ? (
-            <>
-              <div className="no-events-message">
-                <CustomText weight={"500"} type={"Htype"} variant={"p"}>
-                  No events available.
-                </CustomText>
-              </div>
-            </>
+          ) : events && events.length === 0 ? (
+            <div className="centered-style">
+              <CustomText weight={"500"} type={"Htype"} variant={"p"}>
+                No events available.
+              </CustomText>
+            </div>
           ) : (
             <>
-              {events.map((event) => {
-                return (
-                  <div key={event._id}>
-                    {" "}
-                    <div>
-                      <div className="info">
-                        <div className="sub-info">
-                          <Image
-                            width={80}
-                            height={80}
-                            src={event.event_image}
-                            alt="event_banner"
-                          />
-                          <div className="text">
-                            <div className="a">{event.eventName}</div>
-                            <div className="b"> Ending {event.end_date}</div>
-                          </div>
-                        </div>
-                        <div className="icons">
-                          <JoinIcon />
-                          <form onSubmit={deleteEvent}>
-                            <input
-                              type="hidden"
-                              value={event._id}
-                              name="eventId"
-                            />
-
-                            <button
-                              type="submit"
-                              style={{ border: "none", background: "none" }}
-                            >
-                              <Delete />
-                            </button>
-                          </form>
+              {events.map((event) => (
+                <div key={event._id}>
+                  <div>
+                    <div className="info">
+                      <div className="sub-info">
+                        <Image
+                          width={80}
+                          height={80}
+                          src={event.event_image}
+                          alt="event_banner"
+                        />
+                        <div className="text">
+                          <div className="a">{event.eventName}</div>
+                          <div className="b"> Ending {event.end_date}</div>
                         </div>
                       </div>
-                      <hr className="hr" />
+                      <div className="icons">
+                        <JoinIcon />
+                        <form onSubmit={deleteEvent}>
+                          <input
+                            type="hidden"
+                            value={event._id}
+                            name="eventId"
+                          />
+                          <button
+                            type="submit"
+                            style={{ border: "none", background: "none" }}
+                          >
+                            <Delete />
+                          </button>
+                        </form>
+                      </div>
                     </div>
+                    <hr className="hr" />
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </>
           )}
         </div>
