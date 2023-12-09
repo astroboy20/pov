@@ -12,15 +12,13 @@ const GoogleAuth = () => {
   };
 const storeTokenInLocalStorage = (token) => {
   const stringifyToken = token;
-  
-  // Retrieve the existing user object from localStorage or create a new one
-  const existingUser = JSON.parse(localStorage.getItem("user")) || {};
+  const user = {};
 
-  // Update the user object with the stringified token
-  existingUser.token = stringifyToken;
+  
+  user.token = stringifyToken;
 
   // Store the updated user object back in localStorage
-  typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(existingUser));
+  typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(user));
 };
 
 
