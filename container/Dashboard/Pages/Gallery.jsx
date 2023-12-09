@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 const Gallery = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
+  console.log(accessToken);
   const [isLoading, setIsLoading] = useState(false);
   const [events, setEvent] = useState([]);
   const ActiveLink = ({ isActive }) => (isActive ? `${styled.active}` : "");
