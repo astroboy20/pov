@@ -7,7 +7,7 @@ const useAuth = () => {
   console.log("hey",currentUser, user)
   useEffect(() => {
     if (user || googleToken) {
-      setCurrentUser({user}, googleToken);
+      setCurrentUser({user} || googleToken);
     } else {
       setCurrentUser(null);
     }
