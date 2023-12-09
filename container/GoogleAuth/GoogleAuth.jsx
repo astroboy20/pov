@@ -10,9 +10,9 @@ const GoogleAuth = () => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get("token");
   };
-
-  const storeTokenInLocalStorage = (token) => {
-    typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(token));
+    const storeTokenInLocalStorage = (token) => {
+        const stringifyToken = JSON.stringify(token);
+    typeof window !== "undefined" && localStorage.setItem("user", {token:stringifyToken}));
   };
 
   useEffect(() => {
