@@ -30,7 +30,7 @@ const login = async (userData) => {
   return response.data;
 };
 
-const login_google = async (userData) => {
+const login_google = async () => {
   window.location.href = "https://api-cliqpod.koyeb.app/auth/google"
 };
 

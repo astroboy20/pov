@@ -131,21 +131,21 @@ export const newPassword = createAsyncThunk(
   }
 );
 
-// export const googleLogin = createAsyncThunk(
-//   "auth/login_google",
-//   async (_, thunkAPI) => {
-//     try {
-//       return await authService.login_google() // Call your authService method for Google login
-//     } catch (error) {
-//       const message =
-//         (error.response && error.response.data && error.response.data.error) ||
-//         error.message ||
-//         error.toString();
+export const googleLogin = createAsyncThunk(
+  "auth/login_google",
+  async (_, thunkAPI) => {
+    try {
+      return await authService.login_google() // Call your authService method for Google login
+    } catch (error) {
+      const message =
+        (error.response && error.response.data && error.response.data.error) ||
+        error.message ||
+        error.toString();
 
-//       return thunkAPI.rejectWithValue(message);
-//     }
-//   }
-// );
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -156,6 +156,9 @@ const authSlice = createSlice({
         (state.isSuccess = false),
         (state.isLoading = false),
         (state.message = "");
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
     setAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
@@ -287,5 +290,6 @@ const authSlice = createSlice({
 });
 
 export const { reset } = authSlice.actions;
+export const { setUser } = authSlice.actions;
 
 export default authSlice.reducer;
