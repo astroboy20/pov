@@ -20,7 +20,7 @@ const GoogleAuth = () => {
     if (token) {
       storeTokenInLocalStorage(token);
       router.push("/dashboard");
-    //   dispatch(setUser({token}));
+      dispatch(setUser(token));
     }
   }, []);
   return (
