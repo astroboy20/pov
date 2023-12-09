@@ -12,12 +12,12 @@ const GoogleAuth = () => {
   };
 
   const storeTokenInLocalStorage = (token) => {
-    typeof window !== "undefined" && localStorage.setItem("token", token);
+    typeof window !== "undefined" && localStorage.setItem("user", token);
   };
 
   useEffect(() => {
     const token = getTokenFromURL();
-    if (accessToken) {
+    if (token) {
       storeTokenInLocalStorage(token);
       router.push("/dashboard");
       dispatch(setUser({token}));
