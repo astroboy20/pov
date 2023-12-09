@@ -55,8 +55,9 @@ const Gallery = () => {
         }
       )
       .then((response) => {
-        toast.sucess(response.data);
+        toast.success(response.data);
         setEvent(response.data.event);
+         window.location.reload();
       })
       .catch((error) => {
         toast.error(error);
