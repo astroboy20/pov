@@ -6,12 +6,13 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-  gap: 10px;
+  gap: 5px;
+  height:100vh ;
 `;
 export const StepOnestyle = styled.div`
-  background: url("https://res.cloudinary.com/dm42ixhsz/image/upload/v1702011790/home_eikfqn.png") ;
+  background: url("/images/logo.png") ;
   background-repeat: no-repeat;
-  height:70vh;
+  height:75vh;
   background-size: cover;
   width: 100%;
   .text {
@@ -23,11 +24,11 @@ export const StepOnestyle = styled.div`
 `;
 
 export const StepTwostyle = styled.div`
-  background: url("/images/event.png");
+  background: url("/images/wedding.png");
   background-repeat: no-repeat;
-  /* height:80vh; */
+  height:75vh;
   background-size: cover;
-  height: 70vh;
+  width: 100%;
   .text {
     display: flex;
     /* flex-direction: column; */
@@ -35,13 +36,10 @@ export const StepTwostyle = styled.div`
   }
 `;
 export const StepThreestyle = styled.div`
-  background: url("https://res.cloudinary.com/dm42ixhsz/image/upload/v1702011827/real-qr_nlcisi.png");
+  background: url("/images/scanQR.png");
   background-repeat: no-repeat;
+  height:75vh;
   background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 70vh;
   width: 100%;
   .text {
     display: flex;
@@ -50,14 +48,11 @@ export const StepThreestyle = styled.div`
   }
 `;
 export const StepFourstyle = styled.div`
-  background: url("https://res.cloudinary.com/dm42ixhsz/image/upload/v1702011822/gallery_nfhr7h.png");
+  background: url("/images/album.png");
   background-repeat: no-repeat;
+  height:75vh;
   background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   width: 100%;
-  height: 70vh;
   .text {
     display: flex;
     flex-direction: column;

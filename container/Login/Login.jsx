@@ -63,8 +63,8 @@ const Login = () => {
   };
 
 const handleLoginWithGoogle = () => {
-window.location.href = "https://api-cliqpod.koyeb.app/auth/google"
-
+ const hey = window.location.href = "https://api-cliqpod.koyeb.app/auth/google"
+console.log(hey)
 };
 
 

@@ -30,17 +30,17 @@ const login = async (userData) => {
   return response.data;
 };
 
-const login_google = async (userData) => {
-  const response = await axios.get(LOGIN_URL, userData);
-  try {
-    const response = await axios.get(`${VERIFY_EMAIL_URL}`, token);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+// const login_google = async (userData) => {
+//   const response = await axios.get(LOGIN_URL, userData);
+//   try {
+//     const response = await axios.get(`${VERIFY_EMAIL_URL}`, token);
+//     return response.data;
+//   } catch (error) {
+//     throw error;
+//   }
 
-  return response.data;
-};
+//   return response.data;
+// };
 
 //logout user
 const logout = () => {
