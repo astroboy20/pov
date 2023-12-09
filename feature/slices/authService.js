@@ -30,9 +30,9 @@ const login = async (userData) => {
   return response.data;
 };
 
-// const login_google = async (userData) => {
-//   window.location.href = "https://api-cliqpod.koyeb.app/auth/google"
-// };
+const login_google = async (userData) => {
+  window.location.href = "https://api-cliqpod.koyeb.app/auth/google"
+};
 
 //logout user
 const logout = () => {
@@ -70,7 +70,7 @@ const authService = {
   resetPassword,
   otp,
   newPassword,
-  // login_google
+  login_google
 };
 
 export default authService;

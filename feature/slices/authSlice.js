@@ -269,20 +269,20 @@ const authSlice = createSlice({
       })
 
       //login with google
-      // .addCase(googleLogin.pending, (state) => {
-      //   state.isLoading = true;
-      // })
-      // .addCase(googleLogin.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   state.isSuccess = true;
-      //   state.user = action.payload; // Update Redux state with user data upon successful Google login
-      // })
-      // .addCase(googleLogin.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.isError = true;
-      //   state.message = action.payload || "Google Login Failed";
-      //   state.user = null;
-      // });
+      .addCase(googleLogin.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(googleLogin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload; // Update Redux state with user data upon successful Google login
+      })
+      .addCase(googleLogin.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload || "Google Login Failed";
+        state.user = null;
+      });
   },
 });
 

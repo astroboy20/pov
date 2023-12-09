@@ -8,6 +8,8 @@ export const DashboardStyle = styled.div`
 `;
 export const HeaderStyle = styled.div`
   background: url("/images/dashboard.png");
+  background-size: cover;
+  background-repeat:no-repeat ;
   border-radius: 0px 0px 10px 10px;
   height: 50dvh;
 `;
