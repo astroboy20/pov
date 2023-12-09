@@ -83,10 +83,10 @@ const CreateEvent = () => {
     const file = event.target.files[0];
     if (file) {
       const imageURL = URL.createObjectURL(file);
-      setSelectedImage(imageURL); 
+      setSelectedImage(imageURL);
       setData((prevData) => ({
         ...prevData,
-        image: file, 
+        image: file,
       }));
     }
   };
@@ -142,37 +142,38 @@ const CreateEvent = () => {
   }, [accessToken]);
 
   const [loading, setLoading] = useState(false);
+
   const handleSubmit = async () => {
     try {
       setLoading(true);
-  
+
       // Upload the image to Cloudinary
       const imageData = new FormData();
       imageData.append("file", data.image);
       imageData.append("upload_preset", "za8tsrje");
-  
+
       const imageResponse = await axios.post(
         "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
         imageData
       );
-  
+
       if (imageResponse && imageResponse.data.secure_url) {
-        setData((prevData) => ({
-          ...prevData,
-          image: imageResponse.data.secure_url,
-        }));
-  
-        // Submit the event data to create an event
+        const imageUrl = imageResponse.data.secure_url;
+
+        // Create a new data object including the uploaded image URL
+        const updatedData = { ...data, image: imageUrl };
+
+        // Submit the event data with the updated image URL to create an event
         const eventResponse = await axios.post(
           "https://api-cliqpod.koyeb.app/create-event",
-          data,
+          updatedData,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
           }
         );
-  
+
         // Handle event creation response
         if (eventResponse) {
           const userData = eventResponse.data;
@@ -182,15 +183,17 @@ const CreateEvent = () => {
             setLoading(false);
           } else {
             toast.success("Event created successfully!");
+            router.push("/gallery");
             setLoading(false);
           }
         }
       }
     } catch (error) {
       setLoading(false);
+      console.error("Error occurred:", error);
     }
   };
-  
+
   return (
     <>
       <GalleryStyle>
@@ -215,19 +218,35 @@ const CreateEvent = () => {
               id="selectFile"
             />
             {data.image ? (
-              <Image
-                src={selectedImage}
-                alt="Selected"
-                width={100}
-                height={100}
-                style={{
-                  width: "100%",
-                  height: "30vh",
-                }}
-              />
+              <div className="image">
+                <Image
+                  src={selectedImage}
+                  alt="Selected"
+                  width={1920}
+                  height={1080}
+                  style={{
+                    width: "40%",
+                    height: "40vh",
+                    margin: "0 30%",
+                  }}
+                />
+              </div>
             ) : (
-              <span className="icon-style" onClick={handleImageClick}>
+              <span
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  fontSize: "16px",
+                  alignItems: "center",
+                }}
+                className="icon-style"
+                onClick={handleImageClick}
+              >
                 <ImageIcon />
+
+                <CustomText weight={"500"} type={"Htype"} variant={"h2-b"}>
+                  upload frame
+                </CustomText>
               </span>
             )}
             <div></div>

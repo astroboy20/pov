@@ -19,6 +19,7 @@ export const GalleryStyle = styled.div`
   .image-input {
     background-color: rgba(176, 234, 246, 0.65);
   }
+  
   .body {
     padding: 5%;
     height: 80vh;
