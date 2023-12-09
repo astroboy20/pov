@@ -11,7 +11,7 @@ const GoogleAuth = () => {
     return urlParams.get("token");
   };
 const storeTokenInLocalStorage = (token) => {
-  const stringifyToken = JSON.stringify(token);
+  const stringifyToken = token;
   
   // Retrieve the existing user object from localStorage or create a new one
   const existingUser = JSON.parse(localStorage.getItem("user")) || {};
