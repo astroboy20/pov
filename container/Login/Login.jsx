@@ -12,14 +12,14 @@ import { Button } from "@/components/Button";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
-import { login, reset } from "@/feature/slices/authSlice";
+import { login, reset, googleLogin } from "@/feature/slices/authSlice";
 import { toast } from "react-toastify";
 import { Spinner } from "@/components/Spinner";
 import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import { BackIcon, EmailIcon } from "@/assets";
+// import { googleUserLogin } from "@/feature/slices/authSlice";
 
 const Login = () => {
   const router = useRouter();
@@ -62,10 +62,17 @@ const Login = () => {
     router.push("/register");
   };
 
-const handleLoginWithGoogle = () => {
- const hey = window.location.href = "https://api-cliqpod.koyeb.app/auth/google"
-console.log(hey)
-};
+
+
+  const handleGoogleLogin = async () => {
+    try {
+      await dispatch(googleLogin());
+      dispatch(reset());
+    } catch (error) {
+      
+    }
+  };
+
 
 
   return (
@@ -131,7 +138,7 @@ console.log(hey)
 
         <div className="login-with-google">
           <Button
-            onClick={handleLoginWithGoogle}
+            onClick={handleGoogleLogin}
             type={"button"}
             variant={"transparent"}
           >

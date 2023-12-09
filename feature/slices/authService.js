@@ -30,17 +30,9 @@ const login = async (userData) => {
   return response.data;
 };
 
-// const login_google = async (userData) => {
-//   const response = await axios.get(LOGIN_URL, userData);
-//   try {
-//     const response = await axios.get(`${VERIFY_EMAIL_URL}`, token);
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-
-//   return response.data;
-// };
+const login_google = async (userData) => {
+  window.location.href = "https://api-cliqpod.koyeb.app/auth/google"
+};
 
 //logout user
 const logout = () => {
@@ -78,6 +70,7 @@ const authService = {
   resetPassword,
   otp,
   newPassword,
+  login_google
 };
 
 export default authService;
