@@ -1,7 +1,9 @@
 import { PurpleSpinner } from "@/components/Spinner/Spinner";
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
 const GoogleAuth = () => {
+    const router = useRouter()
   const getTokenFromURL = () => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get("token");
@@ -15,6 +17,7 @@ const GoogleAuth = () => {
     const token = getTokenFromURL();
     if (token) {
       storeTokenInLocalStorage(token);
+        router.push("/login")
     }
     console.log("token",token)
   }, []);
