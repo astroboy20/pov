@@ -12,7 +12,7 @@ const GoogleAuth = () => {
   };
 
   const storeTokenInLocalStorage = (token) => {
-    typeof window !== "undefined" && localStorage.setItem("user", token);
+    typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(token));
   };
 
   useEffect(() => {
