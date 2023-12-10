@@ -61,8 +61,7 @@ const Gallery = () => {
           },
         }
       );
-   console.log("Delete Event Response:", response.data);
-    toast.success(response.data);
+   console.log("Delete Event Response:", response.data.success);
       toast.success(response.data.success);
       //setEvent(response.data.events);
    window.location.reload();
