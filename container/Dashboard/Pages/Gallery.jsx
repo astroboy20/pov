@@ -45,12 +45,14 @@ const Gallery = () => {
     fetchEvents(); // Call fetchEvents on component mount
   }, [accessToken]);
 
-  const deleteEvent = async (event) => {
+ const deleteEvent = async (event) => {
     event.preventDefault();
     const eventId = event.target.elements.eventId.value;
 
     try {
-      const response = await axios.post(
+      setIsLoading(true);
+
+      await axios.post(
         "https://api-cliqpod.koyeb.app/deleteEvent",
         {
           eventId: eventId,
@@ -61,12 +63,25 @@ const Gallery = () => {
           },
         }
       );
-   console.log("Delete Event Response:", response.data.success);
-      toast.success(response.data.success);
-      //setEvent(response.data.events);
-   window.location.reload();
+
+
+      const response = await axios.get(
+        "https://api-cliqpod.koyeb.app/events",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      const data = response.data.events;
+
+      setIsLoading(false);
+      toast.success("Event deleted successfully!");
+              setEvent(data);
     } catch (error) {
-      toast.error(error);
+      setIsLoading(false);
+      toast.error(error.message || "Error deleting event. Please try again.");
     }
   };
 
