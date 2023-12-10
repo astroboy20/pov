@@ -63,9 +63,9 @@ const Gallery = () => {
       );
    console.log("Delete Event Response:", response.data);
     toast.success(response.data);
-      toast.success(response.data);
+      toast.success(response.data.success);
       //setEvent(response.data.events);
-      // No need to refresh window. Update state will rerender component and show updated list
+   window.location.reload();
     } catch (error) {
       toast.error(error);
     }
