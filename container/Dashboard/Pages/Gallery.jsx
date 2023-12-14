@@ -12,15 +12,15 @@ import { useRouter } from "next/router";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 
+
 const Gallery = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
-  console.log(accessToken);
   const [isLoading, setIsLoading] = useState(false);
   const [events, setEvent] = useState([]);
   const router = useRouter();
+
   useEffect(() => {
-    // Function to fetch events
     const fetchEvents = async () => {
       try {
         setIsLoading(true);
@@ -36,13 +36,12 @@ const Gallery = () => {
         setEvent(data);
         setIsLoading(false);
       } catch (error) {
-        // Handle error
         setIsLoading(false);
-        console.error("Error fetching events:", error);
+        toast.error( error);
       }
     };
 
-    fetchEvents(); // Call fetchEvents on component mount
+    fetchEvents(); 
   }, [accessToken]);
 
   const deleteEvent = async (event) => {
@@ -64,7 +63,7 @@ const Gallery = () => {
 
       toast.success(response.data);
       setEvent(response.data.event);
-      // No need to refresh window. Update state will rerender component and show updated list
+     
     } catch (error) {
       toast.error(error);
     }
@@ -116,6 +115,7 @@ const Gallery = () => {
                         <div className="text">
                           <div className="a">{event.eventName}</div>
                           <div className="b"> Ending {event.end_date}</div>
+                          <Link href={`/eventID/${event._id}`}>link</Link>
                         </div>
                       </div>
                       <div className="icons">
