@@ -63,6 +63,7 @@ export const GalleryStyle = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 5%;
+    border-bottom:1px solid black ;
   }
   .join {
     display: flex;
@@ -95,6 +96,7 @@ export const GalleryStyle = styled.div`
     justify-content: space-between;
     padding: 5% 3%;
     background-color: #ece6f0;
+    border-bottom:1px solid black ;
   }
   .sub-info {
     display: flex;
@@ -129,4 +131,5 @@ export const GalleryStyle = styled.div`
 export const Delete = styled(MdDelete)`
   width: 24px;
   height: 24px;
+  color:black;
 `;

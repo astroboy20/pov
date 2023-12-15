@@ -9,7 +9,6 @@ import { PurpleSpinner } from "@/components/Spinner/Spinner";
 import Link from "next/link";
 import styled from "../Dashboard.module.css";
 import { useRouter } from "next/router";
-import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 
 
@@ -98,7 +97,6 @@ const Gallery = () => {
             </CustomText>
           </div>
         </div>
-        <hr className="hr" />
 
         <div className="body">
           <div className="body-text"> Hosting</div>
@@ -130,7 +128,7 @@ const Gallery = () => {
                         <div className="text">
                           <div className="a">{event.eventName}</div>
                           <div className="b"> Ending {event.end_date}</div>
-                          <Link href={`/eventID/${event._id}`}>link</Link>
+                          <Link href={`/gallery/${event._id}`}>link</Link>
                         </div>
                       </div>
                       <div className="icons">
@@ -150,7 +148,7 @@ const Gallery = () => {
                         </form>
                       </div>
                     </div>
-                    <hr className="hr" />
+                   
                   </div>
                 </div>
               ))}

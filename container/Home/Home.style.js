@@ -6,13 +6,13 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-  gap: 5px;
+  gap: 10px;
   height:100vh ;
 `;
 export const StepOnestyle = styled.div`
   background: url("/images/logo.png") ;
   background-repeat: no-repeat;
-  height:75vh;
+  height:65vh;
   background-size: cover;
   width: 100%;
   .text {
@@ -26,7 +26,7 @@ export const StepOnestyle = styled.div`
 export const StepTwostyle = styled.div`
   background: url("/images/wedding.png");
   background-repeat: no-repeat;
-  height:75vh;
+  height:65vh;
   background-size: cover;
   width: 100%;
   .text {
@@ -38,7 +38,7 @@ export const StepTwostyle = styled.div`
 export const StepThreestyle = styled.div`
   background: url("/images/scanQR.png");
   background-repeat: no-repeat;
-  height:75vh;
+  height:65vh;
   background-size: cover;
   width: 100%;
   .text {
@@ -50,7 +50,7 @@ export const StepThreestyle = styled.div`
 export const StepFourstyle = styled.div`
   background: url("/images/album.png");
   background-repeat: no-repeat;
-  height:75vh;
+  height:65vh;
   background-size: cover;
   width: 100%;
   .text {
