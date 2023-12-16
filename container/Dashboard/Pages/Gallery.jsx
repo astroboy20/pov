@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Delete, FeatureStyle, GalleryStyle } from "../Dashboard.style";
@@ -10,14 +10,19 @@ import Link from "next/link";
 import styled from "../Dashboard.module.css";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-
+import { Modal } from "@/components/Modal";
+import QRCode from "react-qr-code";
+import * as htmlToImage from "html-to-image";
+import { Button } from "@/components/Button";
 
 const Gallery = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [events, setEvent] = useState([]);
   const router = useRouter();
+  const qrCodeRef = useRef(null);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -36,14 +41,14 @@ const Gallery = () => {
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
-        toast.error( error);
+        toast.error(error);
       }
     };
 
-    fetchEvents(); 
+    fetchEvents();
   }, [accessToken]);
 
- const deleteEvent = async (event) => {
+  const deleteEvent = async (event) => {
     event.preventDefault();
     const eventId = event.target.elements.eventId.value;
 
@@ -62,27 +67,36 @@ const Gallery = () => {
         }
       );
 
-
-      const response = await axios.get(
-        "https://api-cliqpod.koyeb.app/events",
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const response = await axios.get("https://api-cliqpod.koyeb.app/events", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       const data = response.data.events;
 
       setIsLoading(false);
       toast.success("Event deleted successfully!");
-              setEvent(data);
+      setEvent(data);
     } catch (error) {
       setIsLoading(false);
       toast.error(error.message || "Error deleting event. Please try again.");
     }
   };
 
+  const downloadQrCode = () => {
+    htmlToImage
+    .toPng(qrCodeRef.current)
+    .then(function (dataUrl) {
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = "qr-code.png";
+      link.click();
+    })
+    .catch(function (error) {
+      console.error("Error generating QR code:", error);
+    });
+  };
   return (
     <>
       <GalleryStyle>
@@ -101,9 +115,7 @@ const Gallery = () => {
         <div className="body">
           <div className="body-text"> Hosting</div>
           {isLoading ? (
-            <div
-              className="centered-style"
-            >
+            <div className="centered-style">
               <PurpleSpinner />
             </div>
           ) : events && events.length === 0 ? (
@@ -128,11 +140,34 @@ const Gallery = () => {
                         <div className="text">
                           <div className="a">{event.eventName}</div>
                           <div className="b"> Ending {event.end_date}</div>
-                          <Link href={`/gallery/${event._id}`}>link</Link>
+                          <Link
+                            href={`https://cliqpod.co/gallery/${event._id}`}
+                          >
+                            link
+                          </Link>
                         </div>
                       </div>
                       <div className="icons">
-                        <JoinIcon />
+                        <span onClick={() => setShowModal(true)}>
+                          <JoinIcon />
+                        </span>
+                        <Modal
+                          show={showModal}
+                          onClose={() => setShowModal(false)}
+                        >
+                          <div style={{marginBottom:"20px"}} ref={qrCodeRef}>
+                          <QRCode value={`https://cliqpod.co//gallery/${event._id}`} src={`https://cliqpod.co//gallery/${event._id}`}/>
+                          
+                          </div>
+                          <Button
+                            type="submit"
+                            variant="defaultButton"
+                            onClick={downloadQrCode}
+                          >
+                            Download
+                          </Button>
+                        </Modal>
+
                         <form onSubmit={deleteEvent}>
                           <input
                             type="hidden"
@@ -148,7 +183,6 @@ const Gallery = () => {
                         </form>
                       </div>
                     </div>
-                   
                   </div>
                 </div>
               ))}
