@@ -6,7 +6,7 @@ import {toast} from "react-toastify"
 //   typeof window !== "undefined" && JSON.parse(localStorage.getItem("user"));
 // console.log(user)
 const initialState = {
-  user: user,
+  user: "",
   isError: false,
   isSuccess: false,
   // isAuthenticated:false,
