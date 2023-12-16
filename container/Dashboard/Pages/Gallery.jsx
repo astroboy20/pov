@@ -140,11 +140,11 @@ const Gallery = () => {
                         <div className="text">
                           <div className="a">{event.eventName}</div>
                           <div className="b"> Ending {event.end_date}</div>
-                          {/* <Link
-                            href={`https://cliqpod.co/gallery/${event._id}`}
+                          <Link
+                            href={`/gallery/${event._id}`}
                           >
                             link
-                          </Link> */}
+                          </Link>
                         </div>
                       </div>
                       <div className="icons">
@@ -156,7 +156,7 @@ const Gallery = () => {
                           onClose={() => setShowModal(false)}
                         >
                           <div style={{marginBottom:"20px"}} ref={qrCodeRef}>
-                          <QRCode value={`https://cliqpod.co//gallery/${event._id}`} src={`https://cliqpod.co//gallery/${event._id}`}/>
+                          <QRCode value={`https://cliqpod.co//gallery/${event._id}`} />
                           
                           </div>
                           <Button

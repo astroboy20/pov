@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService";
-// import {toast} from "react-toastify"
+import {toast} from "react-toastify"
 
-const user =
-  typeof window !== "undefined" && JSON.parse(localStorage.getItem("user"));
-console.log(user)
+// const user =
+//   typeof window !== "undefined" && JSON.parse(localStorage.getItem("user"));
+// console.log(user)
 const initialState = {
-  user: user ? user : null,
+  user: user,
   isError: false,
   isSuccess: false,
   // isAuthenticated:false,

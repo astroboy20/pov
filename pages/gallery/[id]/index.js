@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { PurpleSpinner } from "@/components/Spinner/Spinner";
+import { Album } from "@/container/Album";
+import { ProtectedRoute } from "@/container/ProtectedRoutes/ProtectedRoute";
 
 const EventID = () => {
   const router = useRouter();
@@ -16,7 +18,7 @@ const EventID = () => {
   useEffect(() => {
     if (eventId) {
       axios
-        .get(`https://api-cliqpod.koyeb.app/event/${eventId}`, {
+        .get(`https://api-cliqpod.koyeb.app/gallery/${eventId}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -37,26 +39,10 @@ const EventID = () => {
     }
   }, [eventId, accessToken, router]);
   return (
-    <div>
-      {eventData ? (
-        <div>
-          <h2>Event Details</h2>
-          <p>ID: {eventData._id}</p>
-          <p>Real Time: {eventData.reaveal_photoTime}</p>
-        </div>
-      ) : (
-        <div
-          style={{
-            height: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <PurpleSpinner />
-        </div>
-      )}
-    </div>
+    <ProtectedRoute>
+      <Album eventData={eventData}/>
+      
+    </ProtectedRoute>
   );
 };
 
