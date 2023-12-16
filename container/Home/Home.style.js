@@ -7,7 +7,7 @@ export const Container = styled.div`
   flex-direction: column;
   text-align: center;
   gap: 10px;
-  height:100vh ;
+  /* height:auto ; */
 `;
 export const StepOnestyle = styled.div`
   background: url("/images/logo.png") ;

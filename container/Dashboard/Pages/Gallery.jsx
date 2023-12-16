@@ -140,11 +140,11 @@ const Gallery = () => {
                         <div className="text">
                           <div className="a">{event.eventName}</div>
                           <div className="b"> Ending {event.end_date}</div>
-                          <Link
+                          {/* <Link
                             href={`https://cliqpod.co/gallery/${event._id}`}
                           >
                             link
-                          </Link>
+                          </Link> */}
                         </div>
                       </div>
                       <div className="icons">
