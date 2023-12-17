@@ -34,8 +34,8 @@ const EventID = () => {
           router.push("/gallery");
         });
     }else if (!eventId){
-      toast.error("invalid ID ");
-      router.push(`/invitee/${setId}`);
+      // toast.error("invalid ID ");
+      router.push(`/invitee`);
     }
   }, [eventId, accessToken, router, setId]);
   return (
