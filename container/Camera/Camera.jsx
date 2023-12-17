@@ -30,7 +30,7 @@ const Camera = () => {
           .then((response) => {
             setIsLoading(false)
             toast.success(response.data.success)
-            router.push("/camera")
+            // router.push("/camera")
           })
           .catch((error) => {
             setIsLoading(false)

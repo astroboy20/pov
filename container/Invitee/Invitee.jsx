@@ -56,7 +56,7 @@ const Invitee = () => {
     <>
       <Container>
         <FormHeader>
-          <span onClick={handleRoute}>
+          <span >
             <BackIcon />
           </span>
 
