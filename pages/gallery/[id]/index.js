@@ -14,7 +14,7 @@ const EventID = () => {
   const { id: eventId } = router.query;
 
   const [eventData, setEventData] = useState(null);
-
+  const setId = typeof window !== "undefined" && localStorage.setItem("id", eventId)
   useEffect(() => {
     if (eventId) {
       axios
@@ -35,9 +35,9 @@ const EventID = () => {
         });
     }else if (!eventId){
       toast.error("invalid ID ");
-      router.push("/gallery");
+      router.push(`/invitee/${setId}`);
     }
-  }, [eventId, accessToken, router]);
+  }, [eventId, accessToken, router, setId]);
   return (
     <ProtectedRoute>
       <Album eventData={eventData}/>
