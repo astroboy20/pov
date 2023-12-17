@@ -34,7 +34,7 @@ const Invitee = () => {
       <Container>
         <FormHeader>
           <span>
-            <BackIcon />
+            {/* <BackIcon /> */}
           </span>
 
           <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
