@@ -55,7 +55,7 @@ const Invitee = () => {
           
 
           <Button type={"submit"} variant={"defaultButton"}>
-            {isLoading ? <Spinner /> : "Login"}
+            {isLoading ? <Spinner /> : "Submit"}
           </Button>
         </form>
       </Container>
