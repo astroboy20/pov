@@ -31,6 +31,8 @@ import { toast } from "react-toastify";
 const CreateEvent = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
+
+  
   const eventName =
     typeof window !== "undefined" && localStorage.getItem("eventName");
 
@@ -47,6 +49,7 @@ const CreateEvent = () => {
     revealTime: "",
     image: "",
   });
+  
   const MAX_FILE_SIZE_MB = 5;
   const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 

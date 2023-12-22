@@ -12,11 +12,15 @@ const EventID = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const { id: eventId } = router.query;
+  const query = router.query
+  console.log(query)
 
   const [eventData, setEventData] = useState(null);
   const setId = typeof window !== "undefined" && localStorage.setItem("id", eventId)
+  
   useEffect(() => {
-    if (eventId) {
+    
+    if (router.isReady && eventId) {
       axios
         .get(`https://api-cliqpod.koyeb.app/gallery/${eventId}`, {
           headers: {
@@ -25,15 +29,18 @@ const EventID = () => {
         })
         .then((response) => {
           const data = response.data;
+          console.log(data)
           setEventData(data);
         })
         .catch((error) => {
           toast.error(error);
           router.push("/gallery");
         });
-    }else if (!eventId){
-      // toast.error("invalid ID ");
-      router.push(`/invitee`);
+    }else{
+      console.log("object")
+      if (typeof window !== "undefined" && !router.isReady) {
+        router.push(`/invitee`);
+      }
     }
   }, [eventId, accessToken, router, setId]);
   return (
