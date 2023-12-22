@@ -14,8 +14,7 @@ const register = async (userData) => {
   const response = await axios.post(REGISTER_URL, userData);
   if (response.ok) {
     localStorage.setItem("user", JSON.stringify(response.data));
-  } else {
-    console.log(response.data);
+    return response.data.message;
   }
   return response.data;
 };
@@ -31,7 +30,7 @@ const login = async (userData) => {
 };
 
 const login_google = async () => {
-  window.location.href = "https://api-cliqpod.koyeb.app/auth/google"
+  window.location.href = "https://api-cliqpod.koyeb.app/auth/google";
 };
 
 //logout user
@@ -70,7 +69,7 @@ const authService = {
   resetPassword,
   otp,
   newPassword,
-  login_google
+  login_google,
 };
 
 export default authService;

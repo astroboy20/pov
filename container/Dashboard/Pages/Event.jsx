@@ -6,8 +6,9 @@ import { CustomText } from "@/components/CustomText";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { useRouter } from "next/router";
-import NavLink from "next/link"
-import styled from "../Dashboard.module.css"
+import NavLink from "next/link";
+import styled from "../Dashboard.module.css";
+import {toast} from "react-toastify"
 
 const Event = () => {
   const { option } = useOptionContext();
@@ -19,10 +20,9 @@ const Event = () => {
       typeof window !== "undefined" &&
         localStorage.setItem("eventName", eventName.toUpperCase());
 
-        console.log(eventName)
       router.push("/create-event");
     } else {
-      console.log("Enter a valid event name");
+      toast.warning("Enter a valid event name");
     }
   };
 
@@ -46,7 +46,7 @@ const Event = () => {
                 variant="text"
                 required
                 value={eventName}
-                onChange={(e)=>setEventName(e.target.value)}
+                onChange={(e) => setEventName(e.target.value)}
               />
               <Button type="submit" variant="defaultButton">
                 Setup my event

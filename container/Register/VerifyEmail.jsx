@@ -16,10 +16,8 @@ import { useParams } from "next/navigation";
 export const Verify = () => {
   const { user, isError } = useSelector((state) => state.auth);
   const verificationToken = user ? user : "nothing";
-  console.log(verificationToken)
   const userData =
     typeof window !== "undefined" && (localStorage.getItem("user"));
-  console.log("ver", verificationToken, userData);
   const username = user ? user.username : "";
   const dispatch = useDispatch();
   

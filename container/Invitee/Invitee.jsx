@@ -31,7 +31,6 @@ const Invitee = () => {
   const handleSubmit = (e) => {
     setIsLoading(true);
     e.preventDefault();
-    console.log(data);
     if (data.email) {
       axios
         .post(`https://api-cliqpod.koyeb.app/event/${setId}`, {
@@ -56,7 +55,7 @@ const Invitee = () => {
     <>
       <Container>
         <FormHeader>
-          <span >
+          <span onClick={handleRoute}>
             <BackIcon />
           </span>
 

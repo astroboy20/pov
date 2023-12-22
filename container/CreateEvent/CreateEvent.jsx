@@ -31,7 +31,6 @@ import { toast } from "react-toastify";
 const CreateEvent = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
-  console.log("token",accessToken)
   const eventName =
     typeof window !== "undefined" && localStorage.getItem("eventName");
 
@@ -58,7 +57,6 @@ const CreateEvent = () => {
       ...prevData,
       [name]: value,
     }));
-    console.log(data);
   };
 
   const handleRevealValue = (newValue) => {

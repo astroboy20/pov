@@ -26,10 +26,8 @@ const EventID = () => {
         .then((response) => {
           const data = response.data;
           setEventData(data);
-          console.log(data);
         })
         .catch((error) => {
-          console.log(error);
           toast.error(error);
           router.push("/gallery");
         });

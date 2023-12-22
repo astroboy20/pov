@@ -23,7 +23,6 @@ const Camera = () => {
     const handleSubmit = (e) => {
       setIsLoading(true)
       e.preventDefault();
-      console.log(data);
       if (data.email) {
         axios
           .post(`https://api-cliqpod.koyeb.app/event/${setId}`, {email:data.email})
