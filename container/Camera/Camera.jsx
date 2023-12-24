@@ -6,7 +6,7 @@ import { BackIcon, BlueBackIcon } from "@/assets";
 import { CustomText } from "@/components/CustomText";
 import { MdOutlineCamera } from "react-icons/md";
 import { MdOutlineFlipCameraAndroid } from "react-icons/md";
-
+import {toast} from "react-toastify"
 
 const Camera = ({events}) => {
   const [capturedImages, setCapturedImages] = useState([]);
@@ -89,7 +89,7 @@ const Camera = ({events}) => {
         formData
       );
 
-      console.log("Uploaded Image:", response.data.secure_url);
+      toast.success("Uploaded Image:", response.data.secure_url);
     } catch (error) {
       console.error("Error uploading image:", error);
     }
