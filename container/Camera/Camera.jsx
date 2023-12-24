@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { Button } from "@/components/Button";
-import { ButtonContainer, Container, Video } from "./Camera.style";
+import { Container } from "./Camera.style";
 import { BackIcon, BlueBackIcon } from "@/assets";
 import { CustomText } from "@/components/CustomText";
 import { MdOutlineCamera } from "react-icons/md";
@@ -20,7 +20,7 @@ const Camera = ({ events }) => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
-  const router = useRouter();
+const router = useRouter()
   const switchCamera = () => {
     const newFacingMode = facingMode === "environment" ? "user" : "environment";
     setFacingMode(newFacingMode);
@@ -119,6 +119,7 @@ const Camera = ({ events }) => {
   };
 
   const SavePictureToDatabase = async (imageUrl) => {
+    
     if (imageUrl) {
       try {
         setIsLoading(true);
@@ -134,7 +135,7 @@ const Camera = ({ events }) => {
           )
           .then(() => {
             setIsLoading(false);
-            router.push("/invitee");
+           router.push("/invitee")
           })
           .catch((error) => {
             console.error("Error saving image:", error);
@@ -142,17 +143,16 @@ const Camera = ({ events }) => {
       } catch (error) {
         console.error("Error saving image:", error);
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); 
       }
     }
   };
+  
 
   return (
     <Container>
-      <Video ref={videoRef} autoPlay playsInline></Video>
-      {/* <VideoOverlay src="path_to_your_image.jpg" alt="Overlay Image" /> */}
-      <ButtonContainer>
-        {/* Place your button inside this div */}
+      <video ref={videoRef} autoPlay playsInline></video>
+      <div className="button">
         {photosTaken === events.photosPerPerson ? (
           <Button
             onClick={handleSavePictures}
@@ -167,8 +167,8 @@ const Camera = ({ events }) => {
           </>
         )}
         <MdOutlineFlipCameraAndroid fontSize={"50px"} onClick={switchCamera} />
-      </ButtonContainer>
-      <span style={{ marginTop: "100px" }}>
+      </div>
+      <span style={{ marginTop: "10px" }}>
         Pictures Taken: {photosTaken} / {events.photosPerPerson}
       </span>
     </Container>
