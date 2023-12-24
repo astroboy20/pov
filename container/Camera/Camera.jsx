@@ -6,14 +6,18 @@ import { BackIcon, BlueBackIcon } from "@/assets";
 import { CustomText } from "@/components/CustomText";
 import { MdOutlineCamera } from "react-icons/md";
 import { MdOutlineFlipCameraAndroid } from "react-icons/md";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
-const Camera = ({events}) => {
+const Camera = ({ events }) => {
   const [capturedImages, setCapturedImages] = useState([]);
   const [photosTaken, setPhotosTaken] = useState(0); // Track the number of photos taken
   const videoRef = useRef(null);
   const [facingMode, setFacingMode] = useState("environment");
- 
+  const { user } = useSelector((state) => state.auth);
+  const accessToken = user ? user.token : "";
+  const eventId = typeof window !== "undefined" && localStorage.getItem("id");
+
   const switchCamera = () => {
     const newFacingMode = facingMode === "environment" ? "user" : "environment";
     setFacingMode(newFacingMode);
@@ -32,18 +36,27 @@ const Camera = ({events}) => {
       } catch (error) {
         console.error("Error accessing camera:", error);
         try {
-          // iOS workaround: enumerate devices and select the desired camera
           const devices = await navigator.mediaDevices.enumerateDevices();
-          const videoDevices = devices.filter((device) => device.kind === "videoinput");
+          const videoDevices = devices.filter(
+            (device) => device.kind === "videoinput"
+          );
 
-          const constraints = {
-            deviceId: videoDevices.find((device) => device.label.includes(facingMode)).deviceId,
-          };
+          const device = videoDevices.find((device) =>
+            device.label.includes(facingMode)
+          );
 
-          const stream = await navigator.mediaDevices.getUserMedia({
-            video: constraints,
-          });
-          videoRef.current.srcObject = stream;
+          if (device && device.deviceId) {
+            const constraints = {
+              deviceId: device.deviceId,
+            };
+
+            const stream = await navigator.mediaDevices.getUserMedia({
+              video: constraints,
+            });
+            videoRef.current.srcObject = stream;
+          } else {
+            console.error("Camera device not found or missing deviceId.");
+          }
         } catch (err) {
           console.error("Error accessing camera on iOS:", err);
         }
@@ -65,6 +78,7 @@ const Camera = ({events}) => {
         context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
         const imageData = canvas.toDataURL("image/jpeg");
+        
 
         setCapturedImages([...capturedImages, imageData]);
         setPhotosTaken(photosTaken + 1);
@@ -88,14 +102,30 @@ const Camera = ({events}) => {
         "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
         formData
       );
-
-      toast.success("Uploaded Image:", response.data.secure_url);
+      SavePictures(imageUrl);
+      console.log("Uploaded Image:", response.data.secure_url);
+      
     } catch (error) {
       console.error("Error uploading image:", error);
     }
   };
 
- 
+  const SavePictures = async (imageUrl) => {
+    if (imageUrl) {
+      await axios
+        .post(`https://api-cliqpod.koyeb.app/camera/${eventId}`, imageUrl, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
   return (
     <Container>
       {/* Header and other components */}
@@ -109,16 +139,22 @@ const Camera = ({events}) => {
         </CustomText>
         <span style={{ color: "white" }}>.</span>
       </div>
-      <h1>Take Pictures</h1>
       <video ref={videoRef} autoPlay playsInline></video>
-      <Button type={"submit"} variant={"defaultButton"} onClick={takePicture}>
-        {photosTaken === events.photosPerPerson ? "Submit" : "Take Picture"}
-        <MdOutlineCamera />
-      </Button>
-      <Button type="button" variant="defaultButton" onClick={switchCamera}>
-        Switch Camera
-        <MdOutlineFlipCameraAndroid />
-      </Button>
+      <div className="button">
+        {photosTaken === events.photosPerPerson ? (
+          <Button onClick={SavePictures} type="submit" variant="defaultButton">
+            Submit
+          </Button>
+        ) : (
+          <>
+            <MdOutlineCamera fontSize={"50px"} onClick={takePicture} />
+          </>
+        )}
+        <MdOutlineFlipCameraAndroid fontSize={"50px"} onClick={switchCamera} />
+      </div>
+      <span style={{ marginTop: "10px" }}>
+        Pictures Taken: {photosTaken} / {events.photosPerPerson}
+      </span>
     </Container>
   );
 };

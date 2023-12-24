@@ -2,7 +2,18 @@ import styled from "styled-components"
 
 export const Container = styled.div`
 padding:5% ;
-height:100dvh ;
+/* height:100dvh ; */
+text-align:center ;
+.header-head{
+    display:flex ;
+    justify-content:space-between ;
+}
+.button{
+    display:flex ;
+    gap:10px;
+    justify-content:center ;
+    align-items:center ;
+}
 video{
     width:100% ;
     padding:2% 0% ;
