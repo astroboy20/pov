@@ -4,6 +4,7 @@ import { AlbumContainer } from "./Album.style";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { CustomText } from "@/components/CustomText";
 import { useRouter } from "next/router";
+import { Select } from "@chakra-ui/select";
 
 const Album = ({ eventData }) => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -21,7 +22,11 @@ const Album = ({ eventData }) => {
   return (
     <AlbumContainer>
       <div className="header">
-        <FaArrowCircleLeft onClick={handleRoute} style={{ color: "white" }} fontSize={30} />{" "}
+        <FaArrowCircleLeft
+          onClick={handleRoute}
+          style={{ color: "white" }}
+          fontSize={30}
+        />{" "}
         <CustomText weight={"500"} type={"Htype"} variant={"h1-c"}>
           ALBUM
         </CustomText>
@@ -29,29 +34,15 @@ const Album = ({ eventData }) => {
       <div className="input">
         <div className="left">
           Filter effect
-          <select
-            className="custom-select"
-            value={selectedOption}
-            onChange={handleDropdownChange}
-          >
-            <option value="">Select...</option>
-            <option value="option1">Filter effect</option>
-            {/* <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option> */}
-          </select>
+            <select className="custom-select">
+              <option value="">Filter menu</option>
+            </select>
         </div>
         <div className="right">
           Cliqs by:
-          <select
-            className="custom-select"
-            value={selectedOption}
-            onChange={handleDropdownChange}
-          >
-            <option value="">Select...</option>
-            <option value="option1">All</option>
-            {/* <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option> */}
-          </select>
+            <select className="custom-select">
+              <option value="">All</option>
+            </select>
         </div>
       </div>
       {eventData ? (
@@ -66,7 +57,7 @@ const Album = ({ eventData }) => {
               {/* {eventData[0].uploadTime} */}
             </div>
           ) : (
-            "No message available"
+            <>{eventData.message}</>
           )}
         </div>
       ) : (

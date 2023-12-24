@@ -13,6 +13,7 @@ text-align:center ;
     gap:10px;
     justify-content:center ;
     align-items:center ;
+    padding:5% ;
 }
 video{
     width:100% ;
