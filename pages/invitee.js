@@ -1,8 +1,9 @@
 // import { Invitee } from '@/container/Invitee/Invitee'
 import { Invitee } from '@/container/Invitee/Invitee'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 const invitee = () => {
+ 
   return (
     <div>
         <Invitee/>

@@ -12,14 +12,19 @@ const EventID = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const { id: eventId } = router.query;
-  const query = router.query
-  console.log(query)
+  const query = router.query;
+  console.log(query);
+ 
 
-  const [eventData, setEventData] = useState(null);
-  const setId = typeof window !== "undefined" && localStorage.setItem("id", eventId)
+
   
+
+ 
+  const [eventData, setEventData] = useState({});
+  const setId =
+    typeof window !== "undefined" && localStorage.setItem("id", eventId);
+
   useEffect(() => {
-    
     if (router.isReady && eventId) {
       axios
         .get(`https://api-cliqpod.koyeb.app/gallery/${eventId}`, {
@@ -29,15 +34,15 @@ const EventID = () => {
         })
         .then((response) => {
           const data = response.data;
-          console.log(data)
+          console.log(data);
           setEventData(data);
         })
         .catch((error) => {
           toast.error(error);
           router.push("/gallery");
         });
-    }else{
-      console.log("object")
+    } else {
+      console.log("object");
       if (typeof window !== "undefined" && !router.isReady) {
         router.push(`/invitee`);
       }
@@ -45,8 +50,7 @@ const EventID = () => {
   }, [eventId, accessToken, router, setId]);
   return (
     <ProtectedRoute>
-      <Album eventData={eventData}/>
-      
+      <Album eventData={eventData} />
     </ProtectedRoute>
   );
 };

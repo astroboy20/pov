@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import NavLink from "next/link";
 import styled from "../Dashboard.module.css";
 import {toast} from "react-toastify"
+import Image from "next/image"
 
 const Event = () => {
   const { option } = useOptionContext();
@@ -31,6 +32,7 @@ const Event = () => {
   };
   return (
     <>
+    {/* <Image width={100} height={"100"} src={"/images/dashboard.png"} alt="hey"/> */}
       <DashboardStyle>
         <HeaderStyle></HeaderStyle>
 

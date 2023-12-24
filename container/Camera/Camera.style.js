@@ -5,6 +5,6 @@ padding:5% ;
 height:100dvh ;
 video{
     width:100% ;
-    padding:5% 0% ;
+    padding:2% 0% ;
 }
 `

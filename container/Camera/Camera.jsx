@@ -4,33 +4,56 @@ import { Button } from "@/components/Button";
 import { Container } from "./Camera.style";
 import { BackIcon, BlueBackIcon } from "@/assets";
 import { CustomText } from "@/components/CustomText";
+import { MdOutlineCamera } from "react-icons/md";
+import { MdOutlineFlipCameraAndroid } from "react-icons/md";
 
-const Camera = () => {
+const Camera = ({events}) => {
   const [capturedImages, setCapturedImages] = useState([]);
   const [photosTaken, setPhotosTaken] = useState(0); // Track the number of photos taken
-  const photosPerPerson =
-    typeof window !== "undefined" && localStorage.getItem("photosPerPerson");
   const videoRef = useRef(null);
-  const eventName =
-    typeof window !== "undefined" && localStorage.getItem("eventName");
+  const [facingMode, setFacingMode] = useState("environment");
+ 
+  const switchCamera = () => {
+    const newFacingMode = facingMode === "environment" ? "user" : "environment";
+    setFacingMode(newFacingMode);
+    startCamera();
+  };
 
   useEffect(() => {
     const startCamera = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
+          video: {
+            facingMode: { exact: facingMode },
+          },
         });
         videoRef.current.srcObject = stream;
       } catch (error) {
         console.error("Error accessing camera:", error);
+        try {
+          // iOS workaround: enumerate devices and select the desired camera
+          const devices = await navigator.mediaDevices.enumerateDevices();
+          const videoDevices = devices.filter((device) => device.kind === "videoinput");
+
+          const constraints = {
+            deviceId: videoDevices.find((device) => device.label.includes(facingMode)).deviceId,
+          };
+
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: constraints,
+          });
+          videoRef.current.srcObject = stream;
+        } catch (err) {
+          console.error("Error accessing camera on iOS:", err);
+        }
       }
     };
 
     startCamera();
-  }, []);
+  }, [facingMode]);
 
   const takePicture = async () => {
-    if (photosTaken <= photosPerPerson) {
+    if (photosTaken < events.photosPerPerson) {
       try {
         const canvas = document.createElement("canvas");
 
@@ -71,23 +94,29 @@ const Camera = () => {
     }
   };
 
+ 
   return (
     <Container>
-        <div className="header-head">
-            <span >
-              {" "}
-              <BackIcon />
-            </span>
-
-            <CustomText type={"Htype"} variant={"h3"}>
-              {eventName}
-            </CustomText>
-            <span style={{ color: "white" }}>.</span>
-          </div>
+      {/* Header and other components */}
+      <div className="header-head">
+        <span>
+          {" "}
+          <BackIcon />
+        </span>
+        <CustomText type={"Htype"} variant={"h3"}>
+          {events.eventName}
+        </CustomText>
+        <span style={{ color: "white" }}>.</span>
+      </div>
       <h1>Take Pictures</h1>
-      <video ref={videoRef} autoPlay></video>
+      <video ref={videoRef} autoPlay playsInline></video>
       <Button type={"submit"} variant={"defaultButton"} onClick={takePicture}>
-        {photosTaken === photosPerPerson ? "Submit" : "Take Picture"}
+        {photosTaken === events.photosPerPerson ? "Submit" : "Take Picture"}
+        <MdOutlineCamera />
+      </Button>
+      <Button type="button" variant="defaultButton" onClick={switchCamera}>
+        Switch Camera
+        <MdOutlineFlipCameraAndroid />
       </Button>
     </Container>
   );

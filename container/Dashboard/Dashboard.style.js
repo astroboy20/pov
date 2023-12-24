@@ -12,6 +12,7 @@ export const HeaderStyle = styled.div`
   background-repeat: no-repeat;
   border-radius: 0px 0px 10px 10px;
   height: 50dvh;
+  width:100% ;
 `;
 export const BodyStyle = styled.div`
   width: 100%;
