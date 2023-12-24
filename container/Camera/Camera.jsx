@@ -8,16 +8,19 @@ import { MdOutlineCamera } from "react-icons/md";
 import { MdOutlineFlipCameraAndroid } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { PurpleSpinner } from "@/components/Spinner/Spinner";
+import { useRouter } from "next/router";
 
 const Camera = ({ events }) => {
   const [capturedImages, setCapturedImages] = useState([]);
-  const [photosTaken, setPhotosTaken] = useState(0); // Track the number of photos taken
+  const [photosTaken, setPhotosTaken] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const videoRef = useRef(null);
   const [facingMode, setFacingMode] = useState("environment");
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
-
+const router = useRouter()
   const switchCamera = () => {
     const newFacingMode = facingMode === "environment" ? "user" : "environment";
     setFacingMode(newFacingMode);
@@ -69,66 +72,85 @@ const Camera = ({ events }) => {
   const takePicture = async () => {
     if (photosTaken < events.photosPerPerson) {
       try {
-        const canvas = document.createElement("canvas");
+        const stream = videoRef.current.srcObject;
+        const tracks = stream.getVideoTracks();
+        const imageCapture = new ImageCapture(tracks[0]);
 
-        canvas.width = videoRef.current.videoWidth;
-        canvas.height = videoRef.current.videoHeight;
+        const blob = await imageCapture.takePhoto();
 
-        const context = canvas.getContext("2d");
-        context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-
-        const imageData = canvas.toDataURL("image/jpeg");
-        
-
-        setCapturedImages([...capturedImages, imageData]);
+        setCapturedImages([...capturedImages, blob]);
         setPhotosTaken(photosTaken + 1);
-
-        await uploadImageToCloudinary(imageData);
       } catch (error) {
         console.error("Error taking picture:", error);
       }
     } else {
-      console.log("Maximum number of photos reached.");
+      toast.warning("Maximum number of photos reached.");
     }
   };
 
-  const uploadImageToCloudinary = async (imageData) => {
+  const handleSavePictures = async () => {
     try {
-      const formData = new FormData();
-      formData.append("file", imageData);
-      formData.append("upload_preset", "za8tsrje");
+      const uploadPromises = capturedImages.map(async (imageData) => {
+        const formData = new FormData();
+        formData.append("file", imageData);
+        formData.append("upload_preset", "za8tsrje");
 
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
-        formData
-      );
-      SavePictures(imageUrl);
-      console.log("Uploaded Image:", response.data.secure_url);
-      
+        const response = await axios.post(
+          "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+          formData
+        );
+        return response.data.secure_url;
+      });
+
+      const uploadedImageUrls = await Promise.all(uploadPromises);
+
+      uploadedImageUrls.forEach((imageUrl) => {
+        SavePictureToDatabase(imageUrl);
+      });
+
+      setCapturedImages([]);
+      setPhotosTaken(0);
+
+      toast.success("Images uploaded successfully!");
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Error uploading images:", error);
+      toast.error("Failed to upload images.");
     }
   };
 
-  const SavePictures = async (imageUrl) => {
+  const SavePictureToDatabase = async (imageUrl) => {
+    
     if (imageUrl) {
-      await axios
-        .post(`https://api-cliqpod.koyeb.app/camera/${eventId}`, imageUrl, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      try {
+        setIsLoading(true);
+        await axios
+          .post(
+            `https://api-cliqpod.koyeb.app/camera/${eventId}`,
+            { imageUrl },
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          )
+          .then(() => {
+            setIsLoading(false);
+           router.push("/invitee")
+          })
+          .catch((error) => {
+            console.error("Error saving image:", error);
+          });
+      } catch (error) {
+        console.error("Error saving image:", error);
+      } finally {
+        setIsLoading(false); 
+      }
     }
   };
+  
+
   return (
     <Container>
-      {/* Header and other components */}
       <div className="header-head">
         <span>
           {" "}
@@ -142,8 +164,12 @@ const Camera = ({ events }) => {
       <video ref={videoRef} autoPlay playsInline></video>
       <div className="button">
         {photosTaken === events.photosPerPerson ? (
-          <Button onClick={SavePictures} type="submit" variant="defaultButton">
-            Submit
+          <Button
+            onClick={handleSavePictures}
+            type="submit"
+            variant="defaultButton"
+          >
+            {isLoading ? <PurpleSpinner /> : "Submit"}
           </Button>
         ) : (
           <>

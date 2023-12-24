@@ -14,13 +14,9 @@ const EventID = () => {
   const { id: eventId } = router.query;
   const query = router.query;
   console.log(query);
- 
-
-
-  
 
  
-  const [eventData, setEventData] = useState({});
+  const [eventData, setEventData] = useState([]);
   const setId =
     typeof window !== "undefined" && localStorage.setItem("id", eventId);
 
@@ -35,7 +31,9 @@ const EventID = () => {
         .then((response) => {
           const data = response.data;
           console.log(data);
+          
           setEventData(data);
+          console.log("data",eventData)
         })
         .catch((error) => {
           toast.error(error);
@@ -51,6 +49,7 @@ const EventID = () => {
   return (
     <ProtectedRoute>
       <Album eventData={eventData} />
+      {/* {eventData.map()} */}
     </ProtectedRoute>
   );
 };
