@@ -9,7 +9,7 @@ const initialState = {
   user: user ? user : null,
   isError: false,
   isSuccess: false,
-  // isAuthenticated:false,
+  isAuthenticated:false,
   isLoading: false,
   message: "",
   isNewpasswordSuccess: false,
@@ -288,5 +288,6 @@ const authSlice = createSlice({
 
 export const { reset } = authSlice.actions;
 export const { setUser } = authSlice.actions;
+export const { isAuthenticated } = authSlice.actions;
 
 export default authSlice.reducer;
