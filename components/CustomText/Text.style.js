@@ -15,6 +15,14 @@ export const HType = styled.p`
           font-weight: 600;
           line-height: normal;
         `
+      : variant === "h1-c"
+      ? css`
+          font-size: 28px;
+          font-style: normal;
+          color:white ;
+          font-weight: 600;
+          line-height: normal;
+        `
       : variant === "h2"
       ? css`
           font-size: 20px;

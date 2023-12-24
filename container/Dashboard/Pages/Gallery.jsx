@@ -138,14 +138,15 @@ const Gallery = () => {
                           alt="event_banner"
                         />
                         <div className="text">
+                        <Link  style={{textDecoration:"none"}} href={`/gallery/${event._id}`}>
                           <div className="a">{event.eventName}</div>
                           <div className="b"> Ending {event.end_date}</div>
-                          <Link
-                            href={`/gallery/${event._id}`}
-                          >
-                            link
                           </Link>
+                          
+                      
+                          
                         </div>
+                       
                       </div>
                       <div className="icons">
                         <span onClick={() => setShowModal(true)}>
