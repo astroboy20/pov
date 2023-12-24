@@ -10,9 +10,13 @@ const Album = ({ eventData }) => {
         {eventData ? (
           <div>
             <h2>Event Details</h2>
-            <p>message: {eventData.message}</p>
+            <p>
+              message:{" "}
+              {eventData.map((event) => {
+                <div key={event.id}>{event.message[0]}</div>;
+              })}
+            </p>
             {/* <p>Real Time: {eventData.reaveal_photoTime}</p> */}
-           
           </div>
         ) : (
           <div
@@ -26,11 +30,6 @@ const Album = ({ eventData }) => {
             <PurpleSpinner />
           </div>
         )}
-         {eventData.map((event)=>{(
-              <div key={event.id}>
-                {event.message}
-              </div>
-            )})}
       </AlbumContainer>
     </>
   );
