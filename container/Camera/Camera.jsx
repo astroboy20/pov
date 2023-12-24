@@ -7,6 +7,7 @@ import { CustomText } from "@/components/CustomText";
 import { MdOutlineCamera } from "react-icons/md";
 import { MdOutlineFlipCameraAndroid } from "react-icons/md";
 
+
 const Camera = ({events}) => {
   const [capturedImages, setCapturedImages] = useState([]);
   const [photosTaken, setPhotosTaken] = useState(0); // Track the number of photos taken
