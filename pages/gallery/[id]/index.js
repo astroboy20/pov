@@ -40,7 +40,6 @@ const EventID = () => {
           router.push("/gallery");
         });
     } else if (!eventData) {
-      console.log("object");
       if (typeof window !== "undefined" && !router.isReady) {
         router.push(`/invitee`);
       }
