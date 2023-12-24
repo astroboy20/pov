@@ -39,10 +39,10 @@ const EventID = () => {
           toast.error(error);
           router.push("/gallery");
         });
-    } else if (!eventData) {
-      if (typeof window !== "undefined" && !router.isReady) {
+    } else if (!eventId) {
+      
         router.push(`/invitee`);
-      }
+      
     }
   }, [eventId, accessToken, router, setId]);
   return (
