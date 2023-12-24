@@ -42,7 +42,7 @@ const EventID = () => {
           toast.error(error);
           router.push("/gallery");
         });
-    } else if (!eventId && !user) {
+    } else  {
       router.push(`/invitee`);
     }
   }, [eventId, accessToken, router, setId]);
