@@ -39,7 +39,7 @@ const EventID = () => {
           toast.error(error);
           router.push("/gallery");
         });
-    } else {
+    } else if (!eventData) {
       console.log("object");
       if (typeof window !== "undefined" && !router.isReady) {
         router.push(`/invitee`);
@@ -49,7 +49,6 @@ const EventID = () => {
   return (
     <ProtectedRoute>
       <Album eventData={eventData} />
-      {/* {eventData.map()} */}
     </ProtectedRoute>
   );
 };

@@ -48,16 +48,12 @@ const Invitee = () => {
     }
   };
 
-  const handleRoute = () =>{
-    router.push("/gallery")
-  }
+ 
   return (
     <>
       <Container>
         <FormHeader>
-          <span onClick={handleRoute}>
-            <BackIcon />
-          </span>
+
 
           <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
             Input your email
