@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const Container = styled.div`
 
-height:100dvh ;
+height:80dvh ;
 text-align:center ;
 .header-head{
     display:flex ;
