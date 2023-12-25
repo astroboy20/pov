@@ -18,6 +18,8 @@ const Camera = ({ events }) => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
+  const token = typeof window !== "undefined" && localStorage.getItem("token");
+  console.log(token);
   const router = useRouter();
 
   const switchCamera = () => {
@@ -81,15 +83,21 @@ const Camera = ({ events }) => {
 
         const imageUrl = response.data.secure_url;
         console.log(imageUrl);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
         if (imageUrl) {
           axios
-            .post(`https://api-cliqpod.koyeb.app/camera/${eventId}`, {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            })
+            .post(
+              `https://api-cliqpod.koyeb.app/camera/${eventId}`,
+               imageUrl,
+              config
+            )
             .then((response) => {
-              console.log(response);
+              console.log(response.data);
+              router.push("/invitee")
             })
             .catch((error) => {
               console.log(error);

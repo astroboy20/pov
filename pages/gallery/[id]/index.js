@@ -47,7 +47,9 @@ const EventID =  ({ params }) => {
   const [eventData, setEventData] = useState([]);
   const setId =
     typeof window !== "undefined" && localStorage.setItem("id", eventId);
-
+  const token =
+    typeof window !== "undefined" && localStorage.setItem("token", accessToken);
+console.log(token)
   useEffect(() => {
     if (!user) {
       router.push("/invitee");
