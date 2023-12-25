@@ -15,11 +15,7 @@ const Camera = ({ events }) => {
   const [isLoading, setIsLoading] = useState(false);
   const videoRef = useRef(null);
   const [facingMode, setFacingMode] = useState("environment");
-  const { user } = useSelector((state) => state.auth);
-  const accessToken = user ? user.token : "";
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
-  const token = typeof window !== "undefined" && localStorage.getItem("token");
-  console.log(token);
   const router = useRouter();
 
   const switchCamera = () => {
@@ -83,27 +79,23 @@ const Camera = ({ events }) => {
 
         const imageUrl = response.data.secure_url;
         console.log(imageUrl);
-        const config = {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        };
-        if (imageUrl) {
+       
+        if (response && imageUrl) {
           axios
-            .post(
-              `https://api-cliqpod.koyeb.app/camera/${eventId}`,
-               imageUrl,
-              config
-            )
+            .post(`https://api-cliqpod.koyeb.app/camera/${eventId}`, {
+              image: imageUrl,
+            })
             .then((response) => {
               console.log(response.data);
-              router.push("/invitee")
+            
             })
             .catch((error) => {
               console.log(error);
             });
-        }
 
+         
+        }
+        
         setPhotosTaken(photosTaken + 1);
       } catch (error) {
         console.error("Error taking picture:", error);
@@ -113,6 +105,13 @@ const Camera = ({ events }) => {
       toast.warning("Maximum number of photos reached.");
     }
   };
+
+  useEffect(() => {
+    if (photosTaken === events.photosPerPerson) {
+      toast.success("All photos have been successfully taken and saved!")
+      router.push("/invitee");
+    }
+  }, [photosTaken, events.photosPerPerson, router]);
 
   return (
     <Container>

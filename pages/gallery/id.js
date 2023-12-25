@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { ProtectedRoute } from "@/container/ProtectedRoutes/ProtectedRoute";
+import { Album } from "@/container/Album";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { Album } from "@/container/Album";
-import { ProtectedRoute } from "@/container/ProtectedRoutes/ProtectedRoute";
-
-
-const EventID =  ({ searchParams }) => {
-console.log("event:", searchParams)
+import {toast} from "react-toastify"
+const Id = ({ searchParams }) => {
+  console.log(searchParams);
   const router = useRouter();
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
-  const { id: eventId } = router.query;
+  const eventId = router.query.id;
   const query = router.query;
   console.log(query);
 
   const [eventData, setEventData] = useState([]);
   const setId =
     typeof window !== "undefined" && localStorage.setItem("id", eventId);
-  
+   
   useEffect(() => {
     if (!user) {
-      router.push("/invitee");
-      return;
+      router.push(`/invitee`);
     }
     if (eventId) {
       axios
@@ -43,10 +40,10 @@ console.log("event:", searchParams)
           toast.error(error);
           router.push("/gallery");
         });
-    } else {
-      router.push(`/invitee`);
     }
   }, [eventId, accessToken, router, setId, eventData, user]);
+
+  
   return (
     <ProtectedRoute>
       <Album eventData={eventData} />
@@ -54,4 +51,4 @@ console.log("event:", searchParams)
   );
 };
 
-export default EventID;
+export default Id;

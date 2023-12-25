@@ -138,7 +138,7 @@ const Gallery = () => {
                           alt="event_banner"
                         />
                         <div className="text">
-                        <Link  style={{textDecoration:"none"}} href={`/gallery/${event._id}`}>
+                        <Link  style={{textDecoration:"none"}} href={{pathname:`/gallery/id`, query:{id:event._id}}}>
                           <div className="a">{event.eventName}</div>
                           <div className="b"> Ending {event.end_date}</div>
                           </Link>
