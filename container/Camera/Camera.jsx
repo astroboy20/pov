@@ -87,6 +87,7 @@ const Camera = ({ events }) => {
             })
             .then((response) => {
               console.log(response.data);
+              toast.success(response.data.success)
             
             })
             .catch((error) => {
