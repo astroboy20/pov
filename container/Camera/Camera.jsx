@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { PurpleSpinner } from "@/components/Spinner/Spinner";
 import { useRouter } from "next/router";
+import { headers } from "@/next.config";
 
 const Camera = ({ events }) => {
   const [capturedImages, setCapturedImages] = useState([]);
@@ -16,14 +17,12 @@ const Camera = ({ events }) => {
   const [facingMode, setFacingMode] = useState("environment");
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
-  const eventId =
-    typeof window !== "undefined" && localStorage.getItem("id");
+  const eventId = typeof window !== "undefined" && localStorage.getItem("id");
   const router = useRouter();
 
   const switchCamera = () => {
     setIsLoading(true);
-    const newFacingMode =
-      facingMode === "environment" ? "user" : "environment";
+    const newFacingMode = facingMode === "environment" ? "user" : "environment";
     setFacingMode(newFacingMode);
     startCamera().finally(() => setIsLoading(false));
   };
@@ -71,7 +70,32 @@ const Camera = ({ events }) => {
         const tracks = stream.getVideoTracks();
         const imageCapture = new ImageCapture(tracks[0]);
         const blob = await imageCapture.takePhoto();
-        setCapturedImages([...capturedImages, blob]);
+
+        const formData = new FormData();
+        formData.append("file", blob);
+        formData.append("upload_preset", "za8tsrje");
+        const response = await axios.post(
+          "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+          formData
+        );
+
+        const imageUrl = response.data.secure_url;
+        console.log(imageUrl);
+        if (imageUrl) {
+          axios
+            .post(`https://api-cliqpod.koyeb.app/camera/${eventId}`, {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            })
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+
         setPhotosTaken(photosTaken + 1);
       } catch (error) {
         console.error("Error taking picture:", error);
@@ -82,80 +106,16 @@ const Camera = ({ events }) => {
     }
   };
 
-  const handleSavePictures = async () => {
-    setIsLoading(true);
-    try {
-      const uploadPromises = capturedImages.map(async (imageData) => {
-        const formData = new FormData();
-        formData.append("file", imageData);
-        formData.append("upload_preset", "za8tsrje");
-        const response = await axios.post(
-          "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
-          formData
-        );
-        return response.data.secure_url;
-      });
-
-      const uploadedImageUrls = await Promise.all(uploadPromises);
-
-      uploadedImageUrls.forEach((imageUrl) => {
-        SavePictureToDatabase(imageUrl);
-      });
-
-      setCapturedImages([]);
-      setPhotosTaken(0);
-      toast.success("Images uploaded successfully!");
-    } catch (error) {
-      console.error("Error uploading images:", error);
-      toast.error("Failed to upload images.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const SavePictureToDatabase = async (imageUrl) => {
-    if (imageUrl) {
-      try {
-        setIsLoading(true);
-        await axios
-          .post(
-            `https://api-cliqpod.koyeb.app/camera/${eventId}`,
-            { imageUrl },
-            { headers: { Authorization: `Bearer ${accessToken}` } }
-          )
-          .then(() => {
-            router.push("/invitee");
-          })
-          .catch((error) => {
-            console.error("Error saving image:", error);
-            setIsLoading(false);
-          });
-      } catch (error) {
-        console.error("Error saving image:", error);
-        setIsLoading(false);
-      }
-    }
-  };
-
   return (
     <Container>
       <video ref={videoRef} autoPlay playsInline></video>
       <div className="button">
         {photosTaken === events.photosPerPerson ? (
-          <Button
-            onClick={handleSavePictures}
-            type="submit"
-            variant="defaultButton"
-          >
-            {isLoading ? <PurpleSpinner /> : "Submit"}
-          </Button>
+          <PurpleSpinner />
         ) : (
           <MdOutlineCamera fontSize={"50px"} onClick={takePicture} />
         )}
-        <MdOutlineFlipCameraAndroid
-          fontSize={"50px"}
-          onClick={switchCamera}
-        />
+        <MdOutlineFlipCameraAndroid fontSize={"50px"} onClick={switchCamera} />
       </div>
       <span style={{ marginTop: "10px" }}>
         Pictures Taken: {photosTaken} / {events.photosPerPerson}

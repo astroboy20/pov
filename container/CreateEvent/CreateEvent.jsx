@@ -160,7 +160,6 @@ const CreateEvent = () => {
     try {
       setLoading(true);
 
-      // Upload the image to Cloudinary
       const imageData = new FormData();
       imageData.append("file", data.image);
       imageData.append("upload_preset", "za8tsrje");

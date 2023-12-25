@@ -7,7 +7,36 @@ import { PurpleSpinner } from "@/components/Spinner/Spinner";
 import { Album } from "@/container/Album";
 import { ProtectedRoute } from "@/container/ProtectedRoutes/ProtectedRoute";
 
-const EventID = () => {
+// export async function generateStaticParams() {
+//   const { user } = useSelector((state) => state.auth);
+//   const accessToken = user ? user.token : "";
+//   const res = await fetch("https://api-cliqpod.koyeb.app/events", {
+//     headers: {
+//       Authorization: `Bearer ${accessToken}`,
+//     },
+//   });
+//   const data = await res.json();
+
+//   return data.events.map((event) => {
+//     ({ id: event._id });
+//   });
+// }
+
+// export async function ggetProduct(id) {
+//   const { user } = useSelector((state) => state.auth);
+//   const accessToken = user ? user.token : "";
+//   const res = await fetch(`https://api-cliqpod.koyeb.app/gallery/${eventId}`, {
+//       headers: {
+//         Authorization: `Bearer ${accessToken}`,
+//       },
+//     })
+
+//     const data = await res.json()
+//    return data
+// }
+const EventID =  ({ params }) => {
+  // const event = await getProduct(params.id)
+// console.log("event:", event)
   const router = useRouter();
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
@@ -20,9 +49,9 @@ const EventID = () => {
     typeof window !== "undefined" && localStorage.setItem("id", eventId);
 
   useEffect(() => {
-    if(!user){
-      router.push("/invitee")
-      return
+    if (!user) {
+      router.push("/invitee");
+      return;
     }
     if (eventId) {
       axios
@@ -42,7 +71,7 @@ const EventID = () => {
           toast.error(error);
           router.push("/gallery");
         });
-    } else  {
+    } else {
       router.push(`/invitee`);
     }
   }, [eventId, accessToken, router, setId]);

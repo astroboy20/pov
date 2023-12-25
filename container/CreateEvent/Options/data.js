@@ -1,11 +1,16 @@
 export const RevealData = [
-    {
+    {   
         id:1,
+        label:"0 hours",
+        value:"0"
+    },
+    {   
+        id:2,
         label:"12 hours",
         value:"12"
     },
     {
-        id:2,
+        id:3,
         label:"24 hours",
         value:"24"
     }
