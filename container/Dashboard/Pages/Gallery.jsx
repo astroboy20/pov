@@ -157,7 +157,7 @@ const Gallery = () => {
                           onClose={() => setShowModal(false)}
                         >
                           <div style={{marginBottom:"20px"}} ref={qrCodeRef}>
-                          <QRCode value={`https://cliqpod.co/invitee/${event._id}`} />
+                          <QRCode value={`https://cliqpod.co/gallery/${event._id}`} />
                           
                           </div>
                           <Button

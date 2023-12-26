@@ -6,7 +6,9 @@ import { useRouter } from "next/router";
 const InviteeRoute = () => {
   const router = useRouter();
   const eventId = router.query.id;
-  typeof window !== "undefined" && localStorage.setItem("id", eventId);
+  const setId = typeof window !== "undefined" && localStorage.setItem("id", eventId);
+console.log(setId)
+console.log(eventId)
 
   return (
     <div>
