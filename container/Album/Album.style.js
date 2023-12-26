@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const AlbumContainer = styled.div`
   background: #72757A;
   padding: 5%;
-  height:100vh;
+  height:auto;
   display:flex ;
   flex-direction:column ;
   gap:20px;
@@ -48,6 +48,17 @@ export const AlbumContainer = styled.div`
   border-top: 5px solid white; /* Color of the arrow */
   transform: translateY(-50%); /* Center vertically */
   pointer-events: none; /* Prevent clicking on pseudo-element */
+}
+.image{
+  display: grid;
+  row-gap: 10px;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+}
+.image-image{
+ 
+  border-radius:10px ;
+  /* padding:2% ; */
 }
 
 

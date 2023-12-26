@@ -5,14 +5,13 @@ import { Album } from "@/container/Album";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import {toast} from "react-toastify"
-const Id = ({ searchParams }) => {
-  console.log(searchParams);
+const Id = () => {
   const router = useRouter();
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const eventId = router.query.id;
   const query = router.query;
-  console.log(query);
+  
 
   const [eventData, setEventData] = useState([]);
   const setId =
@@ -31,17 +30,14 @@ const Id = ({ searchParams }) => {
         })
         .then((response) => {
           const data = response.data;
-          console.log(data);
-
           setEventData(data);
-          console.log("data", eventData);
         })
         .catch((error) => {
           toast.error(error);
           router.push("/gallery");
         });
     }
-  }, [eventId, accessToken, router, setId, eventData, user]);
+  }, [eventId, accessToken, router, setId, user]);
 
   
   return (

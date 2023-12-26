@@ -5,6 +5,7 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 import { CustomText } from "@/components/CustomText";
 import { useRouter } from "next/router";
 import { Select } from "@chakra-ui/select";
+import Image from "next/image";
 
 const Album = ({ eventData }) => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -34,30 +35,42 @@ const Album = ({ eventData }) => {
       <div className="input">
         <div className="left">
           Filter effect
-            <select className="custom-select">
-              <option value="">Filter menu</option>
-            </select>
+          <select className="custom-select">
+            <option value="">Filter menu</option>
+          </select>
         </div>
         <div className="right">
           Cliqs by:
-            <select className="custom-select">
-              <option value="">All</option>
-            </select>
+          <select className="custom-select">
+            <option value="">All</option>
+          </select>
         </div>
       </div>
       {eventData ? (
         <div>
           <h2>Event Details</h2>
           {eventData.length > 0 ? (
-            <div key={eventData[0].id}>
+            <div key={eventData.photo}>
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
                 {eventData[0].message}
               </CustomText>
 
-              {/* {eventData[0].uploadTime} */}
+              <div className="image">
+                {eventData.map((event) => (
+                  <div key={event.photo}>
+                    <Image
+                      width={100}
+                      height={100}
+                      src={event.photo}
+                      alt="event photo"
+                      className="image-image"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           ) : (
-            <>{eventData.message}</>
+            <>{eventData.message} </>
           )}
         </div>
       ) : (
