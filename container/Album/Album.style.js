@@ -3,7 +3,9 @@ import styled from "styled-components";
 export const AlbumContainer = styled.div`
   background: #72757A;
   padding: 5%;
-  height:auto;
+  height:100vh;
+  overflow-y:scroll ;
+  width:100% ;
   display:flex ;
   flex-direction:column ;
   gap:20px;
@@ -50,15 +52,15 @@ export const AlbumContainer = styled.div`
   pointer-events: none; /* Prevent clicking on pseudo-element */
 }
 .image{
-  display: grid;
-  row-gap: 10px;
-  grid-template-columns: auto auto auto;
-  padding: 10px;
+  display:flex ;
+  align-items:center ;
+  justify-content:center ;
+  flex-wrap:wrap ;
+  gap:5px;
 }
 .image-image{
- 
   border-radius:10px ;
-  /* padding:2% ; */
+  
 }
 
 

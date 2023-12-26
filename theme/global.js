@@ -13,7 +13,7 @@ body{
     display:block ;
     transition: all 1s linear;
     background-repeat: no-repeat;
-    padding: 5%;
+    height:100dvh ;
     
   }
 }
