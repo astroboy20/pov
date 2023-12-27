@@ -7,8 +7,8 @@ const InviteeRoute = () => {
   const router = useRouter();
   const eventId = router.query.id;
   const setId = typeof window !== "undefined" && localStorage.setItem("id", eventId);
-console.log(setId)
-console.log(eventId)
+  console.log(setId)
+  console.log(eventId)
 
   return (
     <div>

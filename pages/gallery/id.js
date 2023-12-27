@@ -12,7 +12,7 @@ const Id = () => {
   const eventId = router.query.id;
   const query = router.query;
   
-
+console.log(eventId)
   const [eventData, setEventData] = useState([]);
   const setId =
     typeof window !== "undefined" && localStorage.setItem("id", eventId);
