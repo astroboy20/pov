@@ -31,10 +31,9 @@ const Gallery = () => {
   const downloadQrCode = () => {
     if (qrCodeRef.current) {
       html2canvas(qrCodeRef.current).then((canvas) => {
-        // Convert canvas to image data
+
         const image = canvas.toDataURL('image/png');
 
-        // Create an anchor element to trigger download
         const link = document.createElement('a');
         link.href = image;
         link.download = 'captured_element.png';
