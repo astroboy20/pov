@@ -179,7 +179,6 @@ const Gallery = () => {
                               <div style={{padding:"5%"}}>
                               {event.eventName}
                               </div>
-                              
                             </CustomText>
                             <div>
                               <QRCode
