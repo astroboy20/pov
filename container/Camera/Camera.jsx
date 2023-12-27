@@ -110,7 +110,7 @@ const Camera = ({ events }) => {
   useEffect(() => {
     if (photosTaken === events.photosPerPerson) {
       toast.success("All photos have been successfully taken and saved!")
-      router.push("/invitee");
+      router.push("/");
     }
   }, [photosTaken, events.photosPerPerson, router]);
 
