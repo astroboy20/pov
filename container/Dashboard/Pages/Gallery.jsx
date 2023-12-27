@@ -103,7 +103,6 @@ const Gallery = () => {
       toast.error(error.message || "Error deleting event. Please try again.");
     }
   };
-
   return (
     <>
       <GalleryStyle>
