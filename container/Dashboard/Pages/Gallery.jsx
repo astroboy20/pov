@@ -163,8 +163,7 @@ const Gallery = () => {
                         </span>
                         <Modal
                           show={showModal}
-                          onClose={() => setShowModal(false)}
-                          
+                          onClose={() => setShowModal(false)} 
                         >
                           <div
                             className="qr-code"
