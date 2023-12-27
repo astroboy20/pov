@@ -12,7 +12,7 @@ export const HeaderStyle = styled.div`
   background-repeat: no-repeat;
   border-radius: 0px 0px 10px 10px;
   height: 50dvh;
-  width:100% ;
+  width: 100%;
 `;
 export const BodyStyle = styled.div`
   width: 100%;
@@ -64,7 +64,7 @@ export const GalleryStyle = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 5%;
-    border-bottom:1px solid black ;
+    border-bottom: 1px solid black;
   }
   .join {
     display: flex;
@@ -97,7 +97,7 @@ export const GalleryStyle = styled.div`
     justify-content: space-between;
     padding: 5% 3%;
     background-color: #ece6f0;
-    border-bottom:1px solid black ;
+    border-bottom: 1px solid black;
   }
   .sub-info {
     display: flex;
@@ -127,10 +127,21 @@ export const GalleryStyle = styled.div`
     align-items: center;
     justify-content: center;
   }
+  .qr-code {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
 `;
-
+export const QRcode = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
+  textAlign: "colunm",
+};
 export const Delete = styled(MdDelete)`
   width: 24px;
   height: 24px;
-  color:black;
+  color: black;
 `;

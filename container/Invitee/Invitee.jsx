@@ -48,16 +48,18 @@ const Invitee = () => {
     }
   };
 
- 
   return (
     <>
       <Container>
         <FormHeader>
-
-
-          <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
-            Input your email
-          </CustomText>
+          <div>
+            <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
+              Input your email
+            </CustomText>
+            <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+              You will be informed when the pictures taken is ready
+            </CustomText>
+          </div>
         </FormHeader>
         <form onSubmit={handleSubmit}>
           <Input

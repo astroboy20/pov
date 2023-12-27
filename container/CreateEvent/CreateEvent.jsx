@@ -32,7 +32,6 @@ const CreateEvent = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
 
-  
   const eventName =
     typeof window !== "undefined" && localStorage.getItem("eventName");
 
@@ -49,9 +48,13 @@ const CreateEvent = () => {
     revealTime: "",
     image: "",
   });
-  
+
   const MAX_FILE_SIZE_MB = 5;
   const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
+  const selectNewImage = () => {
+    document.getElementById("selectFile").click();
+  };
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -236,12 +239,16 @@ const CreateEvent = () => {
                   alt="Selected"
                   width={1920}
                   height={1080}
+                  objectFit="cover"
                   style={{
                     width: "40%",
                     height: "40vh",
-                    margin: "0 30%",
+                    margin: "2% 30%",
                   }}
                 />
+                <button className="change-image" onClick={selectNewImage}>
+                  Change Image
+                </button>
               </div>
             ) : (
               <span
@@ -255,63 +262,18 @@ const CreateEvent = () => {
                 onClick={handleImageClick}
               >
                 <ImageIcon />
-
                 <CustomText weight={"500"} type={"Htype"} variant={"h2-b"}>
                   upload frame
                 </CustomText>
               </span>
             )}
+
             <div></div>
           </div>
         </div>
         <div className="body">
           {step === 1 && (
             <>
-              <Accordion allowToggle>
-                <AccordionItem>
-                  <AccordionButton
-                    style={{
-                      background: "none",
-                      border: "none",
-                      gap: "10px",
-                      fontSize: "16px",
-                    }}
-                  >
-                    <div className="item">
-                      <SiNamebase />
-                      <div className="sub-item">
-                        <CustomText
-                          weight={"500"}
-                          type={"Htype"}
-                          variant={"h2-b"}
-                        >
-                          Sub Name
-                        </CustomText>{" "}
-                        {data.subName && (
-                          <CustomText
-                            weight={"500"}
-                            type={"Htype"}
-                            variant={"h2-b"}
-                          >
-                            {data.subName}
-                          </CustomText>
-                        )}
-                      </div>
-                    </div>
-                  </AccordionButton>
-                  <AccordionPanel background="none" p={10}>
-                    <Input
-                      placeholder="Event name"
-                      size="md"
-                      type="text"
-                      name="subName"
-                      value={data.subName}
-                      onChange={handleChange}
-                      className="input"
-                    />
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
               <Accordion allowToggle>
                 <AccordionItem>
                   <AccordionButton
@@ -344,6 +306,9 @@ const CreateEvent = () => {
                     </div>
                   </AccordionButton>
                   <AccordionPanel background="none" p={10}>
+                    <p style={{ margin: "2% 0" }}>
+                      Select the start date and time for the event
+                    </p>
                     <Input
                       placeholder="Select Date and Time"
                       size="md"
@@ -388,6 +353,9 @@ const CreateEvent = () => {
                     </div>
                   </AccordionButton>
                   <AccordionPanel background="none" p={10}>
+                    <p style={{ margin: "2% 0" }}>
+                      Select the end date and time for the event
+                    </p>
                     <Input
                       placeholder="Select Date and Time"
                       size="md"

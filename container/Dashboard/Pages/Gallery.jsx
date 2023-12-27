@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, createRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { Delete, FeatureStyle, GalleryStyle } from "../Dashboard.style";
+import { Delete, FeatureStyle, GalleryStyle, QRcode } from "../Dashboard.style";
 import { CustomText } from "@/components/CustomText";
 import { EditIcon, JoinIcon } from "@/assets";
 import Image from "next/image";
@@ -12,8 +12,8 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { Modal } from "@/components/Modal";
 import QRCode from "react-qr-code";
-import * as htmlToImage from "html-to-image";
 import { Button } from "@/components/Button";
+import { createFileName, useScreenshot } from "use-react-screenshot";
 
 const Gallery = () => {
   const { user } = useSelector((state) => state.auth);
@@ -21,8 +21,28 @@ const Gallery = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [events, setEvent] = useState([]);
+  const [image, takeScreenshot] = useScreenshot({
+    type: "image/jpeg",
+    quality: 1.0,
+  });
+
   const router = useRouter();
-  const qrCodeRef = useRef(null);
+  const qrCodeRef = createRef(null);
+
+  const download = (image, { name = "image", extension = "jpg" } = {}) => {
+    const a = document.createElement("a");
+    a.href = image;
+    a.download = createFileName(extension, name);
+    document.body.appendChild(a); 
+    a.click();
+    document.body.removeChild(a); 
+  };
+
+  const downloadQrCode = () => {
+    takeScreenshot(qrCodeRef.current).then((image) => {
+      download(image, { name: "qr-code", extension: "jpg" });
+    });
+  };
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -84,19 +104,6 @@ const Gallery = () => {
     }
   };
 
-  const downloadQrCode = () => {
-    htmlToImage
-    .toPng(qrCodeRef.current)
-    .then(function (dataUrl) {
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = "qr-code.png";
-      link.click();
-    })
-    .catch(function (error) {
-      console.error("Error generating QR code:", error);
-    });
-  };
   return (
     <>
       <GalleryStyle>
@@ -138,15 +145,17 @@ const Gallery = () => {
                           alt="event_banner"
                         />
                         <div className="text">
-                        <Link  style={{textDecoration:"none"}} href={{pathname:`/gallery/id`, query:{id:event._id}}}>
-                          <div className="a">{event.eventName}</div>
-                          <div className="b"> Ending {event.end_date}</div>
+                          <Link
+                            style={{ textDecoration: "none" }}
+                            href={{
+                              pathname: `/gallery/id`,
+                              query: { id: event._id },
+                            }}
+                          >
+                            <div className="a">{event.eventName}</div>
+                            <div className="b"> Ending {event.end_date}</div>
                           </Link>
-                          
-                      
-                          
                         </div>
-                       
                       </div>
                       <div className="icons">
                         <span onClick={() => setShowModal(true)}>
@@ -155,10 +164,43 @@ const Gallery = () => {
                         <Modal
                           show={showModal}
                           onClose={() => setShowModal(false)}
-                        >
-                          <div style={{marginBottom:"20px"}} ref={qrCodeRef}>
-                          <QRCode value={`https://cliqpod.co/invitee/${event._id}`} />
                           
+                        >
+                          <div
+                            className="qr-code"
+                            ref={qrCodeRef}
+                            style={{padding:"5%"}}
+                          >
+                            <CustomText
+                              weight={"500"}
+                              type={"Htype"}
+                              variant={"h3"}
+                            >
+                              <div style={{padding:"5%"}}>
+                              {event.eventName}
+                              </div>
+                              
+                            </CustomText>
+                            <div>
+                              <QRCode
+                                value={`https://cliqpod.co/invitee/${event._id}`}
+                              />
+                              <CustomText
+                                weight={"500"}
+                                type={"Htype"}
+                                variant={"h1"}
+                              >
+                                SCAN ME
+                              </CustomText>
+                            </div>
+
+                            <CustomText
+                              weight={"500"}
+                              type={"Htype"}
+                              variant={"h3-c"}
+                            >
+                              Made by CliqPod with Love.
+                            </CustomText>
                           </div>
                           <Button
                             type="submit"

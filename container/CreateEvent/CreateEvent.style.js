@@ -6,7 +6,9 @@ export const GalleryStyle = styled.div`
   color: "#2F3036";
 
   .header {
-    height: 50vh;
+    height: auto;
+    text-align:center ;
+    align-items:center ;
   }
   .header-head {
     display: flex;
@@ -15,6 +17,11 @@ export const GalleryStyle = styled.div`
     height: 10vh;
     padding: 3%;
     text-align: center;
+  }
+  .image{
+    display: flex;
+    flex-direction:column ;
+    align-items: center;
   }
   .image-input {
     background-color: rgba(176, 234, 246, 0.65);
@@ -57,6 +64,15 @@ export const GalleryStyle = styled.div`
     accent-color: #1d1465;
     width: 100%;
     height: 20px;
+  }
+  .change-image{
+    border:none ;
+    background: #1d1465;
+    padding:10px ;
+  color: #fff;
+  border: none;
+  margin:2% 0 ;
+  border-radius:10px ;
   }
 
 `;
