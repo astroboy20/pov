@@ -6,12 +6,15 @@ import { CustomText } from "@/components/CustomText";
 import { useRouter } from "next/router";
 import { Select } from "@chakra-ui/select";
 import Image from "next/image";
+import { Modal } from "@/components/Modal";
 
 const Album = ({ eventData }) => {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleDropdownChange = (event) => {
-    setSelectedOption(event.target.value);
+  const handleImageClick = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setShowModal(true);
   };
 
   const router = useRouter();
@@ -47,27 +50,47 @@ const Album = ({ eventData }) => {
         </div>
       </div>
       {eventData ? (
-        <div>
-          <h2>Event Details</h2>
+        <div className="all-image">
           {eventData.length > 0 ? (
             <div key={eventData.photo}>
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                {eventData[0].message}
+                {/* {eventData[0].message} */}
               </CustomText>
 
               <div className="image">
                 {eventData.map((event) => (
-                  <div key={event.photo}>
-                    <Image
-                      width={100}
-                      height={100}
-                      src={event.photo}
-                      alt="event photo"
-                      className="image-image"
-                    />
-                  </div>
+                  <>
+                    <div key={event.photo}>
+                      <Image
+                        width={100}
+                        height={100}
+                        src={event.photo}
+                        alt="event photo"
+                        className="image-image"
+                        onClick={() => handleImageClick(event.photo)}
+                        objectFit="cover"
+                      />
+                    </div>
+                  </>
                 ))}
               </div>
+
+              <Modal
+                show={showModal}
+                onClose={() => {
+                  setShowModal(false);
+                }}
+              >
+                <div className="selected-image">
+                  <Image
+                    width={300}
+                    height={300}
+                    src={selectedImage}
+                    alt="event photo"
+                    objectFit="cover"
+                  />
+                </div>
+              </Modal>
             </div>
           ) : (
             <>{eventData.message} </>
