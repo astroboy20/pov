@@ -94,7 +94,6 @@ const Gallery = () => {
       });
 
       const data = response.data.events;
-
       setIsLoading(false);
       toast.success("Event deleted successfully!");
       setEvent(data);
