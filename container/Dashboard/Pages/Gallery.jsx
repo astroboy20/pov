@@ -1,4 +1,4 @@
-import React, { useEffect, createRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Delete, FeatureStyle, GalleryStyle, QRcode } from "../Dashboard.style";
@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { Modal } from "@/components/Modal";
 import QRCode from "react-qr-code";
 import { Button } from "@/components/Button";
-import { createFileName, useScreenshot } from "use-react-screenshot";
+import html2canvas from 'html2canvas';
 
 const Gallery = () => {
   const { user } = useSelector((state) => state.auth);
@@ -21,27 +21,26 @@ const Gallery = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [events, setEvent] = useState([]);
-  const [image, takeScreenshot] = useScreenshot({
-    type: "image/jpeg",
-    quality: 1.0,
-  });
-
+ 
   const router = useRouter();
-  const qrCodeRef = createRef(null);
+  const qrCodeRef = useRef(null);
 
-  const download = (image, { name = "image", extension = "jpg" } = {}) => {
-    const a = document.createElement("a");
-    a.href = image;
-    a.download = createFileName(extension, name);
-    document.body.appendChild(a); 
-    a.click();
-    document.body.removeChild(a); 
-  };
+ 
 
+  
   const downloadQrCode = () => {
-    takeScreenshot(qrCodeRef.current).then((image) => {
-      download(image, { name: "qr-code", extension: "jpg" });
-    });
+    if (qrCodeRef.current) {
+      html2canvas(qrCodeRef.current).then((canvas) => {
+        // Convert canvas to image data
+        const image = canvas.toDataURL('image/png');
+
+        // Create an anchor element to trigger download
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = 'captured_element.png';
+        link.click();
+      });
+    }
   };
 
   useEffect(() => {
