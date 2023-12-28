@@ -31,6 +31,11 @@ export const AlbumContainer = styled.div`
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap:5px;
   }
 
   .all-image::-webkit-scrollbar {
@@ -46,16 +51,12 @@ export const AlbumContainer = styled.div`
     position: relative; /* Set position for pseudo-element */
   }
 
- 
   .image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 5px;
+    
   }
   .image-image {
-    border-radius: 10px;
+    border-radius: 10px; 
+   
   }
   .selected-image {
     border-radius: 10px;

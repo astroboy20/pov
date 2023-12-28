@@ -62,8 +62,8 @@ const Camera = ({ events }) => {
   };
 
   const takePicture = async () => {
-    if (photosTaken < events.photosPerPerson) {
-      try {
+    try {
+      if (photosTaken < events.photosPerPerson) {
         const stream = videoRef.current.srcObject;
         const tracks = stream.getVideoTracks();
         const imageCapture = new ImageCapture(tracks[0]);
@@ -78,48 +78,45 @@ const Camera = ({ events }) => {
         );
 
         const imageUrl = response.data.secure_url;
-        console.log(imageUrl);
-       
-        if (response && imageUrl) {
-          axios
-            .post(`https://api-cliqpod.koyeb.app/camera/${eventId}`, {
-              image: imageUrl,
-            })
-            .then((response) => {
-              console.log(response.data);
-              toast.success(response.data.success)
-            
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-
-         
-        }
-        
+        console.log("Image URL:", imageUrl);
+        setCapturedImages([...capturedImages, imageUrl]); // Add image URL to array
         setPhotosTaken(photosTaken + 1);
-      } catch (error) {
-        console.error("Error taking picture:", error);
-        setIsLoading(false);
+      } else {
+        toast.warning("Maximum number of photos reached.");
       }
-    } else {
-      toast.warning("Maximum number of photos reached.");
+    } catch (error) {
+      console.error("Error taking picture:", error);
+      setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    if (photosTaken === events.photosPerPerson) {
-      toast.success("All photos have been successfully taken and saved!")
-      router.push("/");
+  const handleUploadImages = async () => {
+    setIsLoading(true)
+    try {
+      setIsLoading(false)
+      const response = await axios.post(
+        `https://api-cliqpod.koyeb.app/camera/${eventId}`,
+        { image: capturedImages } 
+      );
+
+      toast.success(response.data.success); 
+        router.push("/")
+    } catch (error) {
+      setIsLoading(FALSE)
+      toast.error("Error uploading images:", error);
     }
-  }, [photosTaken, events.photosPerPerson, router]);
+  };
+
+  
 
   return (
     <Container>
       <video ref={videoRef} autoPlay playsInline></video>
       <div className="button">
         {photosTaken === events.photosPerPerson ? (
-          <PurpleSpinner />
+           <Button type={"submit"} variant={"defaultButton"} onClick={handleUploadImages}>
+           {isLoading ? <PurpleSpinner/> : "Submit"}
+         </Button>
         ) : (
           <MdOutlineCamera fontSize={"50px"} onClick={takePicture} />
         )}

@@ -193,7 +193,7 @@ const Gallery = () => {
                               type={"Htype"}
                               variant={"h3-c"}
                             >
-                              Made by CliqPod with Love.
+                              Made by cliqpod with Love.
                             </CustomText>
                           </div>
                           <Button

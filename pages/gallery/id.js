@@ -10,9 +10,8 @@ const Id = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const eventId = router.query.id;
-  const query = router.query;
   
-console.log(eventId)
+
   const [eventData, setEventData] = useState([]);
   const setId =
     typeof window !== "undefined" && localStorage.setItem("id", eventId);
@@ -37,7 +36,7 @@ console.log(eventId)
           router.push("/gallery");
         });
     }
-  }, [eventId, accessToken, router, setId, eventData, user]);
+  }, [eventId, accessToken, router, setId, user]);
 
   
   return (
