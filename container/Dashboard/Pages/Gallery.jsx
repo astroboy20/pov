@@ -22,6 +22,25 @@ const Gallery = () => {
   const [showModal, setShowModal] = useState(false);
   const [events, setEvent] = useState([]);
  
+
+  const [showModalForEvent, setShowModalForEvent] = useState({});
+
+   // Function to open modal for a specific event
+   const openModalForEvent = (eventId) => {
+    setShowModalForEvent((prev) => ({
+      ...prev,
+      [eventId]: true,
+    }));
+  };
+
+  // Function to close modal for a specific event
+  const closeModalForEvent = (eventId) => {
+    setShowModalForEvent((prev) => ({
+      ...prev,
+      [eventId]: false,
+    }));
+  };
+
   const router = useRouter();
   const qrCodeRef = useRef(null);
 
@@ -154,12 +173,12 @@ const Gallery = () => {
                         </div>
                       </div>
                       <div className="icons">
-                        <span onClick={() => setShowModal(true)}>
+                        <span onClick={() => openModalForEvent(event._id)}>
                           <JoinIcon />
                         </span>
                         <Modal
-                          show={showModal}
-                          onClose={() => setShowModal(false)} 
+                          show={showModalForEvent[event._id]}
+                          onClose={() => closeModalForEvent(event._id)}
                         >
                           <div
                             className="qr-code"
@@ -193,7 +212,7 @@ const Gallery = () => {
                               type={"Htype"}
                               variant={"h3-c"}
                             >
-                              Made by cliqpod with Love.
+                              Made by cliqPod with Love.
                             </CustomText>
                           </div>
                           <Button
