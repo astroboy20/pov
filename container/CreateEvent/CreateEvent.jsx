@@ -40,7 +40,6 @@ const CreateEvent = () => {
 
   const [data, setData] = useState({
     eventName: eventName,
-    subName: "",
     photosPerPerson: "",
     expectedGuests: "",
     startDate: "",
@@ -123,10 +122,9 @@ const CreateEvent = () => {
   };
 
   const isStepOneValid = () => {
-    const { image, subName, startDate, endDate, revealTime, photosPerPerson } =
+    const { image, startDate, endDate, revealTime, photosPerPerson } =
       data;
     return (
-      subName !== "" &&
       startDate !== "" &&
       endDate !== "" &&
       revealTime !== "" &&
