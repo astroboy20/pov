@@ -14,6 +14,7 @@ const Camera = ({ events }) => {
   const [photosTaken, setPhotosTaken] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const videoRef = useRef(null);
+  const audioRef = useRef(null);
   const [facingMode, setFacingMode] = useState("environment");
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
   const router = useRouter();
@@ -68,11 +69,9 @@ const Camera = ({ events }) => {
         const tracks = stream.getVideoTracks();
         const imageCapture = new ImageCapture(tracks[0]);
         const blob = await imageCapture.takePhoto();
-
+        audioRef.current.play();
         const formData = new FormData();
         formData.append("image", blob);
-        // const uniqueImageName = `image_${Date.now()}.jpg`;
-        // formData.append("image", uniqueImageName);
 
         const config = {
           headers: {
@@ -98,6 +97,11 @@ const Camera = ({ events }) => {
     }
   };
 
+  // useEffect(() => {
+  // if (photosTaken === events.photosPerPerson){
+  //   router.push("./invitee")
+  // }
+  // }, [])
  
 
   return (
@@ -111,6 +115,7 @@ const Camera = ({ events }) => {
         )}
         <MdOutlineFlipCameraAndroid fontSize={"50px"} onClick={switchCamera} />
       </div>
+      <audio ref={audioRef} src={"./sound/sound.mp3"} preload="auto" />
       <span style={{ marginTop: "10px" }}>
         Pictures Taken: {photosTaken} / {events.photosPerPerson}
       </span>
