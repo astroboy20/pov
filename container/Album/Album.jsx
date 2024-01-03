@@ -35,7 +35,7 @@ const Album = ({ eventData }) => {
           ALBUM
         </CustomText>
       </div>
-      <div className="input">
+      {/* <div className="input">
         <div className="left">
           Filter effect
           <select className="custom-select">
@@ -48,24 +48,16 @@ const Album = ({ eventData }) => {
             <option value="">All</option>
           </select>
         </div>
-      </div>
+      </div> */}
       {eventData ? (
         <div className="all-image">
           {eventData.length > 0 ? (
             <div key={eventData.photo}>
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
                 {eventData[0].message}
-                {eventData[0].id}
-                {eventData[0].photos}
-                <Image
-                        width={100}
-                        height={100}
-                        src={eventData.photos}
-                        alt="event photo"
-                        className="image-image"
-                        onClick={() => handleImageClick(event.photo)}
-                        objectFit="cover"
-                      /> 
+                {/* {eventData[0].id} */}
+                {/* {eventData[0].photos} */}
+        
               </CustomText>
 
               <div className="image">
@@ -78,7 +70,7 @@ const Album = ({ eventData }) => {
                         src={`${event.photos}`}
                         alt="event photo"
                         className="image-image"
-                        onClick={() => handleImageClick(event.photo)}
+                        onClick={() => handleImageClick(event.photos)}
                         objectFit="cover"
                       />
                     </div>

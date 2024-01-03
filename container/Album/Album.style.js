@@ -27,7 +27,7 @@ export const AlbumContainer = styled.div`
     color: white;
   }
   .all-image {
-    height: 70vh;
+    height: 80vh;
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
