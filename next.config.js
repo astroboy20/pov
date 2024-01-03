@@ -5,6 +5,7 @@ const nextConfig = {
     domains: [
       "res.cloudinary.com",
       "localhost",
+      "https://api-cliqpod.koyeb.app"
     ],
   },
 };

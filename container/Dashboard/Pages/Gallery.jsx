@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { Modal } from "@/components/Modal";
 import QRCode from "react-qr-code";
 import { Button } from "@/components/Button";
-import html2canvas from 'html2canvas';
+import html2canvas from "html2canvas";
 
 const Gallery = () => {
   const { user } = useSelector((state) => state.auth);
@@ -21,19 +21,16 @@ const Gallery = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [events, setEvent] = useState([]);
- 
 
   const [showModalForEvent, setShowModalForEvent] = useState({});
 
-   // Function to open modal for a specific event
-   const openModalForEvent = (eventId) => {
+  const openModalForEvent = (eventId) => {
     setShowModalForEvent((prev) => ({
       ...prev,
       [eventId]: true,
     }));
   };
 
-  // Function to close modal for a specific event
   const closeModalForEvent = (eventId) => {
     setShowModalForEvent((prev) => ({
       ...prev,
@@ -44,18 +41,13 @@ const Gallery = () => {
   const router = useRouter();
   const qrCodeRef = useRef(null);
 
- 
-
-  
   const downloadQrCode = () => {
     if (qrCodeRef.current) {
       html2canvas(qrCodeRef.current).then((canvas) => {
-
-        const image = canvas.toDataURL('image/png');
-
-        const link = document.createElement('a');
+        const image = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
         link.href = image;
-        link.download = 'captured_element.png';
+        link.download = "captured_element.png";
         link.click();
       });
     }
@@ -183,15 +175,15 @@ const Gallery = () => {
                           <div
                             className="qr-code"
                             ref={qrCodeRef}
-                            style={{padding:"5%"}}
+                            style={{ padding: "5%" }}
                           >
                             <CustomText
                               weight={"500"}
                               type={"Htype"}
                               variant={"h3"}
                             >
-                              <div style={{padding:"5%"}}>
-                              {event.eventName}
+                              <div style={{ padding: "5%" }}>
+                                {event.eventName}
                               </div>
                             </CustomText>
                             <div>

@@ -1,21 +1,23 @@
-import React, { useState } from "react";
-import { FaArrowCircleLeft } from "react-icons/fa";
-import Image from "next/image";
-import { useRouter } from "next/router";
+import { PurpleSpinner } from "@/components/Spinner/Spinner";
+import { useState } from "react";
 import { AlbumContainer } from "./Album.style";
+import { FaArrowCircleLeft } from "react-icons/fa";
 import { CustomText } from "@/components/CustomText";
+import { useRouter } from "next/router";
+import { Select } from "@chakra-ui/select";
+import Image from "next/image";
 import { Modal } from "@/components/Modal";
-import { PurpleSpinner } from "@/components/Spinner/Spinner"; // Ensure Spinner import is correctly referenced
 
 const Album = ({ eventData }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const router = useRouter();
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
     setShowModal(true);
   };
+
+  const router = useRouter();
 
   const handleRoute = () => {
     router.push("/gallery");
@@ -23,19 +25,16 @@ const Album = ({ eventData }) => {
 
   return (
     <AlbumContainer>
-      {/* Header */}
       <div className="header">
         <FaArrowCircleLeft
           onClick={handleRoute}
           style={{ color: "white" }}
           fontSize={30}
-        />
+        />{" "}
         <CustomText weight={"500"} type={"Htype"} variant={"h1-c"}>
           ALBUM
         </CustomText>
       </div>
-
-      {/* Filter Options */}
       <div className="input">
         <div className="left">
           Filter effect
@@ -50,49 +49,76 @@ const Album = ({ eventData }) => {
           </select>
         </div>
       </div>
-
-      <div className="all-image">
-        {eventData ? (
-          eventData.photos && eventData.photos.length > 0 ? (
-            eventData.photos.map((photo) => (
+      {eventData ? (
+        <div className="all-image">
+          {eventData.length > 0 ? (
+            <div key={eventData.photo}>
+              <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+                {eventData[0].message}
+                {eventData[0].id}
+                {eventData[0].photos}
                 <Image
-                key={photo}
-                  width={100}
-                  height={100}
-                  src={photo}
-                  alt={`event photo `}
-                  className="image-image"
-                  onClick={() => handleImageClick(photo)}
-                  objectFit="cover"
-                />
-            ))
-          ) : (
-            <div>{eventData.message}</div>
-          )
-        ) : (
-          <div>
-            <PurpleSpinner />
-          </div>
-        )}
-      </div>
+                        width={100}
+                        height={100}
+                        src={eventData.photos}
+                        alt="event photo"
+                        className="image-image"
+                        onClick={() => handleImageClick(event.photo)}
+                        objectFit="cover"
+                      /> 
+              </CustomText>
 
-      {/* Modal for Selected Image */}
-      <Modal
-        show={showModal}
-        onClose={() => {
-          setShowModal(false);
-        }}
-      >
-        <div className="selected-image">
-          <Image
-            width={300}
-            height={300}
-            src={selectedImage}
-            alt="event photo"
-            objectFit="cover"
-          />
+              <div className="image">
+                {eventData.map((event) => (
+                  <>
+                    <div key={event.photos}>
+                      <Image
+                        width={100}
+                        height={100}
+                        src={`${event.photos}`}
+                        alt="event photo"
+                        className="image-image"
+                        onClick={() => handleImageClick(event.photo)}
+                        objectFit="cover"
+                      />
+                    </div>
+                  </>
+                ))}
+              </div>
+
+              <Modal
+                show={showModal}
+                onClose={() => {
+                  setShowModal(false);
+                }}
+              >
+                <div className="selected-image">
+                  <Image
+                    width={300}
+                    height={300}
+                    src={selectedImage}
+                    alt="event photo"
+                    objectFit="cover"
+                  />
+                </div>
+              </Modal>
+            </div>
+          ) : (
+            <>{eventData.message} </>
+          )}
         </div>
-      </Modal>
+      ) : (
+        <div
+          style={{
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <PurpleSpinner />
+        </div>
+      )}
     </AlbumContainer>
   );
 };

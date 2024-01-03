@@ -31,11 +31,6 @@ export const AlbumContainer = styled.div`
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap:5px;
   }
 
   .all-image::-webkit-scrollbar {
@@ -51,12 +46,29 @@ export const AlbumContainer = styled.div`
     position: relative; /* Set position for pseudo-element */
   }
 
+  /* Styling the custom arrow using a pseudo-element */
+  .custom-select::after {
+    content: ""; /* Add content */
+    position: absolute; /* Set position */
+    top: 50%; /* Adjust vertically */
+    right: 100px; /* Add space before the arrow */
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent; /* Create arrow-like shape */
+    border-right: 5px solid transparent; /* Create arrow-like shape */
+    border-top: 5px solid white; /* Color of the arrow */
+    transform: translateY(-50%); /* Center vertically */
+    pointer-events: none; /* Prevent clicking on pseudo-element */
+  }
   .image {
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
   }
   .image-image {
-    border-radius: 10px; 
-   
+    border-radius: 10px;
   }
   .selected-image {
     border-radius: 10px;

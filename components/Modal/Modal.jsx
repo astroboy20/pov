@@ -15,7 +15,6 @@ const Modal = ({ show, onClose, children }) => {
   <div className={styles.overlay} onClick={handleClose}>
     <div className={styles.modal}>
         <div className={styles.header}>
-            {/* <button onClick={handleClose}>close</button> */}
             <ImCancelCircle size={"30px"} onClick={handleClose} />
         </div>
         <div className={styles.body}>{children}</div>

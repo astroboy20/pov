@@ -70,16 +70,24 @@ const Camera = ({ events }) => {
         const blob = await imageCapture.takePhoto();
 
         const formData = new FormData();
-        formData.append("file", blob);
-        formData.append("upload_preset", "za8tsrje");
+        formData.append("image", blob);
+        // const uniqueImageName = `image_${Date.now()}.jpg`;
+        // formData.append("image", uniqueImageName);
+
+        const config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+
         const response = await axios.post(
-          "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
-          formData
+          `https://api-cliqpod.koyeb.app/camera/${eventId}`,
+          formData,
+          config
         );
 
-        const imageUrl = response.data.secure_url;
-        console.log("Image URL:", imageUrl);
-        setCapturedImages([...capturedImages, imageUrl]); // Add image URL to array
+        const imageUrl = response.data;
+        setCapturedImages([...capturedImages, imageUrl]);
         setPhotosTaken(photosTaken + 1);
       } else {
         toast.warning("Maximum number of photos reached.");
@@ -90,33 +98,14 @@ const Camera = ({ events }) => {
     }
   };
 
-  const handleUploadImages = async () => {
-    setIsLoading(true)
-    try {
-      setIsLoading(false)
-      const response = await axios.post(
-        `https://api-cliqpod.koyeb.app/camera/${eventId}`,
-        { image: capturedImages } 
-      );
-
-      toast.success(response.data.success); 
-        router.push("/")
-    } catch (error) {
-      setIsLoading(FALSE)
-      toast.error("Error uploading images:", error);
-    }
-  };
-
-  
+ 
 
   return (
     <Container>
       <video ref={videoRef} autoPlay playsInline></video>
       <div className="button">
         {photosTaken === events.photosPerPerson ? (
-           <Button type={"submit"} variant={"defaultButton"} onClick={handleUploadImages}>
-           {isLoading ? <PurpleSpinner/> : "Submit"}
-         </Button>
+        "done"
         ) : (
           <MdOutlineCamera fontSize={"50px"} onClick={takePicture} />
         )}
