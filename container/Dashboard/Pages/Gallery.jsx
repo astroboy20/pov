@@ -198,7 +198,13 @@ const Gallery = () => {
                                 SCAN ME
                               </CustomText>
                             </div>
-
+                           
+                            {/* <div>
+                           
+                             <Link href={`https://cliqpod.co/invitee/${event._id}`}>CLICK HERE</Link>
+                         
+                            </div>
+                           <br/> */}
                             <CustomText
                               weight={"500"}
                               type={"Htype"}
