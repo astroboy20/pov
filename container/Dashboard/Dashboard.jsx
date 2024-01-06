@@ -1,14 +1,7 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "@/feature/slices/authSlice";
+
 import { useRouter } from "next/router";
 import Event from "./Pages/Event";
-import Setting from "./Pages/Setting";
-import Option from "../Gallery/Option/Option";
 import { FeatureStyle } from "./Dashboard.style";
-import { optionItems } from "./data";
-import { useOptionContext } from "@/context/option-context";
-import { Gallery } from "../Gallery/Gallery";
 import Link from "next/link";
 import styled from "./Dashboard.module.css";
 
