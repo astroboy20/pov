@@ -1,5 +1,5 @@
 import React from "react";
-import { OptionItem } from "./Dashboard.style";
+import { OptionItem } from "./Option.style";
 
 const Option = ({ value, label, selected, setValue,icon }) => {
   const handleClick = () => {
@@ -8,7 +8,6 @@ const Option = ({ value, label, selected, setValue,icon }) => {
   return (
     <>
       <OptionItem selected={selected} onClick={handleClick}>
-        {icon}
         {label}
       </OptionItem>
     </>

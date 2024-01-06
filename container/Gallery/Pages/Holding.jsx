@@ -1,28 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { Delete, FeatureStyle, GalleryStyle, QRcode } from "../Dashboard.style";
-import { CustomText } from "@/components/CustomText";
-import { EditIcon, JoinIcon } from "@/assets";
-import Image from "next/image";
-import { PurpleSpinner } from "@/components/Spinner/Spinner";
-import Link from "next/link";
-import styled from "../Dashboard.module.css";
+import { useState, useEffect, useRef } from "react";
+import { useOptionContext } from "@/context/option-context";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import { Modal } from "@/components/Modal";
-import QRCode from "react-qr-code";
+import { Delete } from "../Gallery.style";
 import { Button } from "@/components/Button";
-import html2canvas from "html2canvas";
+import { CustomText } from "@/components/CustomText";
+import { QRCode } from "react-qr-code";
+import Link from "next/link";
+import { PurpleSpinner } from "@/components/Spinner/Spinner";
+import Image from "next/image";
+import { Modal } from "@/components/Modal";
+import { JoinIcon } from "@/assets";
+import {toast} from "react-toastify"
 
-const Gallery = () => {
+const Holding = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [events, setEvent] = useState([]);
-  const today = new Date();
   const [showModalForEvent, setShowModalForEvent] = useState({});
+  const { option, switchOption } = useOptionContext();
 
   const openModalForEvent = (eventId) => {
     setShowModalForEvent((prev) => ({
@@ -36,6 +34,10 @@ const Gallery = () => {
       ...prev,
       [eventId]: false,
     }));
+  };
+
+  const handleOption = (option) => {
+    switchOption(option);
   };
 
   const router = useRouter();
@@ -112,25 +114,10 @@ const Gallery = () => {
     }
   };
   return (
-    <>
-      <GalleryStyle>
-        <div className="header">
-          <CustomText type={"Htype"} variant={"h1"}>
-            Gallery
-          </CustomText>
-          <div className="join">
-            <JoinIcon />
-            <CustomText type={"Htype"} variant={"h4"}>
-              Join
-            </CustomText>
-          </div>
-        </div>
-
-        <div className="body">
-          <div className="body-text">
-            <div>Hosting</div>
-            <div>Attended</div>
-          </div>
+    <div>
+      {option === "Holding" && (
+        <>
+        ddd
           {isLoading ? (
             <div className="centered-style">
               <PurpleSpinner />
@@ -165,12 +152,13 @@ const Gallery = () => {
                           >
                             <div className="a">{event.eventName}</div>
                             <div className="b">
-                              {" "}
                               {new Date(event.end_date) < new Date()
-                                ? `Ending on ${new Date(
+                                ? `Event ended on ${new Date(
                                     event.end_date
                                   ).toLocaleDateString()}`
-                                : "Event ended"}
+                                : `Ending on ${new Date(
+                                    event.end_date
+                                  ).toLocaleDateString()}`}
                             </div>
                           </Link>
                         </div>
@@ -253,42 +241,10 @@ const Gallery = () => {
               ))}
             </>
           )}
-        </div>
-      </GalleryStyle>
-      <FeatureStyle>
-        <Link
-          href="/dashboard"
-          className={
-            router.pathname === "/dashboard"
-              ? `${styled.active}`
-              : `${styled.link}`
-          }
-        >
-          Event
-        </Link>
-        <Link
-          href="/gallery"
-          className={
-            router.pathname === "/gallery"
-              ? `${styled.active}`
-              : `${styled.link}`
-          }
-        >
-          Gallery
-        </Link>
-        <Link
-          href="/setting"
-          className={
-            router.pathname === "/setting"
-              ? `${styled.active}`
-              : `${styled.link}`
-          }
-        >
-          Setting
-        </Link>
-      </FeatureStyle>
-    </>
+        </>
+      )}
+    </div>
   );
 };
 
-export { Gallery };
+export { Holding };

@@ -1,0 +1,17 @@
+.active{
+    font-size: 14px;
+    font-weight: 500;
+    padding: 13px;
+    cursor: pointer;
+    border-radius: 15px;
+    background-color: #1d1465;
+    color:white ;
+    text-decoration: none;
+    /* font-size: 200px; */
+}
+.link{
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
+    text-decoration: none;
+}
