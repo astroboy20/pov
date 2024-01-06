@@ -62,9 +62,48 @@ const Camera = ({ events }) => {
     }
   };
 
-  const takePicture = async () => {
+  const takePictureFallback = async () => {
     try {
       if (photosTaken < events.photosPerPerson) {
+        const canvas = document.createElement("canvas");
+        const video = videoRef.current;
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext("2d").drawImage(video, 0, 0);
+
+        canvas.toBlob(async (blob) => {
+          audioRef.current.play();
+          const formData = new FormData();
+          formData.append("image", blob);
+
+          const config = {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          };
+
+          const response = await axios.post(
+            `https://api-cliqpod.koyeb.app/camera/${eventId}`,
+            formData,
+            config
+          );
+
+          const imageUrl = response.data;
+          setCapturedImages([...capturedImages, imageUrl]);
+          setPhotosTaken(photosTaken + 1);
+        }, "image/jpeg");
+      } else {
+        toast.warning("Maximum number of photos reached.");
+      }
+    } catch (error) {
+      console.error("Error taking picture (fallback):", error);
+      setIsLoading(false);
+    }
+  };
+
+  const takePicture = async () => {
+    try {
+      if (typeof ImageCapture !== "undefined") {
         const stream = videoRef.current.srcObject;
         const tracks = stream.getVideoTracks();
         const imageCapture = new ImageCapture(tracks[0]);
@@ -89,13 +128,14 @@ const Camera = ({ events }) => {
         setCapturedImages([...capturedImages, imageUrl]);
         setPhotosTaken(photosTaken + 1);
       } else {
-        toast.warning("Maximum number of photos reached.");
+        takePictureFallback(); // Fallback for devices without ImageCapture support
       }
     } catch (error) {
       console.error("Error taking picture:", error);
       setIsLoading(false);
     }
   };
+
 
   // useEffect(() => {
   // if (photosTaken === events.photosPerPerson){

@@ -43,9 +43,7 @@ console.log("event:", searchParams)
           toast.error(error);
           router.push("/gallery");
         });
-    } else {
-      router.push(`/invitee`);
-    }
+    } 
   }, [eventId, accessToken, router, setId, eventData, user]);
   return (
     <ProtectedRoute>

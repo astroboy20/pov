@@ -87,8 +87,10 @@ export const GalleryStyle = styled.div`
     overflow: scroll;
   }
   .body-text {
+    display:flex ;
+    justify-content: space-between;
     color: #000;
-    padding: 4% 5%;
+    padding: 7% 5%;
     font-weight: 500;
     font-size: 24px;
   }

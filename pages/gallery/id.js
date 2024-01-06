@@ -17,9 +17,7 @@ const Id = () => {
     typeof window !== "undefined" && localStorage.setItem("id", eventId);
    
   useEffect(() => {
-    if (!user) {
-      router.push(`/invitee`);
-    }
+
     if (eventId) {
       axios
         .get(`https://api-cliqpod.koyeb.app/gallery/${eventId}`, {

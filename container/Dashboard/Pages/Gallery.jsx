@@ -21,7 +21,7 @@ const Gallery = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [events, setEvent] = useState([]);
-
+  const today = new Date();
   const [showModalForEvent, setShowModalForEvent] = useState({});
 
   const openModalForEvent = (eventId) => {
@@ -127,7 +127,10 @@ const Gallery = () => {
         </div>
 
         <div className="body">
-          <div className="body-text"> Hosting</div>
+          <div className="body-text">
+            <div>Hosting</div>
+            <div>Attended</div>
+          </div>
           {isLoading ? (
             <div className="centered-style">
               <PurpleSpinner />
@@ -154,13 +157,21 @@ const Gallery = () => {
                         <div className="text">
                           <Link
                             style={{ textDecoration: "none" }}
-                            href={{
-                              pathname: `/gallery/id`,
-                              query: { id: event._id },
-                            }}
+                            // href={{
+                            //   pathname: `/gallery/id`,
+                            //   query: { id: event._id },
+                            // }}
+                            href={`/gallery/${event._id}`}
                           >
                             <div className="a">{event.eventName}</div>
-                            <div className="b"> Ending {event.end_date}</div>
+                            <div className="b">
+                              {" "}
+                              {new Date(event.end_date) < new Date()
+                                ? `Ending on ${new Date(
+                                    event.end_date
+                                  ).toLocaleDateString()}`
+                                : "Event ended"}
+                            </div>
                           </Link>
                         </div>
                       </div>
@@ -198,7 +209,7 @@ const Gallery = () => {
                                 SCAN ME
                               </CustomText>
                             </div>
-                           
+
                             {/* <div>
                            
                              <Link href={`https://cliqpod.co/invitee/${event._id}`}>CLICK HERE</Link>
