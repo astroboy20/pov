@@ -126,6 +126,7 @@ const Attended = () => {
             <div className="centered-style">
               <CustomText weight={"500"} type={"Htype"} variant={"p"}>
                 No events available.
+                
               </CustomText>
             </div>
           ) : (
@@ -141,6 +142,7 @@ const Attended = () => {
                           src={event.event_image}
                           alt="event_banner"
                         />
+                       
                         <div className="text">
                           <Link
                             style={{ textDecoration: "none" }}

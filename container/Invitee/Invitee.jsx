@@ -38,12 +38,13 @@ const Invitee = () => {
         })
         .then((response) => {
           setIsLoading(false);
+          console.log(response)
           toast.success(response.data.success);
-          router.push("/camera");
+          // router.push("/camera");
         })
         .catch((error) => {
           setIsLoading(false);
-          toast.warning(error);
+          toast.warning(error.response.data.error)
         });
     }
   };
