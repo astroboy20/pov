@@ -60,7 +60,7 @@ const Attended = () => {
       try {
         setIsLoading(true);
         const response = await axios.get(
-          "https://api-cliqpod.koyeb.app/events",
+          "https://api-cliqpod.koyeb.app/attended-events",
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -126,7 +126,7 @@ const Attended = () => {
             <div className="centered-style">
               <CustomText weight={"500"} type={"Htype"} variant={"p"}>
                 No events available.
-                
+
               </CustomText>
             </div>
           ) : (

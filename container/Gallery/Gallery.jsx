@@ -86,6 +86,30 @@ const Gallery = () => {
     fetchEvents();
   }, [accessToken]);
 
+  useEffect(() => {
+    const fetchAttendedEvents = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(
+          "https://api-cliqpod.koyeb.app/attended-events",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        const data = response.data;
+        console.log("data", data)
+        // setEvent(data);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        toast.error(error);
+      }
+    };
+
+    fetchAttendedEvents();
+  }, [accessToken]);
   const deleteEvent = async (event) => {
     event.preventDefault();
     const eventId = event.target.elements.eventId.value;
