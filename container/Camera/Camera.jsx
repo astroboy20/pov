@@ -45,6 +45,40 @@ const Camera = ({ events }) => {
       });
   };
 
+  const takePictureFallback = async () => {
+    if (photosTaken < events.photosPerPerson) {
+      const canvas = document.createElement("canvas");
+      const video = videoRef.current;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext("2d").drawImage(video, 0, 0);
+
+      canvas.toBlob(async (blob) => {
+        audioRef.current.play();
+        const formData = new FormData();
+        formData.append("image", blob);
+
+        const config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+
+        const response = await axios.post(
+          `https://api-cliqpod.koyeb.app/camera/${eventId}`,
+          formData,
+          config
+        );
+
+        const imageUrl = response.data;
+        setCapturedImages([...capturedImages, imageUrl]);
+        setPhotosTaken(photosTaken + 1);
+      }, "image/jpeg");
+    } else {
+      toast.warning("Maximum number of photos reached.");
+    }
+  };
+
   const takePicture = async () => {
     if (photosTaken < events.photosPerPerson) {
       const stream = videoRef.current.srcObject;
@@ -71,7 +105,7 @@ const Camera = ({ events }) => {
       setCapturedImages([...capturedImages, imageUrl]);
       setPhotosTaken(photosTaken + 1);
     } else {
-      toast.warning("Maximum number of photos reached.");
+      takePictureFallback();
     }
   };
 
