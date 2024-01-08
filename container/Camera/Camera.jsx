@@ -31,125 +31,62 @@ const Camera = ({ events }) => {
   }, [facingMode]);
 
   const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: { exact: facingMode } },
+    navigator.mediaDevices
+      .getUserMedia({
+        video: { width: 1920, height: 1080 },
+      })
+      .then((stream) => {
+        let video = videoRef.current;
+        video.srcObject = stream;
+        video.play();
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      videoRef.current.srcObject = stream;
-    } catch (error) {
-      console.error("Error accessing camera:", error);
-      try {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const videoDevices = devices.filter(
-          (device) => device.kind === "videoinput"
-        );
-        const device = videoDevices.find((device) =>
-          device.label.includes(facingMode)
-        );
-
-        if (device && device.deviceId) {
-          const constraints = { deviceId: device.deviceId };
-          const stream = await navigator.mediaDevices.getUserMedia({
-            video: constraints,
-          });
-          videoRef.current.srcObject = stream;
-        } else {
-          console.error("Camera device not found or missing deviceId.");
-        }
-      } catch (err) {
-        console.error("Error accessing camera on iOS:", err);
-      }
-    }
-  };
-
-  const takePictureFallback = async () => {
-    try {
-      if (photosTaken < events.photosPerPerson) {
-        const canvas = document.createElement("canvas");
-        const video = videoRef.current;
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas.getContext("2d").drawImage(video, 0, 0);
-
-        canvas.toBlob(async (blob) => {
-          audioRef.current.play();
-          const formData = new FormData();
-          formData.append("image", blob);
-
-          const config = {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          };
-
-          const response = await axios.post(
-            `https://api-cliqpod.koyeb.app/camera/${eventId}`,
-            formData,
-            config
-          );
-
-          const imageUrl = response.data;
-          setCapturedImages([...capturedImages, imageUrl]);
-          setPhotosTaken(photosTaken + 1);
-        }, "image/jpeg");
-      } else {
-        toast.warning("Maximum number of photos reached.");
-      }
-    } catch (error) {
-      console.error("Error taking picture (fallback):", error);
-      setIsLoading(false);
-    }
   };
 
   const takePicture = async () => {
-    try {
-      if (typeof ImageCapture !== "undefined") {
-        const stream = videoRef.current.srcObject;
-        const tracks = stream.getVideoTracks();
-        const imageCapture = new ImageCapture(tracks[0]);
-        const blob = await imageCapture.takePhoto();
-        audioRef.current.play();
-        const formData = new FormData();
-        formData.append("image", blob);
+    if (photosTaken < events.photosPerPerson) {
+      const stream = videoRef.current.srcObject;
+      const tracks = stream.getVideoTracks();
+      const imageCapture = new ImageCapture(tracks[0]);
+      const blob = await imageCapture.takePhoto();
+      audioRef.current.play();
+      const formData = new FormData();
+      formData.append("image", blob);
 
-        const config = {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        };
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
 
-        const response = await axios.post(
-          `https://api-cliqpod.koyeb.app/camera/${eventId}`,
-          formData,
-          config
-        );
+      const response = await axios.post(
+        `https://api-cliqpod.koyeb.app/camera/${eventId}`,
+        formData,
+        config
+      );
 
-        const imageUrl = response.data;
-        setCapturedImages([...capturedImages, imageUrl]);
-        setPhotosTaken(photosTaken + 1);
-      } else {
-        takePictureFallback(); // Fallback for devices without ImageCapture support
-      }
-    } catch (error) {
-      console.error("Error taking picture:", error);
-      setIsLoading(false);
+      const imageUrl = response.data;
+      setCapturedImages([...capturedImages, imageUrl]);
+      setPhotosTaken(photosTaken + 1);
+    } else {
+      toast.warning("Maximum number of photos reached.");
     }
   };
-
 
   // useEffect(() => {
   // if (photosTaken === events.photosPerPerson){
   //   router.push("./invitee")
   // }
   // }, [])
- 
 
   return (
     <Container>
       <video ref={videoRef} autoPlay playsInline></video>
       <div className="button">
         {photosTaken === events.photosPerPerson ? (
-        "done"
+          "done"
         ) : (
           <MdOutlineCamera fontSize={"50px"} onClick={takePicture} />
         )}
