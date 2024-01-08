@@ -63,7 +63,7 @@ const Album = ({ eventData }) => {
               <div className="image">
                 {eventData.map((event) => (
                   <>
-                    <div key={event.photos}>
+                    <div key={event.id}>
                       <Image
                         width={100}
                         height={100}

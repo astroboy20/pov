@@ -1,7 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { useOptionContext } from "@/context/option-context";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
 import { Delete } from "../Gallery.style";
 import { Button } from "@/components/Button";
 import { CustomText } from "@/components/CustomText";
@@ -11,14 +9,9 @@ import { PurpleSpinner } from "@/components/Spinner/Spinner";
 import Image from "next/image";
 import { Modal } from "@/components/Modal";
 import { JoinIcon } from "@/assets";
-import {toast} from "react-toastify"
+import html2canvas from "html2canvas";
 
-const Holding = () => {
-  const { user } = useSelector((state) => state.auth);
-  const accessToken = user ? user.token : "";
-  const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [events, setEvent] = useState([]);
+const Hosting = ({ events, isLoading, deleteEvent }) => {
   const [showModalForEvent, setShowModalForEvent] = useState({});
   const { option, switchOption } = useOptionContext();
 
@@ -36,11 +29,6 @@ const Holding = () => {
     }));
   };
 
-  const handleOption = (option) => {
-    switchOption(option);
-  };
-
-  const router = useRouter();
   const qrCodeRef = useRef(null);
 
   const downloadQrCode = () => {
@@ -55,69 +43,10 @@ const Holding = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get(
-          "https://api-cliqpod.koyeb.app/events",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        const data = response.data.events;
-        setEvent(data);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        toast.error(error);
-      }
-    };
-
-    fetchEvents();
-  }, [accessToken]);
-
-  const deleteEvent = async (event) => {
-    event.preventDefault();
-    const eventId = event.target.elements.eventId.value;
-
-    try {
-      setIsLoading(true);
-
-      await axios.post(
-        "https://api-cliqpod.koyeb.app/deleteEvent",
-        {
-          eventId: eventId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      const response = await axios.get("https://api-cliqpod.koyeb.app/events", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      const data = response.data.events;
-      setIsLoading(false);
-      toast.success("Event deleted successfully!");
-      setEvent(data);
-    } catch (error) {
-      setIsLoading(false);
-      toast.error(error.message || "Error deleting event. Please try again.");
-    }
-  };
   return (
     <div>
-      {option === "Holding" && (
+      {option === "Hosting" && (
         <>
-        ddd
           {isLoading ? (
             <div className="centered-style">
               <PurpleSpinner />
@@ -247,4 +176,4 @@ const Holding = () => {
   );
 };
 
-export { Holding };
+export { Hosting };
