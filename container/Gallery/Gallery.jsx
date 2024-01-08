@@ -17,7 +17,7 @@ import { useOptionContext } from "@/context/option-context";
 import { Modal } from "@/components/Modal";
 import { Button } from "@/components/Button";
 import { toast } from "react-toastify";
-import {Attended} from "./Pages/Attended";
+import { Attended } from "./Pages/Attended";
 
 const Gallery = () => {
   const { user } = useSelector((state) => state.auth);
@@ -28,6 +28,7 @@ const Gallery = () => {
   const today = new Date();
   const [showModalForEvent, setShowModalForEvent] = useState({});
   const { option, switchOption } = useOptionContext();
+  const [attendedEvent, setAttendedEvent] = useState;
 
   const openModalForEvent = (eventId) => {
     setShowModalForEvent((prev) => ({
@@ -98,9 +99,10 @@ const Gallery = () => {
             },
           }
         );
-        const data = response.data;
-        console.log("data", data)
+        const data = response.data.attendedEvents;
+        console.log("data", data);
         // setEvent(data);
+        setAttendedEvent(attendedEvent);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -301,7 +303,11 @@ const Gallery = () => {
             </>
           )}
 
-          {option === "Attended" && <><Attended/></>}
+          {option === "Attended" && (
+            <>
+              <Attended attendedEvent={attendedEvent}/>
+            </>
+          )}
         </div>
       </GalleryStyle>
       <FeatureStyle>

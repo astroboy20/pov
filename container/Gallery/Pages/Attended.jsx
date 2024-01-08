@@ -13,7 +13,7 @@ import { Modal } from "@/components/Modal";
 import { JoinIcon } from "@/assets";
 import { toast } from "react-toastify";
 
-const Attended = () => {
+const Attended = ({attendedEvent}) => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const [isLoading, setIsLoading] = useState(false);
@@ -22,62 +22,8 @@ const Attended = () => {
   const [showModalForEvent, setShowModalForEvent] = useState({});
   const { option, switchOption } = useOptionContext();
 
-  const openModalForEvent = (eventId) => {
-    setShowModalForEvent((prev) => ({
-      ...prev,
-      [eventId]: true,
-    }));
-  };
 
-  const closeModalForEvent = (eventId) => {
-    setShowModalForEvent((prev) => ({
-      ...prev,
-      [eventId]: false,
-    }));
-  };
 
-  const handleOption = (option) => {
-    switchOption(option);
-  };
-
-  const router = useRouter();
-  const qrCodeRef = useRef(null);
-
-  const downloadQrCode = () => {
-    if (qrCodeRef.current) {
-      html2canvas(qrCodeRef.current).then((canvas) => {
-        const image = canvas.toDataURL("image/png");
-        const link = document.createElement("a");
-        link.href = image;
-        link.download = "captured_element.png";
-        link.click();
-      });
-    }
-  };
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get(
-          "https://api-cliqpod.koyeb.app/attended-events",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        const data = response.data.events;
-        setEvent(data);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        toast.error(error);
-      }
-    };
-
-    fetchEvents();
-  }, [accessToken]);
 
   const deleteEvent = async (event) => {
     event.preventDefault();
@@ -122,7 +68,7 @@ const Attended = () => {
             <div className="centered-style">
               <PurpleSpinner />
             </div>
-          ) : events && events.length === 0 ? (
+          ) : attendedEvent && attendedEvent.length === 0 ? (
             <div className="centered-style">
               <CustomText weight={"500"} type={"Htype"} variant={"p"}>
                 No events available.
@@ -131,7 +77,7 @@ const Attended = () => {
             </div>
           ) : (
             <>
-              {events.map((event) => (
+              {attendedEvent.map((event) => (
                 <div key={event._id}>
                   <div>
                     <div className="info">
