@@ -23,7 +23,7 @@ const storeTokenInLocalStorage = (token) => {
       storeTokenInLocalStorage(token);
       router.push("/dashboard");
     }
-  }, []);
+  }, [router]);
   return (
     <>
       <div
