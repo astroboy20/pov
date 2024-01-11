@@ -10,10 +10,12 @@ import Image from "next/image";
 import { Modal } from "@/components/Modal";
 import { JoinIcon } from "@/assets";
 import html2canvas from "html2canvas";
+import { toast } from "react-toastify";
 
 const Hosting = ({ events, isLoading, deleteEvent }) => {
   const [showModalForEvent, setShowModalForEvent] = useState({});
   const { option, switchOption } = useOptionContext();
+  const [isCopied, setIsCopied] = useState(false);
 
   const openModalForEvent = (eventId) => {
     setShowModalForEvent((prev) => ({
@@ -43,6 +45,28 @@ const Hosting = ({ events, isLoading, deleteEvent }) => {
     }
   };
 
+  const copyTextToClipboard = async (text) => {
+    if ("clipboard" in navigator) {
+      return await navigator.clipboard.writeText(text);
+    } else {
+      return document.execCommand("copy", true, text);
+    }
+  };
+
+  const handleCopyClick = () => {
+    const inputField = document.getElementById("url");
+    const textToCopy = inputField.value;
+    copyTextToClipboard(textToCopy)
+      .then(() => {
+        setIsCopied(true);
+        setTimeout(() => {
+          setIsCopied(false);
+        }, 1500);
+      })
+      .catch((error) => {
+        toast.warning(error);
+      });
+  };
   return (
     <div>
       {option === "Hosting" && (
@@ -127,12 +151,37 @@ const Hosting = ({ events, isLoading, deleteEvent }) => {
                               </CustomText>
                             </div>
 
-                            {/* <div>
-                           
-                             <Link href={`https://cliqpod.co/invitee/${event._id}`}>CLICK HERE</Link>
-                         
+                            <div style={{display:"flex", alignItems:"center"}}>
+                              <input
+                                type="text"
+                                id="url"
+                                value={`https://cliqpod.co/invitee/${event._id}`}
+                                readOnly
+                                style={{
+                                  width: "100%",
+                                  padding: "8px",
+                                  fontSize: "14px",
+                                  border: "1px solid #ccc",
+                                  borderRadius: "4px",
+                                  marginRight: "8px",
+                                }}
+                              />
+                              <button
+                                style={{
+                                  padding: "8px 16px",
+                                  fontSize: "14px",
+                                  backgroundColor: "#1D1465",
+                                  color: "white",
+                                  border: "none",
+                                  borderRadius: "4px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handleCopyClick}
+                              >
+                                {isCopied ? "Copied" : "Copy"}
+                              </button>
                             </div>
-                           <br/> */}
+                            <br />
                             <CustomText
                               weight={"500"}
                               type={"Htype"}

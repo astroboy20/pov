@@ -139,7 +139,7 @@ const Gallery = () => {
               );
             })}
           </div>
-          
+
           {option === "Hosting" && (
             <>
               <Hosting

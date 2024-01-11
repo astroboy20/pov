@@ -83,6 +83,32 @@ export const GalleryStyle = styled.div`
     gap: 10px;
     text-align: center;
   }
+
+  /* In your CSS file */
+.qr-code-actions {
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+}
+
+.qr-code-input {
+  flex: 1; /* Take remaining space */
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.qr-code-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 `;
 export const QRcode = {
   display: "flex",
@@ -108,4 +134,7 @@ export const FeatureStyle = styled.div`
   padding: 5%;
   width: 100%;
   /* margin: 0 10%; */
+
+
+  
 `;

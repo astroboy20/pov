@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { Button } from "@/components/Button";
@@ -139,11 +140,11 @@ const Camera = ({ events }) => {
   };
 
 
-  // useEffect(() => {
-  // if (photosTaken === events.photosPerPerson){
-  //   router.push("./invitee")
-  // }
-  // }, [])
+  useEffect(() => {
+  if (photosTaken === events.photosPerPerson){
+    router.push("/")
+  }
+  }, [])
  
 
   return (
