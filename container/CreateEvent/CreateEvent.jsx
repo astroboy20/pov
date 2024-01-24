@@ -28,6 +28,7 @@ import { Button } from "@/components/Button";
 import axios from "axios";
 import { PurpleSpinner, Spinner } from "@/components/Spinner/Spinner";
 import { toast } from "react-toastify";
+import {Cloudinary} from "@cloudinary/url-gen"
 const CreateEvent = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";

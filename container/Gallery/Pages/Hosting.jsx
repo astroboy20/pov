@@ -89,10 +89,16 @@ const Hosting = ({ events, isLoading, deleteEvent }) => {
                     <div className="info">
                       <div className="sub-info">
                         <Image
-                          width={80}
-                          height={80}
+                          width={50}
+                          height={50}
                           src={event.event_image}
                           alt="event_banner"
+                          objectFit="cover"
+                          style={{
+                            width: "auto",
+                            height: "auto",
+                            // margin: "2% 30%",
+                          }}
                         />
                         <div className="text">
                           <Link

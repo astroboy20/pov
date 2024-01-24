@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { PurpleSpinner } from "@/components/Spinner/Spinner";
 import { useRouter } from "next/router";
 import { headers } from "@/next.config";
+import FilterOptions from "./FilterOption";
 
 const Camera = ({ events }) => {
   const [capturedImages, setCapturedImages] = useState([]);
@@ -18,6 +19,8 @@ const Camera = ({ events }) => {
   const audioRef = useRef(null);
   const [facingMode, setFacingMode] = useState("environment");
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
+  const [filter, setFilter] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState(null);
   const router = useRouter();
 
   const switchCamera = () => {
@@ -29,7 +32,7 @@ const Camera = ({ events }) => {
 
   useEffect(() => {
     startCamera();
-  }, [facingMode]);
+  }, [facingMode, selectedFilter]);
 
   const startCamera = async () => {
     try {
@@ -102,6 +105,43 @@ const Camera = ({ events }) => {
     }
   };
 
+  // const takePicture = async () => {
+  //   try {
+  //     if (typeof ImageCapture !== "undefined") {
+  //       const stream = videoRef.current.srcObject;
+  //       const tracks = stream.getVideoTracks();
+  //       const imageCapture = new ImageCapture(tracks[0]);
+  //       const blob = await imageCapture.takePhoto();
+  //       audioRef.current.play();
+  //       const formData = new FormData();
+  //       formData.append("image", blob);
+
+  //       const config = {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       };
+
+  //       const response = await axios.post(
+  //         `https://api-cliqpod.koyeb.app/camera/${eventId}`,
+  //         formData,
+  //         config
+  //       );
+
+  //       const imageUrl = response.data;
+  //       setCapturedImages([...capturedImages, imageUrl]);
+  //       setPhotosTaken(photosTaken + 1);
+  //     } else {
+  //       takePictureFallback(); // Fallback for devices without ImageCapture support
+  //     }
+  //   } catch (error) {
+  //     console.error("Error taking picture:", error);
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  
+
   const takePicture = async () => {
     try {
       if (typeof ImageCapture !== "undefined") {
@@ -110,26 +150,55 @@ const Camera = ({ events }) => {
         const imageCapture = new ImageCapture(tracks[0]);
         const blob = await imageCapture.takePhoto();
         audioRef.current.play();
-        const formData = new FormData();
-        formData.append("image", blob);
-
-        
-
-        const config = {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+  
+        // Create a new Image object with the selected filter as a background
+        const image = new Image();
+        image.crossOrigin = "anonymous"; // Set the crossorigin attribute
+        image.src = events.event_image;
+  
+        // Replace with a default filter image URL
+        image.onload = () => {
+          const canvas = document.createElement("canvas");
+          const context = canvas.getContext("2d");
+          canvas.width = videoRef.current.videoWidth;
+          canvas.height = videoRef.current.videoHeight;
+  
+          // Draw the image from the camera first
+          context.drawImage(
+            videoRef.current,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+  
+          // Draw the filter image on top
+          context.globalCompositeOperation = "source-over";
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+  
+          // Convert the canvas to a Blob
+          canvas.toBlob(async (blobWithFilter) => {
+            const formData = new FormData();
+            formData.append("image", blobWithFilter);
+  
+            const config = {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            };
+  
+            // Send the image with the filter to the server
+            const response = await axios.post(
+              `https://api-cliqpod.koyeb.app/camera/${eventId}`,
+              formData,
+              config
+            );
+  
+            const imageUrl = response.data;
+            setCapturedImages([...capturedImages, imageUrl]);
+            setPhotosTaken(photosTaken + 1);
+          }, "image/jpeg");
         };
-
-        const response = await axios.post(
-          `https://api-cliqpod.koyeb.app/camera/${eventId}`,
-          formData,
-          config
-        );
-
-        const imageUrl = response.data;
-        setCapturedImages([...capturedImages, imageUrl]);
-        setPhotosTaken(photosTaken + 1);
       } else {
         takePictureFallback(); // Fallback for devices without ImageCapture support
       }
@@ -138,21 +207,25 @@ const Camera = ({ events }) => {
       setIsLoading(false);
     }
   };
-
+  
 
   useEffect(() => {
-  if (photosTaken === events.photosPerPerson){
-    router.push("/")
-  }
-  }, [])
- 
+    if (photosTaken === events.photosPerPerson) {
+      router.push("/");
+    }
+  }, []);
 
   return (
     <Container>
-      <video ref={videoRef} autoPlay playsInline></video>
+      <video
+       
+        ref={videoRef}
+        autoPlay
+        playsInline
+      ></video>
       <div className="button">
         {photosTaken === events.photosPerPerson ? (
-        "done"
+          "done"
         ) : (
           <MdOutlineCamera fontSize={"50px"} onClick={takePicture} />
         )}

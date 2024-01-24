@@ -72,6 +72,7 @@ const Album = ({ eventData }) => {
                         className="image-image"
                         onClick={() => handleImageClick(event.photos)}
                         objectFit="cover"
+                        
                       />
                     </div>
                   </>
