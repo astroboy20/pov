@@ -1,7 +1,7 @@
 import React from "react";
 import { OptionItem } from "./Option.style";
 
-const Option = ({ value, label, selected, setValue,icon }) => {
+const Option = ({ value, label, selected, setValue }) => {
   const handleClick = () => {
     setValue(value);
   };

@@ -5,9 +5,18 @@ export const GlobalStyles = createGlobalStyle`
 
 ${reset}
 
-body{
-  display:none ;
+
+
+@media (min-width: 1024px) {
+  body { 
+    display:block ;
+    transition: all 1s linear;
+    background-repeat: no-repeat;
+    height:100dvh ;
+    
+  }
 }
+
 @media (min-width: 768px) and (max-width: 1024px) {
   body { 
     display:block ;

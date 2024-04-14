@@ -1,6 +1,7 @@
-import { HomePage } from '@/container/Home'
-import Head from 'next/head'
-
+import { Navbar } from "@/components/Navbar/Navbar";
+import { HomeContainer, HomePage } from "@/container/Home";
+import { Hero } from "@/container/Home/Hero";
+import Head from "next/head";
 
 export default function Home() {
   return (
@@ -12,8 +13,10 @@ export default function Home() {
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       <main>
-        <HomePage/>
+        <Navbar />
+        <HomeContainer />
+        <Hero />
       </main>
     </>
-  )
+  );
 }

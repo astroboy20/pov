@@ -6,7 +6,7 @@ import { CustomText } from "@/components/CustomText";
 import { useRouter } from "next/router";
 import { Select } from "@chakra-ui/select";
 import Image from "next/image";
-import { Modal } from "@/components/Modal";
+import { GalleryModal, Modal } from "@/components/Modal";
 
 const Album = ({ eventData }) => {
   const [showModal, setShowModal] = useState(false);
@@ -79,7 +79,7 @@ const Album = ({ eventData }) => {
                 ))}
               </div>
 
-              <Modal
+              <GalleryModal
                 show={showModal}
                 onClose={() => {
                   setShowModal(false);
@@ -87,14 +87,14 @@ const Album = ({ eventData }) => {
               >
                 <div className="selected-image">
                   <Image
-                    width={300}
-                    height={300}
+                    width={350}
+                    height={400}
                     src={selectedImage}
                     alt="event photo"
                     objectFit="cover"
                   />
                 </div>
-              </Modal>
+              </GalleryModal>
             </div>
           ) : (
             <>{eventData.message} </>
