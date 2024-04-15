@@ -23,14 +23,14 @@ export const Data = [
       "Absolutely! We love bringing your vision to life. Whether you have a specific theme in mind or unique customization requests, our team is here to make it happen. Just let us know your ideas, and we'll work with you to create a truly unforgettable experience.",
   },
   {
-    id: 4,
+    id: 5,
     title: "Is there a reward for referrals?",
     content:
       "Absolutely! We love bringing your vision to life. Whether you have a specific theme in mind or unique customization requests, our team is here to make it happen. Just let us know your ideas, and we'll work with you to create a truly unforgettable experience.",
   },
   {
-    id: 4,
-    title: " Why should i use cliqpod?",
+    id: 6,
+    title: " Can i host an event on cliqpod?",
     content:
       "Absolutely! We love bringing your vision to life. Whether you have a specific theme in mind or unique customization requests, our team is here to make it happen. Just let us know your ideas, and we'll work with you to create a truly unforgettable experience.",
   },

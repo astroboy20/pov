@@ -1,8 +1,6 @@
+import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar/Navbar";
 import { HomeContainer, HomePage } from "@/container/Home";
-import { Customize } from "@/container/Home/Customize/Customize";
-import { FAQ } from "@/container/Home/FAQs/Faq";
-import { Hero } from "@/container/Home/Hero";
 import Head from "next/head";
 
 export default function Home() {
@@ -17,9 +15,7 @@ export default function Home() {
       <main>
         <Navbar />
         <HomeContainer />
-        <Hero />
-        <Customize/>
-        <FAQ/>
+       <Footer/>
       </main>
     </>
   );
