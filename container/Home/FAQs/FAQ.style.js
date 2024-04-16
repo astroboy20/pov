@@ -72,7 +72,7 @@ export const FAQSContainer = styled.div`
     line-height: 20px;
     text-align:left ;
     padding-top:20px ;
-
+    transition: all 1s linear;
     /* display:block ; */
   }
 

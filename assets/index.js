@@ -558,7 +558,7 @@ export const Logo = () => (
 export const Logo_White = () => (
   <svg
       width={"150px"}
-      height={81}
+      height={"81px"}
       viewBox="0 0 250 81"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -3,40 +3,36 @@ export const Data = [
     id: 1,
     title: "What is Cliqpod?",
     content:
-      "Tagbox specializes in a wide range of events including corporate gatherings, conferences, weddings, private parties, product launches, and more. We're committed to making every event memorable and tailored to your specific needs.",
+      "Cliqpod is a digital platform that helps with capturing moments and creating memories of events. ",
   },
   {
     id: 2,
-    title: "Is there a payment plan?",
+    title: "How much does cliqpod cost?",
     content:
-      "It's recommended to book your event with Tagbox as early as possible to ensure availability, especially for popular dates. However, we understand that every event is unique, so we strive to accommodate last-minute requests whenever feasible.",
+      "Cliqpod offers both free and premium subscription plans. Our free plan includes basic features such as event creation and photo/video uploads, while our premium plans offer additional benefits such as unlimited storage and advanced customization options.",
   },
   {
     id: 3,
     title: "Can i upload my own template?",
-    content: "Currently we have evebt consultation and many interesting features coming soon",
+    content:
+      "You can’t upload your template but you can upload your already made design.",
   },
   {
     id: 4,
     title: " Can i host an event on cliqpod?",
     content:
-      "Absolutely! We love bringing your vision to life. Whether you have a specific theme in mind or unique customization requests, our team is here to make it happen. Just let us know your ideas, and we'll work with you to create a truly unforgettable experience.",
+      "Yes you can! We’ve got some interesting features coming up soon, stay tuned!",
   },
   {
     id: 5,
-    title: "Is there a reward for referrals?",
+    title: "Is there a limit to how many photos and videos I can upload take on cliqpod",
     content:
-      "Absolutely! We love bringing your vision to life. Whether you have a specific theme in mind or unique customization requests, our team is here to make it happen. Just let us know your ideas, and we'll work with you to create a truly unforgettable experience.",
+      "The limit is dependent on the event host but there is an unlimited plan",
   },
   {
     id: 6,
-    title: " Can i host an event on cliqpod?",
+    title: " How does cliqpod work?",
     content:
-      "Absolutely! We love bringing your vision to life. Whether you have a specific theme in mind or unique customization requests, our team is here to make it happen. Just let us know your ideas, and we'll work with you to create a truly unforgettable experience.",
+      "cliqpod makes it easy to organize your event memories in one place. Simply sign up, create an event, design your cliqs(digital backdrops), and get your event guest take pictures with your digital backdrop.",
   },
 ];
-
-
-
-
-

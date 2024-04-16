@@ -1,15 +1,39 @@
 import React from "react";
 import { FooterContainer } from "./Footer.style";
 import { Logo_White } from "@/assets";
+import Image from "next/image"
 
 const Footer = () => {
   return (
     <FooterContainer>
-      <div className="one">
+        <hr className="hr"/>
+        <footer>
+        <div className="one">
         <div>
           <Logo_White />
           <p>Share digital memories of your event...</p>
         </div>
+        <div className="icon">
+              {" "}
+              <Image
+                src={"/images/x.png"}
+                width={24}
+                height={24}
+                alt="x-logo"
+              />
+              <Image
+                src={"/images/whatsapp.png"}
+                width={24}
+                height={24}
+                alt="x-logo"
+              />
+              <Image
+                src={"/images/instagram.png"}
+                width={24}
+                height={24}
+                alt="x-logo"
+              />
+            </div>
       </div>
       <div className="two">
         <span>Features</span>
@@ -32,6 +56,10 @@ const Footer = () => {
         </p>
         {/* <p>Real-time capturing</p> */}
       </div>
+
+        </footer>
+     
+       <hr className="hr"/>
     </FooterContainer>
   );
 };
