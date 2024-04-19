@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const NavContainer = styled.div`
-  padding: 3% 5%;
+  padding: 6% 5%;
   .header {
     display: flex;
     justify-content: space-between;
