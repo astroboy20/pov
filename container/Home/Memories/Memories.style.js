@@ -27,6 +27,7 @@ export const MemoriesContainer = styled.div`
   .right .button {
     display: flex;
     column-gap: 20px;
+    margin:auto ;
   }
   .right .button .a a {
     border-radius: 40px;
