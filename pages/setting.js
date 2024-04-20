@@ -4,7 +4,9 @@ import React from 'react'
 
 const setting = () => {
   return (
+    <div className="body">
     <ProtectedRoute><Setting/></ProtectedRoute>
+    </div>
   )
 }
 

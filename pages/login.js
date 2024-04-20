@@ -5,7 +5,7 @@ const login = () => {
 
   return (
     
-    <div>
+    <div className="body">
       <Login />
     </div>
   );

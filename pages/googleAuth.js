@@ -5,11 +5,11 @@ import React, { useEffect } from "react";
 
 const googleAuth = () => {
   return (
-    <>
+    <div className="body">
       <ProtectedRoute>
         <GoogleAuth />
       </ProtectedRoute>
-    </>
+    </div>
   );
 };
 

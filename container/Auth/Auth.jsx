@@ -31,10 +31,10 @@ window.location.href = "https://api-cliqpod.koyeb.app/auth/google"
         <div>
           {" "}
           <Image
-            width={218.367}
-            height={211.768}
+            width={356}
+            height={300}
             alt="welcome-image"
-            src={"/images/login-amico.svg"}
+            src={"/images/auth.svg"}
           />
         </div>
         <div>

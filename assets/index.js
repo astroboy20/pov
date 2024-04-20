@@ -542,8 +542,8 @@ export const EditIcon = () => (
 
 export const Logo = () => (
   <svg
-    width="175"
-    height="46"
+    width={"150px"}
+      height={"50px"}
     viewBox="0 0 175 46"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

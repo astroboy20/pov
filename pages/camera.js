@@ -27,12 +27,12 @@ const CameraRoute = () => {
   }, [eventId, accessToken]); 
 
   return (
-    <>
+    <div className="body">
       
       
          <Camera events={events} />
          
-    </>
+    </div>
   );
 };
 

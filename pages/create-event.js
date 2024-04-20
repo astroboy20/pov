@@ -4,7 +4,10 @@ import React from 'react'
 
 const createEvent = () => {
   return (
+    <div className="body"> 
+
     <ProtectedRoute><CreateEvent/></ProtectedRoute>
+    </div>
   )
 }
 

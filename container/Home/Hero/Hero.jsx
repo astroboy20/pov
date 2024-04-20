@@ -1,12 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { HeroContainer } from "./Hero.style";
+import Link from "next/link";
 
 const Hero = () => {
   const [typedName, setTypedName] = useState("");
-  const names = ["Stylishly", "Seamlessly", "Elegantly"]; // List of names to cycle through
-  const typingSpeed = 200; // Speed at which each character is typed (in milliseconds)
-  const switchDelay = 3500; // Delay before switching to the next name (in milliseconds)
-  const nameIndexRef = useRef(0); // Ref to hold the current index of the name being typed
+  const names = ["Stylishly", "Seamlessly", "Elegantly"];
+  const typingSpeed = 200;
+  const switchDelay = 3500;
+  const nameIndexRef = useRef(0);
+  const images = [
+    { src: "/images/a.svg", alt: "bouncing-img", delay: 0 },
+    { src: "/images/b.svg", alt: "bouncing-img", delay: 1 },
+    { src: "/images/c.svg", alt: "bouncing-img", delay: 2 },
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -16,7 +22,7 @@ const Hero = () => {
       if (currentIndex < currentName.length) {
         setTypedName((prevName) => prevName + currentName.charAt(currentIndex));
       } else {
-        clearInterval(interval); // Stop typing until next name
+        clearInterval(interval);
         setTimeout(() => {
           setTypedName("");
           nameIndexRef.current = (nameIndexRef.current + 1) % names.length;
@@ -31,7 +37,7 @@ const Hero = () => {
     <HeroContainer>
       <div className="text">
         <h1>
-          Capture Moments and Create <br /> Memories of your Event,{" "}
+          Capture Moments and <br /> Create Memories of your Event,{" "}
           <span>{typedName}.</span>
         </h1>
         <p>
@@ -39,10 +45,15 @@ const Hero = () => {
           cliqpod
         </p>
         <div className="button">
-          <span className="a">Get Cliqpod</span>
-          <span className="b">View Cliqs</span>
+          <span className="a">
+            <Link href="/login">Get Cliqpod</Link>
+          </span>
+          <span className="b">
+            <Link href="/login">View Cliqs</Link>
+          </span>
         </div>
       </div>
+
       <hr className="hr" />
     </HeroContainer>
   );

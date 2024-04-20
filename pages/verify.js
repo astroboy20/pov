@@ -3,9 +3,9 @@ import React from "react";
 
 const verify = () => {
   return (
-    <>
+    <div className="body">
       <Verify />
-    </>
+    </div>
   );
 };
 
