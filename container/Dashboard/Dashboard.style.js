@@ -5,12 +5,13 @@ export const DashboardStyle = styled.div`
   display: flex;
   flex-direction: column;
   overflow: scroll;
+  height:120dvh ;
 `;
 export const HeaderStyle = styled.div`
   background: url("/images/event-create.svg");
   background-size: cover;
   background-repeat: no-repeat;
-  height: 55dvh;
+  height: 70dvh;
   width: 100%;
 `;
 export const BodyStyle = styled.div`
@@ -20,8 +21,13 @@ export const BodyStyle = styled.div`
   color: #1d1465;
   border-radius: 15px;
   text-align: left;
-
   padding: 5%;
+  gap:25px;
+  form{
+     display: flex;
+  flex-direction: column;
+  gap:20px;
+  }
 `;
 export const FeatureStyle = styled.div`
   background: #fff;

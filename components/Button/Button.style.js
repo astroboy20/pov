@@ -4,8 +4,8 @@ export const ButtonStyle = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 600;
   border-radius: 4px;
   padding: 14px 24px;
   width: 100%;

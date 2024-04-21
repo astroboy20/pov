@@ -2,6 +2,7 @@ import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar/Navbar";
 import { HomeContainer, HomePage } from "@/container/Home";
 import Head from "next/head";
+ 
 
 export default function Home() {
   return (

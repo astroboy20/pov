@@ -7,13 +7,14 @@ export const FeatureStyle = styled.div`
   color: black;
   position: fixed;
   align-items: center;
-  bottom: 0;
+  bottom: 10px;
   left: 0;
   display: flex;
   justify-content: space-between;
-  padding: 5%;
+  padding: 3%;
   width: 100%;
   border: 0.8px solid #00000033
+  
   /* margin: 0 10%; */
 `;
 

@@ -2,6 +2,10 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import styled from "./BottomNav.module.css";
 import { FeatureStyle } from "./BottomNav.style";
+import { GoHome } from "react-icons/go";
+import { TbCalendarCheck } from "react-icons/tb";
+import { RxCamera } from "react-icons/rx";
+import { CiUser } from "react-icons/ci";
 
 const BottomNav = () => {
   const router = useRouter();
@@ -17,16 +21,16 @@ const BottomNav = () => {
               : `${styled.link}`
           }
         >
+          <GoHome size={"30px"}/>
           Home
         </Link>
         <Link
           href="/event"
           className={
-            router.pathname === "/event"
-              ? `${styled.active}`
-              : `${styled.link}`
+            router.pathname === "/event" ? `${styled.active}` : `${styled.link}`
           }
         >
+          <TbCalendarCheck size={"30px"}/>
           Events
         </Link>
         <Link
@@ -37,6 +41,7 @@ const BottomNav = () => {
               : `${styled.link}`
           }
         >
+          <RxCamera size={"30px"} />
           Gallery
         </Link>
         <Link
@@ -47,7 +52,8 @@ const BottomNav = () => {
               : `${styled.link}`
           }
         >
-          Setting
+          <CiUser size={"30px"} />
+          Profile
         </Link>
       </FeatureStyle>
     </>
