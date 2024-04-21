@@ -38,7 +38,7 @@ const Event = () => {
 
         <BodyStyle>
           <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
-            CliqPod
+          Event Set Up
           </CustomText>
           <div>
             <form onSubmit={handleSubmit}>
@@ -51,7 +51,7 @@ const Event = () => {
                 onChange={(e) => setEventName(e.target.value)}
               />
               <Button type="submit" variant="defaultButton">
-                Setup my event
+                Setup up event
               </Button>
             </form>
           </div>

@@ -5,9 +5,9 @@ import React from "react";
 const dashboard = () => {
   return (
     <div className="body">
-      <ProtectedRoute>
+      {/* <ProtectedRoute> */}
         <Dashboard />
-      </ProtectedRoute>
+      {/* </ProtectedRoute> */}
     </div>
   );
 };

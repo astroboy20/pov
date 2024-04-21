@@ -7,11 +7,10 @@ export const DashboardStyle = styled.div`
   overflow: scroll;
 `;
 export const HeaderStyle = styled.div`
-  background: url("/images/dashboard.png");
+  background: url("/images/event-create.svg");
   background-size: cover;
   background-repeat: no-repeat;
-  border-radius: 0px 0px 10px 10px;
-  height: 50dvh;
+  height: 55dvh;
   width: 100%;
 `;
 export const BodyStyle = styled.div`
