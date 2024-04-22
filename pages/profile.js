@@ -1,18 +1,17 @@
 import { BottomNav } from "@/components/BottomNav";
-import { Dashboard } from "@/container/Dashboard";
+import Profile from "@/container/Dashboard/Pages/Setting";
 import { ProtectedRoute } from "@/container/ProtectedRoutes/ProtectedRoute";
 import React from "react";
 
-const dashboard = () => {
+const profile = () => {
   return (
     <div className="body">
-      {/* <ProtectedRoute> */}
-        <Dashboard />
-        <BottomNav/>
-
-      {/* </ProtectedRoute> */}
+      <ProtectedRoute>
+        <Profile />
+        <BottomNav />
+      </ProtectedRoute>
     </div>
   );
 };
 
-export default dashboard;
+export default profile;

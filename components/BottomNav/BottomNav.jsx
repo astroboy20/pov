@@ -21,7 +21,7 @@ const BottomNav = () => {
               : `${styled.link}`
           }
         >
-          <GoHome size={"30px"}/>
+          <GoHome size={"25px"}/>
           Home
         </Link>
         <Link
@@ -30,7 +30,7 @@ const BottomNav = () => {
             router.pathname === "/event" ? `${styled.active}` : `${styled.link}`
           }
         >
-          <TbCalendarCheck size={"30px"}/>
+          <TbCalendarCheck size={"25px"}/>
           Events
         </Link>
         <Link
@@ -41,18 +41,18 @@ const BottomNav = () => {
               : `${styled.link}`
           }
         >
-          <RxCamera size={"30px"} />
+          <RxCamera size={"25px"} />
           Gallery
         </Link>
         <Link
-          href="/setting"
+          href="/profile"
           className={
-            router.pathname === "/setting"
+            router.pathname === "/profile"
               ? `${styled.active}`
               : `${styled.link}`
           }
         >
-          <CiUser size={"30px"} />
+          <CiUser size={"25px"} />
           Profile
         </Link>
       </FeatureStyle>

@@ -52,7 +52,7 @@ const Event = () => {
                 onChange={(e) => setEventName(e.target.value)}
               /> */}
 
-              <Select placeholder="Select Event Category" size="xs" fontSize={"14px"}>
+              <Select placeholder="Select Event Category" size="lg" fontSize={"14px"}>
                 <option value="option1">Option 1</option>
                 <option value="option2">Option 2</option>
                 <option value="option3">Option 3</option>

@@ -13,7 +13,6 @@ const Dashboard = () => {
     <>
       <>
         <Event />
-        <BottomNav/>
       </>
     </>
   );
