@@ -16,15 +16,16 @@ const StepOne = ({ data, setData }) => {
   return (
     <>
       <Input placeholder="Event Hashtag" size={"lg"} />
-      <Select size={"lg"}>
-        <option value=" Mode of Event" disabled hidden>
-          Mode of Event
-        </option>
-        <option value="Physical">Physical</option>
-        <option value="Virtual">Virtual</option>
-        <option value="Hybrid">Hybrid</option>
-      </Select>
-      <Input placeholder="Event Date" type="date" size={"lg"} />
+      <Select size="lg">
+  <option value="" disabled hidden>
+    Mode of Event
+  </option>
+  <option value="Physical">Physical</option>
+  <option value="Virtual">Virtual</option>
+  <option value="Hybrid">Hybrid</option>
+</Select>
+
+      <Input placeholder="Event Date" type="date"  onfocus="(this.type='date')"size={"lg"} />
       <Select placeholder="Time of event" size={"lg"}>
         <option>heyy</option>
       </Select>

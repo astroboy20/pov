@@ -18,6 +18,7 @@ export const GalleryStyle = styled.div`
     justify-content: space-between;
     align-items: center;
     text-align: center;
+    margin-top:3% ;
   }
   .header-head h1{
     font-size:24px ;
@@ -34,10 +35,10 @@ export const GalleryStyle = styled.div`
   
   .body {
     padding: 5%;
+    margin-top:10% ;
     overflow: scroll;
     display: flex;
     flex-direction: column;
-    gap: 5px;
     gap: 20px;
   }
   .item {
@@ -60,7 +61,8 @@ export const GalleryStyle = styled.div`
   }
   .icon-style {
     display: flex;
-    height: 30vh;
+    height: 100%;
+    margin:100px auto;
     align-items: center;
     justify-content: center;
   }

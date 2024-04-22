@@ -220,13 +220,14 @@ const CreateEvent = () => {
                   flexDirection: "column",
                   fontSize: "16px",
                   alignItems: "center",
+                  gap:"20px",
                 }}
                 className="icon-style"
                 onClick={handleImageClick}
               >
                 <ImageIcon />
-                <CustomText weight={"500"} type={"Htype"} variant={"h2-b"}>
-                  upload frame
+                <CustomText weight={"400"} type={"Htype"} variant={"h2-b"}>
+                Add thumbnail/flyer of your event
                 </CustomText>
               </span>
             )}
