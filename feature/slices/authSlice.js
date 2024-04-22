@@ -277,7 +277,7 @@ const authSlice = createSlice({
       .addCase(googleLogin.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.user = action.payload; // Update Redux state with user data upon successful Google login
+        state.user = action.payload; 
       })
       .addCase(googleLogin.rejected, (state, action) => {
         state.isLoading = false;

@@ -62,18 +62,9 @@ const Login = () => {
     router.push("/register");
   };
 
-
-
   const handleGoogleLogin = async () => {
-    try {
-      await dispatch(googleLogin());
-      dispatch(reset());
-    } catch (error) {
-      
-    }
+     dispatch(googleLogin());
   };
-
-
 
   return (
     <>

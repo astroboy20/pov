@@ -5,8 +5,13 @@ import { CustomText } from "@/components/CustomText";
 import { Button } from "@/components/Button";
 import { Spinner } from "@/components/Spinner";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { googleLogin } from "@/feature/slices/authSlice";
+
 const Auth = () => {
   const router = useRouter();
+  const dispatch = useDispatch()
+
   const handleRegisterRoute = () => {
     router.push("/register");
   };
@@ -14,11 +19,9 @@ const Auth = () => {
     router.push("/login");
   };
 
-  const handleLoginWithGoogle = () => {
-window.location.href = "https://api-cliqpod.koyeb.app/auth/google"
-
-};
-
+  const handleGoogleLogin = async () => {
+    dispatch(googleLogin());
+ };
   return (
     <>
       <AuthContainer>
@@ -40,7 +43,7 @@ window.location.href = "https://api-cliqpod.koyeb.app/auth/google"
         <div>
           {" "}
           <div className="login-with-google">
-            <Button type={"button"} variant={"transparent"} onClick = {handleLoginWithGoogle}>
+            <Button type={"button"} variant={"transparent"} onClick = {handleGoogleLogin}>
               <div className="button-style">
                 <Image
                   src="/images/google.svg"
