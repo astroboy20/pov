@@ -5,13 +5,11 @@ import { CustomText } from "@/components/CustomText";
 import { Button } from "@/components/Button";
 import { Spinner } from "@/components/Spinner";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { googleLogin } from "@/feature/slices/authSlice";
-
+import { useSelector, useDispatch } from "react-redux";
+import { login, reset, googleLogin } from "@/feature/slices/authSlice";
 const Auth = () => {
   const router = useRouter();
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
   const handleRegisterRoute = () => {
     router.push("/register");
   };
@@ -22,6 +20,7 @@ const Auth = () => {
   const handleGoogleLogin = async () => {
     dispatch(googleLogin());
  };
+
   return (
     <>
       <AuthContainer>
@@ -43,7 +42,11 @@ const Auth = () => {
         <div>
           {" "}
           <div className="login-with-google">
-            <Button type={"button"} variant={"transparent"} onClick = {handleGoogleLogin}>
+            <Button
+              type={"button"}
+              variant={"transparent"}
+              onClick={handleGoogleLogin}
+            >
               <div className="button-style">
                 <Image
                   src="/images/google.svg"

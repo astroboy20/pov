@@ -19,21 +19,26 @@ export const RevealData = [
 export const PhotoData = [
     {
         id:1,
+        label:"In real time",
+        value:"In real time"
+    },
+    {
+        id:2,
         label:"5 Photos",
         value:"5"
     },
     {
-        id:2,
+        id:3,
         label:"10 Photos",
         value:"10"
     },
     {
-        id:3,
+        id:4,
         label:"15 Photos",
         value:"15"
     },
     {
-        id:4,
+        id:5,
         label:"25 Photos",
         value:"25"
     }

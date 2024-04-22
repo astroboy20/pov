@@ -2,21 +2,26 @@ import styled from "styled-components";
 export const GalleryStyle = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  /* height: 100dvh; */
   color: "#2F3036";
 
   .header {
     height: auto;
     text-align:center ;
     align-items:center ;
+    background-color: #C0DDFA;
+    height:60vh ;
+    padding: 3%;
   }
   .header-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 10vh;
-    padding: 3%;
     text-align: center;
+  }
+  .header-head h1{
+    font-size:24px ;
+    font-weight:700 ;
   }
   .image{
     display: flex;
@@ -24,12 +29,11 @@ export const GalleryStyle = styled.div`
     align-items: center;
   }
   .image-input {
-    background-color: rgba(176, 234, 246, 0.65);
+    /* background-color: rgba(176, 234, 246, 0.65); */
   }
   
   .body {
     padding: 5%;
-    height: 80vh;
     overflow: scroll;
     display: flex;
     flex-direction: column;

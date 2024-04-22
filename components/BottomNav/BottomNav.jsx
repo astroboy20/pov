@@ -25,9 +25,9 @@ const BottomNav = () => {
           Home
         </Link>
         <Link
-          href="/event"
+          href="/event" 
           className={
-            router.pathname === "/event" ? `${styled.active}` : `${styled.link}`
+            router.pathname === "/event" || "create-event" ? `${styled.active}` : `${styled.link}`
           }
         >
           <TbCalendarCheck size={"25px"}/>

@@ -30,37 +30,10 @@ const logout = () => {
   typeof window !== "undefined" && localStorage.removeItem("user");
 };
 
-//verify email
-const verifyEmail = async (token) => {
-  const response = await axios.post(`${VERIFY_EMAIL_URL}`, token);
-  return response.data.message;
-};
-//reset
-const resetPassword = async (email) => {
-  const response = await axios.post(RESET_PASSWORD, email);
-  return response.data;
-};
-//votp
-const otp = async (otp) => {
-  const response = await axios.post(OTP, otp);
-  return response.data;
-};
-
-//verify email
-const newPassword = async (newPass) => {
-  const response = await axios.post(OTP, newPass);
-
-  return response.data;
-};
-
 const authService = {
   register,
   logout,
   login,
-  verifyEmail,
-  resetPassword,
-  otp,
-  newPassword,
   login_google,
 };
 

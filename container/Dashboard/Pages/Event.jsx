@@ -52,10 +52,20 @@ const Event = () => {
                 onChange={(e) => setEventName(e.target.value)}
               /> */}
 
-              <Select placeholder="Select Event Category" size="lg" fontSize={"14px"}>
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
+              <Select
+                size="lg"
+                fontSize={"14px"}
+                value={eventName}
+                onChange={(e) => setEventName(e.target.value)}
+              >
+                <option value="" disabled hidden>
+                Select Event Category
+                </option>
+                <option value="Birthday">Birthday </option>
+                <option value="Wedding">Wedding</option>
+                <option value="Graduation">Graduation</option>
+                <option value="Hangout">Hangout</option>
+                <option value="House Party">House party</option>
               </Select>
               <Button type="submit" variant="defaultButton">
                 Setup up event

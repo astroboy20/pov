@@ -1,17 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-} from "@chakra-ui/accordion";
 import Image from "next/image";
 import { GalleryStyle } from "./CreateEvent.style";
 import { CustomText } from "@/components/CustomText";
-import { PhotoData, RevealData } from "./Options/data";
-import { ItemStyle } from "./Options/Options.style";
-import { Input } from "@chakra-ui/input";
-import { SiNamebase } from "react-icons/si";
+
 import { useSelector } from "react-redux";
 import {
   BackArrow,
@@ -28,7 +19,8 @@ import { Button } from "@/components/Button";
 import axios from "axios";
 import { PurpleSpinner, Spinner } from "@/components/Spinner/Spinner";
 import { toast } from "react-toastify";
-import {Cloudinary} from "@cloudinary/url-gen"
+import { Cloudinary } from "@cloudinary/url-gen";
+import { StepOne } from "./Steps/StepOne";
 const CreateEvent = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
@@ -54,29 +46,6 @@ const CreateEvent = () => {
 
   const selectNewImage = () => {
     document.getElementById("selectFile").click();
-  };
-
-  const handleChange = (event) => {
-    event.preventDefault();
-    const { name, value } = event.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleRevealValue = (newValue) => {
-    setData((prevData) => ({
-      ...prevData,
-      revealTime: newValue,
-    }));
-  };
-
-  const handlePhotoValue = (newValue) => {
-    setData((prevData) => ({
-      ...prevData,
-      photosPerPerson: newValue,
-    }));
   };
 
   const handleIDValue = (newValue) => {
@@ -123,8 +92,7 @@ const CreateEvent = () => {
   };
 
   const isStepOneValid = () => {
-    const { image, startDate, endDate, revealTime, photosPerPerson } =
-      data;
+    const { image, startDate, endDate, revealTime, photosPerPerson } = data;
     return (
       startDate !== "" &&
       endDate !== "" &&
@@ -174,10 +142,8 @@ const CreateEvent = () => {
       if (imageResponse && imageResponse.data.secure_url) {
         const imageUrl = imageResponse.data.secure_url;
 
-        // Create a new data object including the uploaded image URL
         const updatedData = { ...data, image: imageUrl };
 
-        // Submit the event data with the updated image URL to create an event
         const eventResponse = await axios.post(
           "https://api-cliqpod.koyeb.app/create-event",
           updatedData,
@@ -188,7 +154,6 @@ const CreateEvent = () => {
           }
         );
 
-        // Handle event creation response
         if (eventResponse) {
           const userData = eventResponse.data;
           if (userData?.authorization_url) {
@@ -218,9 +183,8 @@ const CreateEvent = () => {
               <BlueBackIcon />
             </span>
 
-            <CustomText type={"Htype"} variant={"h3"}>
-              {eventName}
-            </CustomText>
+            <h1>{eventName}</h1>
+
             <span style={{ color: "white" }}>.</span>
           </div>
           <div htmlFor="customFileInput" className="image-input">
@@ -270,300 +234,106 @@ const CreateEvent = () => {
             <div></div>
           </div>
         </div>
+
         <div className="body">
           {step === 1 && (
             <>
-              <Accordion allowToggle>
-                <AccordionItem>
-                  <AccordionButton
-                    style={{
-                      background: "none",
-                      border: "none",
-                      gap: "10px",
-                    }}
-                  >
-                    <div className="item">
-                      <EndIcon />
-                      <div className="sub-item">
-                        <CustomText
-                          weight={"500"}
-                          type={"Htype"}
-                          variant={"h2-b"}
-                        >
-                          Start Date
-                        </CustomText>{" "}
-                        {data.startDate && (
-                          <CustomText
-                            weight={"500"}
-                            type={"Htype"}
-                            variant={"h2-b"}
-                          >
-                            {data.startDate}
-                          </CustomText>
-                        )}
-                      </div>
-                    </div>
-                  </AccordionButton>
-                  <AccordionPanel background="none" p={10}>
-                    <p style={{ margin: "2% 0" }}>
-                      Select the start date and time for the event
-                    </p>
-                    <Input
-                      placeholder="Select Date and Time"
-                      size="md"
-                      name="startDate"
-                      type="datetime-local"
-                      value={data.startDate}
-                      onChange={handleChange}
-                      className="input"
-                    />
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
-              <Accordion allowToggle>
-                <AccordionItem>
-                  <AccordionButton
-                    style={{
-                      background: "none",
-                      border: "none",
-                      gap: "10px",
-                    }}
-                  >
-                    <div className="item">
-                      <EndIcon />
-                      <div className="sub-item">
-                        <CustomText
-                          weight={"500"}
-                          type={"Htype"}
-                          variant={"h2-b"}
-                        >
-                          End Date
-                        </CustomText>{" "}
-                        {data.endDate && (
-                          <CustomText
-                            weight={"500"}
-                            type={"Htype"}
-                            variant={"h2-b"}
-                          >
-                            {data.endDate}
-                          </CustomText>
-                        )}
-                      </div>
-                    </div>
-                  </AccordionButton>
-                  <AccordionPanel background="none" p={10}>
-                    <p style={{ margin: "2% 0" }}>
-                      Select the end date and time for the event
-                    </p>
-                    <Input
-                      placeholder="Select Date and Time"
-                      size="md"
-                      name="endDate"
-                      type="datetime-local"
-                      value={data.endDate}
-                      onChange={handleChange}
-                      className="input"
-                    />
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
-
-              <Accordion allowToggle>
-                <AccordionItem>
-                  <AccordionButton
-                    style={{
-                      background: "none",
-                      border: "none",
-                      gap: "10px",
-                    }}
-                  >
-                    <div className="item">
-                      <RevealIcon />
-                      <div className="sub-item">
-                        <CustomText
-                          weight={"500"}
-                          type={"Htype"}
-                          variant={"h2-b"}
-                        >
-                          Reveal Photo
-                        </CustomText>{" "}
-                        {data.revealTime && (
-                          <CustomText
-                            weight={"500"}
-                            type={"Htype"}
-                            variant={"h2-b"}
-                          >
-                            {data.revealTime} hours
-                          </CustomText>
-                        )}
-                      </div>
-                    </div>
-                  </AccordionButton>
-                  <AccordionPanel background="none" p={10}>
-                    <ItemStyle>
-                      {RevealData.map((reveal) => (
-                        <Option
-                          key={reveal.id}
-                          label={reveal.label}
-                          value={reveal.value}
-                          setValue={handleRevealValue}
-                          selected={data.revealTime === reveal.value}
-                        />
-                      ))}
-                    </ItemStyle>
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
-
-              <Accordion allowToggle>
-                <AccordionItem>
-                  <AccordionButton
-                    style={{
-                      background: "none",
-                      border: "none",
-                      gap: "10px",
-                    }}
-                  >
-                    <div className="item">
-                      <PIcon />
-                      <div className="sub-item">
-                        <CustomText
-                          weight={"500"}
-                          type={"Htype"}
-                          variant={"h2-b"}
-                        >
-                          Photo per person
-                        </CustomText>{" "}
-                        {data.photosPerPerson && (
-                          <CustomText
-                            weight={"500"}
-                            type={"Htype"}
-                            variant={"h2-b"}
-                          >
-                            {data.photosPerPerson} photos
-                          </CustomText>
-                        )}
-                      </div>
-                    </div>
-                  </AccordionButton>
-                  <AccordionPanel background="none" p={10}>
-                    <ItemStyle>
-                      {PhotoData.map((photo) => (
-                        <Option
-                          key={photo.id}
-                          label={photo.label}
-                          value={photo.value}
-                          selected={data.photosPerPerson === photo.value}
-                          setValue={handlePhotoValue}
-                        />
-                      ))}
-                    </ItemStyle>
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
-              <Button
-                onClick={handleNext}
-                type={"submit"}
-                variant={"defaultButton"}
-                disabled={!isStepOneValid()}
-              >
-                Continue
-              </Button>
+              <StepOne data={data} setData={setData} />
             </>
           )}
-          {step === 2 && (
-            <>
-              <div style={{ display: "flex", gap: "10px" }}>
-                <span onClick={handlePrev}>
-                  <BackArrow />
-                </span>
-                <CustomText weight={"500"} type={"Htype"} variant={"h1-b"}>
-                  Finish Up
-                </CustomText>
-              </div>
+          {step === 2 &&
+            // <>
+            //   <div style={{ display: "flex", gap: "10px" }}>
+            //     <span onClick={handlePrev}>
+            //       <BackArrow />
+            //     </span>
+            //     <CustomText weight={"500"} type={"Htype"} variant={"h1-b"}>
+            //       Finish Up
+            //     </CustomText>
+            //   </div>
 
-              <CustomText weight={"500"} type={"Htype"} variant={"h3-b"}>
-                How many guest are participating?
-              </CustomText>
+            //   <CustomText weight={"500"} type={"Htype"} variant={"h3-b"}>
+            //     How many guest are participating?
+            //   </CustomText>
 
-              <CustomText weight={"500"} type={"Htype"} variant={"h3-c"}>
-                Pricing scales for more guests. Upgrade at any time (even after
-                publishing). Guests can participate without downloading the app
-                by scanning a QR code or opening a link. iPhone users can
-                participate too!
-              </CustomText>
+            //   <CustomText weight={"500"} type={"Htype"} variant={"h3-c"}>
+            //     Pricing scales for more guests. Upgrade at any time (even after
+            //     publishing). Guests can participate without downloading the app
+            //     by scanning a QR code or opening a link. iPhone users can
+            //     participate too!
+            //   </CustomText>
 
-              <Accordion allowToggle>
-                <AccordionItem>
-                  <AccordionButton
-                    style={{
-                      background: "none",
-                      border: "none",
-                      gap: "10px",
-                    }}
-                  >
-                    <div className="item">
-                      <GuestIcon />
-                      <div className="sub-item">
-                        <CustomText
-                          weight={"500"}
-                          type={"Htype"}
-                          variant={"h2-b"}
-                        >
-                          Select Guest
-                        </CustomText>{" "}
-                        {/* {data.expectedGuests && (
-                          <CustomText
-                            weight={"500"}
-                            type={"Htype"}
-                            variant={"h2-b"}
-                          >
-                            {data.expectedGuests}
-                          </CustomText>
-                        )} */}
-                      </div>
-                    </div>
-                  </AccordionButton>
-                  <AccordionPanel
-                    background="none"
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
-                    }}
-                    gap={10}
-                    p={10}
-                  >
-                    {isloading ? (
-                      <PurpleSpinner />
-                    ) : (
-                      <>
-                        {" "}
-                        {prices.map((price) => (
-                          <GuestOption
-                            key={price._id}
-                            value={price._id}
-                            price={price.price}
-                            guest={price.expectedGuest}
-                            setValue={handleIDValue}
-                            selected={data.expectedGuests === price._id}
-                          />
-                        ))}
-                      </>
-                    )}
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
+            //   <Accordion allowToggle>
+            //     <AccordionItem>
+            //       <AccordionButton
+            //         style={{
+            //           background: "none",
+            //           border: "none",
+            //           gap: "10px",
+            //         }}
+            //       >
+            //         <div className="item">
+            //           <GuestIcon />
+            //           <div className="sub-item">
+            //             <CustomText
+            //               weight={"500"}
+            //               type={"Htype"}
+            //               variant={"h2-b"}
+            //             >
+            //               Select Guest
+            //             </CustomText>{" "}
+            //             {/* {data.expectedGuests && (
+            //               <CustomText
+            //                 weight={"500"}
+            //                 type={"Htype"}
+            //                 variant={"h2-b"}
+            //               >
+            //                 {data.expectedGuests}
+            //               </CustomText>
+            //             )} */}
+            //           </div>
+            //         </div>
+            //       </AccordionButton>
+            //       <AccordionPanel
+            //         background="none"
+            //         style={{
+            //           display: "flex",
+            //           flexDirection: "column",
+            //           gap: "10px",
+            //         }}
+            //         gap={10}
+            //         p={10}
+            //       >
+            //         {isloading ? (
+            //           <PurpleSpinner />
+            //         ) : (
+            //           <>
+            //             {" "}
+            //             {prices.map((price) => (
+            //               <GuestOption
+            //                 key={price._id}
+            //                 value={price._id}
+            //                 price={price.price}
+            //                 guest={price.expectedGuest}
+            //                 setValue={handleIDValue}
+            //                 selected={data.expectedGuests === price._id}
+            //               />
+            //             ))}
+            //           </>
+            //         )}
+            //       </AccordionPanel>
+            //     </AccordionItem>
+            //   </Accordion>
 
-              <Button
-                onClick={handleSubmit}
-                type={"submit"}
-                variant={"defaultButton"}
-              >
-                {loading ? <Spinner /> : " Publish"}
-              </Button>
-            </>
-          )}
+            //   <Button
+            //     onClick={handleSubmit}
+            //     type={"submit"}
+            //     variant={"defaultButton"}
+            //   >
+            //     {loading ? <Spinner /> : " Publish"}
+            //   </Button>
+            // </>
+            "fhf"}
         </div>
       </GalleryStyle>
     </>
