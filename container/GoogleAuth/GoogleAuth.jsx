@@ -1,6 +1,6 @@
 import { PurpleSpinner } from "@/components/Spinner/Spinner";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/feature/slices/authSlice";
@@ -27,7 +27,7 @@ const GoogleAuth = () => {
       toast.success("Login Successful");
     }
   }, [isSuccess, redirecting, router]);
-  
+
   return (
     <>
       <div
