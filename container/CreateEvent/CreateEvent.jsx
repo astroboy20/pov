@@ -21,6 +21,7 @@ import { PurpleSpinner, Spinner } from "@/components/Spinner/Spinner";
 import { toast } from "react-toastify";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { StepOne } from "./Steps/StepOne";
+import { StepTwo } from "./Steps/StepTwo";
 const CreateEvent = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
@@ -33,6 +34,9 @@ const CreateEvent = () => {
 
   const [data, setData] = useState({
     eventName: eventName,
+    eventHashtag: "",
+    eventMode: "",
+    location: "",
     photosPerPerson: "",
     expectedGuests: "",
     startDate: "",
@@ -48,14 +52,7 @@ const CreateEvent = () => {
     document.getElementById("selectFile").click();
   };
 
-  const handleIDValue = (newValue) => {
-    setData((prevData) => ({
-      ...prevData,
-      expectedGuests: newValue,
-    }));
-  };
-
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
     if (file && file.size > MAX_FILE_SIZE_BYTES) {
       setSelectedImage(null);
@@ -67,14 +64,23 @@ const CreateEvent = () => {
       return;
     }
     if (file) {
-      const imageURL = URL.createObjectURL(file);
-      setSelectedImage(imageURL);
+      const imageURL = new FormData();
+      imageURL.append("file", file);
+      imageURL.append("upload_preset", "za8tsrje");
+
+      const imageResponse = await axios.post(
+        "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+        imageURL
+      );
+      const image = imageResponse.data.secure_url;
+      setSelectedImage(image);
       setData((prevData) => ({
         ...prevData,
-        image: file,
+        image: image,
       }));
     }
   };
+
   const handleImageClick = () => {
     document.getElementById("selectFile").click();
   };
@@ -83,23 +89,24 @@ const CreateEvent = () => {
   const handleRoute = () => {
     router.push("/dashboard");
   };
-
   const handleNext = () => {
-    setStep((prevStep) => prevStep + 1);
+    if (isStepOneValid()) {
+      setStep((prevStep) => prevStep + 1);
+      typeof window !== "undefined" && localStorage.setItem("data", JSON.stringify(data));
+    }
   };
+
   const handlePrev = () => {
     setStep((prevStep) => prevStep - 1);
   };
 
   const isStepOneValid = () => {
     const { image, startDate, endDate, revealTime, photosPerPerson } = data;
-    return (
-      startDate !== "" &&
-      endDate !== "" &&
-      revealTime !== "" &&
-      photosPerPerson !== "" &&
-      image !== ""
-    );
+    if (!image || !startDate  || !revealTime || !photosPerPerson) {
+      // toast.warning("Please fill out all the required fields");
+      return false;
+    }
+    return true;
   };
 
   const [prices, setPrices] = useState([]);
@@ -130,41 +137,26 @@ const CreateEvent = () => {
     try {
       setLoading(true);
 
-      const imageData = new FormData();
-      imageData.append("file", data.image);
-      imageData.append("upload_preset", "za8tsrje");
-
-      const imageResponse = await axios.post(
-        "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
-        imageData
+      const eventResponse = await axios.post(
+        "https://api-cliqpod.koyeb.app/create-event",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
 
-      if (imageResponse && imageResponse.data.secure_url) {
-        const imageUrl = imageResponse.data.secure_url;
-
-        const updatedData = { ...data, image: imageUrl };
-
-        const eventResponse = await axios.post(
-          "https://api-cliqpod.koyeb.app/create-event",
-          updatedData,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-
-        if (eventResponse) {
-          const userData = eventResponse.data;
-          if (userData?.authorization_url) {
-            router.push(userData.authorization_url);
-            toast.success("Please proceed to payment!");
-            setLoading(false);
-          } else {
-            toast.success("Event created successfully!");
-            router.push("/gallery");
-            setLoading(false);
-          }
+      if (eventResponse) {
+        const userData = eventResponse.data;
+        if (userData?.authorization_url) {
+          router.push(userData.authorization_url);
+          toast.success("Please proceed to payment!");
+          setLoading(false);
+        } else {
+          toast.success("Event created successfully!");
+          router.push("/gallery");
+          setLoading(false);
         }
       }
     } catch (error) {
@@ -178,8 +170,7 @@ const CreateEvent = () => {
       <GalleryStyle>
         <div className="header">
           <div className="header-head">
-            <span onClick={handleRoute}>
-              {" "}
+            <span onClick={step === 2 ? handlePrev : handleRoute}>
               <BlueBackIcon />
             </span>
 
@@ -204,7 +195,7 @@ const CreateEvent = () => {
                   height={1080}
                   objectFit="cover"
                   style={{
-                    width: "40%",
+                    width: "50%",
                     height: "40vh",
                     margin: "2% 30%",
                   }}
@@ -220,29 +211,33 @@ const CreateEvent = () => {
                   flexDirection: "column",
                   fontSize: "16px",
                   alignItems: "center",
-                  gap:"20px",
+                  gap: "20px",
                 }}
                 className="icon-style"
                 onClick={handleImageClick}
               >
                 <ImageIcon />
                 <CustomText weight={"400"} type={"Htype"} variant={"h2-b"}>
-                Add thumbnail/flyer of your event
+                  Add thumbnail/flyer of your event
                 </CustomText>
               </span>
             )}
-
-            <div></div>
           </div>
         </div>
 
         <div className="body">
           {step === 1 && (
             <>
-              <StepOne data={data} setData={setData} />
+              <StepOne
+                data={data}
+                setData={setData}
+                handleNext={handleNext}
+                isStepOneValid={isStepOneValid}
+              />
             </>
           )}
-          {step === 2 &&
+          {
+            step === 2 && <StepTwo />
             // <>
             //   <div style={{ display: "flex", gap: "10px" }}>
             //     <span onClick={handlePrev}>
@@ -334,7 +329,7 @@ const CreateEvent = () => {
             //     {loading ? <Spinner /> : " Publish"}
             //   </Button>
             // </>
-            "fhf"}
+          }
         </div>
       </GalleryStyle>
     </>

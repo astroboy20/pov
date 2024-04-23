@@ -2,7 +2,6 @@ import styled from "styled-components";
 export const GalleryStyle = styled.div`
   display: flex;
   flex-direction: column;
-  /* height: 100dvh; */
   color: "#2F3036";
 
   .header {
@@ -35,11 +34,12 @@ export const GalleryStyle = styled.div`
   
   .body {
     padding: 5%;
-    margin-top:10% ;
+    margin-top:5% ;
     overflow: scroll;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    height:85dvh ;
   }
   .item {
     display: flex;
@@ -55,7 +55,6 @@ export const GalleryStyle = styled.div`
     border-radius: 5px;
     padding: 10px;
     border-radius: 12px;
-    /* padding: 5px 16px 0 16px; */
     border: 1.5px solid #878e9c;
     width: 100%;
   }
