@@ -5,13 +5,12 @@ export const DashboardStyle = styled.div`
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  height:110dvh ;
 `;
 export const HeaderStyle = styled.div`
   background: url("/images/event-create.svg");
   background-size: cover;
   background-repeat: no-repeat;
-  height: 65dvh;
+  height: 350px;
   width: 100%;
 `;
 export const BodyStyle = styled.div`

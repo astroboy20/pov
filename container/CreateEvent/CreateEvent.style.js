@@ -3,21 +3,21 @@ export const GalleryStyle = styled.div`
   display: flex;
   flex-direction: column;
   color: "#2F3036";
-
+  /* height: fit-content; */
   .header {
     height: auto;
-    text-align:center ;
-    align-items:center ;
-    background-color: #C0DDFA;
-    height:60vh ;
+    text-align: center;
+    align-items: center;
+    background-color: #c0ddfa;
+    height: 400px;
     padding: 3%;
   }
   .header-step2 {
     height: auto;
-    text-align:center ;
-    align-items:center ;
-    background:url("/images/event-BG.svg") ;
-    height:400px ;
+    text-align: center;
+    align-items: center;
+    background: url("/images/event-BG.svg");
+    height: 400px;
     padding: 3%;
   }
 
@@ -26,50 +26,47 @@ export const GalleryStyle = styled.div`
     justify-content: space-between;
     align-items: center;
     text-align: center;
-    margin-top:3% ;
+    margin-top: 3%;
   }
-  .header-head h1, .header-text h1{
-    font-size:24px ;
-    font-weight:700 ;
+  .header-head h1,
+  .header-text h1 {
+    font-size: 24px;
+    font-weight: 700;
   }
 
   .header-text {
-    margin:40% auto ;
+    margin: 40% auto;
   }
-  .image{
+  .image {
     display: flex;
-    flex-direction:column ;
+    flex-direction: column;
     align-items: center;
   }
   .image-input {
     /* background-color: rgba(176, 234, 246, 0.65); */
   }
-  
+
   .body {
     padding: 5%;
-    margin-top:5% ;
-    overflow: scroll;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height:100dvh ;
   }
-  .body-step2{
+  .body-step2 {
     padding: 5%;
-    margin-top:5% ;
+    margin-top: 5%;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height:500px ;
+    height: 500px;
   }
-  .body-step2 .text{
+  .body-step2 .text {
     display: flex;
     flex-direction: column;
     gap: 25px;
-    font-size:20px ;
-    font-weight:400px ;
-    
+    font-size: 20px;
+    font-weight: 400px;
   }
   .item {
     display: flex;
@@ -91,7 +88,7 @@ export const GalleryStyle = styled.div`
   .icon-style {
     display: flex;
     height: 100%;
-    margin:100px auto;
+    margin: 100px auto;
     align-items: center;
     justify-content: center;
   }
@@ -100,14 +97,13 @@ export const GalleryStyle = styled.div`
     width: 100%;
     height: 20px;
   }
-  .change-image{
-    border:none ;
+  .change-image {
+    border: none;
     background: #1d1465;
-    padding:10px ;
-  color: #fff;
-  border: none;
-  margin:2% 0 ;
-  border-radius:10px ;
+    padding: 10px;
+    color: #fff;
+    border: none;
+    margin: 2% 0;
+    border-radius: 10px;
   }
-
 `;

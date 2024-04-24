@@ -7,7 +7,7 @@ export const FeatureStyle = styled.div`
   color: black;
   position: fixed;
   align-items: center;
-  bottom: 10px;
+  bottom:0;
   left: 0;
   right:0 ;
   display: flex;
