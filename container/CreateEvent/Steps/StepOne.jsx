@@ -9,14 +9,17 @@ import { CustomText } from "@/components/CustomText";
 import axios from "axios";
 import { Spinner } from "@/components/Spinner";
 import { BlackSpinner } from "@/components/Spinner/Spinner";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
 
-const StepOne = ({ step,data, setData,  eventName, handleNext, handlePrev }) => {
- 
-
+const StepOne = ({
+  step,
+  data,
+  setData,
+  eventName,
+  handleNext,
+  handlePrev,
+}) => {
   const [selectedImage, setSelectedImage] = useState(null);
-
- 
 
   const [loading, setLoading] = useState(false);
   const MAX_FILE_SIZE_MB = 5;
@@ -74,7 +77,6 @@ const StepOne = ({ step,data, setData,  eventName, handleNext, handlePrev }) => 
   const handleRoute = () => {
     router.push("/dashboard");
   };
- 
 
   const isStepOneValid = () => {
     const { image, startDate, endDate, revealTime, photosPerPerson } = data;
@@ -178,22 +180,28 @@ const StepOne = ({ step,data, setData,  eventName, handleNext, handlePrev }) => 
           <option value="Virtual">Virtual</option>
           <option value="Hybrid">Hybrid</option>
         </Select>
-        <Input
-          placeholder="Start Date"
-          type="datetime-local"
-          size={"lg"}
-          value={data.startDate}
-          name="startDate"
-          onChange={handleChange}
-        />
-        <Input
-          placeholder="End Date"
-          type="datetime-local"
-          size={"lg"}
-          value={data.endDate}
-          name="endDate"
-          onChange={handleChange}
-        />
+        <div className="input-container">
+          <label htmlFor="startDate">Start Date</label>
+          <Input
+            type="datetime-local"
+            size={"lg"}
+            value={data.startDate}
+            name="startDate"
+            onChange={handleChange}
+            id="startDate"
+          />
+        </div>
+        <div className="input-container">
+          <label htmlFor="endDate">End Date</label>
+          <Input
+            type="datetime-local"
+            size={"lg"}
+            value={data.endDate}
+            name="endDate"
+            onChange={handleChange}
+            id="endDate"
+          />
+        </div>
         <Input
           value={data.location}
           onChange={handleChange}

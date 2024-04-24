@@ -39,7 +39,7 @@ export const GalleryStyle = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height:95dvh ;
+    height:100dvh ;
   }
   .item {
     display: flex;
