@@ -1,5 +1,5 @@
 import { BottomNav } from '@/components/BottomNav'
-import Event from '@/container/Dashboard/Pages/Event'
+import { Event } from '@/container/Event'
 import React from 'react'
 
 const event = () => {

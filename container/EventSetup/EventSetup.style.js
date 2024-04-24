@@ -1,29 +1,11 @@
 import styled from "styled-components";
 import { MdDelete } from "react-icons/md";
 
-export const DashboardStyle = styled.div`
+export const EventSetupStyle = styled.div`
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  .header{
-    background:url("/images/header.svg") ;
-    height:200px ;
-    border-radius:0 0 15px 0 ;
-    padding:3% ;
-  }
-  .input{
-    display:flex ;
-    gap:10px;
-    align-items:center ;
-    background-color:#FFFFFF ;
-    padding:3% ;
-    border-radius:15px ;
-    position:relative ;
-    top:130px ;
-  }
-  .input input{
-    width:100% ;
-  }
+  height:140%;
 `;
 export const HeaderStyle = styled.div`
   background: url("/images/event-create.svg");

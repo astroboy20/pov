@@ -21,16 +21,18 @@ const BottomNav = () => {
               : `${styled.link}`
           }
         >
-          <GoHome size={"25px"}/>
+          <GoHome size={"25px"} />
           Home
         </Link>
         <Link
-          href="/event" 
+          href="/event"
           className={
-            router.pathname === "/event" || "create-event" ? `${styled.active}` : `${styled.link}`
+            router.pathname === "/event" || "/create-event" || "/event-setup" || "/customize"
+              ? `${styled.active}`
+              : `${styled.link}`
           }
         >
-          <TbCalendarCheck size={"25px"}/>
+          <TbCalendarCheck size={"25px"} />
           Events
         </Link>
         <Link

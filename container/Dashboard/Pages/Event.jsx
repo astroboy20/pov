@@ -35,44 +35,7 @@ const Event = () => {
     <>
       {/* <Image width={100} height={"100"} src={"/images/dashboard.png"} alt="hey"/> */}
       <DashboardStyle>
-        <HeaderStyle></HeaderStyle>
-
-        <BodyStyle>
-          <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
-            Event Set Up
-          </CustomText>
-          <div>
-            <form onSubmit={handleSubmit}>
-              {/* <Input
-                type="email"
-                placeholder="What is the Occasion?"
-                variant="text"
-                required
-                value={eventName}
-                onChange={(e) => setEventName(e.target.value)}
-              /> */}
-
-              <Select
-                size="lg"
-                fontSize={"14px"}
-                value={eventName}
-                onChange={(e) => setEventName(e.target.value)}
-              >
-                <option value="" disabled hidden>
-                Select Event Category
-                </option>
-                <option value="Birthday">Birthday </option>
-                <option value="Wedding">Wedding</option>
-                <option value="Graduation">Graduation</option>
-                <option value="Hangout">Hangout</option>
-                <option value="House Party">House party</option>
-              </Select>
-              <Button type="submit" variant="defaultButton">
-                Setup up event
-              </Button>
-            </form>
-          </div>
-        </BodyStyle>
+      
       </DashboardStyle>
     </>
   );
