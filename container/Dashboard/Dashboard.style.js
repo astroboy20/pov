@@ -5,7 +5,7 @@ export const DashboardStyle = styled.div`
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  height:120%;
+  height:140%;
 `;
 export const HeaderStyle = styled.div`
   background: url("/images/event-create.svg");
