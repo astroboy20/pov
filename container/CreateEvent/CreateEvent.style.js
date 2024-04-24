@@ -9,7 +9,7 @@ export const GalleryStyle = styled.div`
     text-align: center;
     align-items: center;
     background-color: #c0ddfa;
-    height: 400px;
+    height: 480px;
     padding: 3%;
   }
   .header-step2 {
