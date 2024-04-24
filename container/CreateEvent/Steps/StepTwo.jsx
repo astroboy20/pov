@@ -1,13 +1,35 @@
-import { BlueBackIcon } from '@/assets'
-import { Button } from '@/components/Button'
-import React from 'react'
+import { BlueBackIcon } from "@/assets";
+import { Button } from "@/components/Button";
+import React from "react";
 
-const StepTwo = ({step, handlePrev, handleRoute,eventName}) => {
+const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
+  const data = typeof window !== "undefined" && localStorage.getItem("data");
+  const parsedData = JSON.parse(data);
+
+
+  const formatDate =(dateString)=> {
+    const date = new Date(dateString);
+  
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"];
+    const month = monthNames[date.getMonth()];
+    const day = date.getDate();
+  
+    const hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+  
+    const formattedDate = `${month} ${day}th by ${hours}:${minutes} GMT`;
+  
+    return formattedDate;
+  }
+  
+ 
+  
   return (
     <>
-        <div className="header">
+      <div className="header-step2">
         <div className="header-head">
-          <span onClick={step === 2 ? handlePrev : handleRoute}>
+          <span onClick={step === 2 && handlePrev}>
             <BlueBackIcon />
           </span>
 
@@ -15,13 +37,25 @@ const StepTwo = ({step, handlePrev, handleRoute,eventName}) => {
 
           <span style={{ color: "white" }}>.</span>
         </div>
-       
-        
+
+        <div className="header-text">
+          {" "}
+          <h1>{parsedData?.eventHashtag}</h1>
+        </div>
       </div>
-      <div className="body">
-       
+      <div className="body-step2">
+        <div className="text">
+            <p>{parsedData?.eventHashtag}</p>
+            <p>{formatDate(parsedData.startDate)}</p>
+            <p>{parsedData?.location}</p>
+            <p>Event Mode: {parsedData?.eventMode}</p>
+            <p>{parsedData?.photosPerPerson} cliqs</p>
+            <p>cliq reveal after {parsedData?.revealTime}</p>
+        </div>
+
+
         <Button
-        //   onClick={handleNext}
+          //   onClick={handleNext}
           type={"submit"}
           variant={"defaultButton"}
         >
@@ -29,7 +63,7 @@ const StepTwo = ({step, handlePrev, handleRoute,eventName}) => {
         </Button>
       </div>
     </>
-  )
-}
+  );
+};
 
-export  {StepTwo}
+export { StepTwo };

@@ -12,6 +12,15 @@ export const GalleryStyle = styled.div`
     height:60vh ;
     padding: 3%;
   }
+  .header-step2 {
+    height: auto;
+    text-align:center ;
+    align-items:center ;
+    background:url("/images/event-BG.svg") ;
+    height:400px ;
+    padding: 3%;
+  }
+
   .header-head {
     display: flex;
     justify-content: space-between;
@@ -19,9 +28,13 @@ export const GalleryStyle = styled.div`
     text-align: center;
     margin-top:3% ;
   }
-  .header-head h1{
+  .header-head h1, .header-text h1{
     font-size:24px ;
     font-weight:700 ;
+  }
+
+  .header-text {
+    margin:40% auto ;
   }
   .image{
     display: flex;
@@ -40,6 +53,23 @@ export const GalleryStyle = styled.div`
     flex-direction: column;
     gap: 20px;
     height:100dvh ;
+  }
+  .body-step2{
+    padding: 5%;
+    margin-top:5% ;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height:500px ;
+  }
+  .body-step2 .text{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    font-size:20px ;
+    font-weight:400px ;
+    
   }
   .item {
     display: flex;
