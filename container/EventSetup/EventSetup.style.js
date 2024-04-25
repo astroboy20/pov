@@ -5,7 +5,7 @@ export const EventSetupStyle = styled.div`
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  height:120%;
+  height:125%;
 `;
 export const HeaderStyle = styled.div`
   background: url("/images/event-create.svg");
