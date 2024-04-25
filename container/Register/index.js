@@ -1,2 +1,2 @@
-export {Register,Verify} from "./Register"
+export {Register} from "./Register"
 // export {VerifyEmail} from "./Register"
