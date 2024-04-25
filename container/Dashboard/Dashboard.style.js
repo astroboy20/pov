@@ -90,7 +90,7 @@ export const DashboardStyle = styled.div`
     border-radius: 8px;
     padding:3% ;
     position:relative ;
-    top:100px;
+    top:90px;
   }
   .event-body .text p {
    font-size:16px ;
