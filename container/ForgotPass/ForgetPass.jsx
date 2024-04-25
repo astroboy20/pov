@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
 import { CustomText } from "@/components/CustomText";
 import { Input } from "@/components/Input";
-import { resetPassword } from "@/feature/slices/authSlice";
+// import { resetPassword } from "@/feature/slices/authSlice";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -23,7 +23,7 @@ const ForgotPass = () => {
   const reset = async (e) => {
     e.preventDefault();
     if (email) {
-      await dispatch(resetPassword({ email }));
+      // await dispatch(resetPassword({ email }));
     } else {
       toast.error("something went wrong!");
     }

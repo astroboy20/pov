@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
 import { CustomText } from "@/components/CustomText";
 import { Input } from "@/components/Input";
-import { newPassword, verifyEmail } from "@/feature/slices/authSlice";
+// import { newPassword, verifyEmail } from "@/feature/slices/authSlice";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -24,7 +24,7 @@ const NewPass = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(newPassword(password.pass))
+    // dispatch(newPassword(password.pass))
   };
   useEffect(() => {
     if(isError){

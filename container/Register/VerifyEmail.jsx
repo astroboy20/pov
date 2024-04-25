@@ -10,7 +10,7 @@ import {
   VerifyContainer,
 } from "./Register.style";
 import { useRouter } from "next/router";
-import { verifyEmail } from "@/feature/slices/authSlice";
+// import { verifyEmail } from "@/feature/slices/authSlice";
 import { useParams } from "next/navigation";
 
 export const Verify = () => {
@@ -24,7 +24,7 @@ export const Verify = () => {
   const router = useRouter();
 
   const handleVerify = () => {
-    dispatch(verifyEmail( userData.emailVerificationToken ));
+    // dispatch(verifyEmail( userData.emailVerificationToken ));
   };
 
   return (
@@ -47,7 +47,7 @@ export const Verify = () => {
           </CustomText>
         </div>
 
-        <Button onClick={handleVerify} type="submit" variant="defaultButton">
+        <Button type="submit" variant="defaultButton">
           Verify Email
         </Button>
       </VerifyContainer>
