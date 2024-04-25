@@ -112,7 +112,7 @@ const Login = () => {
             />
             <div className="link">
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                <Link style={Linkstyle} href={"forgotpassword"}>
+                <Link style={Linkstyle} href={"/"}>
                   Forgot Password?
                 </Link>
               </CustomText>
