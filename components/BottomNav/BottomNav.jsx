@@ -27,7 +27,10 @@ const BottomNav = () => {
         <Link
           href="/event"
           className={
-            router.pathname === "/event" || "/create-event" || "/event-setup" || "/customize"
+            router.pathname === "/event" ||
+            router.pathname === "/create-event" ||
+            router.pathname === "/event-setup" ||
+            router.pathname === "/customize"
               ? `${styled.active}`
               : `${styled.link}`
           }
@@ -35,6 +38,7 @@ const BottomNav = () => {
           <TbCalendarCheck size={"25px"} />
           Events
         </Link>
+
         <Link
           href="/gallery"
           className={
