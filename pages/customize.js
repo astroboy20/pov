@@ -1,10 +1,14 @@
-import { Customize } from '@/container/Customize'
-import React from 'react'
+import { BottomNav } from "@/components/BottomNav";
+import { Customize } from "@/container/Customize";
+import React from "react";
 
 const customize = () => {
   return (
-    <div className='body'><Customize/> </div>
-  )
-}
+    <div className="body">
+      <Customize />
+      <BottomNav />{" "}
+    </div>
+  );
+};
 
-export default customize
+export default customize;

@@ -1,6 +1,7 @@
 import { BlueBackIcon } from "@/assets";
 import { Button } from "@/components/Button";
 import React from "react";
+import {useRouter} from "next/router"
 
 const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
   const data = typeof window !== "undefined" && localStorage.getItem("data");
@@ -23,6 +24,11 @@ const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
     return formattedDate;
   }
   
+  const router = useRouter()
+
+  const handleRoute = () =>{
+    return router.push ("/customize")
+  }
  
   
   return (
@@ -55,7 +61,7 @@ const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
 
 
         <Button
-          //   onClick={handleNext}
+            onClick={handleRoute}
           type={"submit"}
           variant={"defaultButton"}
         >
