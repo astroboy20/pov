@@ -4,15 +4,6 @@ import { GalleryStyle } from "./CreateEvent.style";
 import { CustomText } from "@/components/CustomText";
 
 import { useSelector } from "react-redux";
-import {
-  BackArrow,
-  BlueBackIcon,
-  EndIcon,
-  GuestIcon,
-  ImageIcon,
-  PIcon,
-  RevealIcon,
-} from "@/assets";
 import Option, { GuestOption } from "./Options/Options";
 import { useRouter } from "next/router";
 import { Button } from "@/components/Button";
@@ -33,16 +24,15 @@ const CreateEvent = () => {
     typeof window !== "undefined" && localStorage.getItem("eventName");
 
   const [data, setData] = useState({
-    eventName: eventName,
-    eventHashtag: "",
-    eventMode: "",
+    eventName: "",
+    mode: "",
     location: "",
     photosPerPerson: "",
     expectedGuests: "",
-    startDate: "",
+    event_date: "",
     endDate: "",
     revealTime: "",
-    image: "",
+    event_thumbnail: "",
   });
 
   const handleNext = () => {
@@ -120,6 +110,7 @@ const CreateEvent = () => {
               eventName={eventName}
               handleNext={handleNext}
               handlePrev={handlePrev}
+              prices={prices}
             />
           </>
         )}

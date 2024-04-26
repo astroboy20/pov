@@ -16,18 +16,20 @@ import {
 import Draggable from "react-draggable";
 import axios from "axios";
 import html2canvas from "html2canvas";
+import { Spinner } from "@/components/Spinner";
 
-const StepThree = () => {
+const StepThree = ({handleNext}) => {
   const imageInfo =
     typeof window !== "undefined" && localStorage.getItem("image");
   const parsedData = JSON.parse(imageInfo);
-  const imageRef = useRef(null)
+  const imageRef = useRef(null);
   const [text, setText] = useState("");
   const [isAddTextModalOpen, setIsAddTextModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [selectedElement, setSelectedElement] = useState("");
   const [font, setFont] = useState("");
   const [background, setBackground] = useState("");
+  const [loading, setLoading] = useState(false);
   const MAX_FILE_SIZE_MB = 5;
   const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
@@ -152,34 +154,53 @@ const StepThree = () => {
     }
   };
 
-  const downloadQrCode = () => {
-    setTimeout(() => {
-      if (imageRef.current) {
-        html2canvas(imageRef.current).then((canvas) => {
-          const image = canvas.toDataURL("image/png");
-          const link = document.createElement("a");
-          link.href = image;
-          link.download = "captured_element.png";
-          link.click();
-        });
-      }
-    }, 100); // Adjust the delay as needed
-  };
-  
+ const downloadQrCode = async () => {
+    handleNext();
+  try {
+    setLoading(true); 
 
-  const handleNext = ()=>{
+    if (imageRef.current) {
+      const canvas = await html2canvas(imageRef.current, { backgroundColor: "transparent" });
+      const imageData = canvas.toDataURL("image/png");
 
+      const response = await axios.post("https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload", {
+        file: imageData,
+        upload_preset: "za8tsrje"
+      });
+
+      const imageUrl = response.data.secure_url;
+
+      localStorage.setItem("event_image", imageUrl);
+
+     
+    }
+  } catch (error) {
+    console.error("Error uploading image:", error);
+  } finally {
+    setLoading(false); // Set loading state to false
   }
+};
+
 
   return (
     <div className="edit">
-      <Center ref={imageRef} display={"flex"} flexDirection={"column"} width={"100%"}>
+      <Center
+        ref={imageRef}
+        display={"flex"}
+        flexDirection={"column"}
+        width={"100%"}
+      >
         <img src={parsedData.src} width={350} height={300} alt="Preview" />
         {text && (
           <Draggable>
             <div
               className="dragdiv"
-              style={{ fontFamily: font, background: background }}
+              style={{
+                fontFamily: font,
+                background: background,
+                color: "#fff",
+                padding: "2%",
+              }}
             >
               {text}
             </div>
@@ -210,7 +231,20 @@ const StepThree = () => {
           </Draggable>
         )}
       </Center>
-
+      <Button
+        padding={"20px 24px"}
+        font-size={"16px"}
+        fontWeight={"600"}
+        borderRadius={"4px"}
+        margin={"10px auto"}
+        background={"#1D1465"}
+        width={"100%"}
+        color={"white"}
+        onClick={downloadQrCode}
+      >
+        {loading ? <Spinner/> : "Next"}
+        
+      </Button>
       <div className="item">
         {editActions.map((edit) => (
           <div
@@ -220,26 +254,9 @@ const StepThree = () => {
           >
             {edit.icon}
             <p>{edit.label}</p>
-            
           </div>
         ))}
       </div>
-      
-      <Button
-        padding={"20px 24px"}
-        font-size={"16px"}
-        fontWeight={"600"}
-        borderRadius={"4px"}
-        marginTop={"50px auto"}
-        background={"#1D1465"}
-        color={"white"}
-        onClick={downloadQrCode}
-      >
-       Next
-      </Button>
-      
-
-     
 
       <input
         id="fileInput"
@@ -297,8 +314,6 @@ const StepThree = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-
-      
     </div>
   );
 };

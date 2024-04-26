@@ -18,8 +18,10 @@ const StepOne = ({
   eventName,
   handleNext,
   handlePrev,
+  prices
 }) => {
   const [selectedImage, setSelectedImage] = useState(null);
+  console.log(selectedImage)
 
   const [loading, setLoading] = useState(false);
   const MAX_FILE_SIZE_MB = 5;
@@ -58,7 +60,8 @@ const StepOne = ({
         setSelectedImage(image);
         setData((prevData) => ({
           ...prevData,
-          image: image,
+          event_thumbnail: image,
+
         }));
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -115,7 +118,7 @@ const StepOne = ({
             hidden
             id="selectFile"
           />
-          {data.image ? (
+          {data.event_thumbnail ? (
             <div className="image">
               <Image
                 src={selectedImage}
@@ -163,17 +166,17 @@ const StepOne = ({
       <div className="body">
         {" "}
         <Input
-          value={data.eventHashtag}
+          value={data.eventName}
           onChange={handleChange}
-          name="eventHashtag"
+          name="eventName"
           placeholder="Event Hashtag"
           size={"lg"}
         />
         <Select
           size="lg"
-          value={data.eventMode}
+          value={data.mode}
           onChange={handleChange}
-          name="eventMode"
+          name="mode"
           placeholder="Mode of Event"
         >
           <option value="Physical">Physical</option>
@@ -181,14 +184,14 @@ const StepOne = ({
           <option value="Hybrid">Hybrid</option>
         </Select>
         <div className="input-container">
-          <label htmlFor="startDate">Start Date</label>
+          <label htmlFor="event_date">Start Date</label>
           <Input
             type="datetime-local"
             size={"lg"}
-            value={data.startDate}
-            name="startDate"
+            value={data.event_date}
+            name="event_date"
             onChange={handleChange}
-            id="startDate"
+            id="event_date"
           />
         </div>
         <div className="input-container">
@@ -209,6 +212,19 @@ const StepOne = ({
           placeholder="Event Location"
           size={"lg"}
         />
+        <Select
+          value={data.expectedGuests}
+          placeholder="Expected Guests"
+          size={"lg"}
+          name="expectedGuests"
+          onChange={handleChange}
+        >
+          {prices.map((price) => (
+            <option key={price._id} value={price._id}>
+              {price.expectedGuest}
+            </option>
+          ))}
+        </Select>
         <Select
           value={data.photosPerPerson}
           placeholder="How many cliqs per person ?"

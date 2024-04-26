@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Button, Box } from "@chakra-ui/react";
 import { images } from "./Data";
-import { Edit } from "./Edit";
+import { Edit } from "./StepFour";
 
 const StepTwo = ({ handleNext }) => {
   const imageInfo =
@@ -28,7 +28,7 @@ const StepTwo = ({ handleNext }) => {
           width={220}
           height={390}
         />
-        <div className="text">
+        <div className="final-text">
           <h1>{parsedData?.filterName}</h1>
           <p> {parsedData?.info}</p>
           <Box display={"flex"} flexDirection={"column"} gap={"20px"}>

@@ -46,13 +46,13 @@ const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
 
         <div className="header-text">
           {" "}
-          <h1>{parsedData?.eventHashtag}</h1>
+          <h1>{parsedData?.eventName}</h1>
         </div>
       </div>
       <div className="body-step2">
         <div className="text">
-            <p>{parsedData?.eventHashtag}</p>
-            <p>{formatDate(parsedData.startDate)}</p>
+            <p>{parsedData?.eventName}</p>
+            <p>{formatDate(parsedData.event_date)}</p>
             <p>{parsedData?.location}</p>
             <p>Event Mode: {parsedData?.eventMode}</p>
             <p>{parsedData?.photosPerPerson} cliqs</p>

@@ -33,7 +33,7 @@ export const events = [
       id: 1,
       filterName: "Birthday Flier",
       info: "A little story about the template is here, A little story about the template",
-      src: "/images/birthday.svg",
+      src: "/images/birthday.png",
     },
     {
       id: 2,
