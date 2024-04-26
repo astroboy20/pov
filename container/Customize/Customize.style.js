@@ -6,7 +6,7 @@ export const CustomizeStyle = styled.div`
   gap: 20px;
   padding: 6% 4%;
   overflow:scroll ;
-  height:170vh ;
+  height:130vh ;
   .header {
     display: flex;
     justify-content: space-between;
