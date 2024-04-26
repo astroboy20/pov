@@ -26,7 +26,7 @@ const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
   
   const router = useRouter()
 
-  const handleRoute = () =>{
+  const handleRouter = () =>{
     return router.push ("/customize")
   }
  
@@ -61,7 +61,7 @@ const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
 
 
         <Button
-            onClick={handleRoute}
+            onClick={handleRouter}
           type={"submit"}
           variant={"defaultButton"}
         >
