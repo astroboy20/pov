@@ -57,7 +57,7 @@ export const events = [
     {
         id:3,
         label:"Uplaod Element",
-        icon:<AddTextIcon/>,
+        icon:<UploadIcon/>,
     },
     {
         id:4,
@@ -70,9 +70,22 @@ export const events = [
         icon:<BackgroundIcon/>,
     },
     {
-        id:5,
+        id:6,
         label:"Delete",
         icon:<DeleteIcon/>,
     },
   ]
   
+
+  export const popularFonts = [
+    "Arial",
+    "Helvetica",
+    "Times New Roman",
+    "Courier New",
+    "Verdana",
+    "Georgia",
+    "Palatino",
+    "Garamond",
+    "Bookman",
+    "Comic Sans MS"
+  ];

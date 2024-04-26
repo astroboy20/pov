@@ -5,6 +5,8 @@ export const CustomizeStyle = styled.div`
   flex-direction: column;
   gap: 20px;
   padding: 6% 4%;
+  overflow:scroll ;
+  height:170vh ;
   .header {
     display: flex;
     justify-content: space-between;
@@ -85,13 +87,11 @@ export const CustomizeStyle = styled.div`
   }
 
   .edit {
-    position: relative;
+    /* position: relative; */
     display: flex;
     flex-direction: column;
     width: 100%;
-    height:100dvh ;
-    overflow:scroll ;
-    margin-bottom:100px;
+
   }
 
   .item {
@@ -104,6 +104,7 @@ export const CustomizeStyle = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom:20px ;
   }
   .sub-items p {
     font-size: 12px;
@@ -119,5 +120,6 @@ export const CustomizeStyle = styled.div`
     font-size: medium;
     font-weight: 600;
     word-break: break-word;
+    font-size:20px ;
   }
 `;

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import Image from "next/image";
-import { editActions } from "./Data";
+import React, { useState, useRef } from "react";
+import { editActions, popularFonts } from "./Data";
 import {
   Modal,
   ModalOverlay,
@@ -12,22 +11,33 @@ import {
   Button,
   Center,
   Textarea,
+  Select,
 } from "@chakra-ui/react";
 import Draggable from "react-draggable";
 import axios from "axios";
+import html2canvas from "html2canvas";
 
 const StepThree = () => {
   const imageInfo =
     typeof window !== "undefined" && localStorage.getItem("image");
   const parsedData = JSON.parse(imageInfo);
+  const imageRef = useRef(null)
   const [text, setText] = useState("");
   const [isAddTextModalOpen, setIsAddTextModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [selectedElement, setSelectedElement] = useState("");
+  const [font, setFont] = useState("");
+  const [background, setBackground] = useState("");
   const MAX_FILE_SIZE_MB = 5;
   const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
   const handleAddText = () => {
+    setIsAddTextModalOpen(true);
+  };
+  const handleAddBackground = () => {
+    setIsAddTextModalOpen(true);
+  };
+  const handleFont = () => {
     setIsAddTextModalOpen(true);
   };
 
@@ -86,7 +96,7 @@ const StepThree = () => {
           imageURL
         );
         const image = imageResponse.data.secure_url;
-        setSelectedImage(image);
+        setSelectedElement(image);
       } catch (error) {
         console.error("Error uploading image:", error);
       }
@@ -103,6 +113,20 @@ const StepThree = () => {
     elementInput.click();
   };
 
+  const handleFontChange = (e) => {
+    setFont(e.target.value);
+  };
+
+  const handleBackgroundChange = (e) => {
+    setBackground(e.target.value);
+  };
+  const handleDelete = (e) => {
+    setBackground("");
+    setText("");
+    setSelectedElement("");
+    setSelectedImage("");
+  };
+
   const handleAction = (actionId) => {
     switch (actionId) {
       case 1:
@@ -114,31 +138,76 @@ const StepThree = () => {
       case 3:
         selectNewElement();
         break;
-      // Handle other actions similarly
+      case 4:
+        handleFont();
+        break;
+      case 5:
+        handleAddBackground();
+        break;
+      case 6:
+        handleDelete();
+        break;
       default:
         break;
     }
   };
 
+  const downloadQrCode = () => {
+    setTimeout(() => {
+      if (imageRef.current) {
+        html2canvas(imageRef.current).then((canvas) => {
+          const image = canvas.toDataURL("image/png");
+          const link = document.createElement("a");
+          link.href = image;
+          link.download = "captured_element.png";
+          link.click();
+        });
+      }
+    }, 100); // Adjust the delay as needed
+  };
+  
+
+  const handleNext = ()=>{
+
+  }
+
   return (
     <div className="edit">
-      <Center>
-        <Image src={parsedData.src} width={350} height={300} />
+      <Center ref={imageRef} display={"flex"} flexDirection={"column"} width={"100%"}>
+        <img src={parsedData.src} width={350} height={300} alt="Preview" />
         {text && (
           <Draggable>
-            <div className="dragdiv">{text}</div>
+            <div
+              className="dragdiv"
+              style={{ fontFamily: font, background: background }}
+            >
+              {text}
+            </div>
           </Draggable>
         )}
         {selectedImage && (
           <Draggable>
             <div className="dragdiv">
-              {" "}
-              <Image src={selectedImage} width={150} height={150} />
+              <img
+                src={selectedImage}
+                width={150}
+                height={150}
+                alt="Selected"
+              />
             </div>
           </Draggable>
         )}
         {selectedElement && (
-          <Image src={selectedElement} width={50} height={50} />
+          <Draggable>
+            <div className="dragdiv">
+              <img
+                src={selectedElement}
+                width={100}
+                height={100}
+                alt="Element"
+              />
+            </div>
+          </Draggable>
         )}
       </Center>
 
@@ -151,9 +220,26 @@ const StepThree = () => {
           >
             {edit.icon}
             <p>{edit.label}</p>
+            
           </div>
         ))}
       </div>
+      
+      <Button
+        padding={"20px 24px"}
+        font-size={"16px"}
+        fontWeight={"600"}
+        borderRadius={"4px"}
+        marginTop={"50px auto"}
+        background={"#1D1465"}
+        color={"white"}
+        onClick={downloadQrCode}
+      >
+       Next
+      </Button>
+      
+
+     
 
       <input
         id="fileInput"
@@ -176,7 +262,7 @@ const StepThree = () => {
         <ModalContent>
           <ModalHeader>Add Text</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody display={"flex"} flexDirection={"column"} gap={"20px"}>
             <Textarea
               type="text"
               value={text}
@@ -187,6 +273,21 @@ const StepThree = () => {
                 padding: "15px",
               }}
             />
+
+            <Select placeholder="Select font" onChange={handleFontChange}>
+              {popularFonts.map((font, index) => (
+                <option key={index} value={font}>
+                  {font}
+                </option>
+              ))}
+            </Select>
+
+            <input
+              style={{ background: background }}
+              type="color"
+              value={background}
+              onChange={handleBackgroundChange}
+            />
           </ModalBody>
 
           <ModalFooter>
@@ -196,6 +297,8 @@ const StepThree = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+
+      
     </div>
   );
 };
