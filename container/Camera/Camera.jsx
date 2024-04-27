@@ -66,6 +66,45 @@ const Camera = ({ events }) => {
     }
   };
 
+  // const takePictureFallback = async () => {
+  //   try {
+  //     if (photosTaken < events.photosPerPerson) {
+  //       const canvas = document.createElement("canvas");
+  //       const video = videoRef.current;
+  //       canvas.width = video.videoWidth;
+  //       canvas.height = video.videoHeight;
+  //       canvas.getContext("2d").drawImage(video, 0, 0);
+
+  //       canvas.toBlob(async (blob) => {
+  //         audioRef.current.play();
+  //         const formData = new FormData();
+  //         formData.append("image", blob);
+
+  //         const config = {
+  //           headers: {
+  //             "Content-Type": "multipart/form-data",
+  //           },
+  //         };
+
+  //         const response = await axios.post(
+  //           `https://api-cliqpod.koyeb.app/camera/${eventId}`,
+  //           formData,
+  //           config
+  //         );
+
+  //         const imageUrl = response.data;
+  //         setCapturedImages([...capturedImages, imageUrl]);
+  //         setPhotosTaken(photosTaken + 1);
+  //       }, "image/jpeg");
+  //     } else {
+  //       toast.warning("Maximum number of photos reached.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error taking picture (fallback):", error);
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const takePictureFallback = async () => {
     try {
       if (photosTaken < events.photosPerPerson) {
@@ -73,25 +112,44 @@ const Camera = ({ events }) => {
         const video = videoRef.current;
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
-        canvas.getContext("2d").drawImage(video, 0, 0);
-
+        const context = canvas.getContext("2d");
+  
+        // Draw the video stream onto the canvas
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+  
+        // Apply the selected filter (if any) to the canvas
+        if (selectedFilter) {
+          const filterImage = new Image();
+          filterImage.crossOrigin = "anonymous";
+          filterImage.src = selectedFilter.url;
+          await new Promise((resolve, reject) => {
+            filterImage.onload = () => {
+              context.globalCompositeOperation = "source-over";
+              context.drawImage(filterImage, 0, 0, canvas.width, canvas.height);
+              resolve();
+            };
+            filterImage.onerror = reject;
+          });
+        }
+  
+        // Convert the canvas content to a Blob
         canvas.toBlob(async (blob) => {
           audioRef.current.play();
           const formData = new FormData();
           formData.append("image", blob);
-
+  
           const config = {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           };
-
+  
           const response = await axios.post(
             `https://api-cliqpod.koyeb.app/camera/${eventId}`,
             formData,
             config
           );
-
+  
           const imageUrl = response.data;
           setCapturedImages([...capturedImages, imageUrl]);
           setPhotosTaken(photosTaken + 1);
@@ -105,6 +163,7 @@ const Camera = ({ events }) => {
     }
   };
 
+  
   // const takePicture = async () => {
   //   try {
   //     if (typeof ImageCapture !== "undefined") {
@@ -213,16 +272,12 @@ const Camera = ({ events }) => {
     if (photosTaken === events.photosPerPerson) {
       router.push("/");
     }
-  }, []);
+  }, [photosTaken]);
 
   return (
-    <Container>
-      <video
-       
-        ref={videoRef}
-        autoPlay
-        playsInline
-      ></video>
+    <Container> {/* Use the Container component */}
+      <video ref={videoRef} autoPlay playsInline></video>
+      <span className="counter">Pictures Taken: {photosTaken} / {events.photosPerPerson}</span>
       <div className="button">
         {photosTaken === events.photosPerPerson ? (
           "done"
@@ -232,9 +287,6 @@ const Camera = ({ events }) => {
         <MdOutlineFlipCameraAndroid fontSize={"50px"} onClick={switchCamera} />
       </div>
       <audio ref={audioRef} src={"./sound/sound.mp3"} preload="auto" />
-      <span style={{ marginTop: "10px" }}>
-        Pictures Taken: {photosTaken} / {events.photosPerPerson}
-      </span>
     </Container>
   );
 };
