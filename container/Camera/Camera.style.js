@@ -12,9 +12,8 @@ text-align:center ;
     gap:10px;
     justify-content:center ;
     align-items:center ;
-    padding:5% ;
     position:absolute ;
-    bottom:20px;
+    bottom:25px;
     left:0 ;
     right:0 ;
 
@@ -22,7 +21,7 @@ text-align:center ;
 video{
     width:100% ;
     height:120% ;
-    background:none ;
+    background:#1D1465 ;
 }
 span{
     position:absolute ;
