@@ -275,18 +275,25 @@ const Camera = ({ events }) => {
   }, [photosTaken]);
 
   return (
-    <Container> {/* Use the Container component */}
-      <video ref={videoRef} autoPlay playsInline></video>
-      <span className="counter">Pictures Taken: {photosTaken} / {events.photosPerPerson}</span>
+    <Container>
+      <video
+       
+        ref={videoRef}
+        autoPlay
+        playsInline
+      ></video>
       <div className="button">
         {photosTaken === events.photosPerPerson ? (
           "done"
         ) : (
-          <MdOutlineCamera fontSize={"50px"} onClick={takePicture} />
+          <MdOutlineCamera fontSize={"50px"}  color="#fff" onClick={takePicture} />
         )}
-        <MdOutlineFlipCameraAndroid fontSize={"50px"} onClick={switchCamera} />
+        <MdOutlineFlipCameraAndroid fontSize={"50px"} color="#fff" onClick={switchCamera} />
       </div>
       <audio ref={audioRef} src={"./sound/sound.mp3"} preload="auto" />
+      <span style={{ marginTop: "10px" }}>
+       {photosTaken} / {events.photosPerPerson} cliqs
+      </span>
     </Container>
   );
 };
