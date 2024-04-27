@@ -3,7 +3,7 @@ import React from 'react'
 
 const invitee_login = () => {
   return (
-    <div><Login/></div>
+    <div className='body'><Login/></div>
   )
 }
 

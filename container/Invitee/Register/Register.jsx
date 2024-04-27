@@ -72,10 +72,8 @@ const Register = () => {
     <>
       <RegisterContainer>
         <FormHeader>
-         
-         <h1>Sign Up
-</h1>
-<p>Get started with cliqpod</p>
+          <h1>Sign Up</h1>
+          <p>Get started with cliqpod</p>
         </FormHeader>
 
         <FormContainer>
@@ -156,7 +154,8 @@ const Register = () => {
             </Button>
             <div className="sign-in">
               <CustomText weight={"700"} type={"Htype"} variant={"h4"}>
-              Already have an account? <span onClick={handleRoute}>Sign in</span>
+                Already have an account?{" "}
+                <span onClick={handleRoute}>Sign in</span>
               </CustomText>
             </div>
           </form>

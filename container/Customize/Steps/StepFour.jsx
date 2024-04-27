@@ -53,7 +53,7 @@ const handleSubmit = async () => {
         setLoading(false);
       } else {
         toast.success("Event created successfully!");
-        router.push("/gallery");
+        router.push("/success");
         setLoading(false);
       }
     }

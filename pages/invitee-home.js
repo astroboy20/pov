@@ -3,7 +3,7 @@ import React from "react";
 
 const invitee_home = () => {
   return (
-    <div>
+    <div className="body">
       <Event />
     </div>
   );

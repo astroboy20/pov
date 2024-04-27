@@ -6,6 +6,7 @@ import { GoHome } from "react-icons/go";
 import { TbCalendarCheck } from "react-icons/tb";
 import { RxCamera } from "react-icons/rx";
 import { CiUser } from "react-icons/ci";
+import { FaInstagram } from "react-icons/fa";
 
 const BottomNav = () => {
   const router = useRouter();
@@ -47,8 +48,8 @@ const BottomNav = () => {
               : `${styled.link}`
           }
         >
-          <RxCamera size={"25px"} />
-          Gallery
+          <FaInstagram size={"25px"} />
+          Album
         </Link>
         <Link
           href="/profile"
