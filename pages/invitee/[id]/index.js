@@ -15,13 +15,7 @@ const EventID = ({ searchParams }) => {
 
     const setId = typeof window !== "undefined" && localStorage.setItem("id", eventId);
 
-  useEffect(() => {
-    if (!setId) {
-      router.push("/login");
-      return;
-    }
-   
-  }, [setId,router]);
+ 
   return (
     <>
       <Auth />
