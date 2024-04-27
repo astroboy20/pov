@@ -4,24 +4,29 @@ export const EventStyle = styled.div`
   padding: 6% 5%;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  position:absolute ;
+  gap: 40px;
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   .header h1 {
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 24px;
+    font-weight: 600;
   }
 
   .body {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+    text-align: center;
+    align-items: center;
+    background: url("/images/event-BG.svg");
+    height: 400px;
+    padding: 3%;
+    margin-bottom:20% ;
   }
-.text p {
-    font-weight:600 ;
+.body p {
+  font-size:24px ;
+    font-weight:700 ;
 }
   .text p a{
     color:#1D1465 ;

@@ -82,8 +82,8 @@ const StepOne = ({
   };
 
   const isStepOneValid = () => {
-    const { image, startDate, endDate, revealTime, photosPerPerson } = data;
-    if (!image || !startDate || !revealTime || !photosPerPerson) {
+    const { event_thumbnail, event_date, endDate, revealTime, photosPerPerson } = data;
+    if (!event_thumbnail || !event_date || !revealTime || !photosPerPerson) {
       // toast.warning("Please fill out all the required fields");
       return false;
     }
@@ -243,7 +243,7 @@ const StepOne = ({
           onChange={handleChange}
           name="revealTime"
           size={"lg"}
-          placeholder="cliq per person ?"
+          placeholder="cliq reveal time? "
         >
           {RevealData.map((reveal) => (
             <option key={reveal.id} value={reveal.value}>
@@ -255,7 +255,7 @@ const StepOne = ({
           onClick={handleNext}
           type={"submit"}
           variant={"defaultButton"}
-        //   disabled={!isStepOneValid()}
+          disabled={!isStepOneValid()}
         >
           Continue
         </Button>

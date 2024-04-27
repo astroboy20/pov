@@ -154,32 +154,32 @@ const StepThree = ({handleNext}) => {
     }
   };
 
- const downloadQrCode = async () => {
-    handleNext();
-  try {
-    setLoading(true); 
-
-    if (imageRef.current) {
-      const canvas = await html2canvas(imageRef.current, { backgroundColor: "transparent" });
-      const imageData = canvas.toDataURL("image/png");
-
-      const response = await axios.post("https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload", {
-        file: imageData,
-        upload_preset: "za8tsrje"
-      });
-
-      const imageUrl = response.data.secure_url;
-
-      localStorage.setItem("event_image", imageUrl);
-
-     
+  const downloadQrCode = async () => {
+    try {
+      setLoading(true);
+  
+      if (imageRef.current) {
+        const canvas = await html2canvas(imageRef.current, { backgroundColor: "transparent" });
+        const imageData = canvas.toDataURL("image/png");
+  
+        const response = await axios.post("https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload", {
+          file: imageData,
+          upload_preset: "za8tsrje"
+        });
+  
+        const imageUrl = response.data.secure_url;
+  
+        localStorage.setItem("event_image", imageUrl);
+  
+        setLoading(false); // Set loading state to false
+        handleNext(); // Proceed to the next step after image upload
+      }
+    } catch (error) {
+      setLoading(false); // Set loading state to false in case of error
+      console.error("Error uploading image:", error);
     }
-  } catch (error) {
-    console.error("Error uploading image:", error);
-  } finally {
-    setLoading(false); // Set loading state to false
-  }
-};
+  };
+  
 
 
   return (

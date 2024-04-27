@@ -35,7 +35,7 @@ const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
     <>
       <div className="header-step2">
         <div className="header-head">
-          <span onClick={step === 2 && handlePrev}>
+          <span onClick={ handlePrev}>
             <BlueBackIcon />
           </span>
 
@@ -54,9 +54,9 @@ const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
             <p>{parsedData?.eventName}</p>
             <p>{formatDate(parsedData.event_date)}</p>
             <p>{parsedData?.location}</p>
-            <p>Event Mode: {parsedData?.eventMode}</p>
+            <p>Event Mode: {parsedData?.mode}</p>
             <p>{parsedData?.photosPerPerson} cliqs</p>
-            <p>cliq reveal after {parsedData?.revealTime}</p>
+            <p>cliq reveal after {parsedData?.revealTime} hours</p>
         </div>
 
 

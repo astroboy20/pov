@@ -29,27 +29,27 @@ export const PhotoData = [
   },
   {
     id: 2,
-    label: "11 - 100 ",
-    value: "90",
+    label: "0 - 25 ",
+    value: "25",
   },
   {
     id: 3,
-    label: "101 - 250",
-    value: "150",
+    label: "0 - 50",
+    value: "50",
   },
-  {
-    id: 4,
-    label: "251 -500",
-    value: "250",
-  },
-  {
-    id: 5,
-    label: "501 - 1000",
-    value: "500",
-  },
-  {
-    id: 6,
-    label: "1001 - 2000",
-    value: "2000",
-  },
+//   {
+//     id: 4,
+//     label: "251 -500",
+//     value: "250",
+//   },
+//   {
+//     id: 5,
+//     label: "501 - 1000",
+//     value: "500",
+//   },
+//   {
+//     id: 6,
+//     label: "1001 - 2000",
+//     value: "2000",
+//   },
 ];
