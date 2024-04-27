@@ -8,6 +8,9 @@ import { Button } from "@chakra-ui/react";
 
 const Event = () => {
   const router = useRouter();
+  const handleRoute = ()=>{
+    return router.push("/camera")
+  }
 
   return (
     <EventStyle>
@@ -30,7 +33,7 @@ const Event = () => {
         position={"absolute"}
         left={"0"}
         bottom={"0"}
-        onClick={router.push("/camera")}
+        onClick={handleRoute}
       >
         Start cliqing
       </Button>
