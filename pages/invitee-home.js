@@ -4,7 +4,7 @@ import React from "react";
 const invitee_home = () => {
   return (
     <div>
-      {/* <Event /> */}
+      <Event />
     </div>
   );
 };
