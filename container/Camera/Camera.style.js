@@ -21,7 +21,7 @@ text-align:center ;
 }
 video{
     width:100% ;
-    height:100dvh ;
+    height:100% ;
     background:none ;
 }
 span{

@@ -118,10 +118,10 @@ const Camera = ({ events }) => {
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
   
         // Apply the selected filter (if any) to the canvas
-        if (selectedFilter) {
+        if (events.event_image) {
           const filterImage = new Image();
           filterImage.crossOrigin = "anonymous";
-          filterImage.src = selectedFilter.url;
+          filterImage.src = events.event_image;
           await new Promise((resolve, reject) => {
             filterImage.onload = () => {
               context.globalCompositeOperation = "source-over";
