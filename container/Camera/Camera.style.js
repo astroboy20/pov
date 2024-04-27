@@ -15,7 +15,8 @@ background:#1D1465 ;
     justify-content:center ;
     align-items:center ;
     position:absolute ;
-    bottom:10px;
+    bottom:30px;
+    padding:5% ;
     left:0 ;
     right:0 ;
 
