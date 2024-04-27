@@ -7,7 +7,6 @@ import {
   LoginContainer,
 } from "./Login.style";
 import { CustomText } from "@/components/CustomText";
-import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -19,6 +18,7 @@ import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { BackIcon, EmailIcon } from "@/assets";
+import { Input } from "@chakra-ui/input";
 
 const Login = () => {
   const router = useRouter();
@@ -62,20 +62,15 @@ const Login = () => {
   };
 
   const handleGoogleLogin = async () => {
-     dispatch(googleLogin());
+    dispatch(googleLogin());
   };
 
   return (
     <>
       <LoginContainer>
         <FormHeader>
-          <span onClick={handleRoute}>
-            <BackIcon />
-          </span>
-
-          <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
-            Sign In
-          </CustomText>
+          <h1>Welcome back!</h1>
+          <p>Log in to cliqpod to capture your event memories!</p>
         </FormHeader>
 
         <FormContainer>
@@ -86,23 +81,28 @@ const Login = () => {
               onChange={formik.handleChange}
               placeholder="Email"
               name="email"
-              icon={<EmailIcon />}
-              variant={"text"}
               required
+              borderColor={"#1D1465"}
+              padding={"25px 10px"}
+              borderRadius={"4px"}
               error={
                 formik.errors?.email && formik.errors.email
                   ? `${formik.errors.email}`
                   : null
               }
+              size={"lg"}
             />
             <Input
               type="password"
-              variant={"password"}
               value={formik.values.password}
               onChange={formik.handleChange}
               placeholder="Password"
               name="password"
               required
+              borderColor={"#1D1465"}
+              padding={"25px 10px"}
+              borderRadius={"4px"}
+              size={"lg"}
               error={
                 formik.errors?.password && formik.errors.password
                   ? `${formik.errors.password}`
@@ -110,13 +110,13 @@ const Login = () => {
               }
               password
             />
-            <div className="link">
+            {/* <div className="link">
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
                 <Link style={Linkstyle} href={"/"}>
                   Forgot Password?
                 </Link>
               </CustomText>
-            </div>
+            </div> */}
 
             <Button type={"submit"} variant={"defaultButton"}>
               {isLoading ? <Spinner /> : "Login"}
@@ -124,10 +124,10 @@ const Login = () => {
           </form>
         </FormContainer>
 
-        <div className="or">or</div>
+        {/* <div className="or">or</div> */}
 
         <div className="login-with-google">
-          <Button
+          {/* <Button
             onClick={handleGoogleLogin}
             type={"button"}
             variant={"transparent"}
@@ -138,7 +138,7 @@ const Login = () => {
                 Continue with Google
               </CustomText>
             </div>
-          </Button>
+          </Button> */}
           <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
             Don`t have an account? <span onClick={handleRoute}>Sign Up</span>
           </CustomText>

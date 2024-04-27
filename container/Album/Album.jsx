@@ -28,7 +28,7 @@ const Album = ({ eventData }) => {
       <div className="header">
         <FaArrowCircleLeft
           onClick={handleRoute}
-          style={{ color: "white" }}
+          style={{ color: "#000" }}
           fontSize={30}
         />{" "}
         <CustomText weight={"500"} type={"Htype"} variant={"h1-c"}>
@@ -65,12 +65,12 @@ const Album = ({ eventData }) => {
                   <>
                     <div key={event.id}>
                       <Image
-                        width={100}
-                        height={100}
+                        width={122}
+                        height={160}
                         src={`${event.photos}`}
                         alt="event photo"
                         className="image-image"
-                        onClick={() => handleImageClick(event.photos)}
+                        // onClick={() => handleImageClick(event.photos)}
                         objectFit="cover"
                         
                       />

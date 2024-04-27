@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const AlbumContainer = styled.div`
-  background: #72757a;
-  padding: 5%;
+  padding: 2%;
   height: 100vh;
 
   width: 100%;
@@ -27,7 +26,7 @@ export const AlbumContainer = styled.div`
     color: white;
   }
   .all-image {
-    height: 70vh;
+    height: 90vh;
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -66,9 +65,12 @@ export const AlbumContainer = styled.div`
     justify-content: center;
     flex-wrap: wrap;
     gap: 5px;
+    width:100% ;
   }
   .image-image {
-    border-radius: 10px;
+    border-radius: 4px;
+    width:122px ;
+    height:160px ;
   }
   .selected-image {
     border-radius: 10px;

@@ -8,6 +8,12 @@ export const Linkstyle = {
 export const LoginContainer = styled.div`
  color:black ;
  padding:5% ;
+ form{
+  gap: 20px;
+  display:flex ;
+  flex-direction:column ;
+  color: #1D1465;
+ }
   .login-with-google {
     margin-top: 5%;
     text-align: center;
@@ -59,10 +65,19 @@ export const LoginContainer = styled.div`
 `;
 
 export const FormHeader = styled.header`
-  gap: 30px;
-  padding:30px 0;
+  gap: 10px;
+  padding:20px 0;
   display:flex ;
   flex-direction:column ;
+  color:#1D1465 ;
+  h1{
+    font-size:40px ;
+    font-weight:700 ;
+  }
+  p{
+    font-size:18px ;
+    font-weight:400 ;
+  }
 `;
 
 export const FormContainer = styled.div`

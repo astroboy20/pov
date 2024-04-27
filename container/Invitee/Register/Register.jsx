@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState, useEffect } from "react";
 import { CustomText } from "@/components/CustomText";
-import { Input } from "@/components/Input";
 import { Button } from "@/components/Button";
 import { RegisterContainer, FormContainer, FormHeader } from "./Register.style";
 import { useRouter } from "next/router";
@@ -14,6 +13,7 @@ import { Validate } from "@/components/validate";
 import Image from "next/image";
 import * as Yup from "yup";
 import { BackIcon, EmailIcon, ProfileIcon } from "@/assets";
+import { Input } from "@chakra-ui/input";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -72,13 +72,10 @@ const Register = () => {
     <>
       <RegisterContainer>
         <FormHeader>
-          <span onClick={handleAuthRoute}>
-            <BackIcon />
-          </span>
-
-          <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
-            Sign Up
-          </CustomText>
+         
+         <h1>Sign Up
+</h1>
+<p>Get started with cliqpod</p>
         </FormHeader>
 
         <FormContainer>
@@ -86,12 +83,14 @@ const Register = () => {
             <Input
               type="text"
               placeholder="Username"
-              variant="text"
               required
-              icon={<ProfileIcon />}
               name="username"
               value={formik.values.username}
               onChange={formik.handleChange}
+              size={"lg"}
+              borderRadius={"4px"}
+              padding={"25px 10px"}
+              borderColor={"#1D1465"}
               error={
                 formik.errors?.username && formik.errors.username
                   ? `${formik.errors.username}`
@@ -101,12 +100,14 @@ const Register = () => {
             <Input
               type="email"
               placeholder="Email"
-              variant="text"
               required
-              icon={<EmailIcon />}
               value={formik.values.email}
               name="email"
               onChange={formik.handleChange}
+              size={"lg"}
+              borderRadius={"4px"}
+              padding={"25px 10px"}
+              borderColor={"#1D1465"}
               error={
                 formik.errors?.email && formik.errors.email
                   ? `${formik.errors.email}`
@@ -116,10 +117,13 @@ const Register = () => {
 
             <Input
               type="password"
-              variant="password"
               placeholder="Password"
               id="password-input"
               required
+              size={"lg"}
+              borderRadius={"4px"}
+              padding={"25px 10px"}
+              borderColor={"#1D1465"}
               value={formik.values.password}
               name="password"
               onChange={formik.handleChange}
@@ -131,9 +135,12 @@ const Register = () => {
             />
             <Input
               type="password"
-              variant="password"
               placeholder="Confirm password"
               required
+              size={"lg"}
+              borderRadius={"4px"}
+              padding={"25px 10px"}
+              borderColor={"#1D1465"}
               value={formik.values.confirmpassword}
               name="confirmpassword"
               onChange={formik.handleChange}
@@ -148,8 +155,8 @@ const Register = () => {
               {isLoading ? <Spinner /> : "Sign Up"}
             </Button>
             <div className="sign-in">
-              <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                Have an account? <span onClick={handleRoute}>Sign in</span>
+              <CustomText weight={"700"} type={"Htype"} variant={"h4"}>
+              Already have an account? <span onClick={handleRoute}>Sign in</span>
               </CustomText>
             </div>
           </form>

@@ -39,17 +39,17 @@ const Event = () => {
   return (
     <EventStyle>
       <div className="header">
-        <h1>Welcome to Adedamola @ 18 birthday party.</h1>
+        <h1>Welcome to {events?.eventName}.</h1>
       </div>
 
       <div className="body">
-        <p>Adedamola@18 birthday party</p>
-        <p>#Adedamola@18</p>
+        {/* <p>Adedamola@18 birthday party</p> */}
+        <p>{events?.eventName}</p>
       </div>
 
       <Button
         background={"#1D1465"}
-        padding={"20px"}
+        padding={"25px 10px"}
         borderRadius={"4px"}
         color={"#fff"}
         width={"90%"}

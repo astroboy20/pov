@@ -5,6 +5,7 @@ export const EventStyle = styled.div`
   display: flex;
   flex-direction: column;
   position:absolute ;
+  width:100% ;
   gap: 40px;
   .header {
     display: flex;
@@ -23,6 +24,7 @@ export const EventStyle = styled.div`
     height: 400px;
     padding: 3%;
     margin-bottom:20% ;
+    width:100% ;
   }
 .body p {
   font-size:24px ;

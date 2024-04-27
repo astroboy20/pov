@@ -12,6 +12,7 @@ const FormData = styled.div`
     .sign-in {
       margin: 5% 0;
       text-align: center;
+      font-weight:700 ;
     }
     span{
       font-weight:800 ;
@@ -21,13 +22,28 @@ const FormData = styled.div`
 export const RegisterContainer = styled(FormData)`
   padding: 5%;
   height: 100vh;
+  form{
+  gap: 20px;
+  display:flex ;
+  flex-direction:column ;
+  color: #1D1465;
+ }
 `;
 
 export const FormHeader = styled.header`
-  gap: 30px;
-  padding:30px 0;
+  gap: 10px;
+  padding:20px 0;
   display:flex ;
   flex-direction:column ;
+  color:#1D1465 ;
+  h1{
+    font-size:40px ;
+    font-weight:700 ;
+  }
+  p{
+    font-size:18px ;
+    font-weight:400 ;
+  }
 `;
 export const FormContainer = styled(FormData)``;
 export const VerifyContainer = styled(FormData)`
