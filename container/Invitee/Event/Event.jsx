@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "@chakra-ui/react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Event = () => {
   const router = useRouter();
@@ -26,7 +27,7 @@ const Event = () => {
         },
       })
       .then((response) => {
-        const data = response.data.event;
+        const data = response?.data?.event;
         console.log(data);
         setEvents(data);
       })
