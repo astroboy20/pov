@@ -2,7 +2,6 @@ import styled from "styled-components"
 
 export const Container = styled.div`
 width:100% ;
-height:100%;
 text-align:center ;
 .header-head{
     display:flex ;
@@ -22,7 +21,7 @@ text-align:center ;
 }
 video{
     width:100% ;
-    height:100% ;
+    height:100dvh ;
     background:none ;
 }
 span{
