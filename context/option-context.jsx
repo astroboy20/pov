@@ -1,12 +1,12 @@
 import { createContext, useContext, useState } from "react";
 
 const OptionContext = createContext({
-  option: "Hosting",
+  option: "Hosted",
   switchOption: () => {},
 });
 
 export const OptionProvider = ({ children }) => {
-  const [option, setOption] = useState("Hosting");
+  const [option, setOption] = useState("Hosted");
 
   const switchOption = (optionValue) => {
     setOption(optionValue);

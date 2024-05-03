@@ -28,7 +28,7 @@ const Success = () => {
         link.href = image;
         link.download = "captured_element.png";
         link.click();
-        router.push("/dashboard")
+        router.push("/event")
       });
     }
   };

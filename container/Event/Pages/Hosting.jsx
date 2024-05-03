@@ -75,7 +75,7 @@ const Hosting = ({ events, isLoading, deleteEvent }) => {
             <div className="centered-style">
               <PurpleSpinner />
             </div>
-          ) : events && events.length === 0 ? (
+          ) : events && events?.length === 0 ? (
             <div className="centered-style">
               <CustomText weight={"500"} type={"Htype"} variant={"p"}>
                 {events?.message}
@@ -83,7 +83,7 @@ const Hosting = ({ events, isLoading, deleteEvent }) => {
             </div>
           ) : (
             <>
-              {events.map((event) => (
+              {events?.map((event) => (
                 <div key={event._id}>
                   <div>
                     <div className="info">
@@ -103,10 +103,6 @@ const Hosting = ({ events, isLoading, deleteEvent }) => {
                         <div className="text">
                           <Link
                             style={{ textDecoration: "none" }}
-                            // href={{
-                            //   pathname: `/gallery/id`,
-                            //   query: { id: event._id },
-                            // }}
                             href={`/gallery/${event._id}`}
                           >
                             <div className="a">{event.eventName}</div>
@@ -157,7 +153,9 @@ const Hosting = ({ events, isLoading, deleteEvent }) => {
                               </CustomText>
                             </div>
 
-                            <div style={{display:"flex", alignItems:"center"}}>
+                            <div
+                              style={{ display: "flex", alignItems: "center" }}
+                            >
                               <input
                                 type="text"
                                 id="url"

@@ -41,11 +41,9 @@ const BottomNav = () => {
         </Link>
 
         <Link
-          href="/gallery"
+          href="/album"
           className={
-            router.pathname === "/gallery"
-              ? `${styled.active}`
-              : `${styled.link}`
+            router.pathname === "/album" ? `${styled.active}` : `${styled.link}`
           }
         >
           <FaInstagram size={"25px"} />

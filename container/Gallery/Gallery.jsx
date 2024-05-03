@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { FeatureStyle, GalleryStyle } from "./Gallery.style";
+import {  GalleryStyle } from "./Gallery.style";
 import { CustomText } from "@/components/CustomText";
 import { JoinIcon } from "@/assets";
-import Link from "next/link";
-import styled from "./Gallery.module.css";
 import { useRouter } from "next/router";
 import { optionItems } from "./Option/data";
 import Option from "./Option/Option";
@@ -13,6 +11,7 @@ import { useOptionContext } from "@/context/option-context";
 import { toast } from "react-toastify";
 import { Attended } from "./Pages/Attended";
 import { Hosting } from "./Pages/Hosting";
+import useFetchItems from "@/hooks/useFetchItems";
 
 const Gallery = () => {
   const { user } = useSelector((state) => state.auth);
@@ -26,55 +25,26 @@ const Gallery = () => {
     switchOption(option);
   };
 
-  const router = useRouter();
 
+  const { data: eventDetails } = useFetchItems({
+    url: "https://api-cliqpod.koyeb.app/events",
+    token: accessToken,
+  });
+
+  const { data: attendedEventDetails } = useFetchItems({
+    url: "https://api-cliqpod.koyeb.app/attended-events",
+    token: accessToken,
+  });
+
+ 
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get(
-          "https://api-cliqpod.koyeb.app/events",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        const data = response.data.events;
-        setEvent(data);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        toast.error(error);
-      }
-    };
+    if (eventDetails && attendedEventDetails) {
+      setEvent(eventDetails?.events);
+      setAttendedEvent(attendedEventDetails?.events)
+    }
+  }, [eventDetails, attendedEventDetails]);
+  // console.log(attendedEvent)
 
-    fetchEvents();
-  }, [accessToken]);
-
-  useEffect(() => {
-    const fetchAttendedEvents = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.get(
-          "https://api-cliqpod.koyeb.app/attended-events",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        const data = response.data.attendedEvents;
-        setAttendedEvent(data);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-        toast.error(error);
-      }
-    };
-
-    fetchAttendedEvents();
-  }, [accessToken]);
 
   const deleteEvent = async (event) => {
     event.preventDefault();
@@ -110,6 +80,7 @@ const Gallery = () => {
       toast.error(error.message || "Error deleting event. Please try again.");
     }
   };
+
   return (
     <>
       <GalleryStyle>
@@ -157,7 +128,6 @@ const Gallery = () => {
           )}
         </div>
       </GalleryStyle>
-      
     </>
   );
 };
