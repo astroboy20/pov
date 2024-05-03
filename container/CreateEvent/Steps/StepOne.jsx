@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 
 const StepOne = ({
   step,
-  data,
+  eventData,
   setData,
   eventName,
   handleNext,
@@ -82,7 +82,7 @@ const StepOne = ({
   };
 
   const isStepOneValid = () => {
-    const { event_thumbnail, event_date, endDate, revealTime, photosPerPerson } = data;
+    const { event_thumbnail, event_date, endDate, revealTime, photosPerPerson } = eventData;
     if (!event_thumbnail || !event_date || !revealTime || !photosPerPerson) {
       // toast.warning("Please fill out all the required fields");
       return false;
@@ -118,7 +118,7 @@ const StepOne = ({
             hidden
             id="selectFile"
           />
-          {data.event_thumbnail ? (
+          {eventData.event_thumbnail ? (
             <div className="image">
               <Image
                 src={selectedImage}
@@ -160,7 +160,7 @@ const StepOne = ({
       <div className="body">
         {" "}
         <input
-          value={data.eventName}
+          value={eventData.eventName}
           onChange={handleChange}
           name="eventName"
           placeholder="Event Hashtag"
@@ -168,7 +168,7 @@ const StepOne = ({
         />
         <Select
           size="lg"
-          value={data.mode}
+          value={eventData.mode}
           onChange={handleChange}
           name="mode"
           placeholder="Mode of Event"
@@ -182,7 +182,7 @@ const StepOne = ({
           <Input
             type="datetime-local"
             size={"lg"}
-            value={data.event_date}
+            value={eventData.event_date}
             name="event_date"
             onChange={handleChange}
             id="event_date"
@@ -193,21 +193,21 @@ const StepOne = ({
           <Input
             type="datetime-local"
             size={"lg"}
-            value={data.endDate}
+            value={eventData.endDate}
             name="endDate"
             onChange={handleChange}
             id="endDate"
           />
         </div>
         <input
-          value={data.location}
+          value={eventData.location}
           onChange={handleChange}
           name="location"
           placeholder="Event Location"
           className="input"
         />
         <Select
-          value={data.expectedGuests}
+          value={eventData.expectedGuests}
           placeholder="Expected Guests"
           size={"lg"}
           name="expectedGuests"
@@ -220,7 +220,7 @@ const StepOne = ({
           ))}
         </Select>
         <Select
-          value={data.photosPerPerson}
+          value={eventData.photosPerPerson}
           placeholder="How many cliqs per person ?"
           size={"lg"}
           name="photosPerPerson"
@@ -233,7 +233,7 @@ const StepOne = ({
           ))}
         </Select>
         <Select
-          value={data.revealTime}
+          value={eventData.revealTime}
           onChange={handleChange}
           name="revealTime"
           size={"lg"}

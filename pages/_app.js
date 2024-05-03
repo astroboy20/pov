@@ -9,11 +9,14 @@ import { OptionProvider } from "@/context/option-context";
 import { ChakraProvider } from "@chakra-ui/react";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/feature/store";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   style: ["normal", "italic"],
   subsets: ["latin"],
 });
+
+const queryClient = new QueryClient();
 export default function App({ Component, pageProps }) {
   return (
     <OptionProvider>
@@ -24,7 +27,9 @@ export default function App({ Component, pageProps }) {
           <main className={poppins.className}>
             <Provider store={store}>
               <PersistGate loading={null} persistor={persistor}>
-                <Component {...pageProps} />
+                <QueryClientProvider client={queryClient}>
+                  <Component {...pageProps} />
+                </QueryClientProvider>
               </PersistGate>
             </Provider>
           </main>

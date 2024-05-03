@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { StepOne } from "./Steps/StepOne";
 import { StepTwo } from "./Steps/StepTwo";
+import useFetchItems from "@/hooks/useFetchItems";
 
 const CreateEvent = () => {
   const { user } = useSelector((state) => state.auth);
@@ -13,7 +14,7 @@ const CreateEvent = () => {
   const eventName =
     typeof window !== "undefined" && localStorage.getItem("eventName");
 
-  const [data, setData] = useState({
+  const [eventData, setData] = useState({
     eventName: "",
     mode: "",
     location: "",
@@ -28,13 +29,15 @@ const CreateEvent = () => {
   const handleNext = () => {
     setStep((prevStep) => prevStep + 1);
     typeof window !== "undefined" &&
-      localStorage.setItem("data", JSON.stringify(data));
+      localStorage.setItem("data", JSON.stringify(eventData));
   };
 
   const handlePrev = () => {
     setStep((prevStep) => prevStep - 1);
   };
 
+  const {data} =useFetchItems("https://api-cliqpod.koyeb.app/expected-guest", accessToken);
+console.log("data", data)
   useEffect(() => {
     axios
       .get("https://api-cliqpod.koyeb.app/expected-guest", {
@@ -58,7 +61,7 @@ const CreateEvent = () => {
           <>
             <StepOne
               step={step}
-              data={data}
+              eventData={eventData}
               setData={setData}
               eventName={eventName}
               handleNext={handleNext}
