@@ -165,12 +165,12 @@ const StepOne = ({
       </div>
       <div className="body">
         {" "}
-        <Input
+        <input
           value={data.eventName}
           onChange={handleChange}
           name="eventName"
           placeholder="Event Hashtag"
-          size={"lg"}
+          className="input"
         />
         <Select
           size="lg"

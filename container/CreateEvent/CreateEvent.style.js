@@ -45,7 +45,12 @@ export const GalleryStyle = styled.div`
   .image-input {
     /* background-color: rgba(176, 234, 246, 0.65); */
   }
-
+.input{
+  width:100% ;
+  border:1px solid black ;
+  border-radius:4px !important;
+  padding:12px 10px !important ;
+}
   .body {
     padding: 5%;
     display: flex;
