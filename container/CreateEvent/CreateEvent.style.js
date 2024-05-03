@@ -3,7 +3,7 @@ export const GalleryStyle = styled.div`
   display: flex;
   flex-direction: column;
   color: "#2F3036";
-  /* height: fit-content; */
+  height: fit-content;
   .header {
     height: auto;
     text-align: center;

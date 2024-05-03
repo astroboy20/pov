@@ -205,12 +205,12 @@ const StepOne = ({
             id="endDate"
           />
         </div>
-        <Input
+        <input
           value={data.location}
           onChange={handleChange}
           name="location"
           placeholder="Event Location"
-          size={"lg"}
+          className="input"
         />
         <Select
           value={data.expectedGuests}
