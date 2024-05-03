@@ -79,6 +79,21 @@ const Dashboard = () => {
             <span>View</span></div>
            
           </div>
+          <div className="event-body">
+            <div className="text"> <p>Sekani’s Bridal Party</p>
+            <span>View</span></div>
+           
+          </div>
+          <div className="event-body">
+            <div className="text"> <p>Sekani’s Bridal Party</p>
+            <span>View</span></div>
+           
+          </div>
+          <div className="event-body">
+            <div className="text"> <p>Sekani’s Bridal Party</p>
+            <span>View</span></div>
+           
+          </div>
         </div>
       </div>
     </DashboardStyle>

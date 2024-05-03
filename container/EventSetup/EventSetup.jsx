@@ -4,6 +4,7 @@ import { CustomText } from "@/components/CustomText";
 import { Select } from "@chakra-ui/select";
 import { Button } from "@/components/Button";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 const EventSetup = () => {
   const router = useRouter();

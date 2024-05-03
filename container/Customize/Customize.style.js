@@ -14,7 +14,7 @@ export const CustomizeStyle = styled.div`
   }
 
   .header h1 {
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 700;
     color: #1d1465;
   }

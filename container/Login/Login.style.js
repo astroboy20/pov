@@ -56,6 +56,13 @@ export const LoginContainer = styled.div`
     top:50%;
     position:absolute ;
   }
+  @media screen and (min-width:768px) {
+    gap:50px;
+    /* margin:20% ; */
+    .image{
+      margin:auto ;
+    }
+  }
 `;
 
 export const FormHeader = styled.header`

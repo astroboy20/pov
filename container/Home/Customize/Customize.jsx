@@ -21,7 +21,7 @@ const Customize = () => {
           src="/images/phone2.svg"
           width={420}
           height={640}
-          objectFit="contain"
+          objectFit="cover"
           className="phone2"
           alt="customize_image"
         />

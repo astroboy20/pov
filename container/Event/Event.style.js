@@ -30,4 +30,12 @@ export const EventStyle = styled.div`
     text-decoration:underline ;
     font-weight:700 ;
   }
+  @media screen and (min-width:768px) {
+    gap:40px;
+    .image{
+      width:1000px ;
+      height:600px ;
+      text-align:center ;
+    }
+  }
 `;

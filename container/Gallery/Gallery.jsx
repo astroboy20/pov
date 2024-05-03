@@ -157,38 +157,7 @@ const Gallery = () => {
           )}
         </div>
       </GalleryStyle>
-      <FeatureStyle>
-        <Link
-          href="/dashboard"
-          className={
-            router.pathname === "/dashboard"
-              ? `${styled.active}`
-              : `${styled.link}`
-          }
-        >
-          Event
-        </Link>
-        <Link
-          href="/gallery"
-          className={
-            router.pathname === "/gallery"
-              ? `${styled.active}`
-              : `${styled.link}`
-          }
-        >
-          Gallery
-        </Link>
-        <Link
-          href="/setting"
-          className={
-            router.pathname === "/setting"
-              ? `${styled.active}`
-              : `${styled.link}`
-          }
-        >
-          Setting
-        </Link>
-      </FeatureStyle>
+      
     </>
   );
 };

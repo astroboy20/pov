@@ -4,6 +4,7 @@ import { MdDelete } from "react-icons/md";
 export const DashboardStyle = styled.div`
   display: flex;
   flex-direction: column;
+  height:1400px ;
   .header {
     background: url("/images/header.svg");
     height: 200px;
@@ -103,6 +104,30 @@ export const DashboardStyle = styled.div`
     border-radius:4px ;
    font-size:16px ;
    font-weight:700 ;
+  }
+
+  @media screen and (min-width:768px) {
+    height:1700px ;
+    .header {
+    background-repeat:no-repeat ;
+    background-size:cover ;
+    height:350px ;
+    width:100% ;
+    border-radius: 0 0 20px 20px;
+    padding: 3%;
+  }
+  .input{
+    top:240px ;
+  }
+  .event-a{
+    width:70% ;
+  }
+  .event-body{
+    background-size:cover;
+    background-repeat:no-repeat ;
+    height: 200px;
+    border-radius: 8px;
+  }
   }
 `;
 export const HeaderStyle = styled.div`

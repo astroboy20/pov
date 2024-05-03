@@ -70,4 +70,30 @@ export const FooterContainer = styled.div`
       align-items: center;
     }
   }
+  @media screen and (min-width: 768px) {
+    footer {
+      flex-direction: column;
+      justify-content: center;
+      gap: 28px;
+    }
+
+    .one,
+    .two,
+    .three,
+    .four {
+      gap: 15px;
+    }
+    .icon {
+      display: none;
+    }
+
+    .five {
+      margin: 25px 0;
+    }
+    .icon-mobile {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+  }
 `;

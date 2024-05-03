@@ -3,7 +3,21 @@ import styled from "styled-components";
 const FormData = styled.div`
   display: none;
   /* padding: 5%; */
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 768px) {
+    display: flex;
+
+    width: 100%;
+    flex-direction: column;
+    height:100vh ;
+    .sign-in {
+      margin: 5% 0;
+      text-align: center;
+    }
+    span{
+      font-weight:800 ;
+    }
+  }
+  @media screen and (min-width: 768px) {
     display: flex;
 
     width: 100%;

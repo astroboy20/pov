@@ -138,13 +138,7 @@ const StepOne = ({
             </div>
           ) : (
             <span
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                fontSize: "16px",
-                alignItems: "center",
-                gap: "20px",
-              }}
+             
               className="icon-style"
               onClick={handleImageClick}
             >
@@ -154,9 +148,9 @@ const StepOne = ({
                 <>
                   {" "}
                   <ImageIcon />{" "}
-                  <CustomText weight={"400"} type={"Htype"} variant={"h2-b"}>
+                  <div className="text">
                     Add thumbnail/flyer of your event
-                  </CustomText>
+                  </div>
                 </>
               )}
             </span>

@@ -5,7 +5,7 @@ export const EventSetupStyle = styled.div`
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  height:125%;
+  height:800px;
 `;
 export const HeaderStyle = styled.div`
   background: url("/images/event-create.svg");
@@ -13,6 +13,7 @@ export const HeaderStyle = styled.div`
   background-repeat: no-repeat;
   height: 500px;
   width: 100%;
+  
 `;
 export const BodyStyle = styled.div`
   width: 100%;
@@ -27,6 +28,17 @@ export const BodyStyle = styled.div`
      display: flex;
   flex-direction: column;
   gap:20px;
+  }
+  @media screen and (min-width:768px) {
+   select{
+    height:60px ;
+    font-size:18px ;
+   }
+    .image{
+      width:1000px ;
+      height:500px ;
+      text-align:center ;
+    }
   }
 `;
 export const FeatureStyle = styled.div`

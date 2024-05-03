@@ -15,9 +15,7 @@ export const FeatureStyle = styled.div`
   align-items:center ;
   padding: 3%;
   /* width: 100%; */
-  border: 0.8px solid #00000033
-  
-  /* margin: 0 10%; */
+  border: 0.8px solid #00000033;
 `;
 
 

@@ -9,6 +9,10 @@ export const ButtonStyle = styled.button`
   border-radius: 4px;
   padding: 14px 24px;
   width: 100%;
+  @media screen and (min-width:768px) {
+  padding:20px 16px ;
+  font-size:18px ;
+  }
 `;
 export const DefaultButton = styled(ButtonStyle)`
   background: #1d1465;

@@ -190,7 +190,7 @@ const StepThree = ({handleNext}) => {
         flexDirection={"column"}
         width={"100%"}
       >
-        <img src={parsedData.src} width={350} height={300} alt="Preview" />
+        <img src={parsedData?.src} width={350} height={300} alt="Preview" />
         {text && (
           <Draggable>
             <div

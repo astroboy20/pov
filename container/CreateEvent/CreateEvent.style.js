@@ -1,15 +1,16 @@
 import styled from "styled-components";
+
 export const GalleryStyle = styled.div`
   display: flex;
   flex-direction: column;
   color: "#2F3036";
-  height: fit-content;
+  
   .header {
     height: auto;
     text-align: center;
     align-items: center;
     background-color: #c0ddfa;
-    height: 480px;
+    height: fit-content;
     padding: 3%;
   }
   .header-step2 {
@@ -45,17 +46,18 @@ export const GalleryStyle = styled.div`
   .image-input {
     /* background-color: rgba(176, 234, 246, 0.65); */
   }
-.input{
-  width:100% ;
-  border:1px solid black ;
-  border-radius:4px !important;
-  padding:12px 10px !important ;
-}
+  .input {
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 4px !important;
+    padding: 12px 10px !important ;
+  }
   .body {
     padding: 5%;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    min-height:760px ;
   }
   .body-step2 {
     padding: 5%;
@@ -92,10 +94,17 @@ export const GalleryStyle = styled.div`
   }
   .icon-style {
     display: flex;
+    flex-direction:column ;
+    gap:10px;
     height: 100%;
     margin: 100px auto;
     align-items: center;
     justify-content: center;
+  }
+
+  .icon-style .text {
+    font-size:16px ;
+    text-decoration:underline ;
   }
   progress {
     accent-color: #1d1465;
@@ -110,5 +119,12 @@ export const GalleryStyle = styled.div`
     border: none;
     margin: 2% 0;
     border-radius: 10px;
+  }
+
+  @media screen and (min-width:768px) {
+    height:1400px ;
+   .input, select, input{
+    height:60px ;
+   }
   }
 `;

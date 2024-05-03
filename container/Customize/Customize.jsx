@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { CustomizeStyle } from "./Customize.style";
 import { BlueBackIcon } from "@/assets";
-import { Select } from "@chakra-ui/select";
-import Image from "next/image";
 import { StepOne } from "./Steps/StepOne";
 import { StepTwo } from "./Steps/StepTwo";
 import { StepThree } from "./Steps/StepThere";
 import { StepFour } from "./Steps/StepFour";
 
 const Customize = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(4);
 
   const handleNext = () => {
     setCurrentStep((prev) => prev + 1);
@@ -24,7 +22,7 @@ const Customize = () => {
       <span onClick={currentStep > 1 ? handlePrev : null}>
           <BlueBackIcon />
         </span>
-        <h1>Gallery</h1>
+        <h1>Customize</h1>
         <span style={{ color: "white" }}>.</span>
       </div>
       <div className="body">

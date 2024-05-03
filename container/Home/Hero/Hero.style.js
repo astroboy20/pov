@@ -61,7 +61,7 @@ export const HeroContainer = styled.div`
     opacity: 0.5;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 760px) {
    margin-top:12% ;
    .hr {
     margin-top: 20%;
@@ -71,4 +71,17 @@ export const HeroContainer = styled.div`
       line-height: 40px;
     }
   }
+
+  @media screen and (min-width: 767px) {
+   margin-top:6% ;
+   .hr {
+    margin-top: 20%;
+  }
+    .text h1 {
+      font-size: 28px;
+      line-height: 40px;
+    }
+  }
+
+
 `;

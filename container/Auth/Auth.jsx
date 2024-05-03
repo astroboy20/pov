@@ -37,6 +37,8 @@ const Auth = () => {
             height={300}
             alt="welcome-image"
             src={"/images/auth.svg"}
+            objectFit="contain"
+            className="image"
           />
         </div>
         <div>

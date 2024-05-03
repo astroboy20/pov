@@ -77,4 +77,27 @@ export const CustomizeStyle = styled.div`
     }
    
   }
+
+  @media screen and (min-width: 768px) {
+    flex-direction: column-reverse;
+    justify-content: center;
+    
+    .left span{
+      margin:auto ;
+    }
+    .phone2 {
+      width: 300px;
+      height: 300px;
+    }
+    .left {
+      text-align: center;
+    }
+    .left h1 {
+      font-size: 28px;
+    }
+    .left p {
+      font-size: 18px;
+    }
+   
+  }
 `;

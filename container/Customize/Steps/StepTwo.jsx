@@ -24,7 +24,7 @@ const StepTwo = ({ handleNext }) => {
       <div className="preview">
         <Image
           className="image-preview"
-          src={parsedData.src}
+          src={parsedData?.src}
           width={220}
           height={390}
         />

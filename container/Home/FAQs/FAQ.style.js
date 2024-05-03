@@ -123,4 +123,51 @@ export const FAQSContainer = styled.div`
       /* display:block ; */
     }
   }
+  @media screen and (min-width: 786px) {
+    padding: 5%;
+    border-radius:4px ;
+    margin: 5% ;
+    .hr {
+      border: 1px solid #1d1465;
+      margin: 1px auto;
+      width: 100%;
+    }
+    .question-section {
+      width: 100%;
+      background-color: transparent;
+    }
+    .answer-section {
+      display: none;
+    }
+    .answer-section-mobile {
+      display: block;
+    }
+
+    .sub-box .header {
+      border-radius: 4px;
+      background-color: #f2f3f4;
+      padding: 5%;
+    }
+    .answer-section-mobile .content-show {
+      font-size: 18px;
+      font-weight:500 ;
+      background-color: #1D14654D;
+      border-radius: 4px;
+      padding: 5%;
+      margin-top:5%  ;
+      transition: 0.3s ease-in-out;
+    }
+
+    p {
+      font-size: 18px;
+      font-weight: 400;
+      text-align: left;
+    }
+
+    .sub-box .content-show {
+      font-size: 18px;
+
+      /* display:block ; */
+    }
+  }
 `;

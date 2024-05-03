@@ -82,4 +82,24 @@ export const MemoriesContainer = styled.div`
       font-size: 14px;
     }
   }
+
+  @media screen and (min-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 10% 5%;
+    .phone1 {
+      width: 300px;
+      height: 300px;
+    }
+    .right {
+      text-align: center;
+    }
+    .right h1 {
+      font-size: 28px;
+    }
+    .right p {
+      font-size: 18px;
+    }
+  }
 `;

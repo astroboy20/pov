@@ -4,7 +4,7 @@ export const AuthContainer = styled.div`
 display:flex ;
 padding:2% 5% ;
 flex-direction:column ;
-gap:10px;
+gap:20px;
 margin-top:3% ;
 text-align:center ;
   .login-with-google {
@@ -54,5 +54,13 @@ text-align:center ;
     right: 0;
     top: 50%;
     position: absolute;
+  }
+
+  @media screen and (min-width:768px) {
+    gap:50px;
+    margin:20% ;
+    .image{
+      margin:auto ;
+    }
   }
 `;
