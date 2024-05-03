@@ -249,7 +249,7 @@ const StepOne = ({
           onClick={handleNext}
           type={"submit"}
           variant={"defaultButton"}
-          disabled={!isStepOneValid()}
+          // disabled={!isStepOneValid()}
         >
           Continue
         </Button>

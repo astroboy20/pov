@@ -7,7 +7,7 @@ import { StepThree } from "./Steps/StepThere";
 import { StepFour } from "./Steps/StepFour";
 
 const Customize = () => {
-  const [currentStep, setCurrentStep] = useState(4);
+  const [currentStep, setCurrentStep] = useState(1);
 
   const handleNext = () => {
     setCurrentStep((prev) => prev + 1);

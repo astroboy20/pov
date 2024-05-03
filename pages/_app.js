@@ -10,6 +10,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/feature/store";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   style: ["normal", "italic"],
@@ -29,6 +30,7 @@ export default function App({ Component, pageProps }) {
               <PersistGate loading={null} persistor={persistor}>
                 <QueryClientProvider client={queryClient}>
                   <Component {...pageProps} />
+                  <ReactQueryDevtools initialIsOpen={true} />
                 </QueryClientProvider>
               </PersistGate>
             </Provider>

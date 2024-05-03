@@ -33,7 +33,7 @@ const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
   
   return (
     <>
-      <div className="header-step2">
+      <div className="header-step2" style={{background: `url(${parsedData.event_thumbnail})`, backgroundPosition:"center, center"}}>
         <div className="header-head">
           <span onClick={ handlePrev}>
             <BlueBackIcon />

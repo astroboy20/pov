@@ -17,7 +17,6 @@ export const GalleryStyle = styled.div`
     height: auto;
     text-align: center;
     align-items: center;
-    background: url("/images/event-BG.svg");
     height: 400px;
     padding: 3%;
   }
@@ -49,6 +48,7 @@ export const GalleryStyle = styled.div`
   .input {
     width: 100%;
     border: 1px solid black;
+    height:50px  !important;
     border-radius: 4px !important;
     padding: 12px 10px !important ;
   }
@@ -123,7 +123,14 @@ export const GalleryStyle = styled.div`
 
   @media screen and (min-width:768px) {
     height:1400px ;
-   .input, select, input{
+    .input {
+    width: 100%;
+    border: 1px solid black;
+    height:60px  !important;
+    border-radius: 4px !important;
+    padding: 12px 10px !important ;
+  }
+   select, input{
     height:60px ;
    }
   }

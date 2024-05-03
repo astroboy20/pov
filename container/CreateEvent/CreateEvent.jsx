@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GalleryStyle } from "./CreateEvent.style";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { StepOne } from "./Steps/StepOne";
 import { StepTwo } from "./Steps/StepTwo";
 import useFetchItems from "@/hooks/useFetchItems";
@@ -34,25 +33,19 @@ const CreateEvent = () => {
 
   const handlePrev = () => {
     setStep((prevStep) => prevStep - 1);
+    setData ("")
   };
 
-  const {data} =useFetchItems("https://api-cliqpod.koyeb.app/expected-guest", accessToken);
-console.log("data", data)
+  const { data } = useFetchItems({
+    url: "https://api-cliqpod.koyeb.app/expected-guest",
+    token: accessToken,
+  });
+  
   useEffect(() => {
-    axios
-      .get("https://api-cliqpod.koyeb.app/expected-guest", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((response) => {
-        const data = response.data.guestsExpected;
-        setPrices(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching prices:", error);
-      });
-  }, [accessToken]);
+    if (data) {
+      setPrices(data?.guestsExpected);
+    }
+  }, [data]);
 
   return (
     <>

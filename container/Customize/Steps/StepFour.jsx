@@ -4,6 +4,7 @@ import { Button } from "@chakra-ui/react";
 import axios from "axios"
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import useFetchItems from "@/hooks/useFetchItems";
 
 const StepFour = () => {
   const router = useRouter()
@@ -63,6 +64,11 @@ const handleSubmit = async () => {
   }
 };
 
+const {  } = useFetchItems({
+  url: "https://api-cliqpod.koyeb.app/expected-guest",
+  token: accessToken,
+});
+
   return (
     <div className="final">
       {image && (
@@ -72,7 +78,7 @@ const handleSubmit = async () => {
         <p>{parsedInfo?.filterName}</p>
         <p>{parsedInfo?.info}</p>
         {/* <span>#{parsedData?.expectedGuests}</span> */}
-        <Button type="submit" onClick={handleSubmit} width="fit-content" color={"white"} background={"#1D1465"} padding={"6px"}>Pay now</Button>
+        <Button type="submit" onClick={handleSubmit} width="fit-content" color={"white"} background={"#1D1465"} padding={"6px"} fontSize={"16px"}>Pay now</Button>
       </div>
     </div>
   );
