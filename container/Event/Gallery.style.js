@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 // import { MdDelete } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 
@@ -12,30 +12,18 @@ export const GalleryStyle = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 5%;
-    border-bottom: 1px solid black;
+    color: #1d1465;
   }
-  .join {
-    display: flex;
-    padding: 16px 20px 16px 16px;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    background-color: #ece6f0;
-    border-radius: 100px;
-    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3),
-      0px 4px 8px 3px rgba(0, 0, 0, 0.15);
-  }
-  .hr {
-    width: 100%;
-    color: black;
-  }
+
   .body {
     /* height:200vh ; */
     margin-bottom: 20%;
     overflow: scroll;
+    padding: 3% 2%;
+    border: 8px;
   }
   .body-text {
-    display:flex ;
+    display: flex;
     justify-content: space-between;
     color: #000;
     padding: 4% 5%;
@@ -46,8 +34,8 @@ export const GalleryStyle = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 5% 3%;
-    background-color: #ece6f0;
-    border-bottom: 1px solid black;
+    background: #f2f3f499;
+    box-shadow: 2px 2px 4px 0px #0000001a;
   }
   .sub-info {
     display: flex;
@@ -58,19 +46,29 @@ export const GalleryStyle = styled.div`
     flex-direction: column;
   }
   .text .a {
-    font-size: 14px;
+    font-size: 16px;
     color: #1d1b20;
-    font-weight: 500;
+    font-weight: 700;
+    margin-bottom: 10px;
   }
-  .text .b {
+  .text .b,
+  .c {
     font-size: 14px;
-    color: #49454f;
+    color: #000;
+    margin-bottom: 10px;
   }
   .icons {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    row-gap: 50px;
     align-items: center;
+  }
+  .icons .edit {
+    background-color: #1d1465;
+    border-radius: 2px;
+    padding: 4px 14px;
+    font-size: 8px;
+    color: #fff;
   }
   .centered-style {
     display: flex;
@@ -85,30 +83,35 @@ export const GalleryStyle = styled.div`
   }
 
   /* In your CSS file */
-.qr-code-actions {
-  display: flex;
-  align-items: center; /* Align items vertically in the center */
-}
+  .qr-code-actions {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+  }
 
-.qr-code-input {
-  flex: 1; /* Take remaining space */
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 8px;
-}
+  .qr-code-input {
+    flex: 1; /* Take remaining space */
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
 
-.qr-code-button {
-  padding: 8px 16px;
-  font-size: 14px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+  .qr-code-button {
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 
+  .href{
+    color:#1D1465 ;
+    font-weight:700 ;
+    text-decoration:underline ;
+  }
 `;
 export const QRcode = {
   display: "flex",
@@ -134,7 +137,4 @@ export const FeatureStyle = styled.div`
   padding: 5%;
   width: 100%;
   /* margin: 0 10%; */
-
-
-  
 `;

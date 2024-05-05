@@ -16,6 +16,13 @@ export const FeatureStyle = styled.div`
   padding: 3%;
   /* width: 100%; */
   border: 0.8px solid #00000033;
+
+  .event{
+    position:absolute ;
+    left:44% ;
+    bottom:40px ;
+    width:100% ;
+  }
 `;
 
 

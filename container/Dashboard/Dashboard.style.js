@@ -117,7 +117,7 @@ export const DashboardStyle = styled.div`
     padding: 3%;
   }
   .input{
-    top:240px ;
+    top:50px ;
   }
   .event-a{
     width:70% ;

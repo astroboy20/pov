@@ -43,7 +43,7 @@ const Gallery = () => {
       setAttendedEvent(attendedEventDetails?.events)
     }
   }, [eventDetails, attendedEventDetails]);
-  // console.log(attendedEvent)
+  console.log(attendedEventDetails)
 
 
   const deleteEvent = async (event) => {

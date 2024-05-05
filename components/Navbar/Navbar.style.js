@@ -42,7 +42,7 @@ export const NavContainer = styled.div`
       font-size:14px ;
     border-radius:40px ;
     background-color:#1D1465 ;
-    padding: 10px 24px;
+    padding: 10px 15px;
     color:#fff ;
   }
   }

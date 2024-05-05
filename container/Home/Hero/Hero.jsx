@@ -45,10 +45,10 @@ const Hero = () => {
         </p>
         <div className="button">
           <span className="a">
-            <Link href="/login">Get Cliqpod</Link>
+            <Link href="/auth">Get Cliqpod</Link>
           </span>
           <span className="b">
-            <Link href="/login">View Cliqs</Link>
+            <Link href="/auth">View Cliqs</Link>
           </span>
         </div>
       </div>

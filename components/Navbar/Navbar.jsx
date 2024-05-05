@@ -7,19 +7,11 @@ const Navbar = () => {
   return (
     <NavContainer>
       <header className="header">
-        <Image
-          src={"/images/logo.svg"}
-          width={170}
-          height={81}
-          alt="logo"
-          objectFit="contain"
-          className="logo-image"
-        />
-        {/* <Logo /> */}
+        <Logo />
         <div className="right">
           <p>
             {" "}
-            <Link href={"/login"}>Login</Link>
+            <Link href={"/auth"}>Login</Link>
           </p>
           <span>
             {" "}

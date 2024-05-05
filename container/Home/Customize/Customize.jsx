@@ -13,7 +13,7 @@ const Customize = () => {
         </h1>
         <p>Elevate your capturing experience with personalized templates.</p>
         <span>
-          <Link href="/login">Customize</Link>
+          <Link href="/auth">Customize</Link>
         </span>
       </div>
       <div className="right">

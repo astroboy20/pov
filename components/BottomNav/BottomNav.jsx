@@ -7,6 +7,7 @@ import { TbCalendarCheck } from "react-icons/tb";
 import { RxCamera } from "react-icons/rx";
 import { CiUser } from "react-icons/ci";
 import { FaInstagram } from "react-icons/fa";
+import { AddIcon } from "@/assets";
 
 const BottomNav = () => {
   const router = useRouter();
@@ -39,6 +40,12 @@ const BottomNav = () => {
           <TbCalendarCheck size={"25px"} />
           Events
         </Link>
+
+        {router.pathname === "/dashboard" && (
+          <Link href="/event" className="event">
+            <AddIcon />
+          </Link>
+        )}
 
         <Link
           href="/album"

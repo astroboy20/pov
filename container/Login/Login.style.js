@@ -56,7 +56,7 @@ export const LoginContainer = styled.div`
     top:50%;
     position:absolute ;
   }
-  @media screen and (min-width:768px) {
+  @media screen and (min-width:768px) and (max-width:1024px) {
     gap:50px;
     /* margin:20% ; */
     .image{

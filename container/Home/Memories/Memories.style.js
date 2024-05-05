@@ -83,7 +83,7 @@ export const MemoriesContainer = styled.div`
     }
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 768px)  and (max-width:1024px){
     flex-direction: column;
     justify-content: center;
     gap: 20px;

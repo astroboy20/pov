@@ -7,6 +7,7 @@ import { Spinner } from "@/components/Spinner";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { login, reset, googleLogin } from "@/feature/slices/authSlice";
+import { Logo } from "@/assets";
 const Auth = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -19,16 +20,15 @@ const Auth = () => {
 
   const handleGoogleLogin = async () => {
     dispatch(googleLogin());
- };
+  };
 
   return (
     <>
       <AuthContainer>
-        <div>
-          {" "}
-          <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
-            Welcome
-          </CustomText>
+        <div className="header">
+          <Logo />
+
+          <p>Share digital memories of your event...</p>
         </div>
         <div>
           {" "}
@@ -41,7 +41,10 @@ const Auth = () => {
             className="image"
           />
         </div>
+
+       
         <div>
+        <h1>Welcome!</h1>
           {" "}
           <div className="login-with-google">
             <Button

@@ -9,7 +9,7 @@ export const ButtonStyle = styled.button`
   border-radius: 4px;
   padding: 14px 24px;
   width: 100%;
-  @media screen and (min-width:768px) {
+  @media screen and (min-width:768px) and (max-width:1024px) {
   padding:20px 16px ;
   font-size:18px ;
   }

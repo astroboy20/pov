@@ -123,7 +123,7 @@ export const FAQSContainer = styled.div`
       /* display:block ; */
     }
   }
-  @media screen and (min-width: 786px) {
+  @media screen and (min-width: 786px) and (max-width:1024px) {
     padding: 5%;
     border-radius:4px ;
     margin: 5% ;
