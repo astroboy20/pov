@@ -117,7 +117,6 @@ const Hosting = ({ events }) => {
                     style={{
                       width: "auto",
                       height: "auto",
-                      // margin: "2% 30%",
                     }}
                   />
                   <div className="text">

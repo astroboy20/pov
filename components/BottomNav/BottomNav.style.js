@@ -21,7 +21,6 @@ export const FeatureStyle = styled.div`
     position:absolute ;
     left:44% ;
     bottom:40px ;
-    width:100% ;
   }
 `;
 

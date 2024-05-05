@@ -23,7 +23,12 @@ const GoogleAuth = () => {
 
   useEffect(() => {
     if (user) {
-      router.push("/dashboard");
+      {
+        router.pathname === "/invitee"
+          ? router.push("/invitee-home")
+          : router.push("/dashboard");
+      }
+
       toast.success("Login Successful");
     }
   }, [isSuccess, redirecting, router]);
@@ -44,4 +49,4 @@ const GoogleAuth = () => {
   );
 };
 
-export default  GoogleAuth 
+export default GoogleAuth;

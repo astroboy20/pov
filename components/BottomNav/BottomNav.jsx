@@ -56,6 +56,7 @@ const BottomNav = () => {
           <FaInstagram size={"25px"} />
           Album
         </Link>
+        
         <Link
           href="/profile"
           className={

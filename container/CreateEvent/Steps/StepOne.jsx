@@ -207,15 +207,15 @@ const StepOne = ({
           className="input"
         />
         <Select
-          value={eventData.expectedGuests}
+          value={eventData?.expectedGuests}
           placeholder="Expected Guests"
           size={"lg"}
           name="expectedGuests"
           onChange={handleChange}
         >
-          {prices.map((price) => (
-            <option key={price._id} value={price._id}>
-              {price.expectedGuest}
+          {prices?.map((price) => (
+            <option key={price?._id} value={price?._id}>
+              {price?.expectedGuest}
             </option>
           ))}
         </Select>

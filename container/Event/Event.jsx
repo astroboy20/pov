@@ -8,14 +8,14 @@ import { GalleryStyle } from "./Gallery.style";
 import { CustomText } from "@/components/CustomText";
 import Option from "./Option/Option";
 import { Hosting } from "./Pages/Hosting";
-import { BlackSpinner } from "@/components/Spinner/Spinner";
+import { BlackSpinner, PurpleSpinner } from "@/components/Spinner/Spinner";
 
 const Event = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const [events, setEvents] = useState([]);
 
-  const { data: eventDetails, loading } = useFetchItems({
+  const { data: eventDetails, isLoading } = useFetchItems({
     url: "https://api-cliqpod.koyeb.app/events",
     token: accessToken,
   });
@@ -25,6 +25,8 @@ const Event = () => {
       setEvents(eventDetails.events);
     }
   }, [eventDetails]);
+
+  // if (isLoading) return console.log("is pendoing")
 
   // Uncomment and implement deleteEvent function if needed
   // const deleteEvent = async (eventId) => {
@@ -50,21 +52,32 @@ const Event = () => {
   //     toast.error(error.message || "Error deleting event. Please try again.");
   //   }
   // };
-  
 
   return (
     <>
       <GalleryStyle>
         <div className="header">
-          <BackIcon />
+          <span>
+            <BackIcon />
+          </span>
+
           <CustomText type={"Htype"} variant={"h1"}>
             Events
           </CustomText>
           <span style={{ color: "white" }}>.</span>
         </div>
         <div className="body">
-          {loading ? (
-            <BlackSpinner />
+          {isLoading ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <BlackSpinner />
+            </div>
           ) : (
             <>
               {events && events?.length === 0 ? (
