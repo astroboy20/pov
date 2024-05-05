@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { BackIcon, JoinIcon } from "@/assets";
-import { EventStyle } from "./Event.style";
+import { BackIcon } from "@/assets";
 import useFetchItems from "@/hooks/useFetchItems";
 import { useSelector } from "react-redux";
-import { useOptionContext } from "@/context/option-context";
 import { GalleryStyle } from "./Gallery.style";
 import { CustomText } from "@/components/CustomText";
-import Option from "./Option/Option";
 import { Hosting } from "./Pages/Hosting";
-import { BlackSpinner, PurpleSpinner } from "@/components/Spinner/Spinner";
+import { BlackSpinner } from "@/components/Spinner/Spinner";
+import { useRouter } from "next/router";
 
 const Event = () => {
+  const router  = useRouter()
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const [events, setEvents] = useState([]);
+
 
   const { data: eventDetails, isLoading } = useFetchItems({
     url: "https://api-cliqpod.koyeb.app/events",
@@ -25,6 +25,11 @@ const Event = () => {
       setEvents(eventDetails.events);
     }
   }, [eventDetails]);
+
+
+  const handleRoute  = ()=>{
+    router.push("/dashboard")
+  }
 
   // if (isLoading) return console.log("is pendoing")
 
@@ -57,7 +62,7 @@ const Event = () => {
     <>
       <GalleryStyle>
         <div className="header">
-          <span>
+          <span onClick={handleRoute}> 
             <BackIcon />
           </span>
 
