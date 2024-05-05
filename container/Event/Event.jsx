@@ -86,7 +86,7 @@ const Event = () => {
           ) : (
             <>
               {events && events?.length === 0 ? (
-                <div className="body">{events.message}</div>
+                <div className="body">No event available</div>
               ) : (
                 <Hosting events={events} />
               )}
