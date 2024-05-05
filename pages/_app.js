@@ -30,7 +30,7 @@ export default function App({ Component, pageProps }) {
               <PersistGate loading={null} persistor={persistor}>
                 <QueryClientProvider client={queryClient}>
                   <Component {...pageProps} />
-                  {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+                  <ReactQueryDevtools initialIsOpen={false} />
                 </QueryClientProvider>
               </PersistGate>
             </Provider>

@@ -219,7 +219,7 @@ const Hosting = ({ events }) => {
               }}
             >
               Want to create new event?{" "}
-              <Link href={"/create-event"} className="href">
+              <Link href={"/event-setup"} className="href">
                 click here
               </Link>{" "}
               to set up new event.

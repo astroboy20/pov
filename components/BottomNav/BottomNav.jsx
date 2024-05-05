@@ -42,7 +42,7 @@ const BottomNav = () => {
         </Link>
 
         {router.pathname === "/dashboard" && (
-          <Link href="/create-event" className="event">
+          <Link href="/event-setup" className="event">
             <AddIcon />
           </Link>
         )}
