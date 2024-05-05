@@ -4,7 +4,7 @@ export const AuthContainer = styled.div`
 display:flex ;
 padding:2% 5% ;
 flex-direction:column ;
-gap:4 0px;
+gap:40px;
 margin-top:3% ;
 text-align:center ;
 .header{

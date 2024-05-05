@@ -50,6 +50,7 @@ const Event = () => {
   //     toast.error(error.message || "Error deleting event. Please try again.");
   //   }
   // };
+  
 
   return (
     <>
@@ -69,7 +70,7 @@ const Event = () => {
               {eventDetails && eventDetails.events.length === 0 ? (
                 <div className="body">{eventDetails.message}</div>
               ) : (
-                <Hosting events={events} loading={loading} />
+                <Hosting events={events} />
               )}
             </>
           )}

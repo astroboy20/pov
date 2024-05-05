@@ -236,8 +236,7 @@ const Hosting = ({ events, loading }) => {
                   padding: "3%",
                 }}
               >
-                Want to create new event?
-                <Link href={"/create-event"} className="href"> click here</Link> to set up new
+                Want to create new event? <Link href={"/create-event"} className="href">click here</Link> to set up new
                 event.
               </p>
             </div>
