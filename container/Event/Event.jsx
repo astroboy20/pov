@@ -67,8 +67,8 @@ const Event = () => {
             <BlackSpinner />
           ) : (
             <>
-              {eventDetails && eventDetails.events.length === 0 ? (
-                <div className="body">{eventDetails.message}</div>
+              {events && events?.length === 0 ? (
+                <div className="body">{events.message}</div>
               ) : (
                 <Hosting events={events} />
               )}
