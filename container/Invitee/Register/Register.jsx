@@ -9,15 +9,16 @@ import { register, reset } from "@/feature/slices/authSlice";
 import { toast } from "react-toastify";
 import { Spinner } from "@/components/Spinner";
 import { useFormik } from "formik";
-import { Validate } from "@/components/validate";
-import Image from "next/image";
 import * as Yup from "yup";
-import { BackIcon, EmailIcon, ProfileIcon } from "@/assets";
+import { Show } from "@/assets";
 import { Input } from "@chakra-ui/input";
+import { Box, FormControl } from "@chakra-ui/react";
 
 const Register = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const [show, setShow] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const { user, isError, isSuccess, isLoading, message } = useSelector(
     (state) => state.auth
   );
@@ -27,6 +28,13 @@ const Register = () => {
   };
   const handleAuthRoute = () => {
     router.push("/auth");
+  };
+
+  const handleClick = () => {
+    setShow(!show);
+  };
+  const handleConfirmClick = () => {
+    setShowConfirm(!showConfirm);
   };
 
   const formik = useFormik({
@@ -112,42 +120,68 @@ const Register = () => {
                   : null
               }
             />
-
-            <Input
-              type="password"
-              placeholder="Password"
-              id="password-input"
-              required
-              size={"lg"}
-              borderRadius={"4px"}
-              padding={"25px 10px"}
-              borderColor={"#1D1465"}
-              value={formik.values.password}
-              name="password"
-              onChange={formik.handleChange}
-              error={
-                formik.errors?.password && formik.errors.password
-                  ? `${formik.errors.password}`
-                  : null
-              }
-            />
-            <Input
-              type="password"
-              placeholder="Confirm password"
-              required
-              size={"lg"}
-              borderRadius={"4px"}
-              padding={"25px 10px"}
-              borderColor={"#1D1465"}
-              value={formik.values.confirmpassword}
-              name="confirmpassword"
-              onChange={formik.handleChange}
-              error={
-                formik.errors?.confirmpassword && formik.errors.confirmpassword
-                  ? `${formik.errors.confirmpassword}`
-                  : null
-              }
-            />
+            <FormControl>
+              <Box
+                display={"flex"}
+                borderRadius={"4px"}
+                border={"1px solid #1D1465"}
+                padding={"8px"}
+                alignItems={"center"}
+              >
+                {" "}
+                <Input
+                  type={show ? "text" : "password"}
+                  placeholder="Password"
+                  id="password-input"
+                  required
+                  p={"0"}
+                  focusBorderColor="transparent"
+                  value={formik.values.password}
+                  name="password"
+                  border={"none"}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.errors?.password && formik.errors.password
+                      ? `${formik.errors.password}`
+                      : null
+                  }
+                />
+                <span onClick={handleClick}>
+                  <Show />
+                </span>
+              </Box>
+            </FormControl>
+            <FormControl>
+              <Box
+                display={"flex"}
+                borderRadius={"4px"}
+                border={"1px solid #1D1465"}
+                padding={"8px"}
+                alignItems={"center"}
+              >
+                {" "}
+                <Input
+                  type={showConfirm ? "text" : "password"}
+                  placeholder="Confirm password"
+                  required
+                  p={"0"}
+                  focusBorderColor="transparent"
+                  border={0}
+                  value={formik.values.confirmpassword}
+                  name="confirmpassword"
+                  onChange={formik.handleChange}
+                  error={
+                    formik.errors?.confirmpassword &&
+                    formik.errors.confirmpassword
+                      ? `${formik.errors.confirmpassword}`
+                      : null
+                  }
+                />
+                <span onClick={handleConfirmClick}>
+                  <Show />
+                </span>
+              </Box>
+            </FormControl>
 
             <Button type="submit" variant="defaultButton">
               {isLoading ? <Spinner /> : "Sign Up"}

@@ -38,6 +38,30 @@ const BlackSpinner = () => {
 
 export { BlackSpinner };
 
+const EventSpinner = () => {
+  return (
+    <div style={{
+      display:"flex" ,
+      justifyContent:"center",
+      alignItems:"center",
+      height:"100dvh",
+    }}>
+      <TailSpin
+        height="30"
+        width="30"
+        color="#000"
+        ariaLabel="tail-spin-loading"
+        radius="1"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
+    </div>
+  );
+};
+
+export { EventSpinner };
+
 const PurpleSpinner = () => {
   return (
     <>

@@ -17,12 +17,14 @@ import { Spinner } from "@/components/Spinner";
 import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { BackIcon, EmailIcon } from "@/assets";
+import { BackIcon, EmailIcon, Show } from "@/assets";
 import { Input } from "@chakra-ui/input";
+import { Box, FormControl } from "@chakra-ui/react";
 
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
@@ -56,6 +58,10 @@ const Login = () => {
     }
     dispatch(reset());
   }, [router, user, isSuccess, isError, message, dispatch]);
+
+  const handleClick = () => {
+    setShow(!show);
+  };
 
   const handleRoute = () => {
     router.push("/invitee-register");
@@ -92,24 +98,36 @@ const Login = () => {
               }
               size={"lg"}
             />
-            <Input
-              type="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              placeholder="Password"
-              name="password"
-              required
-              borderColor={"#1D1465"}
-              padding={"25px 10px"}
-              borderRadius={"4px"}
-              size={"lg"}
-              error={
-                formik.errors?.password && formik.errors.password
-                  ? `${formik.errors.password}`
-                  : null
-              }
-              password
-            />
+
+            <FormControl>
+              <Box
+                display={"flex"}
+                borderRadius={"4px"}
+                border={"1px solid #1D1465"}
+                padding={"8px"}
+                alignItems={"center"}
+              >
+                <Input
+                  type={show ? "text" : "password"}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  placeholder="Password"
+                  name="password"
+                  required
+                  border={0}
+                  p={0}
+                  error={
+                    formik.errors?.password && formik.errors.password
+                      ? `${formik.errors.password}`
+                      : null
+                  }
+                  password
+                />
+                <span onClick={handleClick}>
+                  <Show />
+                </span>
+              </Box>
+            </FormControl>
             {/* <div className="link">
               <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
                 <Link style={Linkstyle} href={"/"}>

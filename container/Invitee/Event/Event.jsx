@@ -4,9 +4,10 @@ import { BlueBackIcon } from "@/assets";
 import { EventStyle } from "./Event.style";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Button } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import useFetchItems from "@/hooks/useFetchItems";
 
 const Event = () => {
   const router = useRouter();
@@ -18,49 +19,40 @@ const Event = () => {
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
-
+  const { data } = useFetchItems({
+    url: `https://api-cliqpod.koyeb.app/event/${eventId}`,
+    token: accessToken,
+  });
   useEffect(() => {
-    axios
-      .get(`https://api-cliqpod.koyeb.app/event/${eventId}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((response) => {
-        const data = response?.data?.event;
-        console.log(data);
-        setEvents(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching events:", error);
-      });
+    if (data) {
+      setEvents(data.event);
+    }
   }, [eventId, accessToken]);
 
   return (
-    <EventStyle>
+    <EventStyle style={{ backgroundImage: `url(/images/event-bg.svg)` }}>
       <div className="header">
         <h1>Welcome to {events?.eventName}.</h1>
       </div>
 
-      <div className="body">
-        {/* <p>Adedamola@18 birthday party</p> */}
+      <Box className="body">
+        <p>Adedamola@18 birthday party</p>
         <p>{events?.eventName}</p>
-      </div>
-
-      <Button
-        background={"#1D1465"}
-        padding={"25px 10px"}
-        borderRadius={"4px"}
-        color={"#fff"}
-        width={"90%"}
-        margin={"auto 5%"}
-        position={"absolute"}
-        left={"0"}
-        bottom={"0"}
-        onClick={handleRoute}
-      >
-        Start cliqing
-      </Button>
+        <Button
+          background={"#1D1465"}
+          padding={"25px 10px"}
+          borderRadius={"4px"}
+          color={"#fff"}
+          width={"90%"}
+          margin={"auto 5%"}
+          position={"absolute"}
+          left={"0"}
+          bottom={"0"}
+          onClick={handleRoute}
+        >
+          Start cliqing
+        </Button>
+      </Box>
     </EventStyle>
   );
 };

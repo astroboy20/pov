@@ -1,12 +1,36 @@
 import styled from "styled-components";
 
 export const AuthContainer = styled.div`
-display:flex ;
-padding:2% 5% ;
-flex-direction:column ;
-gap:10px;
-margin-top:3% ;
-text-align:center ;
+  display: flex;
+  padding: 2% 5%;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 3%;
+  text-align: center;
+  .header {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    color: #1d1465;
+    gap:10px;
+  }
+  .header div {
+    font-size: 30px;
+    font-weight: 700;
+    display:flex ;
+    gap:10px;
+    align-items:end ;
+  }
+  .header p{
+    font-size:14px ;
+  }
+
+  .info p {
+    color: #1d1465;
+    font-size:20px ;
+    font-weight:600 ;
+    text-align:left ;
+  }
   .login-with-google {
     margin-top: 5%;
     text-align: center;

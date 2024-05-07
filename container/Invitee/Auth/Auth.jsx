@@ -7,7 +7,9 @@ import { Spinner } from "@/components/Spinner";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { login, reset, googleLogin } from "@/feature/slices/authSlice";
-const Auth = () => {
+import { Logo } from "@/assets";
+
+const Auth = ({ event }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const handleRegisterRoute = () => {
@@ -19,16 +21,16 @@ const Auth = () => {
 
   const handleGoogleLogin = async () => {
     dispatch(googleLogin());
- };
+  };
 
   return (
     <>
       <AuthContainer>
-        <div>
-          {" "}
-          <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
-            Welcome
-          </CustomText>
+        <div className="header">
+          <div>
+            Welcome to <Logo />{" "}
+          </div>
+          <p>Real time event photo sharing platform</p>
         </div>
         <div>
           {" "}
@@ -36,8 +38,12 @@ const Auth = () => {
             width={356}
             height={300}
             alt="welcome-image"
-            src={"/images/auth.svg"}
+            src={event?.event_thumbnail}
           />
+        </div>
+
+        <div className="info">
+          <p>To be a part of {event?.eventName} party, sign in to cliqpod</p>
         </div>
         <div>
           {" "}

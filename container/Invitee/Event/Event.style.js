@@ -7,6 +7,12 @@ export const EventStyle = styled.div`
   position:absolute ;
   width:100% ;
   gap: 40px;
+  height:100% ;
+  background-size:cover ;
+  background-position:center  ;
+  background-repeat:no-repeat ;
+ filter:blur(8px) ;
+ -webkit-filter:border-top-left-radius(8px);
   .header {
     display: flex;
     justify-content: space-between;

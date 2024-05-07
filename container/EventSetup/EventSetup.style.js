@@ -8,7 +8,7 @@ export const EventSetupStyle = styled.div`
   height:800px;
 `;
 export const HeaderStyle = styled.div`
-  background: url("/images/event-create.svg");
+  background: url("/images/event-bg.svg");
   background-size: cover;
   background-repeat: no-repeat;
   height: 500px;
