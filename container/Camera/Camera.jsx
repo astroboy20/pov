@@ -4,11 +4,7 @@ import axios from "axios";
 import { BackdropOverlay, Button, Container, Video } from "./Camera.style";
 import { MdOutlineCamera, MdOutlineFlipCameraAndroid } from "react-icons/md";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
-import { PurpleSpinner } from "@/components/Spinner/Spinner";
 import { useRouter } from "next/router";
-import { headers } from "@/next.config";
-import FilterOptions from "./FilterOption";
 import { ShutterIcon } from "@/assets";
 
 const Camera = ({ events }) => {
@@ -271,7 +267,11 @@ const Camera = ({ events }) => {
   }, [photosTaken]);
 
   return (
-    <Container background={events?.event_image}>
+   <Container>
+      {/* Render the backdrop overlay */}
+      <BackdropOverlay backdropUrl={events?.event_image} />
+
+      {/* Your existing camera preview and capture button */}
       <>
         <Video ref={videoRef} autoPlay playsInline></Video>
         <Button className="button">
