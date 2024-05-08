@@ -121,8 +121,9 @@ export const GalleryStyle = styled.div`
     border-radius: 10px;
   }
 
-  @media screen and (min-width:768px) {
+  @media screen and (min-width:768px) and (max-width:1024px) {
     height:1400px ;
+    
     .input {
     width: 100%;
     border: 1px solid black;

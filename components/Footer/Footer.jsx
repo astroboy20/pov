@@ -46,8 +46,7 @@ const Footer = () => {
           {" "}
           <span>About</span>
           <p>
-            cliqpod helps you turn <br /> fleeting moments into <br /> lifelong
-            treasures
+            cliqpod is a real <br /> time event photo <br /> sharing platform.
           </p>
           {/* <p>Real-time capturing</p> */}
         </div>

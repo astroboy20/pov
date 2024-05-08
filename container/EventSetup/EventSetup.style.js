@@ -6,10 +6,12 @@ export const EventSetupStyle = styled.div`
   flex-direction: column;
   overflow: scroll;
   height:800px;
+  width:100% ;
 `;
 export const HeaderStyle = styled.div`
   background: url("/images/event-bg.svg");
   background-size: cover;
+  background-position:center center ;
   background-repeat: no-repeat;
   height: 500px;
   width: 100%;

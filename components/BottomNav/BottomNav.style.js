@@ -22,6 +22,15 @@ export const FeatureStyle = styled.div`
     left:44% ;
     bottom:40px ;
   }
+
+
+  @media screen and (min-width: 768px) and (max-width:1024px) {
+   
+    .event{
+    left:47% ;
+    bottom:70px ;
+  }
+  }
 `;
 
 

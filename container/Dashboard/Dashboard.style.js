@@ -36,6 +36,7 @@ export const DashboardStyle = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
+    
   }
   .body .scroll {
     display: flex;
@@ -43,6 +44,7 @@ export const DashboardStyle = styled.div`
     gap: 20px;
     width: 100%;
     overflow-x: auto;
+    
   }
 
   .event-a,
@@ -53,6 +55,7 @@ export const DashboardStyle = styled.div`
     gap: 10px;
     width: 90%;
     flex-shrink: 0;
+    padding:2% ;
   }
   .upcoming-event .text h3 {
     font-size: 16px;
@@ -106,12 +109,13 @@ export const DashboardStyle = styled.div`
    font-weight:700 ;
   }
 
-  @media screen and (min-width:768px) {
+  @media screen and (min-width:768px) and (max-width:1024px) {
     height:1700px ;
     .header {
-    background-repeat:no-repeat ;
-    background-size:cover ;
-    height:350px ;
+      background: url("/images/header.svg");
+    /* background-repeat:no-repeat ; */
+    background-size:contain ;
+    height:10000000px ;
     width:100% ;
     border-radius: 0 0 20px 20px;
     padding: 3%;

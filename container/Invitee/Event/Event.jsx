@@ -29,29 +29,58 @@ const Event = () => {
     }
   }, [eventId, accessToken]);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const month = monthNames[date.getMonth()];
+    const day = date.getDate();
+
+    const hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    const formattedDate = `${month} ${day}th by ${hours}:${minutes} GMT`;
+
+    return formattedDate;
+  };
+
   return (
-    <EventStyle style={{ backgroundImage: `url(/images/event-bg.svg)` }}>
-      <div className="header">
-        <h1>Welcome to {events?.eventName}.</h1>
-      </div>
+    <EventStyle background={events?.event_thumbnail}>
+      <div className="blur"></div>
 
       <Box className="body">
-        <p>Adedamola@18 birthday party</p>
-        <p>{events?.eventName}</p>
-        <Button
-          background={"#1D1465"}
-          padding={"25px 10px"}
-          borderRadius={"4px"}
-          color={"#fff"}
-          width={"90%"}
-          margin={"auto 5%"}
-          position={"absolute"}
-          left={"0"}
-          bottom={"0"}
-          onClick={handleRoute}
-        >
-          Start cliqing
-        </Button>
+        <div className="text">
+          <p>{events?.eventName} party</p>
+          <p>{formatDate(events?.event_date)}</p>
+        </div>
+        <hr className="hr" />
+        <div>
+          <Button
+            background={"#fff"}
+            color={"#1D1465"}
+            padding={"25px 10px"}
+            borderRadius={"4px"}
+            width={"90%"}
+            margin={"auto 5%"}
+            onClick={handleRoute}
+          >
+            Start cliqing
+          </Button>
+          <span>You have cliqs for this event</span>
+        </div>
       </Box>
     </EventStyle>
   );

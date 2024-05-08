@@ -1,36 +1,40 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const Container = styled.div`
-width:100% ;
-text-align:center ;
-background:#1D1465 ;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: ${props => props.background ? `url(${props.background})` : 'none'};
+  background-size: cover;
+  background-position: center;
+  z-index: 2; /* Make sure the backdrop is above the camera preview */
+`;
 
-.header-head{
-    display:flex ;
-    justify-content:space-between ;
-}
-.button{
-    display:flex ;
-    gap:10px;
-    justify-content:center ;
-    align-items:center ;
-    position:absolute ;
-    bottom:30px;
-    padding:5% ;
-    left:0 ;
-    right:0 ;
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
-}
-video{
-    width:100% ;
-    height:120% ;
-}
-span{
-    position:absolute ;
-    top:10px;
-    left:0 ;
-    right:0 ;
-    color:#fff ;
-    font-size:18px ;
-}
-`
+export const Button = styled.div`
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  position:absolute ;
+  bottom:50px ;
+  width: 100%;
+`;
+
+export const Video = styled.video`
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the video fills the container */
+  z-index:1 ;
+`;
+
+export const Span = styled.span`
+  color: #fff;
+  font-size: 18px;
+`;

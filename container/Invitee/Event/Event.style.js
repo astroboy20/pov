@@ -1,18 +1,22 @@
 import styled from "styled-components";
 
 export const EventStyle = styled.div`
-  padding: 6% 5%;
+  /* padding: 6% 5%; */
   display: flex;
   flex-direction: column;
-  position:absolute ;
-  width:100% ;
-  gap: 40px;
-  height:100% ;
-  background-size:cover ;
-  background-position:center  ;
-  background-repeat:no-repeat ;
- filter:blur(8px) ;
- -webkit-filter:border-top-left-radius(8px);
+
+
+  .blur {
+    height: 100dvh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* background: url("/images/event-bg.svg"); */
+    background: ${props => props.background ? `url(${props.background})` : 'none'};
+    backdrop-filter: blur(8px);
+    -webkit-filter: blur(3px);
+  }
+
   .header {
     display: flex;
     justify-content: space-between;
@@ -26,19 +30,40 @@ export const EventStyle = styled.div`
   .body {
     text-align: center;
     align-items: center;
-    background: url("/images/event-BG.svg");
+    display: flex;
+    flex-direction: column;
     height: 400px;
     padding: 3%;
-    margin-bottom:20% ;
-    width:100% ;
+    /* margin-bottom: 20%; */
+    width: 100%;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 20%);
+    gap:20px;
   }
-.body p {
-  font-size:24px ;
-    font-weight:700 ;
-}
-  .text p a{
-    color:#1D1465 ;
-    text-decoration:underline ;
-    font-weight:700 ;
+
+  .text {
+    font-size: 28px;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .hr {
+    border: 1px solid #fff;
+    width:50% ;
+    margin:0 auto ;
+  }
+  .body p {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .text p a {
+    color: #1d1465;
+    text-decoration: underline;
+    font-weight: 700;
   }
 `;
