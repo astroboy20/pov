@@ -7,6 +7,8 @@ import { CustomText } from "@/components/CustomText";
 import { Hosting } from "./Pages/Hosting";
 import { BlackSpinner } from "@/components/Spinner/Spinner";
 import { useRouter } from "next/router";
+import {toast} from "react-toastify"
+import axios from "axios"
 
 const Event = () => {
   const router  = useRouter()
@@ -31,32 +33,30 @@ const Event = () => {
     router.push("/dashboard")
   }
 
-  // if (isLoading) return console.log("is pendoing")
-
-  // Uncomment and implement deleteEvent function if needed
-  // const deleteEvent = async (eventId) => {
-  //   try {
-  //     await axios.post(
-  //       "https://api-cliqpod.koyeb.app/deleteEvent",
-  //       { eventId },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       }
-  //     );
-  //     // Update events after deletion
-  //     const response = await axios.get("https://api-cliqpod.koyeb.app/events", {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //     });
-  //     setEvents(response.data.events);
-  //     toast.success("Event deleted successfully!");
-  //   } catch (error) {
-  //     toast.error(error.message || "Error deleting event. Please try again.");
-  //   }
-  // };
+  
+  const deleteEvent = async (eventId) => {
+    try {
+      await axios.post(
+        "https://api-cliqpod.koyeb.app/deleteEvent",
+        { eventId },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      // Update events after deletion
+      const response = await axios.get("https://api-cliqpod.koyeb.app/events", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setEvents(response.data.events);
+      toast.success("Event deleted successfully!");
+    } catch (error) {
+      toast.error(error.message || "Error deleting event. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -88,7 +88,7 @@ const Event = () => {
               {events && events?.length === 0 ? (
                 <div className="body">No event available</div>
               ) : (
-                <Hosting events={events} />
+                <Hosting deleteEvent={deleteEvent} events={events} />
               )}
             </>
           )}

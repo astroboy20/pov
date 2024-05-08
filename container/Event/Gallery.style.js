@@ -36,6 +36,7 @@ export const GalleryStyle = styled.div`
     padding: 5% 3%;
     background: #f2f3f499;
     box-shadow: 2px 2px 4px 0px #0000001a;
+    margin-bottom:20px ;
   }
   .sub-info {
     display: flex;

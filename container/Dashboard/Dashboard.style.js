@@ -46,7 +46,10 @@ export const DashboardStyle = styled.div`
     overflow-x: auto;
     
   }
-
+.thumbnail{
+  width:108px;
+  height:fit-content ;
+}
   .event-a,
   .event-b {
     display: flex;
@@ -55,15 +58,21 @@ export const DashboardStyle = styled.div`
     gap: 10px;
     width: 90%;
     flex-shrink: 0;
+    /* padding:2% 0 ; */
+  }
+  .upcoming-event .text  {
     padding:2% ;
+    display:flex ;
+    flex-direction:column ;
+    gap:5px;
   }
   .upcoming-event .text h3 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     margin-bottom: 10px;
   }
   .upcoming-event p {
-    font-size: 14px;
+    font-size: 10px;
     font-weight: 700;
   }
   .upcoming-event h1,

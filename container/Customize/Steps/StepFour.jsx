@@ -5,6 +5,7 @@ import axios from "axios"
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import useFetchItems from "@/hooks/useFetchItems";
+import {toast} from "react-toastify"
 
 const StepFour = () => {
   const router = useRouter()
@@ -52,7 +53,7 @@ const handleSubmit = async () => {
         router.push(userData.authorization_url);
         toast.success("Please proceed to payment!");
         setLoading(false);
-      } else {
+      } else{
         toast.success("Event created successfully!");
         router.push("/success");
         setLoading(false);
@@ -78,7 +79,7 @@ const {  } = useFetchItems({
         <p>{parsedInfo?.filterName}</p>
         <p>{parsedInfo?.info}</p>
         {/* <span>#{parsedData?.expectedGuests}</span> */}
-        <Button type="submit" onClick={handleSubmit} width="fit-content" color={"white"} background={"#1D1465"} padding={"6px"} fontSize={"16px"}>Pay now</Button>
+        <Button type="submit" size={"xs"} onClick={handleSubmit} width="fit-content" color={"white"} background={"#1D1465"} padding={"6px"} fontSize={"16px"}>Pay now</Button>
       </div>
     </div>
   );

@@ -8,27 +8,37 @@ import { useRouter } from "next/router";
 import { ShutterIcon } from "@/assets";
 
 const Camera = ({ events }) => {
+  const FACING_MODE_USER = "user";
+  const FACING_MODE_ENVIRONMENT = "environment";
   const [capturedImages, setCapturedImages] = useState([]);
   const [photosTaken, setPhotosTaken] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const videoRef = useRef(null);
   const audioRef = useRef(null);
-  const [facingMode, setFacingMode] = useState("environment");
+  const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
-  const [filter, setFilter] = useState([]);
-  const [selectedFilter, setSelectedFilter] = useState(null);
   const router = useRouter();
 
-  const switchCamera = () => {
-    setIsLoading(true);
-    const newFacingMode = facingMode === "environment" ? "user" : "environment";
-    setFacingMode(newFacingMode);
-    startCamera().finally(() => setIsLoading(false));
-  };
+  const switchCamera = React.useCallback(() => {
+    setFacingMode((prevState) =>
+      prevState === FACING_MODE_USER
+        ? FACING_MODE_ENVIRONMENT
+        : FACING_MODE_USER
+    );
+  }, []);
+
+  console.log(facingMode);
+
+  // const switchCamera = () => {
+  //   setIsLoading(true);
+  //   const newFacingMode = facingMode === "environment" ? "user" : "environment";
+  //   setFacingMode(newFacingMode);
+  //   startCamera().finally(() => setIsLoading(false));
+  // };
 
   useEffect(() => {
     startCamera();
-  }, [facingMode, selectedFilter]);
+  }, [facingMode]);
 
   const startCamera = async () => {
     try {

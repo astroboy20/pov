@@ -72,6 +72,8 @@ const Dashboard = () => {
                     height={108}
                     width={100}
                     alt="event-thumbnail"
+                    objectFit="cover"
+                    className="thumbnail"
                   />
                   <div className="text">
                     <h3>{event.eventName}</h3>

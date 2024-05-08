@@ -12,7 +12,8 @@ import { JoinIcon } from "@/assets";
 import html2canvas from "html2canvas";
 import { toast } from "react-toastify";
 
-const Hosting = ({ events }) => {
+
+const Hosting = ({ events, deleteEvent }) => {
   const [showModalForEvent, setShowModalForEvent] = useState({});
   const { option, switchOption } = useOptionContext();
   const [isCopied, setIsCopied] = useState(false);
@@ -105,7 +106,7 @@ const Hosting = ({ events }) => {
       <>
         {events?.map((event) => (
           <div key={event?._id}>
-            <div>
+  
               <div className="info">
                 <div className="sub-info">
                   <Image
@@ -207,12 +208,16 @@ const Hosting = ({ events }) => {
                     </Button>
                   </Modal>
 
+                  {/* <div onClick={deleteEvent} className="edit">delete</div> */}
                   <div className="edit">edit</div>
                 </div>
               </div>
-            </div>
+            
 
-            <p
+           
+          </div>
+        ))}
+         <p
               style={{
                 fontSize: "14px",
                 padding: "3%",
@@ -224,8 +229,6 @@ const Hosting = ({ events }) => {
               </Link>{" "}
               to set up new event.
             </p>
-          </div>
-        ))}
       </>
     </>
   );
