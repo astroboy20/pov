@@ -19,7 +19,7 @@ const Event = () => {
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
-  const { data } = useFetchItems({
+  const { data, isLoading } = useFetchItems({
     url: `https://api-cliqpod.koyeb.app/event/${eventId}`,
     token: accessToken,
   });
@@ -58,6 +58,8 @@ const Event = () => {
   };
 
   return (
+
+    
     <EventStyle background={events?.event_thumbnail}>
       <div className="blur"></div>
 
@@ -79,7 +81,7 @@ const Event = () => {
           >
             Start cliqing
           </Button>
-          <span>You have cliqs for this event</span>
+          <span>You have {events?.photosPerPerson} cliqs for this event</span>
         </div>
       </Box>
     </EventStyle>

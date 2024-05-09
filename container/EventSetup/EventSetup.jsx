@@ -37,6 +37,7 @@ const EventSetup = () => {
             <Select
               size="lg"
               fontSize={"14px"}
+              borderRadius={"4px"}
               value={eventName}
               onChange={(e) => setEventName(e.target.value)}
             >

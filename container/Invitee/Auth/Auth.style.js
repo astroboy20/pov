@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const AuthContainer = styled.div`
   display: flex;
-  padding: 2% 5%;
+
   flex-direction: column;
-  gap: 40px;
+  gap: 20px;
   margin-top: 3%;
   text-align: center;
   .header {
@@ -13,6 +13,7 @@ export const AuthContainer = styled.div`
     text-align: left;
     color: #1d1465;
     gap:10px;
+    padding: 0 5%;
   }
   .header div {
     font-size: 30px;
@@ -24,7 +25,17 @@ export const AuthContainer = styled.div`
   .header p{
     font-size:14px ;
   }
-
+  .image{
+    background-image: url(${props => props.background});
+    width:100% ;
+    background-size:cover ;
+    background-repeat:no-repeat ;
+    height:380px ;
+    background-position: center;
+  }
+.info, .buttons{
+  padding: 0 5%;
+}
   .info p {
     color: #1d1465;
     font-size:20px ;

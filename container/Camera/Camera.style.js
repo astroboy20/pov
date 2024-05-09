@@ -45,4 +45,8 @@ export const Video = styled.video`
 export const Span = styled.span`
   color: #fff;
   font-size: 18px;
+  position:absolute ;
+  top:10px;
+  left:50%;
+
 `;

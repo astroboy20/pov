@@ -12,7 +12,7 @@ const useFetchItems = ({ url, token }) => {
       });
       return response.data;
     },
-    cacheTime:600000,
+    cacheTime:3000,
   });
 };
 

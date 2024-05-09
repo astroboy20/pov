@@ -25,27 +25,28 @@ const Auth = ({ event }) => {
 
   return (
     <>
-      <AuthContainer>
+      <AuthContainer background = {event?.event_thumbnail}>
         <div className="header">
           <div>
             Welcome to <Logo />{" "}
           </div>
           <p>Real time event photo sharing platform</p>
         </div>
-        <div>
+        <div className="image">
           {" "}
-          <Image
-            width={356}
+          {/* <Image
+            width={428}
             height={300}
             alt="welcome-image"
+            objectFit="contain"
             src={event?.event_thumbnail}
-          />
+          /> */}
         </div>
 
         <div className="info">
           <p>To be a part of {event?.eventName} party, sign in to cliqpod</p>
         </div>
-        <div>
+        <div className="buttons">
           {" "}
           <div className="login-with-google">
             <Button

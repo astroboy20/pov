@@ -29,7 +29,7 @@ const EventID = () => {
     }
   }, [data]);
 
-  return <>{ data && isLoading ? <EventSpinner   /> : <Auth event={event} /> }</>;
+  return <>{  isLoading ? <EventSpinner   /> : <Auth event={event} /> }</>;
 };
 
 export default EventID;

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { BackdropOverlay, Button, Container, Video } from "./Camera.style";
+import { BackdropOverlay, Button, Container, Span, Video } from "./Camera.style";
 import { MdOutlineCamera, MdOutlineFlipCameraAndroid } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
@@ -299,7 +299,7 @@ const Camera = ({ events }) => {
           />
         </Button>
         <audio ref={audioRef} src={"./sound/sound.mp3"} preload="auto" />
-        <span style={{ marginTop: "10px" }}></span>
+        <Span style={{ marginTop: "10px" }}>{photosTaken}/{events?.photosPerPerson}</Span>
       </>
     </Container>
   );

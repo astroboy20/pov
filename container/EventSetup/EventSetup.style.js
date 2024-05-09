@@ -9,7 +9,7 @@ export const EventSetupStyle = styled.div`
   width:100% ;
 `;
 export const HeaderStyle = styled.div`
-  background: url("/images/event-bg.svg");
+  background: url("/images/create-event.webp");
   background-size: cover;
   background-position:center center ;
   background-repeat: no-repeat;

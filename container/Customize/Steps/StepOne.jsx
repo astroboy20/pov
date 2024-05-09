@@ -14,7 +14,7 @@ const StepOne = ({ handleNext }) => {
 
   return (
     <>
-      <Select
+      {/* <Select
         fontSize={"16px"}
         fontWeight={"500"}
         placeholder="Choose Frame Size"
@@ -24,7 +24,7 @@ const StepOne = ({ handleNext }) => {
           Choose Frame Size
         </option>
         <option>1080 by 1920</option>
-      </Select>
+      </Select> */}
       <p>
         Choose your own customized templates for different event categories.
       </p>

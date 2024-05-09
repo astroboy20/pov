@@ -65,24 +65,35 @@ const Dashboard = () => {
           <div className="upcoming-event">
             <h1>Upcoming Events</h1>
             <div className="scroll">
-              {upcomingEvent?.map((event) => (
-                <div key={event.id} className="event-a">
-                  <Image
-                    src={event.event_thumbnail}
-                    height={108}
-                    width={100}
-                    alt="event-thumbnail"
-                    objectFit="cover"
-                    className="thumbnail"
-                  />
-                  <div className="text">
-                    <h3>{event.eventName}</h3>
-                    <p>{formatDate(event.event_date)}</p>
-                    <p>{event.location}</p>
-                    <p>{event.event_mode}</p>
+              {upcomingEvent?.length === 0 ? (
+                <p
+                  style={{
+                   margin: "auto",
+                    textAlign:"center"
+                  }}
+                >
+                  No event available
+                </p>
+              ) : (
+                upcomingEvent?.map((event) => (
+                  <div key={event.id} className="event-a">
+                    <Image
+                      src={event.event_thumbnail}
+                      height={108}
+                      width={100}
+                      alt="event-thumbnail"
+                      objectFit="cover"
+                      className="thumbnail"
+                    />
+                    <div className="text">
+                      <h3>{event.eventName}</h3>
+                      <p>{formatDate(event.event_date)}</p>
+                      <p>{event.location}</p>
+                      <p>{event.event_mode}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>

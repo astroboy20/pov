@@ -7,15 +7,14 @@ import { CustomText } from "@/components/CustomText";
 import { Hosting } from "./Pages/Hosting";
 import { BlackSpinner } from "@/components/Spinner/Spinner";
 import { useRouter } from "next/router";
-import {toast} from "react-toastify"
-import axios from "axios"
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Event = () => {
-  const router  = useRouter()
+  const router = useRouter();
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const [events, setEvents] = useState([]);
-
 
   const { data: eventDetails, isLoading } = useFetchItems({
     url: "https://api-cliqpod.koyeb.app/events",
@@ -28,12 +27,10 @@ const Event = () => {
     }
   }, [eventDetails]);
 
+  const handleRoute = () => {
+    router.push("/dashboard");
+  };
 
-  const handleRoute  = ()=>{
-    router.push("/dashboard")
-  }
-
-  
   const deleteEvent = async (eventId) => {
     try {
       await axios.post(
@@ -62,7 +59,7 @@ const Event = () => {
     <>
       <GalleryStyle>
         <div className="header">
-          <span onClick={handleRoute}> 
+          <span onClick={handleRoute}>
             <BackIcon />
           </span>
 
@@ -86,7 +83,18 @@ const Event = () => {
           ) : (
             <>
               {events && events?.length === 0 ? (
-                <div className="body">No event available</div>
+                <div className="body">
+                  <p
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    No event available
+                  </p>
+                </div>
               ) : (
                 <Hosting deleteEvent={deleteEvent} events={events} />
               )}
