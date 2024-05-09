@@ -121,7 +121,7 @@ a {
   }
   .body{
     display: none;
-    touch-action: manipulation;
+    /* touch-action: manipulation; */
   }
  
 }
@@ -132,7 +132,7 @@ a {
     display:block ;
     width:100% ;
     transition: all 1s linear;
-    touch-action: pan-y;
+    /* touch-action: pan-y; */
     /* height:100dvh ; */
   }
 }
