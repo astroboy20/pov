@@ -1,10 +1,4 @@
-
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-} from "next/document";
+import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 
 export default class MyDocument extends Document {
@@ -22,6 +16,17 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200&display=swap"
             rel="stylesheet"
           ></link>
+          <NextScript />
+          {/* Disable pinch zooming */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                document.addEventListener('gesturestart', function (e) {
+                  e.preventDefault();
+                });
+              `,
+            }}
+          />
         </Head>
         <body>
           {/* <ColorModeScript initialColorMode={chTheme.config.initialColorMode} /> */}

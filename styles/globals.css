@@ -121,6 +121,7 @@ a {
   }
   .body{
     display: none;
+    touch-action: manipulation;
   }
  
 }
@@ -131,7 +132,8 @@ a {
     display:block ;
     width:100% ;
     transition: all 1s linear;
-    height:100dvh ;
+    touch-action: pan-y;
+    /* height:100dvh ; */
   }
 }
 
