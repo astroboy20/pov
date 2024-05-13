@@ -34,6 +34,7 @@ export const events = [
       filterName: "Birthday Flier",
       info: "A little story about the template is here, A little story about the template",
       src: "/images/birthday.png",
+      type:"WEDDING"
     },
     {
       id: 2,

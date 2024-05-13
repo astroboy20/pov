@@ -17,7 +17,7 @@ const Memories = () => {
         />
       </div>
       <div className="right">
-        <h1>Your Memories, Anywhere, Anytime!</h1>
+        <h1>Your Event Memories, Anywhere, Anytime!</h1>
         <p>
           Experience the power of nostalgia reimagined with cliqpod's digital
           albums.

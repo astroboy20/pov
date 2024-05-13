@@ -3,7 +3,6 @@ import React from "react";
 import Image from "next/image";
 import { events, images } from "./Data";
 
-
 const StepOne = ({ handleNext }) => {
   const handleSelect = (src) => {
     const selectedImage = images.find((image) => image.src === src);
@@ -11,7 +10,9 @@ const StepOne = ({ handleNext }) => {
       localStorage.setItem("image", JSON.stringify(selectedImage));
     handleNext();
   };
-
+  const eventName =
+    typeof window !== "undefined" && localStorage.getItem("eventName");
+  console.log("f", eventName);
   return (
     <>
       {/* <Select
@@ -29,22 +30,24 @@ const StepOne = ({ handleNext }) => {
         Choose your own customized templates for different event categories.
       </p>
 
-      <div className="event-list">
+      {/* <div className="event-list">
         {events.map((event) => (
           <span key={event.id}>{event.label}</span>
         ))}
-      </div>
+      </div> */}
 
       <div className="images">
-        {images.map((image) => (
-          <Image
-            onClick={() => handleSelect(image.src)}
-            key={image.id}
-            src={image.src}
-            width={180}
-            height={320}
-          />
-        ))}
+        {images
+          .filter((image) => image.type === eventName)
+          .map((image) => (
+            <Image
+              onClick={() => handleSelect(image.src)}
+              key={image.id}
+              src={image.src}
+              width={180}
+              height={320}
+            />
+          ))}
       </div>
     </>
   );

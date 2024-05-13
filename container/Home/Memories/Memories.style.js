@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const MemoriesContainer = styled.div`
-  padding: 3% 5%;
+  padding: 0 5%;
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
@@ -27,7 +27,7 @@ export const MemoriesContainer = styled.div`
   .right .button {
     display: flex;
     column-gap: 20px;
-    margin:auto ;
+   
   }
   .right .button .a a {
     border-radius: 40px;
@@ -75,6 +75,9 @@ export const MemoriesContainer = styled.div`
     .right {
       text-align: center;
     }
+    .right .button{
+       margin:auto ;
+    }
     .right h1 {
       font-size: 24px;
     }
@@ -94,6 +97,9 @@ export const MemoriesContainer = styled.div`
     }
     .right {
       text-align: center;
+    }
+    .right .button{
+       margin:auto ;
     }
     .right h1 {
       font-size: 28px;

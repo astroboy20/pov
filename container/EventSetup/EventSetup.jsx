@@ -46,9 +46,9 @@ const EventSetup = () => {
               </option>
               <option value="Birthday">Birthday </option>
               <option value="Wedding">Wedding</option>
-              <option value="Graduation">Graduation</option>
+              <option value="Graduation">Corporate event</option>
               <option value="Hangout">Hangout</option>
-              <option value="House Party">House party</option>
+              <option value="House Party">Others</option>
             </Select>
             <Button type="submit" variant="defaultButton">
               Setup up event

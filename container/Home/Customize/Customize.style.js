@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const CustomizeStyle = styled.div`
-  padding: 3% 5%;
+  padding: 0 5%;
   display: inline-flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   width: 100%;
 

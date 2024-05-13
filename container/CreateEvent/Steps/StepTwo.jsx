@@ -2,6 +2,7 @@ import { BlueBackIcon } from "@/assets";
 import { Button } from "@/components/Button";
 import React from "react";
 import {useRouter} from "next/router"
+import Image from "next/image"
 
 const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
   const data = typeof window !== "undefined" && localStorage.getItem("data");
@@ -33,7 +34,7 @@ const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
   
   return (
     <>
-      <div className="header-step2" style={{background: `url(${parsedData.event_thumbnail})`, backgroundPosition:"center, center"}}>
+      <div className="header-step2" >
         <div className="header-head">
           <span onClick={ handlePrev}>
             <BlueBackIcon />
@@ -45,8 +46,9 @@ const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
         </div>
 
         <div className="header-text">
+          <Image className="header-text" src={parsedData?.event_thumbnail} height={1000} width={100} alt="event-image" objectFit="cover"/>
           {" "}
-          <h1>{parsedData?.eventName}</h1>
+          {/* <h1>{parsedData?.eventName}</h1> */}
         </div>
       </div>
       <div className="body-step2">

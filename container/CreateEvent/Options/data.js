@@ -24,32 +24,32 @@ export const RevealData = [
 export const PhotoData = [
   {
     id: 1,
-    label: "0 - 10 ",
+    label: " 10 ",
     value: "10 ",
   },
   {
     id: 2,
-    label: "0 - 25 ",
+    label: "25 ",
     value: "25",
   },
   {
     id: 3,
-    label: "0 - 50",
+    label: " 50",
     value: "50",
   },
-//   {
-//     id: 4,
-//     label: "251 -500",
-//     value: "250",
-//   },
-//   {
-//     id: 5,
-//     label: "501 - 1000",
-//     value: "500",
-//   },
-//   {
-//     id: 6,
-//     label: "1001 - 2000",
-//     value: "2000",
-//   },
+  //   {
+  //     id: 4,
+  //     label: "251 -500",
+  //     value: "250",
+  //   },
+  //   {
+  //     id: 5,
+  //     label: "501 - 1000",
+  //     value: "500",
+  //   },
+  //   {
+  //     id: 6,
+  //     label: "1001 - 2000",
+  //     value: "2000",
+  //   },
 ];

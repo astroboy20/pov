@@ -35,7 +35,10 @@ export const GalleryStyle = styled.div`
   }
 
   .header-text {
-    margin: 40% auto;
+    /* margin: 40% auto; */
+    width:100% ;
+    height:100% ;
+    padding: 2%;
   }
   .image {
     display: flex;

@@ -127,8 +127,8 @@ const StepOne = ({
                 height={1080}
                 objectFit="cover"
                 style={{
-                  width: "50%",
-                  height: "40vh",
+                  width: "fit-content",
+                  height: "fit-content",
                   margin: "2% 30%",
                 }}
               />
@@ -249,7 +249,7 @@ const StepOne = ({
           onClick={handleNext}
           type={"submit"}
           variant={"defaultButton"}
-          disabled={!isStepOneValid()}
+          // disabled={!isStepOneValid()}
         >
           Continue
         </Button>
