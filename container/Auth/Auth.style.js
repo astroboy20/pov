@@ -7,6 +7,9 @@ flex-direction:column ;
 gap:40px;
 margin-top:3% ;
 text-align:center ;
+.image{
+      margin:auto ;
+    }
 .header{
   display:flex ;
   flex-direction:column ;

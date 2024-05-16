@@ -19,19 +19,20 @@ export const AuthContainer = styled.div`
     font-size: 30px;
     font-weight: 700;
     display:flex ;
-    gap:10px;
-    align-items:end ;
+    gap:1px;
+    align-items:flex-end ;
   }
   .header p{
     font-size:14px ;
   }
   .image{
-    background-image: url(${props => props.background});
-    width:100% ;
-    background-size:cover ;
-    background-repeat:no-repeat ;
-    height:380px ;
-    background-position: center;
+    /* background-image: url(${props => props.background}); */
+    /* width:355px ; */
+    /* background-size:cover ; */
+    /* background-repeat:no-repeat ; */
+    height:400px ;
+    margin:auto ;
+    /* background-position: center; */
   }
 .info, .buttons{
   padding: 0 5%;

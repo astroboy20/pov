@@ -32,15 +32,16 @@ const Auth = ({ event }) => {
           </div>
           <p>Real time event photo sharing platform</p>
         </div>
-        <div className="image">
+        <div className="image-div">
           {" "}
-          {/* <Image
-            width={428}
-            height={300}
+          <Image
+             width={356}
+             height={300}
             alt="welcome-image"
             objectFit="contain"
+            className="image"
             src={event?.event_thumbnail}
-          /> */}
+          />
         </div>
 
         <div className="info">

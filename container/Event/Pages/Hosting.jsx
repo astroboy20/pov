@@ -123,7 +123,7 @@ const Hosting = ({ events, deleteEvent }) => {
                   <div className="text">
                     <Link
                       style={{ textDecoration: "none" }}
-                      href={`/gallery/${event?._id}`}
+                      href={`/album/${event?._id}`}
                     >
                       <div className="a">{event?.eventName}</div>
                       <div className="b">{formatDate(event?.event_date)}</div>

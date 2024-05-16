@@ -113,7 +113,7 @@ const Dashboard = () => {
                   <div className="text">
                     {" "}
                     <p>{event?.eventName}</p>
-                    <Link href={`/gallery/${event?._id}`}>
+                    <Link href={`/album/${event?._id}`}>
                       <span>View</span>
                     </Link>
                   </div>
