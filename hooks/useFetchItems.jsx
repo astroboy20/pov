@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const useFetchItems = ({ url, token }) => {
   return useQuery({
-    queryKey: ["data"],
+    queryKey: [url],
     queryFn: async () => {
       const response = await axios.get(url, {
         headers: {
@@ -12,7 +12,7 @@ const useFetchItems = ({ url, token }) => {
       });
       return response.data;
     },
-    cacheTime:3000,
+    // cacheTime:3000,
   });
 };
 

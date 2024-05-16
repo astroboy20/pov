@@ -5,6 +5,8 @@ import Image from "next/image";
 import useFetchItems from "@/hooks/useFetchItems";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { EventSpinner } from "@/components/Spinner/Spinner";
+import Link from "next/link";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -12,7 +14,7 @@ const Dashboard = () => {
   const accessToken = user ? user.token : "";
   const [upcomingEvent, setUpcomingEvent] = useState([]);
 
-  const { data } = useFetchItems({
+  const { data, isLoading } = useFetchItems({
     url: "https://api-cliqpod.koyeb.app/upcoming-events/",
     token: accessToken,
   });
@@ -51,6 +53,8 @@ const Dashboard = () => {
     return formattedDate;
   };
 
+  if (isLoading) return <EventSpinner />;
+
   return (
     <DashboardStyle>
       <div className="header">
@@ -68,17 +72,17 @@ const Dashboard = () => {
               {upcomingEvent?.length === 0 ? (
                 <p
                   style={{
-                   margin: "auto",
-                    textAlign:"center"
+                    margin: "auto",
+                    textAlign: "center",
                   }}
                 >
                   No event available
                 </p>
               ) : (
                 upcomingEvent?.map((event) => (
-                  <div key={event.id} className="event-a">
+                  <div key={event?.id} className="event">
                     <Image
-                      src={event.event_thumbnail}
+                      src={event?.event_thumbnail}
                       height={108}
                       width={100}
                       alt="event-thumbnail"
@@ -86,10 +90,10 @@ const Dashboard = () => {
                       className="thumbnail"
                     />
                     <div className="text">
-                      <h3>{event.eventName}</h3>
-                      <p>{formatDate(event.event_date)}</p>
-                      <p>{event.location}</p>
-                      <p>{event.event_mode}</p>
+                      <h3>{event?.eventName}</h3>
+                      <p>{formatDate(event?.event_date)}</p>
+                      <p>{event?.location}</p>
+                      <p>{event?.event_mode}</p>
                     </div>
                   </div>
                 ))
@@ -102,54 +106,20 @@ const Dashboard = () => {
             {" "}
             <h1>Popular Events</h1> <p>View all</p>
           </div>
-          <div className="event-body">
-            <div className="text">
-              {" "}
-              <p>Sekani’s Bridal Party</p>
-              <span>View</span>
-            </div>
-          </div>
-          <div className="event-body">
-            <div className="text">
-              {" "}
-              <p>Sekani’s Bridal Party</p>
-              <span>View</span>
-            </div>
-          </div>
-          <div className="event-body">
-            <div className="text">
-              {" "}
-              <p>Sekani’s Bridal Party</p>
-              <span>View</span>
-            </div>
-          </div>
-          <div className="event-body">
-            <div className="text">
-              {" "}
-              <p>Sekani’s Bridal Party</p>
-              <span>View</span>
-            </div>
-          </div>
-          <div className="event-body">
-            <div className="text">
-              {" "}
-              <p>Sekani’s Bridal Party</p>
-              <span>View</span>
-            </div>
-          </div>
-          <div className="event-body">
-            <div className="text">
-              {" "}
-              <p>Sekani’s Bridal Party</p>
-              <span>View</span>
-            </div>
-          </div>
-          <div className="event-body">
-            <div className="text">
-              {" "}
-              <p>Sekani’s Bridal Party</p>
-              <span>View</span>
-            </div>
+          <div className="popular-scroll">
+            {upcomingEvent?.map((event) => (
+              <>
+                <div className="event-body">
+                  <div className="text">
+                    {" "}
+                    <p>{event?.eventName}</p>
+                    <Link href={`/gallery/${event?._id}`}>
+                      <span>View</span>
+                    </Link>
+                  </div>
+                </div>
+              </>
+            ))}
           </div>
         </div>
       </div>

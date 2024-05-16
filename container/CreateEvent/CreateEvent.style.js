@@ -17,7 +17,7 @@ export const GalleryStyle = styled.div`
     height: auto;
     text-align: center;
     align-items: center;
-    height: 400px;
+    height: fit-content;
     padding: 3%;
   }
 
@@ -64,7 +64,7 @@ export const GalleryStyle = styled.div`
   }
   .body-step2 {
     padding: 5%;
-    margin-top: 5%;
+    /* margin-top: 5%; */
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
