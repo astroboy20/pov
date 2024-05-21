@@ -18,10 +18,10 @@ const StepOne = ({
   eventName,
   handleNext,
   handlePrev,
-  prices
+  prices,
 }) => {
   const [selectedImage, setSelectedImage] = useState(null);
-  console.log(selectedImage)
+  console.log(selectedImage);
 
   const [loading, setLoading] = useState(false);
   const MAX_FILE_SIZE_MB = 5;
@@ -61,7 +61,6 @@ const StepOne = ({
         setData((prevData) => ({
           ...prevData,
           event_thumbnail: image,
-
         }));
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -82,7 +81,13 @@ const StepOne = ({
   };
 
   const isStepOneValid = () => {
-    const { event_thumbnail, event_date, endDate, revealTime, photosPerPerson } = eventData;
+    const {
+      event_thumbnail,
+      event_date,
+      endDate,
+      revealTime,
+      photosPerPerson,
+    } = eventData;
     if (!event_thumbnail || !event_date || !revealTime || !photosPerPerson) {
       // toast.warning("Please fill out all the required fields");
       return false;
@@ -137,20 +142,14 @@ const StepOne = ({
               </button>
             </div>
           ) : (
-            <span
-             
-              className="icon-style"
-              onClick={handleImageClick}
-            >
+            <span className="icon-style" onClick={handleImageClick}>
               {loading ? (
                 <BlackSpinner />
               ) : (
                 <>
                   {" "}
                   <ImageIcon />{" "}
-                  <div className="text">
-                    Add thumbnail/flyer of your event
-                  </div>
+                  <div className="text">Add thumbnail/flyer of your event</div>
                 </>
               )}
             </span>
@@ -171,8 +170,10 @@ const StepOne = ({
           value={eventData.mode}
           onChange={handleChange}
           name="mode"
-          placeholder="Mode of Event"
         >
+          <option value="" disabled hidden>
+            Mode of Event
+          </option>
           <option value="Physical">Physical</option>
           <option value="Virtual">Virtual</option>
           <option value="Hybrid">Hybrid</option>
@@ -208,11 +209,13 @@ const StepOne = ({
         />
         <Select
           value={eventData?.expectedGuests}
-          placeholder="Expected Guests"
           size={"lg"}
           name="expectedGuests"
           onChange={handleChange}
         >
+          <option value="" disabled hidden>
+            Expected Guests
+          </option>
           {prices?.map((price) => (
             <option key={price?._id} value={price?._id}>
               {price?.expectedGuest}
@@ -221,11 +224,13 @@ const StepOne = ({
         </Select>
         <Select
           value={eventData.photosPerPerson}
-          placeholder="How many cliqs per person ?"
           size={"lg"}
           name="photosPerPerson"
           onChange={handleChange}
         >
+          <option value="" disabled hidden>
+            How many cliqs per person ?
+          </option>
           {PhotoData.map((photo) => (
             <option key={photo.id} value={photo.value}>
               {photo.label}
@@ -239,6 +244,9 @@ const StepOne = ({
           size={"lg"}
           placeholder="cliq reveal time? "
         >
+          <option value="" disabled hidden>
+            cliq reveal time?{" "}
+          </option>
           {RevealData.map((reveal) => (
             <option key={reveal.id} value={reveal.value}>
               {reveal.label}
@@ -249,7 +257,7 @@ const StepOne = ({
           onClick={handleNext}
           type={"submit"}
           variant={"defaultButton"}
-          // disabled={!isStepOneValid()}
+          disabled={!isStepOneValid()}
         >
           Continue
         </Button>

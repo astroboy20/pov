@@ -41,6 +41,7 @@ export const events = [
       filterName: "London",
       info: "A little story about the template is here, A little story about the template",
       src: "/images/london.svg",
+      type:"BIRTHDAY"
     },
   ];
 
