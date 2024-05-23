@@ -25,8 +25,9 @@ const StepTwo = ({ handleNext }) => {
         <Image
           className="image-preview"
           src={parsedData?.src}
-          width={220}
-          height={390}
+          width={1080}
+          height={1920}
+          layout="responsive"
         />
         <div className="final-text">
           <h1>{parsedData?.filterName}</h1>

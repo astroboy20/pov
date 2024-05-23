@@ -26,7 +26,7 @@ const Customize = () => {
         <span style={{ color: "white" }}>.</span>
       </div>
       <div className="body">
-        {currentStep === 1 && <StepOne handleNext={handleNext} />}
+        {currentStep === 1 && <StepOne setCurrentStep={setCurrentStep} handleNext={handleNext} />}
         {currentStep === 2 && <StepTwo  handleNext={handleNext}/>}
         {currentStep === 3 && <StepThree  handleNext={handleNext}/>}
         {currentStep === 4 && <StepFour  handleNext={handleNext}/>}

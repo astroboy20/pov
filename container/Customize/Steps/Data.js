@@ -33,16 +33,30 @@ export const events = [
       id: 1,
       filterName: "Birthday Flier",
       info: "A little story about the template is here, A little story about the template",
-      src: "/images/birthday.png",
-      type:"WEDDING"
+      src: "/images/birthday1.png",
+      type:"BIRTHDAY"
     },
     {
       id: 2,
-      filterName: "London",
+      filterName: "Birthday Flier",
       info: "A little story about the template is here, A little story about the template",
-      src: "/images/london.svg",
+      src: "/images/birthday2.png",
       type:"BIRTHDAY"
     },
+    {
+      id: 3,
+      filterName: "Birthday Flier",
+      info: "A little story about the template is here, A little story about the template",
+      src: "/images/birthday3.png",
+      type:"BIRTHDAY"
+    },
+    // {
+    //   id: 4,
+    //   filterName: "London",
+    //   info: "A little story about the template is here, A little story about the template",
+    //   src: "/images/london.svg",
+    //   type:"BIRTHDAY"
+    // },
   ];
 
   export const editActions = [

@@ -44,7 +44,23 @@ export const CustomizeStyle = styled.div`
     display: block;
   }
 
-  .images,
+  .images{
+    display:grid ;
+    grid-template-columns:repeat(2, 1fr) ;
+    row-gap:10px;
+    column-gap:10px;
+  }
+  .customize-page{
+    width:100% ;
+    height:100% ;
+    display: flex;
+    justify-content:center ;
+    font-size:16px ;
+    font-weight:500 ;
+    text-decoration:underline ;
+    align-items:center ;
+    background-color:#f9eac2 ;
+  }
   .show-more .image {
     display: flex;
     gap: 10px;
@@ -56,7 +72,8 @@ export const CustomizeStyle = styled.div`
     gap: 40px;
   }
   .preview {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     align-items: center;
   }
@@ -95,11 +112,12 @@ export const CustomizeStyle = styled.div`
   }
 
   .item {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
+    display: grid;
+    grid-template-columns:repeat(3, 1fr) ;
+    /* align-items: center; */
+    gap: 5px;
     margin-bottom: 100px;
+    margin-top:10px ;
   }
   .sub-items {
     display: flex;

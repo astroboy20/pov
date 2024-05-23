@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { events, images } from "./Data";
 
-const StepOne = ({ handleNext }) => {
+const StepOne = ({ handleNext, setCurrentStep }) => {
   const handleSelect = (src) => {
     const selectedImage = images.find((image) => image.src === src);
     typeof window != "undefined" &&
@@ -44,10 +44,15 @@ const StepOne = ({ handleNext }) => {
               onClick={() => handleSelect(image.src)}
               key={image.id}
               src={image.src}
-              width={180}
-              height={320}
+              width={1080}
+              height={1920}
+              layout="responsive"
             />
           ))}
+
+          <div className="customize-page">
+            <h1 onClick={()=>setCurrentStep(3)}>Create New Template</h1>
+          </div>
       </div>
     </>
   );

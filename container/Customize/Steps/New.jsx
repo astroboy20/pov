@@ -11,21 +11,19 @@ import {
   Center,
   Textarea,
   Select,
-  Box,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { fabric } from "fabric";
 import { Spinner } from "@/components/Spinner";
 import { Button } from "@/components/Button";
-import { fabric } from "fabric";
 
 const StepThree = ({ handleNext }) => {
-  const imageInfo = typeof window !== "undefined" && localStorage.getItem("image");
+  const imageInfo =
+    typeof window !== "undefined" && localStorage.getItem("image");
   const parsedData = JSON.parse(imageInfo);
   const canvasRef = useRef(null);
   const [text, setText] = useState("");
   const [isAddTextModalOpen, setIsAddTextModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(parsedData?.src || "");
-  const [selectedElement, setSelectedElement] = useState("");
   const [font, setFont] = useState("");
   const [background, setBackground] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,42 +31,34 @@ const StepThree = ({ handleNext }) => {
   const MAX_FILE_SIZE_MB = 5;
   const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
-
-  console.log(selectedImage ,"hey", parsedData?.src)
-
   useEffect(() => {
-    const canvasElement = canvasRef.current;
-    const fabricCanvasInstance = new fabric.Canvas(canvasElement);
+    const fabricCanvasInstance = new fabric.Canvas(canvasRef.current, {
+      selection: true,
+    });
     setFabricCanvas(fabricCanvasInstance);
 
-    const resizeCanvas = () => {
-      const { width: containerWidth } = canvasElement.parentNode.getBoundingClientRect();
-      const scaleFactor = containerWidth / 1080;
-      const canvasWidth = 1080 * scaleFactor;
-      const canvasHeight = 1920 * scaleFactor;
-      fabricCanvasInstance.setDimensions({ width: canvasWidth, height: canvasHeight });
-      fabricCanvasInstance.setZoom(scaleFactor);
-      console.log(canvasWidth, "x", canvasHeight);
-    };
-
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas, { passive: true });
-
-    if (selectedImage && typeof selectedImage === 'string') {
-      fabric.Image.fromURL(selectedImage, (img) => {
-        img.set({ left: 0, top: 0 });
-        fabricCanvasInstance?.setBackgroundImage(img, fabricCanvasInstance.renderAll.bind(fabricCanvasInstance));
-      });
-     
-    }
-   
-    
+    fabricCanvasInstance.on('object:selected', () => {
+      fabricCanvasInstance.bringToFront(fabricCanvasInstance.getActiveObject());
+    });
 
     return () => {
       fabricCanvasInstance.dispose();
-      window.removeEventListener("resize", resizeCanvas);
     };
-  }, [selectedImage]);
+  }, []);
+
+  const drawBackground = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const backgroundImage = new Image();
+    backgroundImage.src = parsedData?.src;
+    backgroundImage.crossOrigin = "anonymous";
+    backgroundImage.onload = () => {
+      ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    };
+  };
 
   const handleAddText = () => {
     setIsAddTextModalOpen(true);
@@ -79,17 +69,14 @@ const StepThree = ({ handleNext }) => {
   };
 
   const handleSubmitAddText = () => {
-    if (fabricCanvas && text) {
-      const textbox = new fabric.Textbox(text, {
-        left: 100,
-        top: 100,
-        fontFamily: font,
-        fill: background,
-        width: 200,
-      });
-      fabricCanvas.add(textbox).setActiveObject(textbox);
-      fabricCanvas.renderAll();
-    }
+    const textObject = new fabric.Text(text, {
+      left: 100,
+      top: 100,
+      fontFamily: font,
+      fill: background,
+      editable: true,
+    });
+    fabricCanvas.add(textObject).setActiveObject(textObject);
     handleCloseModal();
   };
 
@@ -113,12 +100,15 @@ const StepThree = ({ handleNext }) => {
           imageURL
         );
         const image = imageResponse.data.secure_url;
-        setSelectedImage(image);
-
         fabric.Image.fromURL(image, (img) => {
-          img.set({ left: 150, top: 150, angle: 0, padding: 10, cornersize: 10 });
+          img.set({
+            left: 150,
+            top: 150,
+            scaleX: 0.5,
+            scaleY: 0.5,
+            editable: true,
+          });
           fabricCanvas.add(img).setActiveObject(img);
-          fabricCanvas.renderAll();
         });
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -146,12 +136,15 @@ const StepThree = ({ handleNext }) => {
           imageURL
         );
         const image = imageResponse.data.secure_url;
-        setSelectedElement(image);
-
         fabric.Image.fromURL(image, (img) => {
-          img.set({ left: 300, top: 300, angle: 0, padding: 10, cornersize: 10 });
+          img.set({
+            left: 300,
+            top: 300,
+            scaleX: 0.5,
+            scaleY: 0.5,
+            editable: true,
+          });
           fabricCanvas.add(img).setActiveObject(img);
-          fabricCanvas.renderAll();
         });
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -178,12 +171,12 @@ const StepThree = ({ handleNext }) => {
   };
 
   const handleDelete = () => {
-    if (fabricCanvas) {
+    const activeObject = fabricCanvas.getActiveObject();
+    if (activeObject) {
+      fabricCanvas.remove(activeObject);
+    } else {
       fabricCanvas.clear();
-      setBackground("");
-      setText("");
-      setSelectedElement("");
-      setSelectedImage("");
+      drawBackground();
     }
   };
 
@@ -215,63 +208,54 @@ const StepThree = ({ handleNext }) => {
   const downloadQrCode = async () => {
     try {
       setLoading(true);
+      const dataUrl = fabricCanvas.toDataURL({
+        format: "png",
+        quality: 1,
+      });
 
-      if (fabricCanvas) {
-        const dataURL = fabricCanvas.toDataURL({
-          format: "png",
-          quality: 1,
-        });
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+        {
+          file: dataUrl,
+          upload_preset: "za8tsrje",
+        }
+      );
 
-        const response = await axios.post(
-          "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
-          {
-            file: dataURL,
-            upload_preset: "za8tsrje",
-          }
-        );
+      const imageUrl = response.data.secure_url;
+      localStorage.setItem("event_image", imageUrl);
 
-        const imageUrl = response.data.secure_url;
-
-        localStorage.setItem("event_image", imageUrl);
-
-        setLoading(false);
-        handleNext();
-      }
+      setLoading(false);
+      handleNext();
     } catch (error) {
       setLoading(false);
       console.error("Error uploading image:", error);
     }
   };
 
+  useEffect(() => {
+    drawBackground();
+  }, [parsedData]);
+
   return (
     <div className="edit">
       <Center display={"flex"} flexDirection={"column"} width={"100%"}>
         <canvas
           ref={canvasRef}
+          width={""}
           style={{
-            width: "100%",
-            maxHeight: "100vh",
+            margin: "5% auto",
+            width: "90%",
+            height: "80vh",
             border: "1px solid red",
           }}
-        />
+        ></canvas>
       </Center>
-      <Box marginTop={"5%"}>
-        <Button
-          type={"submit"}
-          variant={"defaultButton"}
-          onClick={downloadQrCode}
-        >
-          {loading ? <Spinner /> : "Next"}
-        </Button>
-      </Box>
-
+      <Button type={"submit"} variant={"defaultButton"} onClick={downloadQrCode}>
+        {loading ? <Spinner /> : "Next"}
+      </Button>
       <div className="item">
         {editActions.map((edit) => (
-          <div
-            key={edit.id}
-            className="sub-items"
-            onClick={() => handleAction(edit.id)}
-          >
+          <div key={edit.id} className="sub-items" onClick={() => handleAction(edit.id)}>
             {edit.icon}
             <p>{edit.label}</p>
           </div>
@@ -312,23 +296,23 @@ const StepThree = ({ handleNext }) => {
             />
 
             <Select placeholder="Select font" onChange={handleFontChange}>
-              {popularFonts.map((                font, index) => (
-                  <option key={index} value={font}>
-                    {font}
-                  </option>
-                ))}
+              {popularFonts.map((font, index) => (
+                <option key={index} value={font}>
+                  {font}
+                </option>
+              ))}
             </Select>
 
             <input
-              style={{ background: background }}
               type="color"
               value={background}
               onChange={handleBackgroundChange}
+              style={{ width: "100%" }}
             />
           </ModalBody>
 
           <ModalFooter>
-            <button onClick={handleSubmitAddText}>
+            <button  onClick={handleSubmitAddText}>
               Add
             </button>
           </ModalFooter>
@@ -339,4 +323,3 @@ const StepThree = ({ handleNext }) => {
 };
 
 export { StepThree };
-
