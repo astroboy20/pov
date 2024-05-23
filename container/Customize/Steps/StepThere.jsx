@@ -33,8 +33,7 @@ const StepThree = ({ handleNext }) => {
   const MAX_FILE_SIZE_MB = 5;
   const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
-
-  console.log(selectedImage ,"hey", parsedData?.src)
+  console.log(selectedImage, "hey", parsedData?.src);
 
   useEffect(() => {
     const canvasElement = canvasRef.current;
@@ -54,21 +53,21 @@ const StepThree = ({ handleNext }) => {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas, { passive: true });
 
-    if (selectedImage && typeof selectedImage === 'string') {
-      fabric.Image.fromURL(selectedImage, (img) => {
-        img.set({ left: 0, top: 0 });
-        fabricCanvasInstance?.setBackgroundImage(img, fabricCanvasInstance.renderAll.bind(fabricCanvasInstance));
-      });
-     
-    }
-   
-    
-
     return () => {
       fabricCanvasInstance.dispose();
       window.removeEventListener("resize", resizeCanvas);
     };
-  }, [selectedImage]);
+  }, []);
+
+  useEffect(() => {
+    if (fabricCanvas && selectedImage && typeof selectedImage === 'string') {
+      console.log('Setting background image:', selectedImage);
+      fabric.Image.fromURL(selectedImage, (img) => {
+        img.set({ left: 0, top: 0 });
+        fabricCanvas.setBackgroundImage(img, fabricCanvas.renderAll.bind(fabricCanvas));
+      });
+    }
+  }, [fabricCanvas, selectedImage]);
 
   const handleAddText = () => {
     setIsAddTextModalOpen(true);
@@ -312,11 +311,11 @@ const StepThree = ({ handleNext }) => {
             />
 
             <Select placeholder="Select font" onChange={handleFontChange}>
-              {popularFonts.map((                font, index) => (
-                  <option key={index} value={font}>
-                    {font}
-                  </option>
-                ))}
+              {popularFonts.map((font, index) => (
+                <option key={index} value={font}>
+                  {font}
+                </option>
+              ))}
             </Select>
 
             <input
@@ -339,4 +338,3 @@ const StepThree = ({ handleNext }) => {
 };
 
 export { StepThree };
-
