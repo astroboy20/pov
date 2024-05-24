@@ -5,11 +5,13 @@ import { Customize } from "@/container/Home/Customize/Customize";
 import { Hero } from "@/container/Home/Hero";
 import { FAQ } from "./FAQs";
 import { Memories } from "./Memories/Memorises";
+// import { Works } from "./Works";
 
 const HomeContainer = () => {
   const controlsHero = useAnimation();
   const controlsCustomize = useAnimation();
   const controlsMemories = useAnimation();
+  // const controlsWorks = useAnimation();
   const controlsFAQ = useAnimation();
 
   useEffect(() => {
@@ -19,6 +21,7 @@ const HomeContainer = () => {
       const heroOffset = document.getElementById("hero").offsetTop;
       const customizeOffset = document.getElementById("customize").offsetTop;
       const memoriesOffset = document.getElementById("memories").offsetTop;
+      // const worksOffset = document.getElementById("works").offsetTop;
       const faqOffset = document.getElementById("faq").offsetTop;
 
       if (scrollPosition >= heroOffset - windowHeight / 2) {
@@ -30,6 +33,9 @@ const HomeContainer = () => {
       if (scrollPosition >= memoriesOffset - windowHeight / 2) {
         controlsMemories.start({ opacity: 1, y: 0 });
       }
+      // if (scrollPosition >= worksOffset - windowHeight / 2) {
+      //   controlsWorks.start({ opacity: 1, y: 0 });
+      // }
       if (scrollPosition >= faqOffset - windowHeight / 2) {
         controlsFAQ.start({ opacity: 1, y: 0 });
       }
@@ -41,7 +47,7 @@ const HomeContainer = () => {
 
   return (
     <>
-      <motion.div id="hero">
+      <motion.div id="hero" animate={controlsHero} initial={{ opacity: 0, y: 50 }}>
         <Hero />
       </motion.div>
       <motion.div id="customize" animate={controlsCustomize} initial={{ opacity: 0, y: 50 }}>
@@ -50,6 +56,9 @@ const HomeContainer = () => {
       <motion.div id="memories" animate={controlsMemories} initial={{ opacity: 0, y: 50 }}>
         <Memories />
       </motion.div>
+      {/* <motion.div id="works" animate={controlsWorks} initial={{ opacity: 0, y: 50 }}>
+        <Works />
+      </motion.div> */}
       <motion.div id="faq" animate={controlsFAQ} initial={{ opacity: 0, y: 50 }}>
         <FAQ />
       </motion.div>

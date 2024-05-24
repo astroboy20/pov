@@ -19,7 +19,7 @@ export const AuthContainer = styled.div`
     font-size: 30px;
     font-weight: 700;
     display:flex ;
-    gap:1px;
+    /* gap:1px; */
     align-items:flex-end ;
   }
   .header p{
@@ -30,7 +30,8 @@ export const AuthContainer = styled.div`
     /* width:355px ; */
     /* background-size:cover ; */
     /* background-repeat:no-repeat ; */
-    height:400px ;
+    height:fit-content ;
+    width:100% ;
     margin:auto ;
     /* background-position: center; */
   }

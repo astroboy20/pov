@@ -150,6 +150,7 @@ export const CustomizeStyle = styled.div`
   .final {
     display: flex;
     gap: 20px;
+    align-items: center;
     color: black;
     background: #f2f3f4;
     box-shadow: 2px 2px 4px 0px #0000001f;
@@ -164,7 +165,7 @@ export const CustomizeStyle = styled.div`
 
   .final-text h1 {
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 800;
   }
 
   .final-text p {
@@ -172,7 +173,7 @@ export const CustomizeStyle = styled.div`
     font-weight: 400;
   }
   .final-text span {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 800;
     color: #1d1465;
   }

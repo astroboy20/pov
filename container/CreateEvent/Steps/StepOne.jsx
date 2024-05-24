@@ -242,7 +242,6 @@ const StepOne = ({
           onChange={handleChange}
           name="revealTime"
           size={"lg"}
-          placeholder="cliq reveal time? "
         >
           <option value="" disabled hidden>
             cliq reveal time?{" "}

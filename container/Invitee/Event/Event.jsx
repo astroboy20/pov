@@ -61,7 +61,6 @@ const Event = () => {
 
     
     <EventStyle background={events?.event_thumbnail}>
-      <div className="blur"></div>
 
       <Box className="body">
         <div className="text">

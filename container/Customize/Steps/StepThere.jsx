@@ -27,6 +27,7 @@ const StepThree = ({ handleNext }) => {
   const [isAddTextModalOpen, setIsAddTextModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(parsedData?.src || "");
   const [selectedElement, setSelectedElement] = useState("");
+  const [color, setColor] = useState("black")
   const [font, setFont] = useState("");
   const [background, setBackground] = useState("");
   const [loading, setLoading] = useState(false);
@@ -82,8 +83,10 @@ const StepThree = ({ handleNext }) => {
         left: 100,
         top: 100,
         fontFamily: font,
-        fill: background,
-        width: 200,
+        fontSize:20,
+        fill: color,
+        backgroundColor:background,
+        width: 300,
         scalable: true,
         uniformScaling: true,
       });
@@ -175,6 +178,9 @@ const StepThree = ({ handleNext }) => {
     setFont(e.target.value);
   };
 
+  const handleColorChange = (e) => {
+    setColor(e.target.value);
+  };
   const handleBackgroundChange = (e) => {
     setBackground(e.target.value);
   };
@@ -265,6 +271,18 @@ const StepThree = ({ handleNext }) => {
     }
   };
 
+   useEffect(() => {
+    if (fabricCanvas) {
+      fabricCanvas.on("object:scaling", handleObjectScaling);
+    }
+
+    return () => {
+      if (fabricCanvas) {
+        fabricCanvas.off("object:scaling", handleObjectScaling);
+      }
+    };
+  }, [fabricCanvas]);
+
   return (
     <div className="edit">
       <Center display={"flex"} flexDirection={"column"} width={"100%"}>
@@ -273,7 +291,7 @@ const StepThree = ({ handleNext }) => {
           style={{
             width: "100%",
             maxHeight: "100vh",
-            border: "1px solid red",
+            // border: "1px solid red",
           }}
         />
       </Center>
@@ -340,13 +358,26 @@ const StepThree = ({ handleNext }) => {
                 </option>
               ))}
             </Select>
-
-            <input
+            <div style={{display:"flex", gap:"20px", alignItems:"center"}}>
+            <label>Colour: </label> <input
               style={{ background: background }}
+              type="color"
+              value={color}
+              onChange={handleColorChange}
+            />
+            </div>
+
+            <div style={{display:"flex", gap:"20px", alignItems:"center"}}>
+            <label>Background: </label> <input
+              style={{ color: color }}
               type="color"
               value={background}
               onChange={handleBackgroundChange}
             />
+            </div>
+
+            
+          
           </ModalBody>
 
           <ModalFooter>

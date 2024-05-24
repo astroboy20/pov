@@ -36,9 +36,9 @@ const Auth = ({ event }) => {
           {" "}
           <Image
              width={356}
-             height={300}
+             height={3000}
             alt="welcome-image"
-            objectFit="contain"
+            objectFit="cover"
             className="image"
             src={event?.event_thumbnail}
           />

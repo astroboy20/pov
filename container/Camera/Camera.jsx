@@ -1,11 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { BackdropOverlay, Button, Container, Span, Video } from "./Camera.style";
-import { MdOutlineCamera, MdOutlineFlipCameraAndroid } from "react-icons/md";
+import {
+  BackdropOverlay,
+  Buttons,
+  Container,
+  Span,
+  Video,
+} from "./Camera.style";
+import { MdOutlineFlipCameraAndroid } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { ShutterIcon } from "@/assets";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  useDisclosure,
+  Input,
+  Spinner,
+} from "@chakra-ui/react";
+import { Button } from "@/components/Button";
 
 const Camera = ({ events }) => {
   const FACING_MODE_USER = "user";
@@ -13,11 +28,14 @@ const Camera = ({ events }) => {
   const [capturedImages, setCapturedImages] = useState([]);
   const [photosTaken, setPhotosTaken] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [inviteeName, setInviteeName] = useState("");
   const videoRef = useRef(null);
   const audioRef = useRef(null);
   const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
   const router = useRouter();
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   const switchCamera = React.useCallback(() => {
     setFacingMode((prevState) =>
@@ -27,15 +45,6 @@ const Camera = ({ events }) => {
     );
   }, []);
 
-  console.log(facingMode);
-
-  // const switchCamera = () => {
-  //   setIsLoading(true);
-  //   const newFacingMode = facingMode === "environment" ? "user" : "environment";
-  //   setFacingMode(newFacingMode);
-  //   startCamera().finally(() => setIsLoading(false));
-  // };
-
   useEffect(() => {
     startCamera();
   }, [facingMode]);
@@ -43,7 +52,7 @@ const Camera = ({ events }) => {
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: { exact: facingMode } },
+        video: { facingMode },
       });
       videoRef.current.srcObject = stream;
     } catch (error) {
@@ -72,45 +81,6 @@ const Camera = ({ events }) => {
     }
   };
 
-  // const takePictureFallback = async () => {
-  //   try {
-  //     if (photosTaken < events.photosPerPerson) {
-  //       const canvas = document.createElement("canvas");
-  //       const video = videoRef.current;
-  //       canvas.width = video.videoWidth;
-  //       canvas.height = video.videoHeight;
-  //       canvas.getContext("2d").drawImage(video, 0, 0);
-
-  //       canvas.toBlob(async (blob) => {
-  //         audioRef.current.play();
-  //         const formData = new FormData();
-  //         formData.append("image", blob);
-
-  //         const config = {
-  //           headers: {
-  //             "Content-Type": "multipart/form-data",
-  //           },
-  //         };
-
-  //         const response = await axios.post(
-  //           `https://api-cliqpod.koyeb.app/camera/${eventId}`,
-  //           formData,
-  //           config
-  //         );
-
-  //         const imageUrl = response.data;
-  //         setCapturedImages([...capturedImages, imageUrl]);
-  //         setPhotosTaken(photosTaken + 1);
-  //       }, "image/jpeg");
-  //     } else {
-  //       toast.warning("Maximum number of photos reached.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error taking picture (fallback):", error);
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const takePictureFallback = async () => {
     try {
       if (photosTaken < events.photosPerPerson) {
@@ -120,10 +90,8 @@ const Camera = ({ events }) => {
         canvas.height = video.videoHeight;
         const context = canvas.getContext("2d");
 
-        // Draw the video stream onto the canvas
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        // Apply the selected filter (if any) to the canvas
         if (events.event_image) {
           const filterImage = new Image();
           filterImage.crossOrigin = "anonymous";
@@ -138,27 +106,20 @@ const Camera = ({ events }) => {
           });
         }
 
-        // Convert the canvas content to a Blob
         canvas.toBlob(async (blob) => {
           audioRef.current.play();
           const formData = new FormData();
-          formData.append("image", blob);
-
-          const config = {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          };
+          formData.append("file", blob);
+          formData.append("upload_preset", "za8tsrje");
 
           const response = await axios.post(
-            `https://api-cliqpod.koyeb.app/camera/${eventId}`,
-            formData,
-            config
+            "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+            formData
           );
 
-          const imageUrl = response.data;
-          setCapturedImages([...capturedImages, imageUrl]);
-          setPhotosTaken(photosTaken + 1);
+          const imageUrl = response.data.secure_url;
+          setCapturedImages((prevImages) => [...prevImages, imageUrl]);
+          setPhotosTaken((prevCount) => prevCount + 1);
         }, "image/jpeg");
       } else {
         toast.warning("Maximum number of photos reached.");
@@ -169,41 +130,6 @@ const Camera = ({ events }) => {
     }
   };
 
-  // const takePicture = async () => {
-  //   try {
-  //     if (typeof ImageCapture !== "undefined") {
-  //       const stream = videoRef.current.srcObject;
-  //       const tracks = stream.getVideoTracks();
-  //       const imageCapture = new ImageCapture(tracks[0]);
-  //       const blob = await imageCapture.takePhoto();
-  //       audioRef.current.play();
-  //       const formData = new FormData();
-  //       formData.append("image", blob);
-
-  //       const config = {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       };
-
-  //       const response = await axios.post(
-  //         `https://api-cliqpod.koyeb.app/camera/${eventId}`,
-  //         formData,
-  //         config
-  //       );
-
-  //       const imageUrl = response.data;
-  //       setCapturedImages([...capturedImages, imageUrl]);
-  //       setPhotosTaken(photosTaken + 1);
-  //     } else {
-  //       takePictureFallback(); // Fallback for devices without ImageCapture support
-  //     }
-  //   } catch (error) {
-  //     console.error("Error taking picture:", error);
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const takePicture = async () => {
     try {
       if (typeof ImageCapture !== "undefined") {
@@ -213,54 +139,18 @@ const Camera = ({ events }) => {
         const blob = await imageCapture.takePhoto();
         audioRef.current.play();
 
-        // Create a new Image object with the selected filter as a background
-        const image = new Image();
-        image.crossOrigin = "anonymous"; // Set the crossorigin attribute
-        image.src = events?.event_image;
+        const formData = new FormData();
+        formData.append("file", blob);
+        formData.append("upload_preset", "za8tsrje");
 
-        // Replace with a default filter image URL
-        image.onload = () => {
-          const canvas = document.createElement("canvas");
-          const context = canvas.getContext("2d");
-          canvas.width = videoRef.current.videoWidth;
-          canvas.height = videoRef.current.videoHeight;
+        const response = await axios.post(
+          "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+          formData
+        );
 
-          // Draw the image from the camera first
-          context.drawImage(
-            videoRef.current,
-            0,
-            0,
-            canvas.width,
-            canvas.height
-          );
-
-          // Draw the filter image on top
-          context.globalCompositeOperation = "source-over";
-          context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-          // Convert the canvas to a Blob
-          canvas.toBlob(async (blobWithFilter) => {
-            const formData = new FormData();
-            formData.append("image", blobWithFilter);
-
-            const config = {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            };
-
-            // Send the image with the filter to the server
-            const response = await axios.post(
-              `https://api-cliqpod.koyeb.app/camera/${eventId}`,
-              formData,
-              config
-            );
-
-            const imageUrl = response.data;
-            setCapturedImages([...capturedImages, imageUrl]);
-            setPhotosTaken(photosTaken + 1);
-          }, "image/jpeg");
-        };
+        const imageUrl = response.data.secure_url;
+        setCapturedImages((prevImages) => [...prevImages, imageUrl]);
+        setPhotosTaken((prevCount) => prevCount + 1);
       } else {
         takePictureFallback(); // Fallback for devices without ImageCapture support
       }
@@ -272,35 +162,86 @@ const Camera = ({ events }) => {
 
   useEffect(() => {
     if (photosTaken === events.photosPerPerson) {
-      router.push("/");
+      onOpen();
     }
   }, [photosTaken]);
 
-  return (
-   <Container>
-      {/* Render the backdrop overlay */}
-      <BackdropOverlay backdropUrl={events?.event_image} />
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true);
+      const payload = {
+        inviteeName,
+        pictures: capturedImages,
+        eventId,
+      };
+      await axios.post(
+        `https://api-cliqpod.koyeb.app/camera/${eventId}`,
+        payload
+      );
+      toast.success("Images submitted successfully!");
+      router.push("/");
+    } catch (error) {
+      console.error("Error submitting images:", error);
+      toast.error("Failed to submit images.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-      {/* Your existing camera preview and capture button */}
-      <>
-        <Video ref={videoRef} autoPlay playsInline></Video>
-        <Button className="button">
-          {photosTaken === events.photosPerPerson ? (
-            "done"
-          ) : (
-            <span onClick={takePicture}>
-              <ShutterIcon />
-            </span>
-          )}
-          <MdOutlineFlipCameraAndroid
-            fontSize={"30px"}
-            color="#fff"
-            onClick={switchCamera}
-          />
-        </Button>
-        <audio ref={audioRef} src={"./sound/sound.mp3"} preload="auto" />
-        <Span style={{ marginTop: "10px" }}>{photosTaken}/{events?.photosPerPerson}</Span>
-      </>
+  return (
+    <Container>
+      <BackdropOverlay backdropUrl={events?.event_image} />
+      <Video ref={videoRef} autoPlay playsInline></Video>
+      <Buttons className="button">
+        {photosTaken === events.photosPerPerson ? (
+          "done"
+        ) : (
+          <span onClick={takePicture}>
+            <ShutterIcon />
+          </span>
+        )}
+        <MdOutlineFlipCameraAndroid
+          fontSize={"30px"}
+          color="#fff"
+          onClick={switchCamera}
+        />
+      </Buttons>
+      <audio ref={audioRef} src={"./sound/sound.mp3"} preload="auto" />
+      <Span style={{ marginTop: "10px" }}>
+        {photosTaken}/{events?.photosPerPerson}
+      </Span>
+
+      {photosTaken === events.photosPerPerson && (
+        <Modal isOpen={isOpen}>
+          <ModalOverlay />
+          <ModalContent
+            display={"flex"}
+            flexDirection={"column"}
+            gap={"20px"}
+            padding={"6%"}
+            width={"90%"}
+          >
+            <div>
+              <h2>Invitee Name</h2>
+              <Input
+                size="lg"
+                type="text"
+                value={inviteeName}
+                onChange={(e) => setInviteeName(e.target.value)}
+              />
+            </div>
+
+            <Button
+              type={"submit"}
+              variant={"defaultButton"}
+              onClick={handleSubmit}
+              disabled={isLoading}
+            >
+              {isLoading ? <Spinner /> : "Submit"}
+            </Button>
+          </ModalContent>
+        </Modal>
+      )}
     </Container>
   );
 };

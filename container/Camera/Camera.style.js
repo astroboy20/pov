@@ -25,7 +25,7 @@ export const Header = styled.div`
   justify-content: space-between;
 `;
 
-export const Button = styled.div`
+export const Buttons = styled.div`
   display: flex;
   gap: 10px;
   justify-content: center;

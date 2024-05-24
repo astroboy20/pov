@@ -31,6 +31,7 @@ const Memories = () => {
           </span>
         </div>
       </div>
+      
     </MemoriesContainer>
   );
 };

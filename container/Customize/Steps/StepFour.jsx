@@ -71,18 +71,18 @@ const StepFour = () => {
     <div className="final">
       {image && <Image src={image} width={90} height={160} alt="image" />}
       <div className="final-text">
-        <p>{parsedInfo?.filterName}</p>
+        <h1>{parsedInfo?.filterName}</h1>
         <p>{parsedInfo?.info}</p>
-        <Text color={"#1D1465"} fontSize={"14px"} fontWeight={"800"}>
-          {priceData?.price?.price}
-        </Text>
+        <span >
+          #{priceData?.price?.price}
+        </span>
         {/* <span>#{parsedData?.expectedGuests}</span> */}
         <Box
           onClick={handleSubmit}
           width="fit-content"
           color={"white"}
           background={"#1D1465"}
-          padding={"3px 24px"}
+          padding={"8px 15px"}
           fontSize={"12px"}
           borderRadius={"4px"}
         >
