@@ -7,6 +7,7 @@ import { Album } from "@/container/Album";
 import { ProtectedRoute } from "@/container/ProtectedRoutes/ProtectedRoute";
 import useFetchItems from "@/hooks/useFetchItems";
 import { EventSpinner } from "@/components/Spinner/Spinner";
+import { BottomNav } from "@/components/BottomNav";
 
 const EventID = ({ searchParams }) => {
   console.log("event:", searchParams);
@@ -37,10 +38,12 @@ const EventID = ({ searchParams }) => {
       setEventData(data);
     }
   }, [data]);
+  console.log(eventData)
   if (isLoading) return <EventSpinner />;
   return (
     <ProtectedRoute>
       <Album eventData={eventData} />
+      <BottomNav/>
     </ProtectedRoute>
   );
 };

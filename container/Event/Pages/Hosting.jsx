@@ -101,6 +101,11 @@ const Hosting = ({ events, deleteEvent }) => {
     return formattedDate;
   };
 
+  const handleId =(id)=>{
+    return typeof window !== "undefined" && localStorage.setItem("id-route", id)
+      }
+    
+
   return (
     <>
       <>
@@ -120,7 +125,7 @@ const Hosting = ({ events, deleteEvent }) => {
                       height: "auto",
                     }}
                   />
-                  <div className="text">
+                  <div className="text" onClick={()=>handleId(event?._id)}>
                     <Link
                       style={{ textDecoration: "none" }}
                       href={`/album/${event?._id}`}

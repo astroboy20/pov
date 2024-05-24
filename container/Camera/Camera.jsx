@@ -92,7 +92,7 @@ const Camera = ({ events }) => {
 
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        if (events.event_image) {
+        if (events?.event_image) {
           const filterImage = new Image();
           filterImage.crossOrigin = "anonymous";
           filterImage.src = events.event_image;
@@ -139,18 +139,45 @@ const Camera = ({ events }) => {
         const blob = await imageCapture.takePhoto();
         audioRef.current.play();
 
-        const formData = new FormData();
-        formData.append("file", blob);
-        formData.append("upload_preset", "za8tsrje");
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(blob);
+        await img.decode();
 
-        const response = await axios.post(
-          "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
-          formData
-        );
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        canvas.width = img.width;
+        canvas.height = img.height;
 
-        const imageUrl = response.data.secure_url;
-        setCapturedImages((prevImages) => [...prevImages, imageUrl]);
-        setPhotosTaken((prevCount) => prevCount + 1);
+        context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        if (events?.event_image) {
+          const filterImage = new Image();
+          filterImage.crossOrigin = "anonymous";
+          filterImage.src = events.event_image;
+          await new Promise((resolve, reject) => {
+            filterImage.onload = () => {
+              context.globalCompositeOperation = "source-over";
+              context.drawImage(filterImage, 0, 0, canvas.width, canvas.height);
+              resolve();
+            };
+            filterImage.onerror = reject;
+          });
+        }
+
+        canvas.toBlob(async (finalBlob) => {
+          const formData = new FormData();
+          formData.append("file", finalBlob);
+          formData.append("upload_preset", "za8tsrje");
+
+          const response = await axios.post(
+            "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+            formData
+          );
+
+          const imageUrl = response.data.secure_url;
+          setCapturedImages((prevImages) => [...prevImages, imageUrl]);
+          setPhotosTaken((prevCount) => prevCount + 1);
+        }, "image/jpeg");
       } else {
         takePictureFallback(); // Fallback for devices without ImageCapture support
       }
@@ -171,14 +198,14 @@ const Camera = ({ events }) => {
       setIsLoading(true);
       const payload = {
         inviteeName,
-        pictures: capturedImages,
+        image: capturedImages,
         eventId,
       };
       await axios.post(
         `https://api-cliqpod.koyeb.app/camera/${eventId}`,
         payload
       );
-      toast.success("Images submitted successfully!");
+      toast.success("Images saved!");
       router.push("/");
     } catch (error) {
       console.error("Error submitting images:", error);

@@ -11,6 +11,7 @@ import { AddIcon } from "@/assets";
 
 const BottomNav = () => {
   const router = useRouter();
+  const id = typeof window !== "undefined" && localStorage.getItem("id-route");
 
   return (
     <>
@@ -48,9 +49,11 @@ const BottomNav = () => {
         )}
 
         <Link
-          href="/album"
+          href={`/album/${id}`}
           className={
-            router.pathname === "/album" ? `${styled.active}` : `${styled.link}`
+            router.pathname === `/album/${id}`
+              ? `${styled.active}`
+              : `${styled.link}`
           }
         >
           <FaInstagram size={"25px"} />

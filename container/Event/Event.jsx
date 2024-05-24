@@ -31,6 +31,7 @@ const Event = () => {
     router.push("/dashboard");
   };
 
+
   const deleteEvent = async (eventId) => {
     try {
       await axios.post(
