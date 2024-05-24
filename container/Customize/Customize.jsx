@@ -5,21 +5,29 @@ import { StepOne } from "./Steps/StepOne";
 import { StepTwo } from "./Steps/StepTwo";
 import { StepThree } from "./Steps/StepThere";
 import { StepFour } from "./Steps/StepFour";
+import { useRouter } from "next/router";
 
 const Customize = () => {
   const [currentStep, setCurrentStep] = useState(1);
+ const router =  useRouter()
 
   const handleNext = () => {
     setCurrentStep((prev) => prev + 1);
+    window.scrollTo(0,0)
   };
   const handlePrev = () => {
-    setCurrentStep((prev) => prev - 1);
+    if (currentStep > 1) {
+      setCurrentStep((prev) => prev - 1);
+    } else {
+      router.push("/create-event");
+    }
+    window.scrollTo(0,0)
   };
 
   return (
     <CustomizeStyle>
       <div className="header">
-      <span onClick={currentStep > 1 ? handlePrev : null}>
+      <span onClick={handlePrev}>
           <BlueBackIcon />
         </span>
         <h1>Customize</h1>

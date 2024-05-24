@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, Spinner, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router"; // Correct import for useRouter
 import useFetchItems from "@/hooks/useFetchItems";
 import { toast } from "react-toastify";
 
@@ -14,16 +14,18 @@ const StepFour = () => {
   const accessToken = user ? user.token : "";
   const data = typeof window !== "undefined" && localStorage.getItem("data");
   const parsedData = data ? JSON.parse(data) : null;
-  console.log(parsedData);
   const imageInfo =
     typeof window !== "undefined" && localStorage.getItem("image");
   const parsedInfo = imageInfo ? JSON.parse(imageInfo) : null;
-  console.log(parsedInfo);
   const image =
     typeof window !== "undefined" && localStorage.getItem("event_image");
 
   const mergedData = { ...parsedData, image };
-  console.log(mergedData);
+
+  const { data: priceData } = useFetchItems({
+    url: `https://api-cliqpod.koyeb.app/price/${parsedData?.expectedGuests}`,
+    token: accessToken,
+  });
 
   const handleSubmit = async () => {
     try {
@@ -47,36 +49,28 @@ const StepFour = () => {
         if (userData?.authorization_url) {
           router.push(userData.authorization_url);
           toast.success("Please proceed to payment!");
-          setLoading(false);
         } else {
           toast.success("Event created successfully!");
           router.push("/success");
-          setLoading(false);
         }
       }
     } catch (error) {
-      setLoading(false);
       console.error("Error occurred:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const { data: priceData } = useFetchItems({
-    url: `https://api-cliqpod.koyeb.app/price/${parsedData?.expectedGuests}`,
-    token: accessToken,
-  });
-
-  // console.log(priceData?.price.price);
+  const price = priceData?.price?.price;
+  const displayPrice = price === "free" ? "free" : `#${price}`;
 
   return (
     <div className="final">
-      {image && <Image src={image} width={90} height={160} alt="image" />}
+      {image && <Image src={image} width={90} height={160} alt="Event Image" />}
       <div className="final-text">
-        <h1>{parsedInfo?.filterName}</h1>
+        <h1>{parsedData?.eventName}</h1>
         <p>{parsedInfo?.info}</p>
-        <span >
-          #{priceData?.price?.price}
-        </span>
-        {/* <span>#{parsedData?.expectedGuests}</span> */}
+        <span>{displayPrice}</span>
         <Box
           onClick={handleSubmit}
           width="fit-content"
@@ -86,7 +80,7 @@ const StepFour = () => {
           fontSize={"12px"}
           borderRadius={"4px"}
         >
-          Pay now
+          {loading ? <Spinner/> : "Pay now"}
         </Box>
       </div>
     </div>

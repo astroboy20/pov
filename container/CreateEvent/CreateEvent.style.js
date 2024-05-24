@@ -44,6 +44,8 @@ export const GalleryStyle = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    width:100% ;
+    height:100% ;
   }
   .image-input {
     /* background-color: rgba(176, 234, 246, 0.65); */

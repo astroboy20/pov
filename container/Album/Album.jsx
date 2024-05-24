@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { Select } from "@chakra-ui/select";
 import Image from "next/image";
 import { GalleryModal, Modal } from "@/components/Modal";
+import { BlueBackIcon } from "@/assets";
 
 const Album = ({ eventData }) => {
   const [showModal, setShowModal] = useState(false);
@@ -20,21 +21,19 @@ const Album = ({ eventData }) => {
   const router = useRouter();
 
   const handleRoute = () => {
-    router.push("/gallery");
+    router.push("/event");
   };
 
   return (
     <AlbumContainer>
       <div className="header">
-        <FaArrowCircleLeft
-          onClick={handleRoute}
-          style={{ color: "#000" }}
-          fontSize={30}
-        />{" "}
-        <CustomText weight={"500"} type={"Htype"} variant={"h1-c"}>
-          ALBUM
-        </CustomText>
+        <span onClick={handleRoute}>
+          <BlueBackIcon />
+        </span>
+        <h1> ALBUM</h1>
+        <span style={{ color: "white" }}>.</span>
       </div>
+
       {/* <div className="input">
         <div className="left">
           Filter effect
@@ -57,7 +56,6 @@ const Album = ({ eventData }) => {
                 {eventData[0].message}
                 {/* {eventData[0].id} */}
                 {/* {eventData[0].photos} */}
-        
               </CustomText>
 
               <div className="image">
@@ -72,7 +70,6 @@ const Album = ({ eventData }) => {
                         className="image-image"
                         // onClick={() => handleImageClick(event.photos)}
                         objectFit="cover"
-                        
                       />
                     </div>
                   </>

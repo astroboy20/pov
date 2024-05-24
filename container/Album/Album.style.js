@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const AlbumContainer = styled.div`
-  padding: 2%;
+  padding: 6%;
   height: 100vh;
 
   width: 100%;
@@ -11,7 +11,7 @@ export const AlbumContainer = styled.div`
   .header {
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: space-between;
   }
   .input {
     display: flex;
@@ -65,12 +65,12 @@ export const AlbumContainer = styled.div`
     justify-content: center;
     flex-wrap: wrap;
     gap: 5px;
-    width:100% ;
+    width: 100%;
   }
   .image-image {
     border-radius: 4px;
-    width:122px ;
-    height:160px ;
+    width: 122px;
+    height: 160px;
   }
   .selected-image {
     border-radius: 10px;

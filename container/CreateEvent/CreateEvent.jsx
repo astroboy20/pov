@@ -29,11 +29,13 @@ const CreateEvent = () => {
     setStep((prevStep) => prevStep + 1);
     typeof window !== "undefined" &&
       localStorage.setItem("data", JSON.stringify(eventData));
+      window.scrollTo(0, 0);
   };
 
   const handlePrev = () => {
     setStep((prevStep) => prevStep - 1);
-    setData ("")
+    // setData ("")
+    window.scrollTo(0, 0);
   };
 
   const { data } = useFetchItems({
