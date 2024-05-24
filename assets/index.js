@@ -735,8 +735,8 @@ export const ShutterIcon = () => (
 
 export const ChooseIcon = () => (
   <svg
-    width="80"
-    height="80"
+  width="50px"
+  height="50px"
     viewBox="0 0 80 80"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -752,8 +752,8 @@ export const ChooseIcon = () => (
 
 export const SetupIcon = () => (
   <svg
-    width="80"
-    height="80"
+    width="50px"
+    height="50px"
     viewBox="0 0 80 80"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -785,8 +785,8 @@ export const SetupIcon = () => (
 
 export const DigitalIcon = () => (
   <svg
-    width="80"
-    height="80"
+  width="50px"
+  height="50px"
     viewBox="0 0 80 80"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -802,8 +802,8 @@ export const DigitalIcon = () => (
 
 export const QRIcon = () => (
   <svg
-    width="80"
-    height="80"
+  width="50px"
+  height="50px"
     viewBox="0 0 80 80"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -831,8 +831,8 @@ export const QRIcon = () => (
 
 export const StartIcon = () => (
   <svg
-    width="80"
-    height="80"
+  width="50px"
+  height="50px"
     viewBox="0 0 80 80"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -854,8 +854,8 @@ export const StartIcon = () => (
 
 export const NextArrowIcon = () => (
   <svg
-    width="168"
-    height="35"
+    width="150px"
+    height="30px"
     viewBox="0 0 168 35"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -881,8 +881,8 @@ export const NextArrowIcon = () => (
 
 export const NextIcon = () => (
   <svg
-    width="112"
-    height="57"
+  width="150px"
+  height="30px"
     viewBox="0 0 112 57"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
