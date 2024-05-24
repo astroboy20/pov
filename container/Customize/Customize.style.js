@@ -6,6 +6,7 @@ export const CustomizeStyle = styled.div`
   gap: 20px;
   padding: 6% 4%;
   overflow: scroll;
+  height:130dvh ;
 
   .header {
     display: flex;
@@ -60,6 +61,8 @@ export const CustomizeStyle = styled.div`
     text-decoration:underline ;
     align-items:center ;
     background-color:#f9eac2 ;
+    padding:5%;
+    text-align:center;
   }
   .show-more .image {
     display: flex;

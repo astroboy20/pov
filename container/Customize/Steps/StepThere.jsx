@@ -17,6 +17,7 @@ import axios from "axios";
 import { Spinner } from "@/components/Spinner";
 import { Button } from "@/components/Button";
 import { fabric } from "fabric";
+import { toast } from "react-toastify";
 
 const StepThree = ({ handleNext }) => {
   const imageInfo = typeof window !== "undefined" && localStorage.getItem("image");
@@ -33,11 +34,11 @@ const StepThree = ({ handleNext }) => {
   const MAX_FILE_SIZE_MB = 5;
   const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
-  console.log(selectedImage, "hey", parsedData?.src);
-
   useEffect(() => {
     const canvasElement = canvasRef.current;
-    const fabricCanvasInstance = new fabric.Canvas(canvasElement);
+    const fabricCanvasInstance = new fabric.Canvas(canvasElement, {
+      preserveObjectStacking: true,
+    });
     setFabricCanvas(fabricCanvasInstance);
 
     const resizeCanvas = () => {
@@ -47,7 +48,6 @@ const StepThree = ({ handleNext }) => {
       const canvasHeight = 1920 * scaleFactor;
       fabricCanvasInstance.setDimensions({ width: canvasWidth, height: canvasHeight });
       fabricCanvasInstance.setZoom(scaleFactor);
-      console.log(canvasWidth, "x", canvasHeight);
     };
 
     resizeCanvas();
@@ -60,12 +60,11 @@ const StepThree = ({ handleNext }) => {
   }, []);
 
   useEffect(() => {
-    if (fabricCanvas && selectedImage && typeof selectedImage === 'string') {
-      console.log('Setting background image:', selectedImage);
+    if (fabricCanvas && selectedImage && typeof selectedImage === "string") {
       fabric.Image.fromURL(selectedImage, (img) => {
-        img.set({ left: 0, top: 0 });
+        img.set({ left: 0, top: 0, selectable: false, evented: false });
         fabricCanvas.setBackgroundImage(img, fabricCanvas.renderAll.bind(fabricCanvas));
-      });
+      }, { crossOrigin: "anonymous" });
     }
   }, [fabricCanvas, selectedImage]);
 
@@ -85,6 +84,8 @@ const StepThree = ({ handleNext }) => {
         fontFamily: font,
         fill: background,
         width: 200,
+        scalable: true,
+        uniformScaling: true,
       });
       fabricCanvas.add(textbox).setActiveObject(textbox);
       fabricCanvas.renderAll();
@@ -112,13 +113,14 @@ const StepThree = ({ handleNext }) => {
           imageURL
         );
         const image = imageResponse.data.secure_url;
-        setSelectedImage(image);
+        setSelectedElement(image);
 
         fabric.Image.fromURL(image, (img) => {
           img.set({ left: 150, top: 150, angle: 0, padding: 10, cornersize: 10 });
+          img.scaleToWidth(fabricCanvas.width / 2);
           fabricCanvas.add(img).setActiveObject(img);
           fabricCanvas.renderAll();
-        });
+        }, { crossOrigin: "anonymous" });
       } catch (error) {
         console.error("Error uploading image:", error);
       }
@@ -149,9 +151,10 @@ const StepThree = ({ handleNext }) => {
 
         fabric.Image.fromURL(image, (img) => {
           img.set({ left: 300, top: 300, angle: 0, padding: 10, cornersize: 10 });
+          img.scaleToWidth(fabricCanvas.width / 2);
           fabricCanvas.add(img).setActiveObject(img);
           fabricCanvas.renderAll();
-        });
+        }, { crossOrigin: "anonymous" });
       } catch (error) {
         console.error("Error uploading image:", error);
       }
@@ -178,11 +181,14 @@ const StepThree = ({ handleNext }) => {
 
   const handleDelete = () => {
     if (fabricCanvas) {
-      fabricCanvas.clear();
+      fabricCanvas.getObjects().forEach((obj) => {
+        if (obj !== fabricCanvas.backgroundImage) {
+          fabricCanvas.remove(obj);
+        }
+      });
       setBackground("");
       setText("");
       setSelectedElement("");
-      setSelectedImage("");
     }
   };
 
@@ -239,6 +245,23 @@ const StepThree = ({ handleNext }) => {
     } catch (error) {
       setLoading(false);
       console.error("Error uploading image:", error);
+    }
+  };
+
+  const handleObjectScaling = (e) => {
+    const obj = e.target;
+    if (
+      obj.left < 0 ||
+      obj.top < 0 ||
+      obj.left + obj.getScaledWidth() > fabricCanvas.width ||
+      obj.top + obj.getScaledHeight() > fabricCanvas.height
+    ) {
+      if (!obj.outOfBounds) {
+        toast.warning("Object is out of canvas bounds.");
+        obj.outOfBounds = true;
+      }
+    } else {
+      obj.outOfBounds = false;
     }
   };
 
