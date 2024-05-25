@@ -19,6 +19,9 @@ const StepTwo = ({ handleNext }) => {
     setEditItem(!editItem);
   };
 
+  const eventName =
+    typeof window !== "undefined" && localStorage.getItem("eventName");
+
   return (
     <div className="preview-body">
       <div className="preview">
@@ -57,11 +60,20 @@ const StepTwo = ({ handleNext }) => {
       </div>
       {showMoreImages && (
         <div className="show-more">
-            <h1>More Templates</h1>
+          <h1>More Templates</h1>
           <div className="images">
-            {images.map((image) => (
-              <Image src={image.src} width={180} height={320} />
-            ))}
+            {images
+              .filter((image) => image.type === eventName)
+              .map((image) => (
+                <Image
+                  onClick={() => handleSelect(image.src)}
+                  key={image.id}
+                  src={image.src}
+                  width={1080}
+                  height={1920}
+                  layout="responsive"
+                />
+              ))}
           </div>
         </div>
       )}

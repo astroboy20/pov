@@ -64,6 +64,9 @@ export const CustomizeStyle = styled.div`
     padding:5%;
     text-align:center;
   }
+  .show-more{
+    margin-bottom:100px ;
+  }
   .show-more .image {
     display: flex;
     gap: 10px;

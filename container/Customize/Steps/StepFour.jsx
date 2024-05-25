@@ -6,24 +6,24 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router"; // Correct import for useRouter
 import useFetchItems from "@/hooks/useFetchItems";
 import { toast } from "react-toastify";
+import { EventSpinner } from "@/components/Spinner/Spinner";
 
 const StepFour = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
-  const data = typeof window !== "undefined" && localStorage.getItem("data");
-  const parsedData = data ? JSON.parse(data) : null;
-  const imageInfo =
-    typeof window !== "undefined" && localStorage.getItem("image");
-  const parsedInfo = imageInfo ? JSON.parse(imageInfo) : null;
+  const data = JSON.parse(
+    typeof window !== "undefined" && localStorage.getItem("data")
+  );
   const image =
     typeof window !== "undefined" && localStorage.getItem("event_image");
 
-  const mergedData = { ...parsedData, image };
-
-  const { data: priceData } = useFetchItems({
-    url: `https://api-cliqpod.koyeb.app/price/${parsedData?.expectedGuests}`,
+  const info = JSON.parse(
+    typeof window !== "undefined" && localStorage.getItem("image")
+  );
+  const { data: priceData, isLoading } = useFetchItems({
+    url: `https://api-cliqpod.koyeb.app/price/${data?.expectedGuests}`,
     token: accessToken,
   });
 
@@ -34,7 +34,7 @@ const StepFour = () => {
       const eventResponse = await axios.post(
         "https://api-cliqpod.koyeb.app/create-event",
         {
-          ...parsedData,
+          ...data,
           image: image,
         },
         {
@@ -43,8 +43,10 @@ const StepFour = () => {
           },
         }
       );
-
+      console.log("heyy", eventResponse.data.data);
       if (eventResponse) {
+        typeof window != "undefined" &&
+          localStorage.setItem("creatorId", eventResponse?.data?.data?._id);
         const userData = eventResponse.data;
         if (userData?.authorization_url) {
           router.push(userData.authorization_url);
@@ -64,12 +66,14 @@ const StepFour = () => {
   const price = priceData?.price?.price;
   const displayPrice = price === "free" ? "free" : `#${price}`;
 
+  // if (isLoading) return <EventSpinner />;
+
   return (
     <div className="final">
       {image && <Image src={image} width={90} height={160} alt="Event Image" />}
       <div className="final-text">
-        <h1>{parsedData?.eventName}</h1>
-        <p>{parsedInfo?.info}</p>
+        <h1>{data?.eventName}</h1>
+        <p>{info?.info}</p>
         <span>{displayPrice}</span>
         <Box
           onClick={handleSubmit}
@@ -80,7 +84,7 @@ const StepFour = () => {
           fontSize={"12px"}
           borderRadius={"4px"}
         >
-          {loading ? <Spinner/> : "Pay now"}
+          {loading ? <Spinner /> : "Pay now"}
         </Box>
       </div>
     </div>

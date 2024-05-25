@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { DashboardStyle, FeatureStyle } from "./Dashboard.style";
+import { DashboardStyle, EventBody, FeatureStyle } from "./Dashboard.style";
 import { SearchIcon } from "@/assets";
 import Image from "next/image";
 import useFetchItems from "@/hooks/useFetchItems";
@@ -109,7 +109,7 @@ const Dashboard = () => {
           <div className="popular-scroll">
             {upcomingEvent?.map((event) => (
               <>
-                <div className="event-body">
+                <EventBody background={event?.event_thumbnail}>
                   <div className="text">
                     {" "}
                     <p>{event?.eventName}</p>
@@ -117,7 +117,7 @@ const Dashboard = () => {
                       <span>View</span>
                     </Link>
                   </div>
-                </div>
+                </EventBody>
               </>
             ))}
           </div>

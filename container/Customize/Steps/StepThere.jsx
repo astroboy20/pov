@@ -12,9 +12,10 @@ import {
   Textarea,
   Select,
   Box,
+  Spinner
 } from "@chakra-ui/react";
 import axios from "axios";
-import { Spinner } from "@/components/Spinner";
+// import { Spinner } from "@/components/Spinner";
 import { Button } from "@/components/Button";
 import { fabric } from "fabric";
 import { toast } from "react-toastify";
@@ -27,11 +28,13 @@ const StepThree = ({ handleNext }) => {
   const [isAddTextModalOpen, setIsAddTextModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(parsedData?.src || "");
   const [selectedElement, setSelectedElement] = useState("");
-  const [color, setColor] = useState("black")
+  const [color, setColor] = useState("black");
   const [font, setFont] = useState("");
   const [background, setBackground] = useState("");
   const [loading, setLoading] = useState(false);
   const [fabricCanvas, setFabricCanvas] = useState(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingElement, setUploadingElement] = useState(false);
   const MAX_FILE_SIZE_MB = 5;
   const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
@@ -83,15 +86,16 @@ const StepThree = ({ handleNext }) => {
         left: 100,
         top: 100,
         fontFamily: font,
-        fontSize:20,
+        fontSize: 20,
         fill: color,
-        backgroundColor:background,
+        backgroundColor: background,
         width: 300,
         scalable: true,
         uniformScaling: true,
       });
       fabricCanvas.add(textbox).setActiveObject(textbox);
       fabricCanvas.renderAll();
+      toast.success("Text added to the canvas!");
     }
     handleCloseModal();
   };
@@ -111,6 +115,7 @@ const StepThree = ({ handleNext }) => {
       imageURL.append("upload_preset", "za8tsrje");
 
       try {
+        setUploadingImage(true);
         const imageResponse = await axios.post(
           "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
           imageURL
@@ -123,9 +128,13 @@ const StepThree = ({ handleNext }) => {
           img.scaleToWidth(fabricCanvas.width / 2);
           fabricCanvas.add(img).setActiveObject(img);
           fabricCanvas.renderAll();
+          toast.success("Image uploaded successfully!");
         }, { crossOrigin: "anonymous" });
       } catch (error) {
         console.error("Error uploading image:", error);
+        toast.error("Error uploading image.");
+      } finally {
+        setUploadingImage(false);
       }
     }
   };
@@ -145,6 +154,7 @@ const StepThree = ({ handleNext }) => {
       imageURL.append("upload_preset", "za8tsrje");
 
       try {
+        setUploadingElement(true);
         const imageResponse = await axios.post(
           "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
           imageURL
@@ -157,9 +167,13 @@ const StepThree = ({ handleNext }) => {
           img.scaleToWidth(fabricCanvas.width / 2);
           fabricCanvas.add(img).setActiveObject(img);
           fabricCanvas.renderAll();
+          toast.success("Element uploaded successfully!");
         }, { crossOrigin: "anonymous" });
       } catch (error) {
         console.error("Error uploading image:", error);
+        toast.error("Error uploading element.");
+      } finally {
+        setUploadingElement(false);
       }
     }
   };
@@ -195,6 +209,7 @@ const StepThree = ({ handleNext }) => {
       setBackground("");
       setText("");
       setSelectedElement("");
+      toast.success("Canvas cleared!");
     }
   };
 
@@ -251,27 +266,45 @@ const StepThree = ({ handleNext }) => {
     } catch (error) {
       setLoading(false);
       console.error("Error uploading image:", error);
+      toast.error("Error uploading the QR code image.");
     }
   };
 
   const handleObjectScaling = (e) => {
     const obj = e.target;
+    const canvas = obj.canvas;
+    if (obj.currentHeight > canvas.height || obj.currentWidth > canvas.width) {
+      obj.scaleToHeight(canvas.height);
+      obj.scaleToWidth(canvas.width);
+    }
+    obj.setCoords();
+
+    if (obj.getBoundingRect().top < 0 || obj.getBoundingRect().left < 0) {
+      obj.top = Math.max(obj.top, obj.getBoundingRect().height / 2);
+      obj.left = Math.max(obj.left, obj.getBoundingRect().width / 2);
+    }
+
     if (
-      obj.left < 0 ||
-      obj.top < 0 ||
-      obj.left + obj.getScaledWidth() > fabricCanvas.width ||
-      obj.top + obj.getScaledHeight() > fabricCanvas.height
+      obj.getBoundingRect().top + obj.getBoundingRect().height >
+      canvas.height
     ) {
-      if (!obj.outOfBounds) {
-        toast.warning("Object is out of canvas bounds.");
-        obj.outOfBounds = true;
-      }
-    } else {
-      obj.outOfBounds = false;
+      obj.top = Math.min(
+        obj.top,
+        canvas.height - obj.getBoundingRect().height / 2
+      );
+    }
+    if (
+      obj.getBoundingRect().left + obj.getBoundingRect().width >
+      canvas.width
+    ) {
+      obj.left = Math.min(
+        obj.left,
+        canvas.width - obj.getBoundingRect().width / 2
+      );
     }
   };
 
-   useEffect(() => {
+  useEffect(() => {
     if (fabricCanvas) {
       fabricCanvas.on("object:scaling", handleObjectScaling);
     }
@@ -286,15 +319,18 @@ const StepThree = ({ handleNext }) => {
   return (
     <div className="edit">
       <Center display={"flex"} flexDirection={"column"} width={"100%"}>
-        <canvas
-          ref={canvasRef}
-          style={{
-            width: "100%",
-            maxHeight: "100vh",
-            // border: "1px solid red",
-          }}
-        />
+        <div style={{ border: "2px solid red", display: "inline-block" }}>
+          <canvas
+            ref={canvasRef}
+            style={{
+              display: "block",
+            }}
+          />
+        </div>
       </Center>
+
+      {uploadingImage && <Spinner />}
+      {uploadingElement && <Spinner />}
       <Box marginTop={"5%"}>
         <Button
           type={"submit"}
@@ -336,6 +372,7 @@ const StepThree = ({ handleNext }) => {
 
       <Modal isOpen={isAddTextModalOpen} onClose={handleCloseModal}>
         <ModalOverlay />
+
         <ModalContent>
           <ModalHeader>Add Text</ModalHeader>
           <ModalCloseButton />
@@ -358,32 +395,29 @@ const StepThree = ({ handleNext }) => {
                 </option>
               ))}
             </Select>
-            <div style={{display:"flex", gap:"20px", alignItems:"center"}}>
-            <label>Colour: </label> <input
-              style={{ background: background }}
-              type="color"
-              value={color}
-              onChange={handleColorChange}
-            />
+            <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+              <label>Colour: </label>{" "}
+              <input
+                style={{ background: background }}
+                type="color"
+                value={color}
+                onChange={handleColorChange}
+              />
             </div>
 
-            <div style={{display:"flex", gap:"20px", alignItems:"center"}}>
-            <label>Background: </label> <input
-              style={{ color: color }}
-              type="color"
-              value={background}
-              onChange={handleBackgroundChange}
-            />
+            <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+              <label>Background: </label>{" "}
+              <input
+                style={{ color: color }}
+                type="color"
+                value={background}
+                onChange={handleBackgroundChange}
+              />
             </div>
-
-            
-          
           </ModalBody>
 
           <ModalFooter>
-            <button onClick={handleSubmitAddText}>
-              Add
-            </button>
+            <button onClick={handleSubmitAddText}>Add</button>
           </ModalFooter>
         </ModalContent>
       </Modal>

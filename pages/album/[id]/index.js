@@ -31,8 +31,8 @@ const EventID = ({ searchParams }) => {
     url: `https://api-cliqpod.koyeb.app/gallery/${eventId}`,
     token: accessToken,
   });
-  console.log(eventId)
-  console.log(eventDetails?._id)
+
+  
   useEffect(() => {
     if (data) {
       setEventData(data);

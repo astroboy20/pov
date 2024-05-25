@@ -34,20 +34,7 @@ const Album = ({ eventData }) => {
         <span style={{ color: "white" }}>.</span>
       </div>
 
-      {/* <div className="input">
-        <div className="left">
-          Filter effect
-          <select className="custom-select">
-            <option value="">Filter menu</option>
-          </select>
-        </div>
-        <div className="right">
-          Cliqs by:
-          <select className="custom-select">
-            <option value="">All</option>
-          </select>
-        </div>
-      </div> */}
+     
       {eventData ? (
         <div className="all-image">
           {eventData.length > 0 ? (
@@ -58,7 +45,7 @@ const Album = ({ eventData }) => {
                 {/* {eventData[0].photos} */}
               </CustomText>
 
-              <div className="image">
+              {/* <div className="image">
                 {eventData.map((event) => (
                   <>
                     <div key={event.id}>
@@ -74,9 +61,9 @@ const Album = ({ eventData }) => {
                     </div>
                   </>
                 ))}
-              </div>
+              </div> */}
 
-              <GalleryModal
+              {/* <GalleryModal
                 show={showModal}
                 onClose={() => {
                   setShowModal(false);
@@ -91,7 +78,7 @@ const Album = ({ eventData }) => {
                     objectFit="cover"
                   />
                 </div>
-              </GalleryModal>
+              </GalleryModal> */}
             </div>
           ) : (
             <>{eventData.message} </>

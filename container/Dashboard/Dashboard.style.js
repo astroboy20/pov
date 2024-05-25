@@ -100,38 +100,10 @@ export const DashboardStyle = styled.div`
     margin-bottom: 20px;
   }
   .event-body {
-    background: url("/images/bg.svg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 160px;
-    border-radius: 0 8px 8px 0;
-    padding: 2%;
-    margin-bottom: 25px;
   }
 
-  .event-body .text {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f2f3f480;
-    border-radius: 8px;
-    padding: 3%;
-    position: relative;
-    top: 90px;
-  }
-  .event-body .text p {
-    font-size: 16px;
-    font-weight: 700;
-  }
-  .event-body .text span {
-    background: #1d1465;
-    color: #fff;
-    padding: 5.5px 12px;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: 700;
-  }
+  /* .event-body  */
+  /* .event-body  */
 
   @media screen and (min-width: 768px) and (max-width: 1024px) {
     height: 1700px;
@@ -158,47 +130,46 @@ export const DashboardStyle = styled.div`
     }
   }
 `;
-export const HeaderStyle = styled.div`
-  background: url("/images/event-create.svg");
+export const EventBody = styled.div`
+  /* background: url("/images/bg.svg"); */
+  background:  url(${props => props.background});
   background-size: cover;
+  background-position:  top center ;
   background-repeat: no-repeat;
-  height: 500px;
   width: 100%;
-`;
-export const BodyStyle = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  color: #1d1465;
-  border-radius: 15px;
-  text-align: left;
-  padding: 5%;
-  gap: 25px;
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-`;
-export const FeatureStyle = styled.div`
-  background: #fff;
-  color: black;
-  position: fixed;
-  align-items: center;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  padding: 5%;
-  width: 100%;
-  /* margin: 0 10%; */
-`;
+  height: 160px;
+  border-radius: 0 8px 8px 0;
+  padding: 2%;
+  margin-bottom: 25px;
 
-export const SettingStyle = styled.div`
-  padding: 5%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  .setting-type {
+  .text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f2f3f480;
+    border-radius: 8px;
+    padding: 3%;
+    position: relative;
+    top: 90px;
+  }
+
+  .text p {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .text span {
+    background: #1d1465;
+    color: #fff;
+    padding: 5.5px 12px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 200px;
+    border-radius: 8px;
   }
 `;
