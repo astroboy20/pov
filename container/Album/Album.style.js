@@ -1,18 +1,21 @@
 import styled from "styled-components";
 
 export const AlbumContainer = styled.div`
-  padding: 6%;
   height: 100vh;
-
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
+
   .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 6%;
+    background-image: url(${props => props.background});
+    color:#fff ;
   }
+
   .input {
     display: flex;
     justify-content: space-between;
@@ -25,54 +28,73 @@ export const AlbumContainer = styled.div`
     flex-direction: column;
     color: white;
   }
+
   .all-image {
-    height: 90vh;
-    overflow-y: scroll;
+    /* height: 100vh; */
+    /* overflow-y: scroll;
     -ms-overflow-style: none;
-    scrollbar-width: none;
+    scrollbar-width: none; */
+    margin-bottom:20px ;
+    
   }
 
   .all-image::-webkit-scrollbar {
     display: none; /* Safari and Chrome */
   }
-  .custom-select {
-    padding: 10px 30px 10px 10px; /* Adjust padding for arrow space */
-    width: 150px; /* Adjust width as needed */
-    background-color: #221e26;
-    color: #fff;
-    border-radius: 100px;
-    appearance: none;
-    position: relative; /* Set position for pseudo-element */
+
+  .image {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(2, 1fr);
+    /* gap: 10px; */
   }
 
-  /* Styling the custom arrow using a pseudo-element */
-  .custom-select::after {
-    content: ""; /* Add content */
-    position: absolute; /* Set position */
-    top: 50%; /* Adjust vertically */
-    right: 100px; /* Add space before the arrow */
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent; /* Create arrow-like shape */
-    border-right: 5px solid transparent; /* Create arrow-like shape */
-    border-top: 5px solid white; /* Color of the arrow */
-    transform: translateY(-50%); /* Center vertically */
-    pointer-events: none; /* Prevent clicking on pseudo-element */
+  .image-wrapper {
+    /* background-color: #f0f0f0; */
+    /* border-radius: 5px; */
+    overflow: hidden; /* Ensure the image fits within the wrapper */
   }
-  .image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 5px;
-    width: 100%;
-  }
-  .image-image {
-    border-radius: 4px;
-    width: 122px;
-    height: 160px;
-  }
+
   .selected-image {
     border-radius: 10px;
+  }
+
+  .invitee-section {
+    /* margin-bottom: 20px; */
+  }
+
+  .images-with-names {
+    /* margin-top: 20px; */
+  }
+
+  .toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items:center ;
+    position: fixed;
+    bottom: 50px;
+    background: #fff;
+    width: 90%;
+    margin: 0 5%;
+    padding: 3% 3%;
+    border-radius: 80px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+
+  .toggle h1 {
+    text-align: center;
+    /* padding: 10px px; */
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .toggle h1.active {
+    background-color: #1D1465;
+    color: #fff;
+    font-size:14px ;
+    font-weight:500 ;
+    padding:5px 10px ;
   }
 `;

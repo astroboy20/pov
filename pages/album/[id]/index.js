@@ -32,7 +32,7 @@ const EventID = ({ searchParams }) => {
     token: accessToken,
   });
 
-  
+
   useEffect(() => {
     if (data) {
       setEventData(data);
@@ -43,7 +43,7 @@ const EventID = ({ searchParams }) => {
   return (
     <ProtectedRoute>
       <Album eventData={eventData} />
-      <BottomNav/>
+      {/* <BottomNav/> */}
     </ProtectedRoute>
   );
 };

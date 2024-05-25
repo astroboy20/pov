@@ -1,17 +1,19 @@
 import { PurpleSpinner } from "@/components/Spinner/Spinner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AlbumContainer } from "./Album.style";
-import { FaArrowCircleLeft } from "react-icons/fa";
 import { CustomText } from "@/components/CustomText";
 import { useRouter } from "next/router";
-import { Select } from "@chakra-ui/select";
 import Image from "next/image";
-import { GalleryModal, Modal } from "@/components/Modal";
-import { BlueBackIcon } from "@/assets";
+import { GalleryModal } from "@/components/Modal";
+import { BackIcon, BackIconWhite, BlueBackIcon } from "@/assets";
+import { useSelector } from "react-redux";
+import useFetchItems from "@/hooks/useFetchItems";
 
 const Album = ({ eventData }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [currentView, setCurrentView] = useState("all");
+  const [event, setEvent] = useState([])
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
@@ -24,46 +26,91 @@ const Album = ({ eventData }) => {
     router.push("/event");
   };
 
+  const handleToggleClick = (view) => {
+    setCurrentView(view);
+  };
+
+  // Collect all images into a single array
+  const allImages = eventData.reduce((acc, event) => {
+    return acc.concat(event.image);
+  }, []);
+
+  const imagesWithNames = eventData.map((event) => (
+    <div key={event._id} className="invitee-section">
+      <h1 style={{ fontSize: "24px", fontWeight: "500", margin: "20px  10px" }}>
+        {event.inviteeName}
+      </h1>
+      <div className="image">
+        {event.image.map((image, index) => (
+          <div key={index} className="image-wrapper">
+            <Image
+              width={1080}
+              height={1920}
+              src={image}
+              alt="event photo"
+              className="image-image"
+              onClick={() => handleImageClick(image)}
+              objectFit="cover"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  ));
+
+  const id = typeof window !== "undefined" && localStorage.getItem("id-route");
+  const { user } = useSelector((state) => state.auth);
+  const accessToken = user ? user.token : ""
+  const { data, isLoading } = useFetchItems({
+    url: `https://api-cliqpod.koyeb.app/event/${id}`,
+    token: accessToken,
+  });
+
+  
+
+  useEffect(() => {
+    if (data) {
+      setEvent(data.event);
+    }
+  }, [data]);
+
+
+
   return (
-    <AlbumContainer>
+    <AlbumContainer background={event?.event_thumbnail}>
       <div className="header">
         <span onClick={handleRoute}>
-          <BlueBackIcon />
+          <BackIconWhite />
         </span>
-        <h1> ALBUM</h1>
+        <h1>{event?.eventName}</h1>
         <span style={{ color: "white" }}>.</span>
       </div>
 
-     
       {eventData ? (
         <div className="all-image">
           {eventData.length > 0 ? (
-            <div key={eventData.photo}>
-              <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
-                {eventData[0].message}
-                {/* {eventData[0].id} */}
-                {/* {eventData[0].photos} */}
-              </CustomText>
-
-              {/* <div className="image">
-                {eventData.map((event) => (
-                  <>
-                    <div key={event.id}>
+            <>
+              {currentView === "all" ? (
+                <div className="image">
+                  {allImages.map((image, index) => (
+                    <div key={index} className="image-wrapper">
                       <Image
-                        width={122}
-                        height={160}
-                        src={`${event.photos}`}
+                        width={1080}
+                        height={1920}
+                        src={image}
                         alt="event photo"
                         className="image-image"
-                        // onClick={() => handleImageClick(event.photos)}
+                        onClick={() => handleImageClick(image)}
                         objectFit="cover"
                       />
                     </div>
-                  </>
-                ))}
-              </div> */}
+                  ))}
+                </div>
+              ) : (
+                <div className="images-with-names">{imagesWithNames}</div>
+              )}
 
-              {/* <GalleryModal
+              <GalleryModal
                 show={showModal}
                 onClose={() => {
                   setShowModal(false);
@@ -71,17 +118,17 @@ const Album = ({ eventData }) => {
               >
                 <div className="selected-image">
                   <Image
-                    width={350}
-                    height={400}
+                    width={500}
+                    height={500}
                     src={selectedImage}
                     alt="event photo"
                     objectFit="cover"
                   />
                 </div>
-              </GalleryModal> */}
-            </div>
+              </GalleryModal>
+            </>
           ) : (
-            <>{eventData.message} </>
+            <>{eventData.message}</>
           )}
         </div>
       ) : (
@@ -96,6 +143,20 @@ const Album = ({ eventData }) => {
           <PurpleSpinner />
         </div>
       )}
+      <div className="toggle">
+        <h1
+          onClick={() => handleToggleClick("all")}
+          className={currentView === "all" ? "active" : ""}
+        >
+          All Cliqs
+        </h1>
+        <h1
+          onClick={() => handleToggleClick("my")}
+          className={currentView === "my" ? "active" : ""}
+        >
+          My Cliqs
+        </h1>
+      </div>
     </AlbumContainer>
   );
 };
