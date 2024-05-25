@@ -12,8 +12,10 @@ export const AlbumContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 6%;
-    background-image: url(${props => props.background});
-    color:#fff ;
+    background-image: url(${(props) => props.background});
+    color: #fff;
+    background-size: cover;
+    background-position: center;
   }
 
   .input {
@@ -30,12 +32,7 @@ export const AlbumContainer = styled.div`
   }
 
   .all-image {
-    /* height: 100vh; */
-    /* overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none; */
-    margin-bottom:20px ;
-    
+    margin-bottom: 20px;
   }
 
   .all-image::-webkit-scrollbar {
@@ -46,12 +43,9 @@ export const AlbumContainer = styled.div`
     display: grid;
     justify-content: center;
     grid-template-columns: repeat(2, 1fr);
-    /* gap: 10px; */
   }
 
   .image-wrapper {
-    /* background-color: #f0f0f0; */
-    /* border-radius: 5px; */
     overflow: hidden; /* Ensure the image fits within the wrapper */
   }
 
@@ -60,17 +54,17 @@ export const AlbumContainer = styled.div`
   }
 
   .invitee-section {
-    /* margin-bottom: 20px; */
+    margin-bottom: 20px;
   }
 
   .images-with-names {
-    /* margin-top: 20px; */
+    margin-top: 20px;
   }
 
   .toggle {
     display: flex;
     justify-content: space-between;
-    align-items:center ;
+    align-items: center;
     position: fixed;
     bottom: 50px;
     background: #fff;
@@ -84,17 +78,26 @@ export const AlbumContainer = styled.div`
 
   .toggle h1 {
     text-align: center;
-    /* padding: 10px px; */
     border-radius: 50px;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   .toggle h1.active {
-    background-color: #1D1465;
+    background-color: #1d1465;
     color: #fff;
-    font-size:14px ;
-    font-weight:500 ;
-    padding:5px 10px ;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px 10px;
+    animation: toggleActive 0.3s ease;
+  }
+
+  @keyframes toggleActive {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.1);
+    }
   }
 `;

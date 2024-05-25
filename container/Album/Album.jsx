@@ -5,7 +5,7 @@ import { CustomText } from "@/components/CustomText";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { GalleryModal } from "@/components/Modal";
-import { BackIcon, BackIconWhite, BlueBackIcon } from "@/assets";
+import { BackIconWhite } from "@/assets";
 import { useSelector } from "react-redux";
 import useFetchItems from "@/hooks/useFetchItems";
 
@@ -13,7 +13,7 @@ const Album = ({ eventData }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentView, setCurrentView] = useState("all");
-  const [event, setEvent] = useState([])
+  const [event, setEvent] = useState([]);
 
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
@@ -31,50 +31,49 @@ const Album = ({ eventData }) => {
   };
 
   // Collect all images into a single array
-  const allImages = eventData?.reduce((acc, event) => {
-    return acc.concat(event?.image);
-  }, []);
+  const allImages = Array.isArray(eventData)
+    ? eventData.reduce((acc, event) => acc.concat(event?.image || []), [])
+    : [];
 
-  const imagesWithNames = eventData?.map((event) => (
-    <div key={event?._id} className="invitee-section">
-      <h1 style={{ fontSize: "24px", fontWeight: "500", margin: "20px  10px" }}>
-        {event?.inviteeName}
-      </h1>
-      <div className="image">
-        {event?.image?.map((image, index) => (
-          <div key={index} className="image-wrapper">
-            <Image
-              width={1080}
-              height={1920}
-              src={image}
-              alt="event photo"
-              className="image-image"
-              onClick={() => handleImageClick(image)}
-              objectFit="cover"
-            />
+  // Map eventData to get name and respective images
+  const imagesWithNames = Array.isArray(eventData)
+    ? eventData.map((event) => (
+        <div key={event?._id} className="invitee-section">
+          <h1 style={{ fontSize: "24px", fontWeight: "500", margin: "20px 10px" }}>
+            {event?.inviteeName}
+          </h1>
+          <div className="image">
+            {event?.image?.map((image, index) => (
+              <div key={index} className="image-wrapper">
+                <Image
+                  width={1080}
+                  height={1920}
+                  src={image}
+                  alt="event photo"
+                  className="image-image"
+                  onClick={() => handleImageClick(image)}
+                  objectFit="cover"
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
-  ));
+        </div>
+      ))
+    : [];
 
   const id = typeof window !== "undefined" && localStorage.getItem("id-route");
   const { user } = useSelector((state) => state.auth);
-  const accessToken = user ? user.token : ""
+  const accessToken = user ? user.token : "";
   const { data, isLoading } = useFetchItems({
     url: `https://api-cliqpod.koyeb.app/event/${id}`,
     token: accessToken,
   });
-
-
 
   useEffect(() => {
     if (data) {
       setEvent(data.event);
     }
   }, [data]);
-
-
 
   return (
     <AlbumContainer background={event?.event_thumbnail}>
@@ -86,10 +85,21 @@ const Album = ({ eventData }) => {
         <span style={{ color: "white" }}>.</span>
       </div>
 
-      {eventData ? (
-        <div className="all-image">
-          {eventData?.length > 0 ? (
-            <>
+      {isLoading ? (
+        <div
+          style={{
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <PurpleSpinner />
+        </div>
+      ) : (
+        <>
+          {Array.isArray(eventData) && eventData.length > 0 ? (
+            <div className="all-image">
               {currentView === "all" ? (
                 <div className="image">
                   {allImages?.map((image, index) => (
@@ -126,22 +136,21 @@ const Album = ({ eventData }) => {
                   />
                 </div>
               </GalleryModal>
-            </>
+            </div>
           ) : (
-            <>{eventData?.message}</>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100vh",
+                textAlign: "center",
+              }}
+            >
+              <p>{eventData?.message}</p>
+            </div>
           )}
-        </div>
-      ) : (
-        <div
-          style={{
-            height: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <PurpleSpinner />
-        </div>
+        </>
       )}
       <div className="toggle">
         <h1

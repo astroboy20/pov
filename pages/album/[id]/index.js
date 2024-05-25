@@ -38,7 +38,7 @@ const EventID = ({ searchParams }) => {
       setEventData(data);
     }
   }, [data]);
-  console.log(eventData)
+  // console.log(eventData)
   if (isLoading) return <EventSpinner />;
   return (
     <ProtectedRoute>
