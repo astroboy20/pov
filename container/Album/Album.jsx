@@ -31,17 +31,17 @@ const Album = ({ eventData }) => {
   };
 
   // Collect all images into a single array
-  const allImages = eventData.reduce((acc, event) => {
-    return acc.concat(event.image);
+  const allImages = eventData?.reduce((acc, event) => {
+    return acc.concat(event?.image);
   }, []);
 
-  const imagesWithNames = eventData.map((event) => (
-    <div key={event._id} className="invitee-section">
+  const imagesWithNames = eventData?.map((event) => (
+    <div key={event?._id} className="invitee-section">
       <h1 style={{ fontSize: "24px", fontWeight: "500", margin: "20px  10px" }}>
-        {event.inviteeName}
+        {event?.inviteeName}
       </h1>
       <div className="image">
-        {event.image.map((image, index) => (
+        {event?.image?.map((image, index) => (
           <div key={index} className="image-wrapper">
             <Image
               width={1080}
@@ -66,7 +66,7 @@ const Album = ({ eventData }) => {
     token: accessToken,
   });
 
-  
+
 
   useEffect(() => {
     if (data) {
@@ -88,11 +88,11 @@ const Album = ({ eventData }) => {
 
       {eventData ? (
         <div className="all-image">
-          {eventData.length > 0 ? (
+          {eventData?.length > 0 ? (
             <>
               {currentView === "all" ? (
                 <div className="image">
-                  {allImages.map((image, index) => (
+                  {allImages?.map((image, index) => (
                     <div key={index} className="image-wrapper">
                       <Image
                         width={1080}
@@ -128,7 +128,7 @@ const Album = ({ eventData }) => {
               </GalleryModal>
             </>
           ) : (
-            <>{eventData.message}</>
+            <>{eventData?.message}</>
           )}
         </div>
       ) : (
