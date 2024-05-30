@@ -1,12 +1,18 @@
 import { useRouter } from "next/router";
 import { DashboardStyle, EventBody, FeatureStyle } from "./Dashboard.style";
-import { SearchIcon } from "@/assets";
+import { FilterIcon, SearchIcon } from "@/assets";
 import Image from "next/image";
 import useFetchItems from "@/hooks/useFetchItems";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { EventSpinner } from "@/components/Spinner/Spinner";
 import Link from "next/link";
+import {
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+} from "@chakra-ui/input";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -55,13 +61,37 @@ const Dashboard = () => {
 
   if (isLoading) return <EventSpinner />;
 
+  const [filter, setFilter] = useState(false);
+  const handleFilter = () => {
+    setFilter(!filter);
+  };
+
   return (
     <DashboardStyle>
       <div className="header">
         <div className="input">
-          {" "}
-          <SearchIcon />
-          <input type="text" placeholder="Search events here ..." />
+          {/* <input type="text" placeholder="Search events here ..." /> */}
+          <InputGroup display={"flex"} alignItems={"center"}>
+            <InputLeftElement>
+              <SearchIcon />
+            </InputLeftElement>
+            <Input
+              border={"none"}
+              focusBorderColor="transparent"
+              placeholder="Search events here ..."
+            />
+            <InputRightElement onClick={handleFilter}>
+              <FilterIcon />
+              
+            </InputRightElement>
+            {filter && (
+                <div className="filter">
+                  <p>Location</p>
+                  <hr className="hr"/>
+                  <p>Vibe</p>
+                </div>
+              )}
+          </InputGroup>
         </div>
       </div>
       <div className="body">
@@ -92,8 +122,9 @@ const Dashboard = () => {
                     <div className="text">
                       <h3>{event?.eventName}</h3>
                       <p>{formatDate(event?.event_date)}</p>
-                      <p>{event?.location}</p>
-                      <p>{event?.event_mode}</p>
+                      <Link href={`/album/${event?._id}`}>
+                        <span>View Event</span>
+                      </Link>
                     </div>
                   </div>
                 ))
@@ -104,7 +135,7 @@ const Dashboard = () => {
         <div className="popular-event">
           <div className="event-header">
             {" "}
-            <h1>Popular Events</h1> <p>View all</p>
+            <h1>Popular Albums</h1> <p>View all</p>
           </div>
           <div className="popular-scroll">
             {upcomingEvent?.map((event) => (
@@ -114,7 +145,7 @@ const Dashboard = () => {
                     {" "}
                     <p>{event?.eventName}</p>
                     <Link href={`/album/${event?._id}`}>
-                      <span>View</span>
+                      <span>View Albums</span>
                     </Link>
                   </div>
                 </EventBody>

@@ -75,11 +75,11 @@ const Success = () => {
       <>
         <div className="qr-code">
           <CustomText weight={"500"} type={"Htype"} variant={"h3"}>
-            <div>{event.eventName}</div>
+            <div>{event?.eventName}</div>
           </CustomText>
 
           <div>
-            <QRCode value={`https://cliqpod.co/invitee/${event._id}`} />
+            <QRCode value={`https://cliqpod.co/invitee/${event?._id}`} />
             <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
               SCAN ME
             </CustomText>
@@ -89,7 +89,7 @@ const Success = () => {
             <input
               type="text"
               id="url"
-              value={`https://cliqpod.co/invitee/${event._id}`}
+              value={`https://cliqpod.co/invitee/${event?._id}`}
               readOnly
               style={{
                 width: "100%",

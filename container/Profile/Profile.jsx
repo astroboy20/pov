@@ -1,15 +1,11 @@
 import React from "react";
-import { FeatureStyle, SettingStyle } from "../Dashboard.style";
 import { CustomText } from "@/components/CustomText";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { logout, reset } from "@/feature/slices/authSlice";
-import Link from "next/link";
-import styled from "../Dashboard.module.css";
-
+import { ProfileStyle } from "./Profile.style";
 
 const Profile = () => {
-  const ActiveLink = ({ isActive }) => (isActive ? `${styled.active}` : "");
   const dispatch = useDispatch();
   const router = useRouter();
   const handleLogout = () => {
@@ -19,7 +15,7 @@ const Profile = () => {
   };
   return (
     <>
-      <SettingStyle>
+      <ProfileStyle>
         <CustomText weight={"500"} type={"Htype"} variant={"p"}>
           Setting
         </CustomText>
@@ -65,10 +61,10 @@ const Profile = () => {
           </CustomText>{" "}
           Request Acccount Deletion
         </div>
-      </SettingStyle>
+      </ProfileStyle>
      
     </>
   );
 };
 
-export default Profile;
+export  {Profile};

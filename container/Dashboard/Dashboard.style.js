@@ -20,7 +20,27 @@ export const DashboardStyle = styled.div`
     padding: 3%;
     border-radius: 15px;
     position: relative;
-    top: 130px;
+    top: 115px;
+  }
+  .filter{
+    position:absolute ;
+    top:40px ;
+    box-shadow: 2px 2px 4px 0px #00000026;
+    background-color:#F2F3F4 ;
+    width:30% ;
+    left:70% ;
+    display:flex;
+    flex-direction:column ;
+    gap:10px;
+    /* padding:3% ; */
+/* width:100% ; */
+  }
+  .filter .hr{
+    border: 1px solid #000;
+    opacity:0.3 ;
+  }
+  .filter p{
+    padding:4% ;
   }
   .input input {
     width: 100%;
@@ -71,15 +91,23 @@ export const DashboardStyle = styled.div`
     padding: 2%;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
+  }
+
+  .text span {
+    background: #1d1465;
+    color: #fff;
+    padding: 5.5px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
   }
   .upcoming-event .text h3 {
     font-size: 14px;
     font-weight: 700;
-    margin-bottom: 10px;
   }
   .upcoming-event p {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 700;
   }
   .upcoming-event h1,
