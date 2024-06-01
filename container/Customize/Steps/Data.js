@@ -202,4 +202,10 @@ export const popularFonts = [
   "Garamond",
   "Bookman",
   "Comic Sans MS",
+  "Blenda Script",
+  "Roboto 3D",
+  "Lobster 3D",
+  "Zilap 3D",
+  "HYPERWAVE 3D",
 ];
+

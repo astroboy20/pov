@@ -15,7 +15,6 @@ import {
   Spinner
 } from "@chakra-ui/react";
 import axios from "axios";
-// import { Spinner } from "@/components/Spinner";
 import { Button } from "@/components/Button";
 import { fabric } from "fabric";
 import { toast } from "react-toastify";
@@ -27,14 +26,13 @@ const StepThree = ({ handleNext }) => {
   const [text, setText] = useState("");
   const [isAddTextModalOpen, setIsAddTextModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(parsedData?.src || "");
-  const [selectedElement, setSelectedElement] = useState("");
   const [color, setColor] = useState("black");
   const [font, setFont] = useState("");
-  const [background, setBackground] = useState("");
   const [loading, setLoading] = useState(false);
   const [fabricCanvas, setFabricCanvas] = useState(null);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [uploadingElement, setUploadingElement] = useState(false);
+  const [selectedElement, setSelectedElement] = useState(null);
   const MAX_FILE_SIZE_MB = 5;
   const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
@@ -88,7 +86,6 @@ const StepThree = ({ handleNext }) => {
         fontFamily: font,
         fontSize: 20,
         fill: color,
-        backgroundColor: background,
         width: 300,
         scalable: true,
         uniformScaling: true,
@@ -96,6 +93,11 @@ const StepThree = ({ handleNext }) => {
       fabricCanvas.add(textbox).setActiveObject(textbox);
       fabricCanvas.renderAll();
       toast.success("Text added to the canvas!");
+
+      // Clear input fields
+      setText("");
+      setFont("");
+      setColor("black");
     }
     handleCloseModal();
   };
@@ -195,21 +197,16 @@ const StepThree = ({ handleNext }) => {
   const handleColorChange = (e) => {
     setColor(e.target.value);
   };
-  const handleBackgroundChange = (e) => {
-    setBackground(e.target.value);
-  };
 
   const handleDelete = () => {
     if (fabricCanvas) {
-      fabricCanvas.getObjects().forEach((obj) => {
-        if (obj !== fabricCanvas.backgroundImage) {
-          fabricCanvas.remove(obj);
-        }
-      });
-      setBackground("");
-      setText("");
-      setSelectedElement("");
-      toast.success("Canvas cleared!");
+      const activeObject = fabricCanvas.getActiveObject();
+      if (activeObject && activeObject !== fabricCanvas.backgroundImage) {
+        fabricCanvas.remove(activeObject);
+        fabricCanvas.discardActiveObject();
+        fabricCanvas.renderAll();
+        toast.success("Element deleted!");
+      }
     }
   };
 
@@ -398,20 +395,10 @@ const StepThree = ({ handleNext }) => {
             <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
               <label>Colour: </label>{" "}
               <input
-                style={{ background: background }}
+                style={{ color: color }}
                 type="color"
                 value={color}
                 onChange={handleColorChange}
-              />
-            </div>
-
-            <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
-              <label>Background: </label>{" "}
-              <input
-                style={{ color: color }}
-                type="color"
-                value={background}
-                onChange={handleBackgroundChange}
               />
             </div>
           </ModalBody>

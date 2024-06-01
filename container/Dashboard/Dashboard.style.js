@@ -166,7 +166,7 @@ export const EventBody = styled.div`
   background-repeat: no-repeat;
   width: 100%;
   height: 160px;
-  border-radius: 0 8px 8px 0;
+  border-radius: 8px;
   padding: 2%;
   margin-bottom: 25px;
 

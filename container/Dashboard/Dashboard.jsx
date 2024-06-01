@@ -19,6 +19,7 @@ const Dashboard = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const [upcomingEvent, setUpcomingEvent] = useState([]);
+  const [filter, setFilter] = useState(false);
 
   const { data, isLoading } = useFetchItems({
     url: "https://api-cliqpod.koyeb.app/upcoming-events/",
@@ -59,12 +60,11 @@ const Dashboard = () => {
     return formattedDate;
   };
 
-  if (isLoading) return <EventSpinner />;
-
-  const [filter, setFilter] = useState(false);
   const handleFilter = () => {
     setFilter(!filter);
   };
+
+  if (isLoading) return <EventSpinner />;
 
   return (
     <DashboardStyle>
@@ -82,15 +82,14 @@ const Dashboard = () => {
             />
             <InputRightElement onClick={handleFilter}>
               <FilterIcon />
-              
             </InputRightElement>
             {filter && (
-                <div className="filter">
-                  <p>Location</p>
-                  <hr className="hr"/>
-                  <p>Vibe</p>
-                </div>
-              )}
+              <div className="filter">
+                <p>Location</p>
+                <hr className="hr" />
+                <p>Vibe</p>
+              </div>
+            )}
           </InputGroup>
         </div>
       </div>
@@ -110,7 +109,7 @@ const Dashboard = () => {
                 </p>
               ) : (
                 upcomingEvent?.map((event) => (
-                  <div key={event?.id} className="event">
+                  <div key={event?._id} className="event">
                     <Image
                       src={event?.event_thumbnail}
                       height={108}
@@ -134,22 +133,18 @@ const Dashboard = () => {
         </div>
         <div className="popular-event">
           <div className="event-header">
-            {" "}
             <h1>Popular Albums</h1> <p>View all</p>
           </div>
           <div className="popular-scroll">
             {upcomingEvent?.map((event) => (
-              <>
-                <EventBody background={event?.event_thumbnail}>
-                  <div className="text">
-                    {" "}
-                    <p>{event?.eventName}</p>
-                    <Link href={`/album/${event?._id}`}>
-                      <span>View Albums</span>
-                    </Link>
-                  </div>
-                </EventBody>
-              </>
+              <EventBody key={event?._id} background={event?.event_thumbnail}>
+                <div className="text">
+                  <p>{event?.eventName}</p>
+                  <Link href={`/album/${event?._id}`}>
+                    <span>View Albums</span>
+                  </Link>
+                </div>
+              </EventBody>
             ))}
           </div>
         </div>
