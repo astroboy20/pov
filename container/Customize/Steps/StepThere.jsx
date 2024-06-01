@@ -12,7 +12,7 @@ import {
   Textarea,
   Select,
   Box,
-  Spinner
+  Spinner,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Button } from "@/components/Button";
@@ -20,7 +20,8 @@ import { fabric } from "fabric";
 import { toast } from "react-toastify";
 
 const StepThree = ({ handleNext }) => {
-  const imageInfo = typeof window !== "undefined" && localStorage.getItem("image");
+  const imageInfo =
+    typeof window !== "undefined" && localStorage.getItem("image");
   const parsedData = JSON.parse(imageInfo);
   const canvasRef = useRef(null);
   const [text, setText] = useState("");
@@ -44,11 +45,15 @@ const StepThree = ({ handleNext }) => {
     setFabricCanvas(fabricCanvasInstance);
 
     const resizeCanvas = () => {
-      const { width: containerWidth } = canvasElement.parentNode.getBoundingClientRect();
+      const { width: containerWidth } =
+        canvasElement.parentNode.getBoundingClientRect();
       const scaleFactor = containerWidth / 1080;
       const canvasWidth = 1080 * scaleFactor;
       const canvasHeight = 1920 * scaleFactor;
-      fabricCanvasInstance.setDimensions({ width: canvasWidth, height: canvasHeight });
+      fabricCanvasInstance.setDimensions({
+        width: canvasWidth,
+        height: canvasHeight,
+      });
       fabricCanvasInstance.setZoom(scaleFactor);
     };
 
@@ -63,10 +68,17 @@ const StepThree = ({ handleNext }) => {
 
   useEffect(() => {
     if (fabricCanvas && selectedImage && typeof selectedImage === "string") {
-      fabric.Image.fromURL(selectedImage, (img) => {
-        img.set({ left: 0, top: 0, selectable: false, evented: false });
-        fabricCanvas.setBackgroundImage(img, fabricCanvas.renderAll.bind(fabricCanvas));
-      }, { crossOrigin: "anonymous" });
+      fabric.Image.fromURL(
+        selectedImage,
+        (img) => {
+          img.set({ left: 0, top: 0, selectable: false, evented: false });
+          fabricCanvas.setBackgroundImage(
+            img,
+            fabricCanvas.renderAll.bind(fabricCanvas)
+          );
+        },
+        { crossOrigin: "anonymous" }
+      );
     }
   }, [fabricCanvas, selectedImage]);
 
@@ -94,7 +106,6 @@ const StepThree = ({ handleNext }) => {
       fabricCanvas.renderAll();
       toast.success("Text added to the canvas!");
 
-      // Clear input fields
       setText("");
       setFont("");
       setColor("black");
@@ -125,13 +136,23 @@ const StepThree = ({ handleNext }) => {
         const image = imageResponse.data.secure_url;
         setSelectedElement(image);
 
-        fabric.Image.fromURL(image, (img) => {
-          img.set({ left: 150, top: 150, angle: 0, padding: 10, cornersize: 10 });
-          img.scaleToWidth(fabricCanvas.width / 2);
-          fabricCanvas.add(img).setActiveObject(img);
-          fabricCanvas.renderAll();
-          toast.success("Image uploaded successfully!");
-        }, { crossOrigin: "anonymous" });
+        fabric.Image.fromURL(
+          image,
+          (img) => {
+            img.set({
+              left: 150,
+              top: 150,
+              angle: 0,
+              padding: 10,
+              cornersize: 10,
+            });
+            img.scaleToWidth(fabricCanvas.width / 2);
+            fabricCanvas.add(img).setActiveObject(img);
+            fabricCanvas.renderAll();
+            toast.success("Image uploaded successfully!");
+          },
+          { crossOrigin: "anonymous" }
+        );
       } catch (error) {
         console.error("Error uploading image:", error);
         toast.error("Error uploading image.");
@@ -164,13 +185,23 @@ const StepThree = ({ handleNext }) => {
         const image = imageResponse.data.secure_url;
         setSelectedElement(image);
 
-        fabric.Image.fromURL(image, (img) => {
-          img.set({ left: 300, top: 300, angle: 0, padding: 10, cornersize: 10 });
-          img.scaleToWidth(fabricCanvas.width / 2);
-          fabricCanvas.add(img).setActiveObject(img);
-          fabricCanvas.renderAll();
-          toast.success("Element uploaded successfully!");
-        }, { crossOrigin: "anonymous" });
+        fabric.Image.fromURL(
+          image,
+          (img) => {
+            img.set({
+              left: 300,
+              top: 300,
+              angle: 0,
+              padding: 10,
+              cornersize: 10,
+            });
+            img.scaleToWidth(fabricCanvas.width / 2);
+            fabricCanvas.add(img).setActiveObject(img);
+            fabricCanvas.renderAll();
+            toast.success("Element uploaded successfully!");
+          },
+          { crossOrigin: "anonymous" }
+        );
       } catch (error) {
         console.error("Error uploading image:", error);
         toast.error("Error uploading element.");
