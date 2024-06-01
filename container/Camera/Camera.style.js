@@ -6,7 +6,7 @@ export const Container = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2; /* Make sure the backdrop is above the camera preview */
+  z-index: 1; /* Ensure Container is the lowest layer */
 `;
 
 export const BackdropOverlay = styled.div`
@@ -18,7 +18,7 @@ export const BackdropOverlay = styled.div`
   background-image: url(${props => props.backdropUrl});
   background-size: cover;
   background-position: center;
-  z-index: 3;
+  z-index: 2; /* Ensure BackdropOverlay is above the Container and Video */
 `;
 
 export const Header = styled.div`
@@ -34,21 +34,22 @@ export const Buttons = styled.div`
   position: absolute;
   bottom: 50px;
   width: 100%;
-  z-index: 4;
+  z-index: 3; /* Ensure Buttons are above the BackdropOverlay */
 `;
 
 export const Video = styled.video`
   width: 100%;
   height: 100%;
   object-fit: cover; /* Ensure the video fills the container */
-  z-index: 1;
+  z-index: 1; /* Ensure Video is above the Container but below the BackdropOverlay */
 `;
 
 export const Span = styled.span`
   color: #fff;
   font-size: 18px;
-  position:absolute ;
-  top:10px;
-  left:50%;
-
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3; /* Ensure Span is above the BackdropOverlay */
 `;
