@@ -106,21 +106,10 @@ const Camera = ({ events }) => {
           });
         }
 
-        canvas.toBlob(async (blob) => {
-          audioRef.current.play();
-          const formData = new FormData();
-          formData.append("file", blob);
-          formData.append("upload_preset", "za8tsrje");
-
-          const response = await axios.post(
-            "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
-            formData
-          );
-
-          const imageUrl = response.data.secure_url;
-          setCapturedImages((prevImages) => [...prevImages, imageUrl]);
-          setPhotosTaken((prevCount) => prevCount + 1);
-        }, "image/jpeg");
+        const imageUrl = canvas.toDataURL("image/jpeg");
+        setCapturedImages((prevImages) => [...prevImages, imageUrl]);
+        setPhotosTaken((prevCount) => prevCount + 1);
+        audioRef.current.play();
       } else {
         toast.warning("Maximum number of photos reached.");
       }
@@ -164,20 +153,9 @@ const Camera = ({ events }) => {
           });
         }
 
-        canvas.toBlob(async (finalBlob) => {
-          const formData = new FormData();
-          formData.append("file", finalBlob);
-          formData.append("upload_preset", "za8tsrje");
-
-          const response = await axios.post(
-            "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
-            formData
-          );
-
-          const imageUrl = response.data.secure_url;
-          setCapturedImages((prevImages) => [...prevImages, imageUrl]);
-          setPhotosTaken((prevCount) => prevCount + 1);
-        }, "image/jpeg");
+        const imageUrl = canvas.toDataURL("image/jpeg");
+        setCapturedImages((prevImages) => [...prevImages, imageUrl]);
+        setPhotosTaken((prevCount) => prevCount + 1);
       } else {
         takePictureFallback(); // Fallback for devices without ImageCapture support
       }
@@ -196,15 +174,33 @@ const Camera = ({ events }) => {
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
+      const formData = new FormData();
+
+      capturedImages.forEach((image, index) => {
+        const blob = dataURLtoBlob(image);
+        formData.append("file", blob, `photo${index}.jpg`);
+      });
+
+      formData.append("upload_preset", "za8tsrje");
+
+      const responses = await Promise.all(
+        capturedImages.map((image) =>
+          axios.post("https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+        )
+      );
+
+      const imageUrls = responses.map((res) => res.data.secure_url);
       const payload = {
         inviteeName,
-        image: capturedImages,
+        image: imageUrls,
         eventId,
       };
-      await axios.post(
-        `https://api-cliqpod.koyeb.app/camera/${eventId}`,
-        payload
-      );
+
+      await axios.post(`https://api-cliqpod.koyeb.app/camera/${eventId}`, payload);
       toast.success("Images saved!");
       router.push("/");
     } catch (error) {
@@ -215,10 +211,23 @@ const Camera = ({ events }) => {
     }
   };
 
+  const dataURLtoBlob = (dataURL) => {
+    const byteString = atob(dataURL.split(",")[1]);
+    const mimeString = dataURL.split(",")[0].split(":")[1].split(";")[0];
+    const buffer = new ArrayBuffer(byteString.length);
+    const dataView = new Uint8Array(buffer);
+
+    for (let i = 0; i < byteString.length; i++) {
+      dataView[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([buffer], { type: mimeString });
+  };
+
   return (
     <Container>
       <BackdropOverlay backdropUrl={events?.event_image} />
-      <Video ref={videoRef} autoPlay playsInline></Video>
+      <Video ref={videoRef} autoPlay playsInline style={{ transform: facingMode === FACING_MODE_USER ? "scaleX(-1)" : "scaleX(1)" }}></Video>
       <Buttons className="button">
         {photosTaken === events.photosPerPerson ? (
           "done"
@@ -239,7 +248,7 @@ const Camera = ({ events }) => {
       </Span>
 
       {photosTaken === events.photosPerPerson && (
-        <Modal isOpen={isOpen}>
+        <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent
             display={"flex"}

@@ -18,6 +18,7 @@ export const BackdropOverlay = styled.div`
   background-image: url(${props => props.backdropUrl});
   background-size: cover;
   background-position: center;
+  z-index: 3;
 `;
 
 export const Header = styled.div`
@@ -33,6 +34,7 @@ export const Buttons = styled.div`
   position: absolute;
   bottom: 50px;
   width: 100%;
+  z-index: 4;
 `;
 
 export const Video = styled.video`
