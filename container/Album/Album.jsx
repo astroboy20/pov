@@ -10,9 +10,9 @@ import useFetchItems from "@/hooks/useFetchItems";
 const Album = ({ eventData }) => {
   const [currentImageIndices, setCurrentImageIndices] = useState({});
   const [event, setEvent] = useState(null);
-  const router = useRouter();
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
+  const router = useRouter();
 
   const handleRoute = () => {
     router.push("/event");
@@ -38,16 +38,16 @@ const Album = ({ eventData }) => {
     }
   };
 
-  const handleTouchStart = useCallback((e) => {
+  const handleTouchStart = (e) => {
     setTouchStart(e.targetTouches[0].clientX);
-  }, []);
+  };
 
-  const handleTouchMove = useCallback((e) => {
+  const handleTouchMove = (e) => {
     setTouchEnd(e.targetTouches[0].clientX);
-  }, []);
+  };
 
-  const handleTouchEnd = useCallback((inviteeId) => {
-    if (!touchStart || !touchEnd) return;
+  const handleTouchEnd = (inviteeId) => {
+    if (touchStart === null || touchEnd === null) return;
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > 50;
     const isRightSwipe = distance < -50;
@@ -57,7 +57,11 @@ const Album = ({ eventData }) => {
 
     setTouchStart(null);
     setTouchEnd(null);
-  }, [touchStart, touchEnd]);
+  };
+
+  useEffect(() => {
+    console.log("Event Data:", eventData);
+  }, [eventData]);
 
   const imagesWithNames = Array.isArray(eventData)
     ? eventData.map((event) => {
