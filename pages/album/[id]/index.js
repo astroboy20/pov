@@ -9,8 +9,7 @@ import useFetchItems from "@/hooks/useFetchItems";
 import { EventSpinner } from "@/components/Spinner/Spinner";
 import { BottomNav } from "@/components/BottomNav";
 
-const EventID = ({ searchParams }) => {
-  console.log("event:", searchParams);
+const EventID = () => {
   const router = useRouter();
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
@@ -22,11 +21,7 @@ const EventID = ({ searchParams }) => {
   const setId =
     typeof window !== "undefined" && localStorage.setItem("id", eventId);
 
-  const { data: eventDetails } = useFetchItems({
-    url: "https://api-cliqpod.koyeb.app/events",
-    token: accessToken,
-  });
-
+ 
   const { data, isLoading } = useFetchItems({
     url: `https://api-cliqpod.koyeb.app/gallery/${eventId}`,
     token: accessToken,
@@ -38,12 +33,12 @@ const EventID = ({ searchParams }) => {
       setEventData(data);
     }
   }, [data]);
-  // console.log(eventData)
+
   if (isLoading) return <EventSpinner />;
   return (
     <ProtectedRoute>
       <Album eventData={eventData} />
-      {/* <BottomNav/> */}
+    
     </ProtectedRoute>
   );
 };
