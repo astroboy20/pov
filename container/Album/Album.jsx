@@ -1,27 +1,21 @@
-import { PurpleSpinner } from "@/components/Spinner/Spinner";
 import { useEffect, useState } from "react";
-import { AlbumContainer } from "./Album.style";
-import { CustomText } from "@/components/CustomText";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { GalleryModal } from "@/components/Modal";
-import { BackIconWhite } from "@/assets";
 import { useSelector } from "react-redux";
+import { useSwipeable } from "react-swipeable";
+import { PurpleSpinner } from "@/components/Spinner/Spinner";
+import { AlbumContainer } from "./Album.style";
+import { BackIcon } from "@/assets";
 import useFetchItems from "@/hooks/useFetchItems";
+import { GalleryModal } from "@/components/Modal";
 
 const Album = ({ eventData }) => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [currentView, setCurrentView] = useState("all");
   const [event, setEvent] = useState([]);
 
-  const handleImageClick = (imageUrl) => {
-    setSelectedImage(imageUrl);
-    setShowModal(true);
-  };
-
   const router = useRouter();
-
   const handleRoute = () => {
     router.push("/event");
   };
@@ -30,12 +24,30 @@ const Album = ({ eventData }) => {
     setCurrentView(view);
   };
 
-  // Collect all images into a single array
+  const handleImageClick = (index) => {
+    setSelectedImageIndex(index);
+    setShowModal(true);
+  };
+
+  const handleNextImage = () => {
+    setSelectedImageIndex((prev) => (prev + 1) % allImages.length);
+  };
+
+  const handlePrevImage = () => {
+    setSelectedImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
+  };
+
+  const handlers = useSwipeable({
+    onSwipedLeft: handleNextImage,
+    onSwipedRight: handlePrevImage,
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true
+  });
+
   const allImages = Array.isArray(eventData)
     ? eventData.reduce((acc, event) => acc.concat(event?.image || []), [])
     : [];
 
-  // Map eventData to get name and respective images
   const imagesWithNames = Array.isArray(eventData)
     ? eventData.map((event) => (
         <div key={event?._id} className="invitee-section">
@@ -46,12 +58,12 @@ const Album = ({ eventData }) => {
             {event?.image?.map((image, index) => (
               <div key={index} className="image-wrapper">
                 <Image
-                  width={1080}
-                  height={1920}
+                  width={1920}
+                  height={1080}
                   src={image}
                   alt="event photo"
                   className="image-image"
-                  onClick={() => handleImageClick(image)}
+                  onClick={() => handleImageClick(allImages.indexOf(image))}
                   objectFit="cover"
                 />
               </div>
@@ -79,7 +91,7 @@ const Album = ({ eventData }) => {
     <AlbumContainer background={event?.event_thumbnail}>
       <div className="header">
         <span onClick={handleRoute}>
-          <BackIconWhite />
+          <BackIcon />
         </span>
         <h1>{event?.eventName}</h1>
         <span style={{ color: "white" }}>.</span>
@@ -105,12 +117,12 @@ const Album = ({ eventData }) => {
                   {allImages?.map((image, index) => (
                     <div key={index} className="image-wrapper">
                       <Image
-                        width={1080}
-                        height={1920}
+                        width={1920}
+                        height={1080}
                         src={image}
                         alt="event photo"
                         className="image-image"
-                        onClick={() => handleImageClick(image)}
+                        onClick={() => handleImageClick(index)}
                         objectFit="cover"
                       />
                     </div>
@@ -120,19 +132,14 @@ const Album = ({ eventData }) => {
                 <div className="images-with-names">{imagesWithNames}</div>
               )}
 
-              <GalleryModal
-                show={showModal}
-                onClose={() => {
-                  setShowModal(false);
-                }}
-              >
-                <div className="selected-image">
+              <GalleryModal show={showModal} onClose={() => setShowModal(false)}>
+                <div className="selected-image" {...handlers}>
                   <Image
-                    width={500}
-                    height={500}
-                    src={selectedImage}
+                    width={1920}
+                    height={1080}
+                    src={allImages[selectedImageIndex]}
                     alt="event photo"
-                    objectFit="cover"
+                    objectFit="contain"
                   />
                 </div>
               </GalleryModal>
@@ -152,6 +159,7 @@ const Album = ({ eventData }) => {
           )}
         </>
       )}
+
       <div className="toggle">
         <h1
           onClick={() => handleToggleClick("all")}

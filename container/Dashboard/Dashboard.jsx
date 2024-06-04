@@ -141,7 +141,7 @@ const Dashboard = () => {
                 <div className="text">
                   <p>{event?.eventName}</p>
                   <Link href={`/album/${event?._id}`}>
-                    <span>View Albums</span>
+                    <span>View Album</span>
                   </Link>
                 </div>
               </EventBody>

@@ -5,15 +5,14 @@ export const AlbumContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  // gap: 20px;
 
   .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 6%;
-    background-image: url(${(props) => props.background});
-    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
     background-size: cover;
     background-position: center;
   }
@@ -50,7 +49,16 @@ export const AlbumContainer = styled.div`
   }
 
   .selected-image {
-    border-radius: 10px;
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .invitee-section {
