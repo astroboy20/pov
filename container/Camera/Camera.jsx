@@ -52,7 +52,11 @@ const Camera = ({ events }) => {
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode },
+        video: {
+          facingMode,
+          width: { ideal: 1080 }, // Request a high resolution
+          height: { ideal: 1920 },
+        },
       });
       videoRef.current.srcObject = stream;
     } catch (error) {
@@ -106,7 +110,7 @@ const Camera = ({ events }) => {
           });
         }
 
-        const imageUrl = canvas.toDataURL("image/jpeg");
+        const imageUrl = canvas.toDataURL("image/png");
         setCapturedImages((prevImages) => [...prevImages, imageUrl]);
         setPhotosTaken((prevCount) => prevCount + 1);
         audioRef.current.play();
@@ -153,7 +157,7 @@ const Camera = ({ events }) => {
           });
         }
 
-        const imageUrl = canvas.toDataURL("image/jpeg");
+        const imageUrl = canvas.toDataURL("image/png");
         setCapturedImages((prevImages) => [...prevImages, imageUrl]);
         setPhotosTaken((prevCount) => prevCount + 1);
       } else {
@@ -185,11 +189,15 @@ const Camera = ({ events }) => {
 
       const responses = await Promise.all(
         capturedImages.map((image) =>
-          axios.post("https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
+          axios.post(
+            "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
         )
       );
 
@@ -200,7 +208,10 @@ const Camera = ({ events }) => {
         eventId,
       };
 
-      await axios.post(`https://api-cliqpod.koyeb.app/camera/${eventId}`, payload);
+      await axios.post(
+        `https://api-cliqpod.koyeb.app/camera/${eventId}`,
+        payload
+      );
       toast.success("Images saved!");
       router.push("/");
     } catch (error) {
@@ -227,7 +238,15 @@ const Camera = ({ events }) => {
   return (
     <Container>
       <BackdropOverlay backdropUrl={events?.event_image} />
-      <Video ref={videoRef} autoPlay playsInline style={{ transform: facingMode === FACING_MODE_USER ? "scaleX(-1)" : "scaleX(1)" }}></Video>
+      <Video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        style={{
+          transform:
+            facingMode === FACING_MODE_USER ? "scaleX(-1)" : "scaleX(1)",
+        }}
+      ></Video>
       <Buttons className="button">
         {photosTaken === events.photosPerPerson ? (
           "done"

@@ -30,28 +30,45 @@ export const AlbumContainer = styled.div`
     color: white;
   }
 
-  .all-image {
-    margin-bottom: 20px;
-  }
-
-  .all-image::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-  }
-
-  .image {
-    display: grid;
-    justify-content: center;
-    grid-template-columns: repeat(2, 1fr);
+  .image-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
   }
 
   .image-wrapper {
-    overflow: hidden; /* Ensure the image fits within the wrapper */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+  }
+
+  .indicator {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .indicator.active {
+    background: rgba(255, 255, 255, 1);
   }
 
   .selected-image {
     position: relative;
-    width: 1920px;
-    height: 1080px;
+    height: 1920px;
+    width: 1080px;
     max-width: 100%;
     max-height: 100%;
     margin: auto;
@@ -67,45 +84,5 @@ export const AlbumContainer = styled.div`
 
   .images-with-names {
     margin-top: 20px;
-  }
-
-  .toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    bottom: 50px;
-    background: #fff;
-    width: 90%;
-    margin: 0 5%;
-    padding: 3% 3%;
-    border-radius: 80px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-  }
-
-  .toggle h1 {
-    text-align: center;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  .toggle h1.active {
-    background-color: #1d1465;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 5px 10px;
-    animation: toggleActive 0.3s ease;
-  }
-
-  @keyframes toggleActive {
-    from {
-      transform: scale(1);
-    }
-    to {
-      transform: scale(1.1);
-    }
   }
 `;
