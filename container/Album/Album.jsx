@@ -10,7 +10,7 @@ import { useSwipeable } from "react-swipeable";
 
 const Album = ({ eventData }) => {
   const [event, setEvent] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndexes, setCurrentIndexes] = useState({});
   const router = useRouter();
 
   const handleRoute = () => {
@@ -32,18 +32,32 @@ const Album = ({ eventData }) => {
     }
   }, [data]);
 
-  const handlers = useSwipeable({
-    onSwipedLeft: () =>
-      setCurrentIndex((prevIndex) =>
-        prevIndex < eventData.length - 1 ? prevIndex + 1 : prevIndex
-      ),
-    onSwipedRight: () =>
-      setCurrentIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : prevIndex
-      ),
+  const handleSwipe = (id, direction) => {
+    setCurrentIndexes((prevIndexes) => {
+      const newIndexes = { ...prevIndexes };
+      if (direction === "left") {
+        newIndexes[id] = Math.min(newIndexes[id] + 1, eventData[id].image.length - 1);
+      } else if (direction === "right") {
+        newIndexes[id] = Math.max(newIndexes[id] - 1, 0);
+      }
+      return newIndexes;
+    });
+  };
+
+  const handlers = (id) => useSwipeable({
+    onSwipedLeft: () => handleSwipe(id, "left"),
+    onSwipedRight: () => handleSwipe(id, "right"),
     preventDefaultTouchmoveEvent: true,
     trackMouse: true,
   });
+
+  useEffect(() => {
+    const initialIndexes = {};
+    eventData.forEach(event => {
+      initialIndexes[event._id] = 0;
+    });
+    setCurrentIndexes(initialIndexes);
+  }, [eventData]);
 
   if (isLoading) {
     return (
@@ -86,8 +100,9 @@ const Album = ({ eventData }) => {
       </div>
 
       <div className="images-with-names">
-        {eventData.map((event, index) => {
+        {eventData.map((event) => {
           const eventImages = event?.image;
+          const currentIndex = currentIndexes[event._id] || 0;
 
           return (
             <div key={event._id} className="invitee-section">
@@ -101,7 +116,7 @@ const Album = ({ eventData }) => {
                 {event.inviteeName}
               </h1>
               <div className="image-carousel">
-                <div {...handlers} className="image-wrapper">
+                <div {...handlers(event._id)} className="image-wrapper">
                   <Image
                     width={1080}
                     height={1920}
