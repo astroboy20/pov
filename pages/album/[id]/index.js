@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import axios from "axios";
-import { toast } from "react-toastify";
 import { Album } from "@/container/Album";
 import { ProtectedRoute } from "@/container/ProtectedRoutes/ProtectedRoute";
 import useFetchItems from "@/hooks/useFetchItems";
@@ -14,19 +12,19 @@ const EventID = () => {
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const { id: eventId } = router.query;
-  const query = router.query;
-  console.log(query);
 
   const [eventData, setEventData] = useState([]);
-  const setId =
-    typeof window !== "undefined" && localStorage.setItem("id", eventId);
 
- 
+  useEffect(() => {
+    if (eventId) {
+      localStorage.setItem("event-id", eventId);
+    }
+  }, [eventId]);
+
   const { data, isLoading } = useFetchItems({
-    url: `https://api-cliqpod.koyeb.app/gallery/${eventId}`,
+    url: eventId ? `https://api-cliqpod.koyeb.app/gallery/${eventId}` : null,
     token: accessToken,
   });
-
 
   useEffect(() => {
     if (data) {
@@ -35,10 +33,11 @@ const EventID = () => {
   }, [data]);
 
   if (isLoading) return <EventSpinner />;
+
   return (
     <ProtectedRoute>
       <Album eventData={eventData} />
-    
+      <BottomNav />
     </ProtectedRoute>
   );
 };
