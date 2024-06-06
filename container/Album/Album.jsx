@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useSelector } from "react-redux";
@@ -6,47 +6,19 @@ import { PurpleSpinner } from "@/components/Spinner/Spinner";
 import { AlbumContainer } from "./Album.style";
 import { BackIcon } from "@/assets";
 import useFetchItems from "@/hooks/useFetchItems";
+import { useSwipeable } from "react-swipeable";
 
 const Album = ({ eventData }) => {
-  const [currentImageIndices, setCurrentImageIndices] = useState({});
   const [event, setEvent] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const router = useRouter();
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
 
   const handleRoute = () => {
     router.push("/event");
   };
 
-  const handleNextImage = useCallback((inviteeId) => {
-    setCurrentImageIndices((prev) => {
-      const currentIndex = prev[inviteeId] || 0;
-      const eventImages = eventData.find((event) => event._id === inviteeId)?.image || [];
-      const nextIndex = (currentIndex + 1) % eventImages.length;
-      return { ...prev, [inviteeId]: nextIndex };
-    });
-  }, [eventData]);
-
-  const handlePrevImage = useCallback((inviteeId) => {
-    setCurrentImageIndices((prev) => {
-      const currentIndex = prev[inviteeId] || 0;
-      const eventImages = eventData.find((event) => event._id === inviteeId)?.image || [];
-      const prevIndex = (currentIndex - 1 + eventImages.length) % eventImages.length;
-      return { ...prev, [inviteeId]: prevIndex };
-    });
-  }, [eventData]);
-
-  useEffect(() => {
-    if (Array.isArray(eventData)) {
-      const initialIndices = eventData.reduce((acc, event) => {
-        acc[event._id] = 0;
-        return acc;
-      }, {});
-      setCurrentImageIndices(initialIndices);
-    }
-  }, [eventData]);
-
-  const eventId = typeof window !== "undefined" ? localStorage.getItem("event-id") : null;
+  const eventId =
+    typeof window !== "undefined" ? localStorage.getItem("event-id") : null;
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
   const { data, isLoading } = useFetchItems({
@@ -60,22 +32,18 @@ const Album = ({ eventData }) => {
     }
   }, [data]);
 
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchMove = (e) => {
-    touchEndX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (inviteeId) => {
-    if (touchStartX.current - touchEndX.current > 50) {
-      handleNextImage(inviteeId);
-    }
-    if (touchStartX.current - touchEndX.current < -50) {
-      handlePrevImage(inviteeId);
-    }
-  };
+  const handlers = useSwipeable({
+    onSwipedLeft: () =>
+      setCurrentIndex((prevIndex) =>
+        prevIndex < eventData.length - 1 ? prevIndex + 1 : prevIndex
+      ),
+    onSwipedRight: () =>
+      setCurrentIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : prevIndex
+      ),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
 
   if (isLoading) {
     return (
@@ -92,6 +60,21 @@ const Album = ({ eventData }) => {
     );
   }
 
+  if (!eventData.length) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h1>No images available</h1>
+      </div>
+    );
+  }
+
   return (
     <AlbumContainer background={event?.event_thumbnail}>
       <div className="header">
@@ -103,23 +86,22 @@ const Album = ({ eventData }) => {
       </div>
 
       <div className="images-with-names">
-        {eventData.map((event) => {
-          const currentIndex = currentImageIndices[event._id] || 0;
-          const eventImages = event.image || [];
-          if (eventImages.length === 0) return null;
+        {eventData.map((event, index) => {
+          const eventImages = event?.image;
 
           return (
             <div key={event._id} className="invitee-section">
-              <h1 style={{ fontSize: "24px", fontWeight: "500", margin: "20px 10px" }}>
+              <h1
+                style={{
+                  fontSize: "24px",
+                  fontWeight: "500",
+                  margin: "20px 10px",
+                }}
+              >
                 {event.inviteeName}
               </h1>
-              <div
-                className="image-carousel"
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={() => handleTouchEnd(event._id)}
-              >
-                <div className="image-wrapper">
+              <div className="image-carousel">
+                <div {...handlers} className="image-wrapper">
                   <Image
                     width={1080}
                     height={1920}
@@ -130,17 +112,13 @@ const Album = ({ eventData }) => {
                   />
                 </div>
                 <div className="carousel-indicators">
-                  {eventImages.map((_, index) => (
-                    <span
-                      key={index}
-                      className={`indicator ${index === currentIndex ? "active" : ""}`}
-                      onClick={() =>
-                        setCurrentImageIndices((prev) => ({
-                          ...prev,
-                          [event._id]: index,
-                        }))
-                      }
-                    ></span>
+                  {eventImages.map((_, idx) => (
+                    <div
+                      key={idx}
+                      className={`indicator ${
+                        idx === currentIndex ? "active" : ""
+                      }`}
+                    ></div>
                   ))}
                 </div>
               </div>
