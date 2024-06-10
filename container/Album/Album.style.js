@@ -30,59 +30,32 @@ export const AlbumContainer = styled.div`
     color: white;
   }
 
-  .image-carousel {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .image-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-
-  .carousel-indicators {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 5px;
-  }
-
-  .indicator {
-    width: 10px;
-    height: 10px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    cursor: pointer;
-  }
-
-  .indicator.active {
-    background: rgba(255, 255, 255, 1);
-  }
-
-  .selected-image {
-    position: relative;
-    height: 1920px;
-    width: 1080px;
-    max-width: 100%;
-    max-height: 100%;
-    margin: auto;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .images-with-names {
+    margin-top: 20px;
   }
 
   .invitee-section {
     margin-bottom: 20px;
   }
 
-  .images-with-names {
-    margin-top: 20px;
+  .swiper-pagination-bullet {
+    background: rgba(255, 255, 255, 0.5);
+    width: 10px;
+    height: 10px;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: rgba(255, 255, 255, 1);
+  }
+
+  .swiper-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;

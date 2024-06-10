@@ -6,11 +6,13 @@ import { PurpleSpinner } from "@/components/Spinner/Spinner";
 import { AlbumContainer } from "./Album.style";
 import { BackIcon } from "@/assets";
 import useFetchItems from "@/hooks/useFetchItems";
-import { useSwipeable } from "react-swipeable";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+
 
 const Album = ({ eventData }) => {
   const [event, setEvent] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const router = useRouter();
 
   const handleRoute = () => {
@@ -31,19 +33,6 @@ const Album = ({ eventData }) => {
       setEvent(data.event);
     }
   }, [data]);
-
-  const handlers = useSwipeable({
-    onSwipedLeft: () =>
-      setCurrentIndex((prevIndex) =>
-        prevIndex < eventData.length - 1 ? prevIndex + 1 : prevIndex
-      ),
-    onSwipedRight: () =>
-      setCurrentIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : prevIndex
-      ),
-    preventDefaultTouchmoveEvent: true,
-    trackMouse: true,
-  });
 
   if (isLoading) {
     return (
@@ -86,46 +75,37 @@ const Album = ({ eventData }) => {
       </div>
 
       <div className="images-with-names">
-        {eventData.map((event, index) => {
-          const eventImages = event?.image;
-
-          return (
-            <div key={event._id} className="invitee-section">
-              <h1
-                style={{
-                  fontSize: "24px",
-                  fontWeight: "500",
-                  margin: "20px 10px",
-                }}
-              >
-                {event.inviteeName}
-              </h1>
-              <div className="image-carousel">
-                <div  className="image-wrapper">
+        {eventData.map((event) => (
+          <div key={event._id} className="invitee-section">
+            <h1
+              style={{
+                fontSize: "24px",
+                fontWeight: "500",
+                margin: "20px 10px",
+              }}
+            >
+              {event.inviteeName}
+            </h1>
+            <Swiper
+              spaceBetween={10}
+              slidesPerView={1}
+              pagination={{ clickable: true }}
+            >
+              {event.image.map((img, idx) => (
+                <SwiperSlide key={idx}>
                   <Image
                     width={1080}
                     height={1920}
-                    src={eventImages[currentIndex]}
+                    src={img}
                     alt="event photo"
                     className="image-image"
                     objectFit="cover"
-                    {...handlers}
                   />
-                </div>
-                <div className="carousel-indicators">
-                  {eventImages.map((_, idx) => (
-                    <div
-                      key={idx}
-                      className={`indicator ${
-                        idx === currentIndex ? "active" : ""
-                      }`}
-                    ></div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          );
-        })}
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        ))}
       </div>
     </AlbumContainer>
   );
