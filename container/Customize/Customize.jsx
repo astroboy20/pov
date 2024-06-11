@@ -3,41 +3,57 @@ import { CustomizeStyle } from "./Customize.style";
 import { BlueBackIcon } from "@/assets";
 import { StepOne } from "./Steps/StepOne";
 import { StepTwo } from "./Steps/StepTwo";
-import { StepThree } from "./Steps/StepThere";
+import { StepThree } from "./Steps/StepThree";
 import { StepFour } from "./Steps/StepFour";
 import { useRouter } from "next/router";
 
 const Customize = () => {
   const [currentStep, setCurrentStep] = useState(1);
- const router =  useRouter()
+  const [blankCanvas, setBlankCanvas] = useState(false);
+  const [cameFromNewTemplate, setCameFromNewTemplate] = useState(false);
+  const router = useRouter();
 
   const handleNext = () => {
     setCurrentStep((prev) => prev + 1);
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
   };
+
   const handlePrev = () => {
-    if (currentStep > 1) {
+    if (cameFromNewTemplate && currentStep === 3) {
+      setCurrentStep(1);
+      setCameFromNewTemplate(false);
+    } else if (currentStep > 1) {
       setCurrentStep((prev) => prev - 1);
+      setBlankCanvas(false);
     } else {
       router.push("/create-event");
     }
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
   };
 
   return (
     <CustomizeStyle>
       <div className="header">
-      <span onClick={handlePrev}>
+        <span onClick={handlePrev}>
           <BlueBackIcon />
         </span>
         <h1>Customize</h1>
         <span style={{ color: "white" }}>.</span>
       </div>
       <div className="body">
-        {currentStep === 1 && <StepOne setCurrentStep={setCurrentStep} handleNext={handleNext} />}
-        {currentStep === 2 && <StepTwo  handleNext={handleNext}/>}
-        {currentStep === 3 && <StepThree  handleNext={handleNext}/>}
-        {currentStep === 4 && <StepFour  handleNext={handleNext}/>}
+        {currentStep === 1 && (
+          <StepOne
+            setCurrentStep={setCurrentStep}
+            handleNext={handleNext}
+            setBlankCanvas={setBlankCanvas}
+            setCameFromNewTemplate={setCameFromNewTemplate}
+          />
+        )}
+        {currentStep === 2 && <StepTwo handleNext={handleNext} />}
+        {currentStep === 3 && (
+          <StepThree handleNext={handleNext} blankCanvas={blankCanvas} />
+        )}
+        {currentStep === 4 && <StepFour handleNext={handleNext} />}
       </div>
     </CustomizeStyle>
   );

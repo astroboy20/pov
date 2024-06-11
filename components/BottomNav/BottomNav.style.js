@@ -14,7 +14,6 @@ export const FeatureStyle = styled.div`
   justify-content: space-between;
   align-items:center ;
   padding: 3%;
-  /* width: 100%; */
   border: 0.8px solid #00000033;
 
   .event{

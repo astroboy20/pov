@@ -37,7 +37,6 @@ const EventID = () => {
   return (
     <ProtectedRoute>
       <Album eventData={eventData} />
-      <BottomNav />
     </ProtectedRoute>
   );
 };

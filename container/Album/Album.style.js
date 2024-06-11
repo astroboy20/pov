@@ -35,13 +35,14 @@ export const AlbumContainer = styled.div`
   }
 
   .invitee-section {
-    margin-bottom: 20px;
+    margin-bottom: 10px; /* Reduced space between sections */
   }
 
   .swiper-pagination-bullet {
-    background: rgba(255, 255, 255, 0.5);
-    width: 10px;
-    height: 10px;
+    background:red;
+    width: 8px;  // Smaller size for Instagram-like indicators
+    height: 8px;
+    margin: 0 4px; // Reduce space between indicators
   }
 
   .swiper-pagination-bullet-active {
@@ -57,5 +58,16 @@ export const AlbumContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+  }
+
+  .swiper-pagination {
+    position: absolute;
+    bottom: 10px;  // Position indicators at the bottom
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
 `;

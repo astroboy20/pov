@@ -19,7 +19,7 @@ import { Button } from "@/components/Button";
 import { fabric } from "fabric";
 import { toast } from "react-toastify";
 
-const StepThree = ({ handleNext }) => {
+const StepThree = ({ handleNext, blankCanvas }) => {
   const imageInfo =
     typeof window !== "undefined" && localStorage.getItem("image");
   const parsedData = JSON.parse(imageInfo);
@@ -37,6 +37,7 @@ const StepThree = ({ handleNext }) => {
   const MAX_FILE_SIZE_MB = 5;
   const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
+  // Initialize the canvas
   useEffect(() => {
     const canvasElement = canvasRef.current;
     const fabricCanvasInstance = new fabric.Canvas(canvasElement, {
@@ -66,21 +67,30 @@ const StepThree = ({ handleNext }) => {
     };
   }, []);
 
+  // Update the canvas background based on the selectedImage and blankCanvas
   useEffect(() => {
-    if (fabricCanvas && selectedImage && typeof selectedImage === "string") {
-      fabric.Image.fromURL(
-        selectedImage,
-        (img) => {
-          img.set({ left: 0, top: 0, selectable: false, evented: false });
-          fabricCanvas.setBackgroundImage(
-            img,
-            fabricCanvas.renderAll.bind(fabricCanvas)
-          );
-        },
-        { crossOrigin: "anonymous" }
-      );
+    if (fabricCanvas) {
+      fabricCanvas.clear(); // Clear the canvas before setting a new background
+      if (blankCanvas) {
+        fabricCanvas.setBackgroundColor(
+          "white",
+          fabricCanvas.renderAll.bind(fabricCanvas)
+        );
+      } else if (selectedImage && typeof selectedImage === "string") {
+        fabric.Image.fromURL(
+          selectedImage,
+          (img) => {
+            img.set({ left: 0, top: 0, selectable: false, evented: false });
+            fabricCanvas.setBackgroundImage(
+              img,
+              fabricCanvas.renderAll.bind(fabricCanvas)
+            );
+          },
+          { crossOrigin: "anonymous" }
+        );
+      }
     }
-  }, [fabricCanvas, selectedImage]);
+  }, [fabricCanvas, selectedImage, blankCanvas]);
 
   const handleAddText = () => {
     setIsAddTextModalOpen(true);
@@ -300,12 +310,7 @@ const StepThree = ({ handleNext }) => {
 
   const handleObjectScaling = (e) => {
     const obj = e.target;
-    const canvas = obj.canvas;
-    if (obj.currentHeight > canvas.height || obj.currentWidth > canvas.width) {
-      obj.scaleToHeight(canvas.height);
-      obj.scaleToWidth(canvas.width);
-    }
-    obj.setCoords();
+    if (!obj) return;
 
     if (obj.getBoundingRect().top < 0 || obj.getBoundingRect().left < 0) {
       obj.top = Math.max(obj.top, obj.getBoundingRect().height / 2);
@@ -314,20 +319,20 @@ const StepThree = ({ handleNext }) => {
 
     if (
       obj.getBoundingRect().top + obj.getBoundingRect().height >
-      canvas.height
+      fabricCanvas.height
     ) {
       obj.top = Math.min(
         obj.top,
-        canvas.height - obj.getBoundingRect().height / 2
+        fabricCanvas.height - obj.getBoundingRect().height / 2
       );
     }
     if (
       obj.getBoundingRect().left + obj.getBoundingRect().width >
-      canvas.width
+      fabricCanvas.width
     ) {
       obj.left = Math.min(
         obj.left,
-        canvas.width - obj.getBoundingRect().width / 2
+        fabricCanvas.width - obj.getBoundingRect().width / 2
       );
     }
   };

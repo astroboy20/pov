@@ -2,25 +2,28 @@ import { useState } from "react";
 import Image from "next/image";
 import { Button, Box } from "@chakra-ui/react";
 import { images } from "./Data";
-import { Edit } from "./StepFour";
 
 const StepTwo = ({ handleNext }) => {
   const imageInfo =
     typeof window !== "undefined" && localStorage.getItem("image");
   const parsedData = JSON.parse(imageInfo);
 
-  const [editItem, setEditItem] = useState(false);
   const [showMoreImages, setShowMoreImages] = useState(false);
 
   const showMore = () => {
     setShowMoreImages(!showMoreImages);
   };
-  const EditItem = () => {
-    setEditItem(!editItem);
-  };
+ 
 
   const eventName =
     typeof window !== "undefined" && localStorage.getItem("eventName");
+
+  const handleSelect = (src) => {
+    const selectedImage = images.find((image) => image.src === src);
+    typeof window != "undefined" &&
+      localStorage.setItem("image", JSON.stringify(selectedImage));
+    handleNext();
+  };
 
   return (
     <div className="preview-body">
@@ -77,11 +80,7 @@ const StepTwo = ({ handleNext }) => {
           </div>
         </div>
       )}
-      {/* {editItem && (
-        <div className="show-more">
-          <Edit/>
-        </div>
-      )} */}
+     
     </div>
   );
 };

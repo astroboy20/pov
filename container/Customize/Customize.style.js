@@ -4,9 +4,10 @@ export const CustomizeStyle = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 6% 4%;
+  padding: 3% 4%;
   overflow: scroll;
-  height:130dvh ;
+  height: 910px;
+  width: 100%;
 
   .header {
     display: flex;
@@ -45,28 +46,31 @@ export const CustomizeStyle = styled.div`
     display: block;
   }
 
-  .images{
-    display:grid ;
-    grid-template-columns:repeat(2, 1fr) ;
-    row-gap:10px;
-    column-gap:10px;
+  .images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 10px;
+    column-gap: 10px;
   }
-  .customize-page{
-    width:100% ;
-    height:100% ;
+
+  .customize-page {
+    width: 100%;
+    height: 100%;
     display: flex;
-    justify-content:center ;
-    font-size:16px ;
-    font-weight:500 ;
-    text-decoration:underline ;
-    align-items:center ;
-    background-color:#f9eac2 ;
-    padding:5%;
-    text-align:center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: underline;
+    align-items: center;
+    background-color: #f9eac2;
+    padding: 5%;
+    text-align: center;
   }
-  .show-more{
-    margin-bottom:100px ;
+
+  .show-more {
+    margin-bottom: 100px;
   }
+
   .show-more .image {
     display: flex;
     gap: 10px;
@@ -77,12 +81,14 @@ export const CustomizeStyle = styled.div`
     flex-direction: column;
     gap: 40px;
   }
+
   .preview {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     align-items: center;
   }
+
   .text {
     display: flex;
     flex-direction: column;
@@ -119,18 +125,19 @@ export const CustomizeStyle = styled.div`
 
   .item {
     display: grid;
-    grid-template-columns:repeat(3, 1fr) ;
-    /* align-items: center; */
+    grid-template-columns: repeat(3, 1fr);
     gap: 5px;
-    margin-bottom: 100px;
-    margin-top:10px ;
+    margin-bottom: 20px;
+    margin-top: 10px;
   }
+
   .sub-items {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
   }
+
   .sub-items p {
     font-size: 12px;
     font-weight: 400;
@@ -157,7 +164,7 @@ export const CustomizeStyle = styled.div`
     color: black;
     background: #f2f3f4;
     box-shadow: 2px 2px 4px 0px #0000001f;
-    padding:3%;
+    padding: 3%;
   }
 
   .final-text {
@@ -175,6 +182,7 @@ export const CustomizeStyle = styled.div`
     font-size: 12px;
     font-weight: 400;
   }
+
   .final-text span {
     font-size: 14px;
     font-weight: 800;
