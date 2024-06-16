@@ -6,7 +6,7 @@ import { Button } from "@/components/Button";
 import { Spinner } from "@/components/Spinner";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
-import { login, reset, googleLogin } from "@/feature/slices/authSlice";
+import { login, reset, googleLogin, googleLogin_Invitee } from "@/feature/slices/authSlice";
 import { Logo } from "@/assets";
 
 const Auth = ({ event }) => {
@@ -20,7 +20,7 @@ const Auth = ({ event }) => {
   };
 
   const handleGoogleLogin = async () => {
-    dispatch(googleLogin());
+    dispatch(googleLogin_Invitee());
   };
 
   return (
