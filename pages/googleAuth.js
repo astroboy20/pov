@@ -29,7 +29,7 @@ const GoogleAuth = () => {
 
       if (invitee === "true") {
         router.push("/invitee-home");
-      } else {
+      } else if (user && invitee === "") {
         router.push("/dashboard");
       }
 
