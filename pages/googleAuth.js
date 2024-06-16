@@ -29,6 +29,7 @@ const GoogleAuth = () => {
   useEffect(() => {
     if (isSuccess && redirecting && isAuthenticated) {
       const invitee = searchParams.get("invitee");
+      const token = searchParams.get("token");
       console.log("Invitee:", invitee);
       console.log("User:", user);
 
