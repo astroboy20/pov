@@ -38,7 +38,7 @@ const GoogleAuth = () => {
 
       toast.success("Login Successful");
     }
-  }, [isSuccess, redirecting, isAuthenticated, user, router, searchParams]);
+  }, [isSuccess, redirecting, user, router, searchParams]);
 
   return (
     <div
