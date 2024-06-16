@@ -14,7 +14,7 @@ const Success = () => {
   const [isCopied, setIsCopied] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const accessToken = user ? user.token : "";
-  const [event, setEvent] = useState([]);
+  const [event, setEvent] = useState(null);
   const router = useRouter();
 
   const qrCodeRef = useRef(null);
@@ -29,9 +29,9 @@ const Success = () => {
         link.href = image;
         link.download = "captured_element.png";
         link.click();
-        router.push("/event");
       });
     }
+    router.push("/event");
   };
 
   const copyTextToClipboard = async (text) => {
@@ -69,7 +69,9 @@ const Success = () => {
   }, [data]);
 
   if (isLoading) return <EventSpinner />;
-  
+
+  console.log(event?._id);
+
   return (
     <QRContainer ref={qrCodeRef}>
       <>
