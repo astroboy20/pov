@@ -15,6 +15,8 @@ const GoogleAuth = () => {
 
   useEffect(() => {
     const token = searchParams.get("token");
+    const invitee = searchParams.get("invitee")
+    console.log("c",invitee)
     if (token) {
       dispatch(setUser(token));
       setRedirecting(true);

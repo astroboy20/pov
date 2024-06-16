@@ -22,7 +22,8 @@ const login = async (userData) => {
 };
 
 const login_google = async () => {
-  window.location.href = "https://api-cliqpod.koyeb.app/auth/google";
+  window.location.href =
+    "https://api-cliqpod.koyeb.app/auth/google?invitee=true";
 };
 
 //logout user
