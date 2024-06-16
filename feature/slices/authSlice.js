@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authService from "./authService";
-import { toast } from "react-toastify";
 
 const initialState = {
   user: null,
@@ -8,9 +7,10 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: "",
+  isAuthenticated: false,
 };
 
-//Register user
+// Register user
 export const register = createAsyncThunk(
   "auth/register",
   async (user, thunkAPI) => {
@@ -21,21 +21,12 @@ export const register = createAsyncThunk(
         (error.response && error.response.data && error.response.data.error) ||
         error.message ||
         error.toString();
-
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message === "User with this email already exists"
-      ) {
-        return thunkAPI.rejectWithValue("User with this email already exists");
-      }
-
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 
-//Register user
+// Login user
 export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
   try {
     return await authService.login(user);
@@ -44,16 +35,16 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
       (error.response && error.response.data && error.response.data.error) ||
       error.message ||
       error.toString();
-
     return thunkAPI.rejectWithValue(message);
   }
 });
 
-//logout
+// Logout user
 export const logout = createAsyncThunk("auth/logout", async () => {
   return await authService.logout();
 });
 
+// Google login
 export const googleLogin = createAsyncThunk(
   "auth/login_google",
   async (_, thunkAPI) => {
@@ -64,11 +55,12 @@ export const googleLogin = createAsyncThunk(
         (error.response && error.response.data && error.response.data.error) ||
         error.message ||
         error.toString();
-
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
+
+// Google login for invitee
 export const googleLogin_Invitee = createAsyncThunk(
   "auth/login_google_invitee",
   async (_, thunkAPI) => {
@@ -79,7 +71,6 @@ export const googleLogin_Invitee = createAsyncThunk(
         (error.response && error.response.data && error.response.data.error) ||
         error.message ||
         error.toString();
-
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -90,14 +81,17 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      (state.isError = false),
-        (state.isSuccess = false),
-        (state.isLoading = false),
-        (state.message = "");
+      state.isError = false;
+      state.isSuccess = false;
+      state.isLoading = false;
+      state.message = "";
+      state.isAuthenticated = false;
     },
     setUser: (state, action) => {
       state.isLoading = false;
       state.user = { token: action.payload };
+      state.isSuccess = true;
+      state.isAuthenticated = true;
     },
   },
   extraReducers: (builder) => {
@@ -108,18 +102,17 @@ const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.message = action.payload;
         state.isAuthenticated = true;
         state.user = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.message = action.payload || " Registration Failed";
+        state.message = action.payload || "Registration Failed";
         state.user = null;
       })
 
-      //login
+      // Login
       .addCase(login.pending, (state) => {
         state.isLoading = true;
       })
@@ -136,13 +129,15 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.user = null;
       })
-      //login with google
+
+      // Google login
       .addCase(googleLogin.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(googleLogin.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        state.isAuthenticated = true;
         state.user = action.payload;
       })
       .addCase(googleLogin.rejected, (state, action) => {
@@ -151,13 +146,15 @@ const authSlice = createSlice({
         state.message = action.payload || "Google Login Failed";
         state.user = null;
       })
-      //login with google invitee
+
+      // Google login invitee
       .addCase(googleLogin_Invitee.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(googleLogin_Invitee.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        state.isAuthenticated = true;
         state.user = action.payload;
       })
       .addCase(googleLogin_Invitee.rejected, (state, action) => {
@@ -169,7 +166,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { reset } = authSlice.actions;
-export const { setUser } = authSlice.actions;
-
+export const { reset, setUser } = authSlice.actions;
 export default authSlice.reducer;
