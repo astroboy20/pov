@@ -29,13 +29,13 @@ const GoogleAuth = () => {
   useEffect(() => {
     if (isSuccess && redirecting && isAuthenticated) {
       const invitee = searchParams.get("invitee");
-      const token = searchParams.get("token");
+
       console.log("Invitee:", invitee);
       console.log("User:", user);
 
-      if (invitee && token) {
+      if (invitee === "true") {
         router.push("/invitee-home");
-      } else if (token) {
+      } else {
         router.push("/dashboard");
       }
 
