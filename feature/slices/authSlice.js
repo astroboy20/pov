@@ -69,6 +69,21 @@ export const googleLogin = createAsyncThunk(
     }
   }
 );
+export const googleLogin_Invitee = createAsyncThunk(
+  "auth/login_google_invitee",
+  async (_, thunkAPI) => {
+    try {
+      return await authService.login_google_invitee();
+    } catch (error) {
+      const message =
+        (error.response && error.response.data && error.response.data.error) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -131,6 +146,21 @@ const authSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(googleLogin.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload || "Google Login Failed";
+        state.user = null;
+      })
+      //login with google invitee
+      .addCase(googleLogin_Invitee.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(googleLogin_Invitee.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(googleLogin_Invitee.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload || "Google Login Failed";

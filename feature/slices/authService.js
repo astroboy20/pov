@@ -22,6 +22,10 @@ const login = async (userData) => {
 };
 
 const login_google = async () => {
+  window.location.href = "https://api-cliqpod.koyeb.app/auth/google";
+};
+
+const login_google_invitee = async () => {
   window.location.href =
     "https://api-cliqpod.koyeb.app/auth/google?invitee=true";
 };
@@ -36,6 +40,7 @@ const authService = {
   logout,
   login,
   login_google,
+  login_google_invitee,
 };
 
 export default authService;
