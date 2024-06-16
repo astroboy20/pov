@@ -11,7 +11,9 @@ const GoogleAuth = () => {
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
   const [redirecting, setRedirecting] = useState(false);
-  const { isSuccess, user, isAuthenticated } = useSelector((state) => state.auth);
+  const { isSuccess, user, isAuthenticated } = useSelector(
+    (state) => state.auth
+  );
 
   useEffect(() => {
     const token = searchParams.get("token");
@@ -30,10 +32,7 @@ const GoogleAuth = () => {
     if (isSuccess && redirecting && isAuthenticated) {
       const invitee = searchParams.get("invitee");
 
-      console.log("Invitee:", invitee);
-      console.log("User:", user);
-
-      if (invitee === true) {
+      if (invite) {
         router.push("/invitee-home");
       } else {
         router.push("/dashboard");
