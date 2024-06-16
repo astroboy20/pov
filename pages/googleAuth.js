@@ -33,7 +33,7 @@ const GoogleAuth = () => {
       console.log("Invitee:", invitee);
       console.log("User:", user);
 
-      if (invitee === "true") {
+      if (invitee === true) {
         router.push("/invitee-home");
       } else {
         router.push("/dashboard");
