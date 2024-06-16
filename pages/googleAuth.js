@@ -32,7 +32,7 @@ const GoogleAuth = () => {
     if (isSuccess && redirecting && isAuthenticated) {
       const invitee = searchParams.get("invitee");
 
-      if (invite) {
+      if (invitee) {
         router.push("/invitee-home");
       } else {
         router.push("/dashboard");
