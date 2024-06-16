@@ -50,7 +50,7 @@ const Album = ({ eventData }) => {
   }
 
   return (
-    <AlbumContainer >
+    <AlbumContainer>
       <div className="header">
         <span onClick={handleRoute}>
           <BackIcon />
