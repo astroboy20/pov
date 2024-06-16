@@ -15,39 +15,39 @@ const GoogleAuth = () => {
 
   useEffect(() => {
     const token = searchParams.get("token");
-    const invitee = searchParams.get("invitee")
-    console.log("c",invitee)
+    const invitee = searchParams.get("invitee");
+
     if (token) {
       dispatch(setUser(token));
       setRedirecting(true);
     }
-  }, [router]);
+  }, [searchParams, dispatch]);
 
   useEffect(() => {
-    if (user) {
-      {
-        router.pathname === "/invitee"
-          ? router.push("/invitee-home")
-          : router.push("/dashboard");
+    if (isSuccess && redirecting && user) {
+      const invitee = searchParams.get("invitee");
+
+      if (invitee === "true") {
+        router.push("/invitee-home");
+      } else {
+        router.push("/dashboard");
       }
 
       toast.success("Login Successful");
     }
-  }, [isSuccess, redirecting, router]);
+  }, [isSuccess, redirecting, user, router, searchParams]);
 
   return (
-    <>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <PurpleSpinner />
-      </div>
-    </>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+      }}
+    >
+      <PurpleSpinner />
+    </div>
   );
 };
 
