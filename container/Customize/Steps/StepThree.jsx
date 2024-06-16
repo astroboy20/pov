@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { editActions, popularFonts } from "./Data";
+import { editActions, items, popularFonts } from "./Data";
 import {
   Modal,
   ModalOverlay,
@@ -13,11 +13,13 @@ import {
   Select,
   Box,
   Spinner,
+  useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Button } from "@/components/Button";
 import { fabric } from "fabric";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 const StepThree = ({ handleNext, blankCanvas }) => {
   const imageInfo =
@@ -37,7 +39,11 @@ const StepThree = ({ handleNext, blankCanvas }) => {
   const MAX_FILE_SIZE_MB = 5;
   const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
-  // Initialize the canvas
+  const eventName =
+    typeof window !== "undefined" && localStorage.getItem("eventName");
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   useEffect(() => {
     const canvasElement = canvasRef.current;
     const fabricCanvasInstance = new fabric.Canvas(canvasElement, {
@@ -67,10 +73,9 @@ const StepThree = ({ handleNext, blankCanvas }) => {
     };
   }, []);
 
-  // Update the canvas background based on the selectedImage and blankCanvas
   useEffect(() => {
     if (fabricCanvas) {
-      fabricCanvas.clear(); // Clear the canvas before setting a new background
+      fabricCanvas.clear();
       if (blankCanvas) {
         fabricCanvas.setBackgroundColor(
           "white",
@@ -105,7 +110,7 @@ const StepThree = ({ handleNext, blankCanvas }) => {
       const textbox = new fabric.Textbox(text, {
         left: 100,
         top: 100,
-        fontFamily: font,
+        fontFamily: font || "sans-serif",
         fontSize: 20,
         fill: color,
         width: 300,
@@ -173,51 +178,34 @@ const StepThree = ({ handleNext, blankCanvas }) => {
   };
 
   const handleUploadElement = async () => {
-    const fileInput = document.getElementById("elementInput");
-    const file = fileInput.files[0];
-
-    if (file && file.size > MAX_FILE_SIZE_BYTES) {
-      console.error("File size exceeds the limit.");
-      return;
+    if (eventName === "BIRTHDAY" || eventName === "WEDDING") {
+      onOpen(); // Open the modal to select items
+    } else {
+      const fileInput = document.getElementById("elementInput");
+      fileInput.click(); // Trigger file input dialog
     }
+  };
 
-    if (file) {
-      const imageURL = new FormData();
-      imageURL.append("file", file);
-      imageURL.append("upload_preset", "za8tsrje");
-
-      try {
-        setUploadingElement(true);
-        const imageResponse = await axios.post(
-          "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
-          imageURL
-        );
-        const image = imageResponse.data.secure_url;
-        setSelectedElement(image);
-
-        fabric.Image.fromURL(
-          image,
-          (img) => {
-            img.set({
-              left: 300,
-              top: 300,
-              angle: 0,
-              padding: 10,
-              cornersize: 10,
-            });
-            img.scaleToWidth(fabricCanvas.width / 2);
-            fabricCanvas.add(img).setActiveObject(img);
-            fabricCanvas.renderAll();
-            toast.success("Element uploaded successfully!");
-          },
-          { crossOrigin: "anonymous" }
-        );
-      } catch (error) {
-        console.error("Error uploading image:", error);
-        toast.error("Error uploading element.");
-      } finally {
-        setUploadingElement(false);
-      }
+  const handleSelectItem = (item) => {
+    if (fabricCanvas) {
+      fabric.Image.fromURL(
+        item.src,
+        (img) => {
+          img.set({
+            left: 150,
+            top: 150,
+            angle: 0,
+            padding: 10,
+            cornersize: 10,
+          });
+          img.scaleToWidth(fabricCanvas.width / 2);
+          fabricCanvas.add(img).setActiveObject(img);
+          fabricCanvas.renderAll();
+          toast.success("Item added to the canvas!");
+        },
+        { crossOrigin: "anonymous" }
+      );
+      onClose();
     }
   };
 
@@ -227,8 +215,7 @@ const StepThree = ({ handleNext, blankCanvas }) => {
   };
 
   const selectNewElement = () => {
-    const elementInput = document.getElementById("elementInput");
-    elementInput.click();
+    handleUploadElement(); // Handle the element upload logic
   };
 
   const handleFontChange = (e) => {
@@ -406,10 +393,10 @@ const StepThree = ({ handleNext, blankCanvas }) => {
       <Modal isOpen={isAddTextModalOpen} onClose={handleCloseModal}>
         <ModalOverlay />
 
-        <ModalContent>
+        <ModalContent width={"90%"}>
           <ModalHeader>Add Text</ModalHeader>
           <ModalCloseButton />
-          <ModalBody display={"flex"} flexDirection={"column"} gap={"20px"}>
+          <ModalBody display={"flex"} flexDirection={"column"} gap={"20px"} padding={"6%"}>
             <Textarea
               type="text"
               value={text}
@@ -437,10 +424,49 @@ const StepThree = ({ handleNext, blankCanvas }) => {
                 onChange={handleColorChange}
               />
             </div>
+
+            <Button
+              type={"button"}
+              variant={"defaultButton"}
+              onClick={handleSubmitAddText}
+            >
+              Add
+            </Button>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent width={"90%"} height={"90dvh"} overflow={"scroll"}>
+          <ModalHeader>Select Item</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: "20px",
+              }}
+            >
+              {items &&
+                items.map((item) => (
+                  <div key={item.id} onClick={() => handleSelectItem(item)}>
+                    <Image
+                      src={item.src}
+                      width={80}
+                      height={80}
+                      alt={item.alt}
+                    />
+                  </div>
+                ))}
+            </div>
           </ModalBody>
 
           <ModalFooter>
-            <button onClick={handleSubmitAddText}>Add</button>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
