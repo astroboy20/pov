@@ -32,5 +32,6 @@ export const AlbumContainer = styled.div`
   .swiper-container {
     width: 100%;
     height: auto;
+    border:1px solid red ;
   }
 `;
