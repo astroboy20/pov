@@ -182,7 +182,50 @@ const StepThree = ({ handleNext, blankCanvas }) => {
       onOpen(); // Open the modal to select items
     } else {
       const fileInput = document.getElementById("elementInput");
-      fileInput.click(); // Trigger file input dialog
+      const file = fileInput.files[0];
+
+      if (file && file.size > MAX_FILE_SIZE_BYTES) {
+        console.error("File size exceeds the limit.");
+        return;
+      }
+
+      if (file) {
+        const elementURL = new FormData();
+        elementURL.append("file", file);
+        elementURL.append("upload_preset", "za8tsrje");
+
+        try {
+          setUploadingElement(true);
+          const elementResponse = await axios.post(
+            "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+            elementURL
+          );
+          const element = elementResponse.data.secure_url;
+
+          fabric.Image.fromURL(
+            element,
+            (img) => {
+              img.set({
+                left: 150,
+                top: 150,
+                angle: 0,
+                padding: 10,
+                cornersize: 10,
+              });
+              img.scaleToWidth(fabricCanvas.width / 2);
+              fabricCanvas.add(img).setActiveObject(img);
+              fabricCanvas.renderAll();
+              toast.success("Element uploaded successfully!");
+            },
+            { crossOrigin: "anonymous" }
+          );
+        } catch (error) {
+          console.error("Error uploading element:", error);
+          toast.error("Error uploading element.");
+        } finally {
+          setUploadingElement(false);
+        }
+      }
     }
   };
 

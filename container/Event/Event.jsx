@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { toast } from "react-toastify";
 import { BackIcon } from "@/assets";
 import useFetchItems from "@/hooks/useFetchItems";
-import { useSelector } from "react-redux";
 import { GalleryStyle } from "./Gallery.style";
 import { CustomText } from "@/components/CustomText";
 import { Hosting } from "./Pages/Hosting";
 import { BlackSpinner } from "@/components/Spinner/Spinner";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import axios from "axios";
 
 const Event = () => {
   const router = useRouter();
@@ -31,7 +31,6 @@ const Event = () => {
     router.push("/dashboard");
   };
 
-
   const deleteEvent = async (eventId) => {
     try {
       await axios.post(
@@ -43,7 +42,6 @@ const Event = () => {
           },
         }
       );
-      // Update events after deletion
       const response = await axios.get("https://api-cliqpod.koyeb.app/events", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -57,54 +55,52 @@ const Event = () => {
   };
 
   return (
-    <>
-      <GalleryStyle>
-        <div className="header">
-          <span onClick={handleRoute}>
-            <BackIcon />
-          </span>
-
-          <CustomText type={"Htype"} variant={"h1"}>
-            Events
-          </CustomText>
-          <span style={{ color: "white" }}>.</span>
-        </div>
-        <div className="body">
-          {isLoading ? (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <BlackSpinner />
-            </div>
-          ) : (
-            <>
-              {events && events?.length === 0 ? (
-                <div className="body">
-                  <p
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    No event available
-                  </p>
-                </div>
-              ) : (
-                <Hosting deleteEvent={deleteEvent} events={events} />
-              )}
-            </>
-          )}
-        </div>
-      </GalleryStyle>
-    </>
+    <GalleryStyle>
+      <div className="header">
+        <span onClick={handleRoute}>
+          <BackIcon />
+        </span>
+        <CustomText type={"Htype"} variant={"h1"}>
+          Events
+        </CustomText>
+        <span style={{ color: "white" }}>.</span>
+      </div>
+      <div className="body">
+        {isLoading ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <BlackSpinner />
+          </div>
+        ) : (
+          <>
+            {events && events.length === 0 ? (
+              <div className="body">
+                <p
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  No event available
+                </p>
+              </div>
+            ) : (
+              <Hosting deleteEvent={deleteEvent} events={events} />
+            )}
+          </>
+        )}
+      </div>
+    </GalleryStyle>
   );
 };
 
 export { Event };
+

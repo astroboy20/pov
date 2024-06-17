@@ -31,7 +31,8 @@ export const AlbumContainer = styled.div`
 
   .swiper-container {
     width: 100%;
-    height: fit-content;
+    height: 100%;
+    margin:auto ;
   }
 
   .swiper-slide {

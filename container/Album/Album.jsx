@@ -86,7 +86,6 @@ const Album = ({ eventData }) => {
               </h1>
               <Swiper
                 autoHeight={true}
-                calculateHeight={true}
                 spaceBetween={10}
                 slidesPerView={1}
                 pagination={{
@@ -106,6 +105,7 @@ const Album = ({ eventData }) => {
                       className="image-image"
                       objectFit="cover"
                       layout="responsive"
+                      quality={100}
                     />
                   
                     

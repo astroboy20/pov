@@ -2,6 +2,7 @@ import { Camera } from "@/container/Camera";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Head from "next/head";
 
 const CameraRoute = () => {
   const [events, setEvents] = useState([]); // Initialize as an array
@@ -19,19 +20,22 @@ const CameraRoute = () => {
       .then((response) => {
         const data = response.data.event;
         console.log(data);
-        setEvents(data); 
+        setEvents(data);
       })
       .catch((error) => {
         console.error("Error fetching events:", error);
       });
-  }, [eventId, accessToken]); 
+  }, [eventId, accessToken]);
 
   return (
     <div className="body">
-      
-      
-         <Camera events={events} />
-         
+       <Head>
+        <title>Camera</title>
+        <meta name="description" content="Clipod" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/images/cliqpod.png" />
+      </Head>
+      <Camera events={events} />
     </div>
   );
 };

@@ -80,3 +80,15 @@ const PurpleSpinner = () => {
 };
 
 export { PurpleSpinner };
+
+// cloudinaryLoader.js
+export const cloudinaryLoader = ({ src, width, quality }) => {
+  const params = [
+    `w_${width}`,
+    `q_${quality || 75}`
+  ].join(',');
+
+  // Assuming the src is the complete URL from the backend
+  return `${src}?${params}`;
+};
+

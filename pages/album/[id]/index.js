@@ -6,6 +6,7 @@ import { ProtectedRoute } from "@/container/ProtectedRoutes/ProtectedRoute";
 import useFetchItems from "@/hooks/useFetchItems";
 import { EventSpinner } from "@/components/Spinner/Spinner";
 import { BottomNav } from "@/components/BottomNav";
+import Head from "next/head";
 
 const EventID = () => {
   const router = useRouter();
@@ -35,9 +36,17 @@ const EventID = () => {
   if (isLoading) return <EventSpinner />;
 
   return (
-    <ProtectedRoute>
-      <Album eventData={eventData} />
-    </ProtectedRoute>
+    <div className="body">
+      <Head>
+        <title>Album</title>
+        <meta name="description" content="Clipod" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/images/cliqpod.png" />
+      </Head>
+      <ProtectedRoute>
+        <Album eventData={eventData} />
+      </ProtectedRoute>
+    </div>
   );
 };
 
