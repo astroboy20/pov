@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { PurpleSpinner } from "@/components/Spinner/Spinner";
+import { cloudinaryLoader, PurpleSpinner } from "@/components/Spinner/Spinner";
 import { AlbumContainer } from "./Album.style";
 import { BackIcon } from "@/assets";
 import useFetchItems from "@/hooks/useFetchItems";
@@ -106,6 +106,7 @@ const Album = ({ eventData }) => {
                       objectFit="cover"
                       layout="responsive"
                       quality={100}
+                      loader={cloudinaryLoader}
                     />
                   
                     
