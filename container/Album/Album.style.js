@@ -31,7 +31,27 @@ export const AlbumContainer = styled.div`
 
   .swiper-container {
     width: 100%;
-    height: auto;
-    border:1px solid red ;
+    height: fit-content;
   }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .image-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .swiper-container {
+  padding-bottom: 0;
+}
+
+.swiper-pagination {
+  bottom: 10px !important;
+}
+
 `;

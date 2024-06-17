@@ -85,6 +85,8 @@ const Album = ({ eventData }) => {
                 {event?.inviteeName}
               </h1>
               <Swiper
+                autoHeight={true}
+                calculateHeight={true}
                 spaceBetween={10}
                 slidesPerView={1}
                 pagination={{
@@ -95,6 +97,7 @@ const Album = ({ eventData }) => {
               >
                 {event?.image.map((img, idx) => (
                   <SwiperSlide key={idx}>
+                 
                     <Image
                       width={1080}
                       height={1920}
@@ -102,7 +105,10 @@ const Album = ({ eventData }) => {
                       alt="event photo"
                       className="image-image"
                       objectFit="cover"
+                      layout="responsive"
                     />
+                  
+                    
                   </SwiperSlide>
                 ))}
               </Swiper>
