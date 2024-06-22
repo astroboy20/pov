@@ -36,7 +36,7 @@ const Camera = ({ events }) => {
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
   const router = useRouter();
   const [selectedImages, setSelectedImages] = useState([]);
-  const [previewImage, setPreviewImage] = useState([]);
+  const [previewImage, setPreviewImage] = useState(null);
   const {
     isOpen: isPreviewOpen,
     onOpen: onPreviewOpen,
@@ -109,7 +109,7 @@ const Camera = ({ events }) => {
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
         if (events?.event_image) {
-          const filterImage = new Image();
+          const filterImage = new window.Image();
           filterImage.crossOrigin = "anonymous";
           filterImage.src = events.event_image;
           await new Promise((resolve, reject) => {
@@ -157,7 +157,7 @@ const Camera = ({ events }) => {
         context.drawImage(img, 0, 0, canvas.width, canvas.height);
 
         if (events?.event_image) {
-          const filterImage = new Image();
+          const filterImage = new window.Image();
           filterImage.crossOrigin = "anonymous";
           filterImage.src = events.event_image;
           await new Promise((resolve, reject) => {
