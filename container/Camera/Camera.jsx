@@ -36,7 +36,7 @@ const Camera = ({ events }) => {
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
   const router = useRouter();
   const [selectedImages, setSelectedImages] = useState([]);
-  const [previewImage, setPreviewImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState([]);
   const {
     isOpen: isPreviewOpen,
     onOpen: onPreviewOpen,
@@ -172,6 +172,7 @@ const Camera = ({ events }) => {
 
         const imageUrl = canvas.toDataURL("image/png");
         setCapturedImages((prevImages) => [...prevImages, imageUrl]);
+        setPreviewImage(imageUrl);
         setPhotosTaken((prevCount) => prevCount + 1);
       } else {
         takePictureFallback(); // Fallback for devices without ImageCapture support
