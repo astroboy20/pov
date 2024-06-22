@@ -48,6 +48,11 @@ export const SliderStyle = styled.div`
       font-size: 14px;
       inline-size:100%;
     }
+
+    .image img{
+        margin:0 auto;
+        text-align:center ;
+    }
   }
 
   @media screen and (min-width: 768px)  and (max-width:1024px){
