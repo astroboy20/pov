@@ -8,7 +8,6 @@ import {
   Span,
   Video,
 } from "./Camera.style";
-import { MdOutlineFlipCameraAndroid } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { PreviewIcon, ShutterIcon, SwitchIcon } from "@/assets";
@@ -21,6 +20,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { Button } from "@/components/Button";
+import Image from "next/image";
 
 const Camera = ({ events }) => {
   const FACING_MODE_USER = "user";
@@ -35,6 +35,18 @@ const Camera = ({ events }) => {
   const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
   const router = useRouter();
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [previewImage, setPreviewImage] = useState(null);
+  const {
+    isOpen: isPreviewOpen,
+    onOpen: onPreviewOpen,
+    onClose: onPreviewClose,
+  } = useDisclosure();
+  const {
+    isOpen: isSubmitOpen,
+    onOpen: onSubmitOpen,
+    onClose: onSubmitClose,
+  } = useDisclosure();
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const switchCamera = React.useCallback(() => {
@@ -112,6 +124,7 @@ const Camera = ({ events }) => {
 
         const imageUrl = canvas.toDataURL("image/png");
         setCapturedImages((prevImages) => [...prevImages, imageUrl]);
+        setPreviewImage(imageUrl);
         setPhotosTaken((prevCount) => prevCount + 1);
         audioRef.current.play();
       } else {
@@ -243,7 +256,8 @@ const Camera = ({ events }) => {
         autoPlay
         playsInline
         style={{
-          transform: facingMode === FACING_MODE_USER ? "scaleX(-1)" : "scaleX(1)",
+          transform:
+            facingMode === FACING_MODE_USER ? "scaleX(-1)" : "scaleX(1)",
         }}
       ></Video>
       <Buttons className="button">
@@ -267,7 +281,7 @@ const Camera = ({ events }) => {
       <Span style={{ marginTop: "10px" }}>
         {photosTaken}/{events?.photosPerPerson}
       </Span>
-  
+
       {photosTaken === events.photosPerPerson && (
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
@@ -287,7 +301,7 @@ const Camera = ({ events }) => {
                 onChange={(e) => setInviteeName(e.target.value)}
               />
             </div>
-  
+
             <Button
               type={"submit"}
               variant={"defaultButton"}
@@ -301,7 +315,6 @@ const Camera = ({ events }) => {
       )}
     </Container>
   );
-  
 };
 
 export { Camera };

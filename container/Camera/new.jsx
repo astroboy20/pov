@@ -8,7 +8,6 @@ import {
   Span,
   Video,
 } from "./Camera.style";
-import { MdOutlineFlipCameraAndroid } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { PreviewIcon, SaveIcon, ShutterIcon, SwitchIcon } from "@/assets";
