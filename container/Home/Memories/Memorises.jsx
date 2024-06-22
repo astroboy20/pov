@@ -13,6 +13,7 @@ const Memories = () => {
           height={640}
           objectFit="contain"
           className="phone1"
+          layout="responsive"
           alt="customize_image"
         />
       </div>

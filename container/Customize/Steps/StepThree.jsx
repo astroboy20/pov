@@ -178,53 +178,49 @@ const StepThree = ({ handleNext, blankCanvas }) => {
   };
 
   const handleUploadElement = async () => {
-    if (eventName === "BIRTHDAY" || eventName === "WEDDING") {
-      onOpen(); // Open the modal to select items
-    } else {
-      const fileInput = document.getElementById("elementInput");
-      const file = fileInput.files[0];
+    const fileInput = document.getElementById("elementInput");
+    const file = fileInput.files[0];
 
-      if (file && file.size > MAX_FILE_SIZE_BYTES) {
-        console.error("File size exceeds the limit.");
-        return;
-      }
+    if (file && file.size > MAX_FILE_SIZE_BYTES) {
+      console.error("File size exceeds the limit.");
+      return;
+    }
 
-      if (file) {
-        const elementURL = new FormData();
-        elementURL.append("file", file);
-        elementURL.append("upload_preset", "za8tsrje");
+    if (file) {
+      const elementURL = new FormData();
+      elementURL.append("file", file);
+      elementURL.append("upload_preset", "za8tsrje");
 
-        try {
-          setUploadingElement(true);
-          const elementResponse = await axios.post(
-            "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
-            elementURL
-          );
-          const element = elementResponse.data.secure_url;
+      try {
+        setUploadingElement(true);
+        const elementResponse = await axios.post(
+          "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+          elementURL
+        );
+        const element = elementResponse.data.secure_url;
 
-          fabric.Image.fromURL(
-            element,
-            (img) => {
-              img.set({
-                left: 150,
-                top: 150,
-                angle: 0,
-                padding: 10,
-                cornersize: 10,
-              });
-              img.scaleToWidth(fabricCanvas.width / 2);
-              fabricCanvas.add(img).setActiveObject(img);
-              fabricCanvas.renderAll();
-              toast.success("Element uploaded successfully!");
-            },
-            { crossOrigin: "anonymous" }
-          );
-        } catch (error) {
-          console.error("Error uploading element:", error);
-          toast.error("Error uploading element.");
-        } finally {
-          setUploadingElement(false);
-        }
+        fabric.Image.fromURL(
+          element,
+          (img) => {
+            img.set({
+              left: 150,
+              top: 150,
+              angle: 0,
+              padding: 10,
+              cornersize: 10,
+            });
+            img.scaleToWidth(fabricCanvas.width / 2);
+            fabricCanvas.add(img).setActiveObject(img);
+            fabricCanvas.renderAll();
+            toast.success("Element uploaded successfully!");
+          },
+          { crossOrigin: "anonymous" }
+        );
+      } catch (error) {
+        console.error("Error uploading element:", error);
+        toast.error("Error uploading element.");
+      } finally {
+        setUploadingElement(false);
       }
     }
   };
@@ -258,7 +254,12 @@ const StepThree = ({ handleNext, blankCanvas }) => {
   };
 
   const selectNewElement = () => {
-    handleUploadElement(); // Handle the element upload logic
+    if (eventName === "BIRTHDAY" || eventName === "WEDDING") {
+      onOpen();
+    } else {
+      const fileInput = document.getElementById("elementInput");
+      fileInput.click();
+    }
   };
 
   const handleFontChange = (e) => {
@@ -311,9 +312,11 @@ const StepThree = ({ handleNext, blankCanvas }) => {
       setLoading(true);
 
       if (fabricCanvas) {
+        // Increase resolution for HD quality
         const dataURL = fabricCanvas.toDataURL({
           format: "png",
           quality: 1,
+          multiplier: 2, // Increase resolution by 2x
         });
 
         const response = await axios.post(
@@ -439,7 +442,12 @@ const StepThree = ({ handleNext, blankCanvas }) => {
         <ModalContent width={"90%"}>
           <ModalHeader>Add Text</ModalHeader>
           <ModalCloseButton />
-          <ModalBody display={"flex"} flexDirection={"column"} gap={"20px"} padding={"6%"}>
+          <ModalBody
+            display={"flex"}
+            flexDirection={"column"}
+            gap={"20px"}
+            padding={"6%"}
+          >
             <Textarea
               type="text"
               value={text}
@@ -481,7 +489,7 @@ const StepThree = ({ handleNext, blankCanvas }) => {
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent width={"90%"} height={"90dvh"} overflow={"scroll"}>
+        <ModalContent width={"95%"} height={"90%"} overflow={"scroll"}>
           <ModalHeader>Select Item</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

@@ -134,12 +134,12 @@ export const DashboardStyle = styled.div`
   /* .event-body  */
 
   @media screen and (min-width: 768px) and (max-width: 1024px) {
-    height: 1700px;
+    height: 1200px;
     .header {
       background: url("/images/header.svg");
-      /* background-repeat:no-repeat ; */
-      background-size: contain;
-      height: 10000000px;
+      background-repeat:no-repeat ;
+      background-size: cover;
+      height: 200px;
       width: 100%;
       border-radius: 0 0 20px 20px;
       padding: 3%;
@@ -156,6 +156,12 @@ export const DashboardStyle = styled.div`
       height: 200px;
       border-radius: 8px;
     }
+    .popular-scroll {
+    height: 500px !important;
+    overflow-y: scroll;
+    /* width:10% ; */
+    width: 100%;
+  }
   }
 `;
 export const EventBody = styled.div`

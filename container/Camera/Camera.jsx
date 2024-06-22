@@ -11,7 +11,7 @@ import {
 import { MdOutlineFlipCameraAndroid } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { ShutterIcon } from "@/assets";
+import { PreviewIcon, ShutterIcon, SwitchIcon } from "@/assets";
 import {
   Modal,
   ModalOverlay,
@@ -35,6 +35,12 @@ const Camera = ({ events }) => {
   const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
   const eventId = typeof window !== "undefined" && localStorage.getItem("id");
   const router = useRouter();
+  const [selectedImages, setSelectedImages] = useState([]);
+  const {
+    isOpen: isPreviewOpen,
+    onOpen: onPreviewOpen,
+    onClose: onPreviewClose,
+  } = useDisclosure();
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const switchCamera = React.useCallback(() => {
@@ -169,6 +175,30 @@ const Camera = ({ events }) => {
     }
   };
 
+  const saveImage = () => {
+    if (previewImage) {
+      const images = JSON.parse(localStorage.getItem("capturedImages")) || [];
+      images.push(previewImage);
+      localStorage.setItem("capturedImages", JSON.stringify(images));
+      setCapturedImages(images);
+      setPreviewImage(null);
+      onClose();
+    }
+  };
+
+  const handlePreview = () => {
+    const images = JSON.parse(localStorage.getItem("capturedImages")) || [];
+    setCapturedImages(images);
+    onPreviewOpen();
+  };
+
+  const handleSelectImage = (image) => {
+    setSelectedImages((prevSelectedImages) =>
+      prevSelectedImages.includes(image)
+        ? prevSelectedImages.filter((img) => img !== image)
+        : [...prevSelectedImages, image]
+    );
+  };
   useEffect(() => {
     if (photosTaken === events.photosPerPerson) {
       onOpen();
@@ -248,18 +278,21 @@ const Camera = ({ events }) => {
         }}
       ></Video>
       <Buttons className="button">
-        {photosTaken === events.photosPerPerson ? (
-          "done"
-        ) : (
-          <span onClick={takePicture}>
-            <ShutterIcon />
+        <div className="left-icon">
+          <PreviewIcon />
+        </div>
+        <div className="center-buttons">
+          {photosTaken === events.photosPerPerson ? (
+            "done"
+          ) : (
+            <span onClick={takePicture}>
+              <ShutterIcon />
+            </span>
+          )}
+          <span onClick={switchCamera}>
+            <SwitchIcon />
           </span>
-        )}
-        <MdOutlineFlipCameraAndroid
-          fontSize={"30px"}
-          color="#fff"
-          onClick={switchCamera}
-        />
+        </div>
       </Buttons>
       <audio ref={audioRef} src={"./sound/sound.mp3"} preload="auto" />
       <Span style={{ marginTop: "10px" }}>

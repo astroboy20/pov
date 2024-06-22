@@ -5,6 +5,9 @@ export const WorkStyle = styled.div`
   display: flex;
   flex-direction: column;
   gap: 50px;
+  .header{
+    text-align:center ;
+  }
   .header h1 {
     font-size: 36px;
     font-weight: 700;
@@ -49,8 +52,8 @@ export const WorkStyle = styled.div`
     flex-direction: column;
     justify-content: center;
     gap: 30px;
-    padding: 13% 5%;
-    margin:10% auto ;
+    padding: 0 5%;
+    margin:6% auto ;
     .big-box {
       display: grid;
       grid-template-columns: repeat(1, 1fr);
@@ -85,7 +88,7 @@ export const WorkStyle = styled.div`
     flex-direction: column;
     justify-content: center;
     gap: 30px;
-    padding: 10% 5%;
+    /* padding: 10% 5%; */
     .big-box {
       display: grid;
       grid-template-columns: repeat(2, 50%);

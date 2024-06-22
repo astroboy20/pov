@@ -6,9 +6,10 @@ import { Hero } from "@/container/Home/Hero";
 import { FAQ } from "./FAQs";
 import { Memories } from "./Memories/Memorises";
 import { Work } from "./Work";
+import { Slider } from "./Slider";
 
 const HomeContainer = () => {
-  const controlsHero = useAnimation();
+  const controlsSlider = useAnimation();
   const controlsCustomize = useAnimation();
   const controlsMemories = useAnimation();
   const controlsWorks = useAnimation();
@@ -21,9 +22,9 @@ const HomeContainer = () => {
       const customizeOffset = document.getElementById("customize").offsetTop;
       const memoriesOffset = document.getElementById("memories").offsetTop;
       const workOffset = document.getElementById("work").offsetTop;
+      const sliderOffset = document.getElementById("slider").offsetTop;
       const faqOffset = document.getElementById("faq").offsetTop;
 
-      
       if (scrollPosition >= customizeOffset - windowHeight / 2) {
         controlsCustomize.start({ opacity: 1, y: 0 });
       }
@@ -32,6 +33,9 @@ const HomeContainer = () => {
       }
       if (scrollPosition >= workOffset - windowHeight / 2) {
         controlsWorks.start({ opacity: 1, y: 0 });
+      }
+      if (scrollPosition >= sliderOffset - windowHeight / 2) {
+        controlsSlider.start({ opacity: 1, y: 0 });
       }
       if (scrollPosition >= faqOffset - windowHeight / 2) {
         controlsFAQ.start({ opacity: 1, y: 0 });
@@ -45,13 +49,12 @@ const HomeContainer = () => {
     controlsMemories,
     controlsFAQ,
     controlsWorks,
+    controlsSlider,
   ]);
 
   return (
     <>
-       
-      
-        <Hero />
+      <Hero />
       <motion.div
         id="customize"
         animate={controlsCustomize}
@@ -66,6 +69,14 @@ const HomeContainer = () => {
       >
         <Memories />
       </motion.div>
+      <motion.div
+        id="slider"
+        animate={controlsSlider}
+        initial={{ opacity: 0, y: 50 }}
+      >
+        <Slider />
+      </motion.div>
+
       <motion.div
         id="work"
         animate={controlsWorks}

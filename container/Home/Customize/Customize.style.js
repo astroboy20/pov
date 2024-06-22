@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
 export const CustomizeStyle = styled.div`
-  padding: 0 5%;
+  padding:  5%;
   display: inline-flex;
   /* justify-content: space-between; */
   align-items: center;
   width: 100%;
-
   .left {
     display: flex;
     flex-direction: column;
@@ -50,8 +49,13 @@ export const CustomizeStyle = styled.div`
     color: #1d1465;
   }
 
+  .right{
+    width:60% ;
+    height:fit-content ;
+  }
+
   .phone2 {
-    width: 420px;
+    width: 620px;
     height: 640px;
   }
 

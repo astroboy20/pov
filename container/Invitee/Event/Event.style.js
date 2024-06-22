@@ -5,14 +5,15 @@ export const EventStyle = styled.div`
   overflow: hidden;
   background: ${(props) =>
     props.background ? `url(${props.background})` : "none"};
+  /* background-color: black !important; */
   height: 100dvh;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   /* background-color: #f9f9f9; */
   /* background-blend-mode: screen; */
-  position:absolute ;
-  width:100% ;
+  position: absolute;
+  width: 100%;
 
   .header {
     display: flex;
@@ -33,7 +34,7 @@ export const EventStyle = styled.div`
     width: 100%;
     color: white;
     position: relative;
-    top:65% ;
+    top: 65%;
     bottom: 0;
     gap: 20px;
   }

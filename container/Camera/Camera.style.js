@@ -28,14 +28,27 @@ export const Header = styled.div`
 
 export const Buttons = styled.div`
   display: flex;
-  gap: 10px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: absolute;
-  bottom: 50px;
+  bottom: 40px;
   width: 100%;
   z-index: 3; /* Ensure Buttons are above the BackdropOverlay */
+
+  .left-icon {
+    padding-left: 20px; /* Add some padding for spacing */
+  }
+
+  .center-buttons {
+    flex: 1; /* Ensure the buttons take available space in the center */
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+    margin:auto ;
+    gap: 20px; /* Space between the buttons */
+  }
 `;
+
 
 export const Video = styled.video`
   width: 100%;

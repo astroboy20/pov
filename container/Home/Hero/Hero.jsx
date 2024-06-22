@@ -37,7 +37,7 @@ const Hero = () => {
     <HeroContainer>
       <div className="text">
         <h1>
-        Capture Moments and Create Memories <br/> of your Event In Real-time; <span>{typedName}.</span>
+        Capture Moments and Create Memories  of your Event In Real-time; <span>{typedName}.</span>
         </h1>
         <p>
           Transform fleeting moments into timeless memories as an album with

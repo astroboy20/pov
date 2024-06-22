@@ -19,10 +19,11 @@ const Customize = () => {
       <div className="right">
         <Image
           src="/images/phone2.svg"
-          width={510}
+          width={620}
           height={640}
           objectFit="cover"
           className="phone2"
+          layout="responsive"
           alt="customize_image"
         />
       </div>
