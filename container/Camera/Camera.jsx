@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import {
@@ -10,7 +9,7 @@ import {
 } from "./Camera.style";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { PreviewIcon, ShutterIcon, SwitchIcon } from "@/assets";
+import { PreviewIcon, SaveIcon, ShutterIcon, SwitchIcon } from "@/assets";
 import {
   Modal,
   ModalOverlay,
@@ -128,6 +127,7 @@ const Camera = ({ events }) => {
         setPreviewImage(imageUrl);
         setPhotosTaken((prevCount) => prevCount + 1);
         audioRef.current.play();
+        setModalOpen(true);
       } else {
         toast.warning("Maximum number of photos reached.");
       }
@@ -175,6 +175,7 @@ const Camera = ({ events }) => {
         setCapturedImages((prevImages) => [...prevImages, imageUrl]);
         setPreviewImage(imageUrl);
         setPhotosTaken((prevCount) => prevCount + 1);
+        setModalOpen(true);
       } else {
         takePictureFallback(); // Fallback for devices without ImageCapture support
       }
@@ -310,7 +311,7 @@ const Camera = ({ events }) => {
       </Span>
 
       {previewImage && (
-        <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+        <Modal size={"full"} isOpen={modalOpen} onClose={() => setModalOpen(false)}>
           <ModalOverlay />
           <ModalContent
             position="fixed"
@@ -323,10 +324,8 @@ const Camera = ({ events }) => {
             <Image
               src={previewImage}
               alt="Preview"
-              // layout="fill"
-              width={1080}
-              height={1920}
-              objectFit="cover" // or "cover" if you want the image to cover the entire area
+              layout="fill"
+              objectFit="contain"
               style={{ zIndex: 1 }}
             />
 
@@ -344,9 +343,9 @@ const Camera = ({ events }) => {
         </Modal>
       )}
 
-      <Modal isOpen={isPreviewOpen} onClose={onPreviewClose}>
+      <Modal size={"full"} isOpen={isPreviewOpen} onClose={onPreviewClose}>
         <ModalOverlay />
-        <ModalContent height={"100dvh"} width={"100%"} overflow={"hidden"} position={"fixed"}>
+        <ModalContent  width={"100%"} overflow={"hidden"} position={"fixed"}>
           <Grid templateColumns="repeat(3, 1fr)" gap={6}>
             {capturedImages.map((image, index) => (
               <Image
@@ -356,11 +355,6 @@ const Camera = ({ events }) => {
                 width={1080}
                 height={1920}
                 onClick={() => handleSelectImage(image)}
-                // border={
-                //   selectedImages.includes(image)
-                //     ? "2px solid blue"
-                //     : "2px solid transparent"
-                // }
                 cursor="pointer"
               />
             ))}
