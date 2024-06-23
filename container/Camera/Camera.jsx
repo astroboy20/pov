@@ -19,6 +19,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { Button } from "@/components/Button";
+import { ImCancelCircle } from "react-icons/im";
 
 const Camera = ({ events }) => {
   const FACING_MODE_USER = "user";
@@ -314,7 +315,7 @@ const Camera = ({ events }) => {
       <Modal
         size={"full"}
         isOpen={previewModal.isOpen}
-        onClose={previewModal.onClose}
+        onClose={previewModal.onClose} // Ensure the Modal itself has the onClose prop
       >
         <ModalOverlay />
         <ModalContent
@@ -323,6 +324,13 @@ const Camera = ({ events }) => {
           position={"fixed"}
           padding={"3%"}
         >
+          <span
+            style={{ marginLeft: "auto", cursor: "pointer" }}
+            onClick={previewModal.onClose}
+          >
+            <ImCancelCircle size={"30px"} />
+          </span>
+
           <div
             style={{ display: "flex", flexDirection: "column", gap: "20px" }}
           >
