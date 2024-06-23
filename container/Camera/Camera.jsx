@@ -20,7 +20,6 @@ import {
 } from "@chakra-ui/react";
 import { Button } from "@/components/Button";
 import Image from "next/image";
-import { Grid } from "react-loader-spinner";
 
 const Camera = ({ events }) => {
   const FACING_MODE_USER = "user";
@@ -33,7 +32,6 @@ const Camera = ({ events }) => {
   const videoRef = useRef(null);
   const audioRef = useRef(null);
   const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
-  const eventId = typeof window !== "undefined" && localStorage.getItem("id");
   const router = useRouter();
   const [selectedImages, setSelectedImages] = useState([]);
   const [previewImage, setPreviewImage] = useState(null);
@@ -49,13 +47,11 @@ const Camera = ({ events }) => {
   } = useDisclosure();
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const switchCamera = React.useCallback(() => {
+  const switchCamera = () => {
     setFacingMode((prevState) =>
-      prevState === FACING_MODE_USER
-        ? FACING_MODE_ENVIRONMENT
-        : FACING_MODE_USER
+      prevState === FACING_MODE_USER ? FACING_MODE_ENVIRONMENT : FACING_MODE_USER
     );
-  }, []);
+  };
 
   useEffect(() => {
     startCamera();
@@ -66,7 +62,7 @@ const Camera = ({ events }) => {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           facingMode,
-          width: { ideal: 1080 }, // Request a high resolution
+          width: { ideal: 1080 },
           height: { ideal: 1920 },
         },
       });
@@ -75,17 +71,12 @@ const Camera = ({ events }) => {
       console.error("Error accessing camera:", error);
       try {
         const devices = await navigator.mediaDevices.enumerateDevices();
-        const videoDevices = devices.filter(
-          (device) => device.kind === "videoinput"
-        );
-        const device = videoDevices.find((device) =>
-          device.label.includes(facingMode)
-        );
+        const videoDevices = devices.filter((device) => device.kind === "videoinput");
+        const device = videoDevices.find((device) => device.label.includes(facingMode));
 
         if (device && device.deviceId) {
-          const constraints = { deviceId: device.deviceId };
           const stream = await navigator.mediaDevices.getUserMedia({
-            video: constraints,
+            video: { deviceId: device.deviceId },
           });
           videoRef.current.srcObject = stream;
         } else {
@@ -122,7 +113,7 @@ const Camera = ({ events }) => {
           });
         }
 
-        const imageUrl = canvas.toDataURL("image/png");
+        const imageUrl = canvas.toDataURL("image/jpeg", 0.8); // Adjust quality here (0.0 - 1.0)
         setCapturedImages((prevImages) => [...prevImages, imageUrl]);
         setPreviewImage(imageUrl);
         setPhotosTaken((prevCount) => prevCount + 1);
@@ -171,8 +162,7 @@ const Camera = ({ events }) => {
           });
         }
 
-        const imageUrl = canvas.toDataURL("image/png");
-        setCapturedImages((prevImages) => [...prevImages, imageUrl]);
+        const imageUrl = canvas.toDataURL("image/jpeg", 1); // Adjust quality here (0.0 - 1.0)
         setPreviewImage(imageUrl);
         setPhotosTaken((prevCount) => prevCount + 1);
         setModalOpen(true);
@@ -186,19 +176,14 @@ const Camera = ({ events }) => {
   };
 
   const saveImage = () => {
-    if (previewImage) {
-      const images = JSON.parse(localStorage.getItem("capturedImages")) || [];
-      images.push(previewImage);
-      localStorage.setItem("capturedImages", JSON.stringify(images));
-      setCapturedImages(images);
+    if (previewImage && !capturedImages.includes(previewImage)) {
+      setCapturedImages((prevImages) => [...prevImages, previewImage]);
       setPreviewImage(null);
       setModalOpen(false);
     }
   };
 
   const handlePreview = () => {
-    const images = JSON.parse(localStorage.getItem("capturedImages")) || [];
-    setCapturedImages(images);
     onPreviewOpen();
   };
 
@@ -210,6 +195,39 @@ const Camera = ({ events }) => {
     );
   };
 
+  const uploadSelectedImages = async () => {
+    try {
+      setIsLoading(true);
+      const uploadedUrls = await Promise.all(
+        selectedImages.map(async (image) => {
+          const formData = new FormData();
+          const blob = dataURLtoBlob(image);
+          formData.append("file", blob);
+          formData.append("upload_preset", "za8tsrje");
+
+          const response = await axios.post(
+            "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              }
+            }
+          );
+
+          return response.data.secure_url;
+        })
+      );
+
+      return uploadedUrls;
+    } catch (error) {
+      console.error("Error uploading images:", error);
+      toast.error("Failed to upload images.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (photosTaken === events.photosPerPerson) {
       onSubmitOpen();
@@ -218,48 +236,27 @@ const Camera = ({ events }) => {
 
   const handleSubmit = async () => {
     try {
-      setIsLoading(true);
-      const formData = new FormData();
+      const imageUrls = await uploadSelectedImages();
 
-      capturedImages.forEach((image, index) => {
-        const blob = dataURLtoBlob(image);
-        formData.append("file", blob, `photo${index}.jpg`);
-      });
+      if (imageUrls.length > 0) {
+        const payload = {
+          inviteeName,
+          image: imageUrls,
+          eventId: events.id,
+        };
 
-      formData.append("upload_preset", "za8tsrje");
-
-      const responses = await Promise.all(
-        capturedImages.map((image) =>
-          axios.post(
-            "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          )
-        )
-      );
-
-      const imageUrls = responses.map((res) => res.data.secure_url);
-      const payload = {
-        inviteeName,
-        image: imageUrls,
-        eventId,
-      };
-
-      await axios.post(
-        `https://api-cliqpod.koyeb.app/camera/${eventId}`,
-        payload
-      );
-      toast.success("Images saved!");
-      router.push("/");
+        await axios.post(
+          `https://api-cliqpod.koyeb.app/camera/${events.id}`,
+          payload
+        );
+        toast.success("Images saved!");
+        router.push("/");
+      } else {
+        toast.error("No images selected for upload.");
+      }
     } catch (error) {
       console.error("Error submitting images:", error);
       toast.error("Failed to submit images.");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -284,8 +281,7 @@ const Camera = ({ events }) => {
         autoPlay
         playsInline
         style={{
-          transform:
-            facingMode === FACING_MODE_USER ? "scaleX(-1)" : "scaleX(1)",
+          transform: facingMode === FACING_MODE_USER ? "scaleX(-1)" : "scaleX(1)",
         }}
       ></Video>
       <Buttons className="button">
@@ -314,19 +310,30 @@ const Camera = ({ events }) => {
         <Modal size={"full"} isOpen={modalOpen} onClose={() => setModalOpen(false)}>
           <ModalOverlay />
           <ModalContent
-            position="fixed"
+            position="relative"
             top="0"
             left="0"
-            height="100vh"
+            height="100%"
             width="100vw"
             padding="0"
           >
             <Image
               src={previewImage}
+              width={1080}
+              height={1920}
               alt="Preview"
-              layout="fill"
-              objectFit="contain"
-              style={{ zIndex: 1 }}
+              layout="responsive"
+              style={{
+                zIndex: 1,
+                width: "100%",
+                height: "100%",
+                margin: "auto",
+                position: "relative",
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+              }}
             />
 
             <span
@@ -334,7 +341,10 @@ const Camera = ({ events }) => {
               style={{
                 zIndex: 10,
                 cursor: "pointer",
-                background: "red",
+                background: "#fff",
+                position: "absolute",
+                bottom: "25px",
+                left: "20px",
               }}
             >
               <SaveIcon />
@@ -345,32 +355,27 @@ const Camera = ({ events }) => {
 
       <Modal size={"full"} isOpen={isPreviewOpen} onClose={onPreviewClose}>
         <ModalOverlay />
-        <ModalContent  width={"100%"} overflow={"hidden"} position={"fixed"}>
-          <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+        <ModalContent width={"100%"} overflow={"hidden"} position={"fixed"}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "6px" }}>
             {capturedImages.map((image, index) => (
-              <Image
+              <img
                 key={index}
                 src={image}
                 alt={`Captured ${index}`}
-                width={1080}
-                height={1920}
+                style={{
+                  width: "200px",
+                  height: "200px",
+                  cursor: "pointer",
+                  border: selectedImages.includes(image) ? "2px solid blue" : "none",
+                }}
                 onClick={() => handleSelectImage(image)}
-                cursor="pointer"
               />
             ))}
-          </Grid>
-          <Button
-            type={"button"}
-            variant={"defaultButton"}
-            onClick={onPreviewClose}
-          >
+          </div>
+          <Button type={"button"} variant={"defaultButton"} onClick={onPreviewClose}>
             Close
           </Button>
-          <Button
-            type={"button"}
-            variant={"defaultButton"}
-            onClick={onSubmitOpen}
-          >
+          <Button type={"button"} variant={"defaultButton"} onClick={uploadSelectedImages}>
             Submit
           </Button>
         </ModalContent>
