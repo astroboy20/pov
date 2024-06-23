@@ -9,7 +9,7 @@ import {
 } from "./Camera.style";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { PreviewIcon, SaveIcon, ShutterIcon, SwitchIcon } from "@/assets";
+import { PreviewIcon, ShutterIcon, SwitchIcon } from "@/assets";
 import {
   Modal,
   ModalOverlay,
@@ -19,39 +19,32 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { Button } from "@/components/Button";
-import Image from "next/image";
 
 const Camera = ({ events }) => {
   const FACING_MODE_USER = "user";
   const FACING_MODE_ENVIRONMENT = "environment";
   const [capturedImages, setCapturedImages] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
   const [photosTaken, setPhotosTaken] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [inviteeName, setInviteeName] = useState("");
+  const [selectedImages, setSelectedImages] = useState([]);
   const videoRef = useRef(null);
   const audioRef = useRef(null);
   const [facingMode, setFacingMode] = useState(FACING_MODE_USER);
+  const eventId = typeof window !== "undefined" && localStorage.getItem("id");
   const router = useRouter();
-  const [selectedImages, setSelectedImages] = useState([]);
-  const [previewImage, setPreviewImage] = useState(null);
-  const {
-    isOpen: isPreviewOpen,
-    onOpen: onPreviewOpen,
-    onClose: onPreviewClose,
-  } = useDisclosure();
-  const {
-    isOpen: isSubmitOpen,
-    onOpen: onSubmitOpen,
-    onClose: onSubmitClose,
-  } = useDisclosure();
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const previewModal = useDisclosure();
+  const submitModal = useDisclosure();
 
-  const switchCamera = () => {
+  const switchCamera = React.useCallback(() => {
     setFacingMode((prevState) =>
-      prevState === FACING_MODE_USER ? FACING_MODE_ENVIRONMENT : FACING_MODE_USER
+      prevState === FACING_MODE_USER
+        ? FACING_MODE_ENVIRONMENT
+        : FACING_MODE_USER
     );
-  };
+  }, []);
 
   useEffect(() => {
     startCamera();
@@ -71,12 +64,17 @@ const Camera = ({ events }) => {
       console.error("Error accessing camera:", error);
       try {
         const devices = await navigator.mediaDevices.enumerateDevices();
-        const videoDevices = devices.filter((device) => device.kind === "videoinput");
-        const device = videoDevices.find((device) => device.label.includes(facingMode));
+        const videoDevices = devices.filter(
+          (device) => device.kind === "videoinput"
+        );
+        const device = videoDevices.find((device) =>
+          device.label.includes(facingMode)
+        );
 
         if (device && device.deviceId) {
+          const constraints = { deviceId: device.deviceId };
           const stream = await navigator.mediaDevices.getUserMedia({
-            video: { deviceId: device.deviceId },
+            video: constraints,
           });
           videoRef.current.srcObject = stream;
         } else {
@@ -97,10 +95,16 @@ const Camera = ({ events }) => {
         canvas.height = video.videoHeight;
         const context = canvas.getContext("2d");
 
+        // Flip the image horizontally if using the front camera
+        if (facingMode === FACING_MODE_USER) {
+          context.translate(canvas.width, 0);
+          context.scale(-1, 1);
+        }
+
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
         if (events?.event_image) {
-          const filterImage = new window.Image();
+          const filterImage = new Image();
           filterImage.crossOrigin = "anonymous";
           filterImage.src = events.event_image;
           await new Promise((resolve, reject) => {
@@ -113,12 +117,11 @@ const Camera = ({ events }) => {
           });
         }
 
-        const imageUrl = canvas.toDataURL("image/jpeg", 0.8); // Adjust quality here (0.0 - 1.0)
+        const imageUrl = canvas.toDataURL("image/png");
         setCapturedImages((prevImages) => [...prevImages, imageUrl]);
-        setPreviewImage(imageUrl);
         setPhotosTaken((prevCount) => prevCount + 1);
         audioRef.current.play();
-        setModalOpen(true);
+        uploadImage(imageUrl);
       } else {
         toast.warning("Maximum number of photos reached.");
       }
@@ -146,10 +149,16 @@ const Camera = ({ events }) => {
         canvas.width = img.width;
         canvas.height = img.height;
 
+        // Flip the image horizontally if using the front camera
+        if (facingMode === FACING_MODE_USER) {
+          context.translate(canvas.width, 0);
+          context.scale(-1, 1);
+        }
+
         context.drawImage(img, 0, 0, canvas.width, canvas.height);
 
         if (events?.event_image) {
-          const filterImage = new window.Image();
+          const filterImage = new Image();
           filterImage.crossOrigin = "anonymous";
           filterImage.src = events.event_image;
           await new Promise((resolve, reject) => {
@@ -162,10 +171,10 @@ const Camera = ({ events }) => {
           });
         }
 
-        const imageUrl = canvas.toDataURL("image/jpeg", 1); // Adjust quality here (0.0 - 1.0)
-        setPreviewImage(imageUrl);
+        const imageUrl = canvas.toDataURL("image/png");
+        setCapturedImages((prevImages) => [...prevImages, imageUrl]);
         setPhotosTaken((prevCount) => prevCount + 1);
-        setModalOpen(true);
+        uploadImage(imageUrl);
       } else {
         takePictureFallback(); // Fallback for devices without ImageCapture support
       }
@@ -175,88 +184,60 @@ const Camera = ({ events }) => {
     }
   };
 
-  const saveImage = () => {
-    if (previewImage && !capturedImages.includes(previewImage)) {
-      setCapturedImages((prevImages) => [...prevImages, previewImage]);
-      setPreviewImage(null);
-      setModalOpen(false);
-    }
-  };
-
-  const handlePreview = () => {
-    onPreviewOpen();
-  };
-
-  const handleSelectImage = (image) => {
-    setSelectedImages((prevSelectedImages) =>
-      prevSelectedImages.includes(image)
-        ? prevSelectedImages.filter((img) => img !== image)
-        : [...prevSelectedImages, image]
-    );
-  };
-
-  const uploadSelectedImages = async () => {
-    try {
-      setIsLoading(true);
-      const uploadedUrls = await Promise.all(
-        selectedImages.map(async (image) => {
-          const formData = new FormData();
-          const blob = dataURLtoBlob(image);
-          formData.append("file", blob);
-          formData.append("upload_preset", "za8tsrje");
-
-          const response = await axios.post(
-            "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              }
-            }
-          );
-
-          return response.data.secure_url;
-        })
-      );
-
-      return uploadedUrls;
-    } catch (error) {
-      console.error("Error uploading images:", error);
-      toast.error("Failed to upload images.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (photosTaken === events.photosPerPerson) {
-      onSubmitOpen();
+      submitModal.onOpen();
     }
   }, [photosTaken]);
 
+  const uploadImage = async (imageUrl) => {
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      const blob = dataURLtoBlob(imageUrl);
+      formData.append("file", blob, `photo${photosTaken}.jpg`);
+      formData.append("upload_preset", "za8tsrje");
+
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      setImageUrls((prevUrls) => [...prevUrls, response.data.secure_url]);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error("Failed to upload image.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const handleSubmit = async () => {
     try {
-      const imageUrls = await uploadSelectedImages();
+      setIsLoading(true);
 
-      if (imageUrls.length > 0) {
-        const payload = {
-          inviteeName,
-          image: imageUrls,
-          eventId: events.id,
-        };
+      const payload = {
+        inviteeName,
+        image: imageUrls,
+        eventId,
+      };
 
-        await axios.post(
-          `https://api-cliqpod.koyeb.app/camera/${events.id}`,
-          payload
-        );
-        toast.success("Images saved!");
-        router.push("/");
-      } else {
-        toast.error("No images selected for upload.");
-      }
+      await axios.post(
+        `https://api-cliqpod.koyeb.app/camera/${eventId}`,
+        payload
+      );
+      toast.success("Images saved!");
+      router.push("/");
     } catch (error) {
       console.error("Error submitting images:", error);
       toast.error("Failed to submit images.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -273,6 +254,29 @@ const Camera = ({ events }) => {
     return new Blob([buffer], { type: mimeString });
   };
 
+  const handlePreview = () => {
+    previewModal.onOpen();
+  };
+
+  const handleSelectImage = (image) => {
+    setSelectedImages((prevSelectedImages) =>
+      prevSelectedImages.includes(image)
+        ? prevSelectedImages.filter((img) => img !== image)
+        : [...prevSelectedImages, image]
+    );
+  };
+
+  const handleDeleteSelectedImages = () => {
+    if (selectedImages.length === 0) {
+      toast.warning("No images selected for deletion.");
+      return;
+    }
+    setImageUrls((prevImageUrls) =>
+      prevImageUrls.filter((imageUrl) => !selectedImages.includes(imageUrl))
+    );
+    setSelectedImages([]);
+  };
+
   return (
     <Container>
       <BackdropOverlay backdropUrl={events?.event_image} />
@@ -281,7 +285,8 @@ const Camera = ({ events }) => {
         autoPlay
         playsInline
         style={{
-          transform: facingMode === FACING_MODE_USER ? "scaleX(-1)" : "scaleX(1)",
+          transform:
+            facingMode === FACING_MODE_USER ? "scaleX(-1)" : "scaleX(1)",
         }}
       ></Video>
       <Buttons className="button">
@@ -292,8 +297,8 @@ const Camera = ({ events }) => {
           {photosTaken === events.photosPerPerson ? (
             "done"
           ) : (
-            <span onClick={takePicture}>
-              <ShutterIcon />
+            <span onClick={takePicture} disabled={uploading}>
+              {uploading ? <Spinner /> : <ShutterIcon />}
             </span>
           )}
           <span onClick={switchCamera}>
@@ -306,112 +311,102 @@ const Camera = ({ events }) => {
         {photosTaken}/{events?.photosPerPerson}
       </Span>
 
-      {previewImage && (
-        <Modal size={"full"} isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-          <ModalOverlay />
-          <ModalContent
-            position="relative"
-            top="0"
-            left="0"
-            height="100%"
-            width="100vw"
-            padding="0"
+      <Modal
+        size={"full"}
+        isOpen={previewModal.isOpen}
+        onClose={previewModal.onClose}
+      >
+        <ModalOverlay />
+        <ModalContent
+          width={"100%"}
+          overflow={"scroll"}
+          position={"fixed"}
+          padding={"3%"}
+        >
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
           >
-            <Image
-              src={previewImage}
-              width={1080}
-              height={1920}
-              alt="Preview"
-              layout="responsive"
+            <div
               style={{
-                zIndex: 1,
-                width: "100%",
-                height: "100%",
-                margin: "auto",
-                position: "relative",
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-              }}
-            />
-
-            <span
-              onClick={saveImage}
-              style={{
-                zIndex: 10,
-                cursor: "pointer",
-                background: "#fff",
-                position: "absolute",
-                bottom: "25px",
-                left: "20px",
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gap: "6px",
               }}
             >
-              <SaveIcon />
-            </span>
-          </ModalContent>
-        </Modal>
-      )}
-
-      <Modal size={"full"} isOpen={isPreviewOpen} onClose={onPreviewClose}>
-        <ModalOverlay />
-        <ModalContent width={"100%"} overflow={"hidden"} position={"fixed"}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "6px" }}>
-            {capturedImages.map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt={`Captured ${index}`}
-                style={{
-                  width: "200px",
-                  height: "200px",
-                  cursor: "pointer",
-                  border: selectedImages.includes(image) ? "2px solid blue" : "none",
+              {imageUrls.map((imageUrl, index) => (
+                <img
+                  key={index}
+                  width={"1080"}
+                  height={"1920"}
+                  src={imageUrl}
+                  alt={`Uploaded ${index}`}
+                  style={{
+                    cursor: "pointer",
+                    border: selectedImages.includes(imageUrl)
+                      ? "2px solid blue"
+                      : "none",
+                  }}
+                  onClick={() => handleSelectImage(imageUrl)}
+                />
+              ))}
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <Button
+                type={"button"}
+                variant={"defaultButton"}
+                onClick={handleDeleteSelectedImages}
+                disabled={selectedImages.length === 0}
+              >
+                Delete
+              </Button>
+              <Button
+                type={"button"}
+                variant={"defaultButton"}
+                onClick={() => {
+                  if (selectedImages.length === 0) {
+                    toast.warning("No images selected for submission.");
+                  } else {
+                    submitModal.onOpen();
+                  }
                 }}
-                onClick={() => handleSelectImage(image)}
-              />
-            ))}
+                disabled={selectedImages.length === 0}
+              >
+                Submit
+              </Button>
+            </div>
           </div>
-          <Button type={"button"} variant={"defaultButton"} onClick={onPreviewClose}>
-            Close
-          </Button>
-          <Button type={"button"} variant={"defaultButton"} onClick={uploadSelectedImages}>
-            Submit
-          </Button>
         </ModalContent>
       </Modal>
 
-      {photosTaken === events.photosPerPerson && (
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent
-            display={"flex"}
-            flexDirection={"column"}
-            gap={"20px"}
-            padding={"6%"}
-            width={"90%"}
-          >
-            <div>
-              <h2>Invitee Name</h2>
-              <Input
-                size="lg"
-                type="text"
-                value={inviteeName}
-                onChange={(e) => setInviteeName(e.target.value)}
-              />
-            </div>
+      <Modal isOpen={submitModal.isOpen} onClose={submitModal.onClose}>
+        <ModalOverlay />
+        <ModalContent
+          display={"flex"}
+          flexDirection={"column"}
+          gap={"20px"}
+          padding={"6%"}
+          width={"90%"}
+        >
+          <div>
+            <h2>Invitee Name</h2>
+            <Input
+              size="lg"
+              type="text"
+              value={inviteeName}
+              onChange={(e) => setInviteeName(e.target.value)}
+            />
+          </div>
 
-            <Button
-              type={"submit"}
-              variant={"defaultButton"}
-              onClick={handleSubmit}
-              disabled={isLoading}
-            >
-              {isLoading ? <Spinner /> : "Submit"}
-            </Button>
-          </ModalContent>
-        </Modal>
-      )}
+          <Button
+            type={"submit"}
+            variant={"defaultButton"}
+            onClick={handleSubmit}
+            disabled={isLoading}
+          >
+            {isLoading ? <Spinner /> : "Submit"}
+          </Button>
+        </ModalContent>
+      </Modal>
     </Container>
   );
 };
