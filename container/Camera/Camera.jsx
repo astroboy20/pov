@@ -96,11 +96,7 @@ const Camera = ({ events }) => {
         canvas.height = video.videoHeight;
         const context = canvas.getContext("2d");
 
-        // Flip the image horizontally if using the front camera
-        if (facingMode === FACING_MODE_USER) {
-          context.translate(canvas.width, 0);
-          context.scale(-1, 1);
-        }
+      
 
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
@@ -150,11 +146,7 @@ const Camera = ({ events }) => {
         canvas.width = img.width;
         canvas.height = img.height;
 
-        // Flip the image horizontally if using the front camera
-        if (facingMode === FACING_MODE_USER) {
-          context.translate(canvas.width, 0);
-          context.scale(-1, 1);
-        }
+      
 
         context.drawImage(img, 0, 0, canvas.width, canvas.height);
 
@@ -344,11 +336,11 @@ const Camera = ({ events }) => {
               {imageUrls.map((imageUrl, index) => (
                 <img
                   key={index}
-                  width={"1080"}
-                  height={"1920"}
                   src={imageUrl}
                   alt={`Uploaded ${index}`}
                   style={{
+                    width:"300px",
+                    height:"300px",
                     cursor: "pointer",
                     border: selectedImages.includes(imageUrl)
                       ? "2px solid blue"
