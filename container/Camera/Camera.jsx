@@ -21,6 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { Button } from "@/components/Button";
 import Image from "next/image";
+import { Grid } from "react-loader-spinner";
 
 const Camera = ({ events }) => {
   const FACING_MODE_USER = "user";
@@ -183,9 +184,34 @@ const Camera = ({ events }) => {
     }
   };
 
+  const saveImage = () => {
+    if (previewImage) {
+      const images = JSON.parse(localStorage.getItem("capturedImages")) || [];
+      images.push(previewImage);
+      localStorage.setItem("capturedImages", JSON.stringify(images));
+      setCapturedImages(images);
+      setPreviewImage(null);
+      setModalOpen(false);
+    }
+  };
+
+  const handlePreview = () => {
+    const images = JSON.parse(localStorage.getItem("capturedImages")) || [];
+    setCapturedImages(images);
+    onPreviewOpen();
+  };
+
+  const handleSelectImage = (image) => {
+    setSelectedImages((prevSelectedImages) =>
+      prevSelectedImages.includes(image)
+        ? prevSelectedImages.filter((img) => img !== image)
+        : [...prevSelectedImages, image]
+    );
+  };
+
   useEffect(() => {
     if (photosTaken === events.photosPerPerson) {
-      onOpen();
+      onSubmitOpen();
     }
   }, [photosTaken]);
 
@@ -262,7 +288,7 @@ const Camera = ({ events }) => {
         }}
       ></Video>
       <Buttons className="button">
-        <div className="left-icon">
+        <div className="left-icon" onClick={handlePreview}>
           <PreviewIcon />
         </div>
         <div className="center-buttons">
@@ -282,6 +308,79 @@ const Camera = ({ events }) => {
       <Span style={{ marginTop: "10px" }}>
         {photosTaken}/{events?.photosPerPerson}
       </Span>
+
+      {previewImage && (
+        <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+          <ModalOverlay />
+          <ModalContent
+            position="fixed"
+            top="0"
+            left="0"
+            height="100vh"
+            width="100vw"
+            padding="0"
+          >
+            <Image
+              src={previewImage}
+              alt="Preview"
+              // layout="fill"
+              width={1080}
+              height={1920}
+              objectFit="cover" // or "cover" if you want the image to cover the entire area
+              style={{ zIndex: 1 }}
+            />
+
+            <span
+              onClick={saveImage}
+              style={{
+                zIndex: 10,
+                cursor: "pointer",
+                background: "red",
+              }}
+            >
+              <SaveIcon />
+            </span>
+          </ModalContent>
+        </Modal>
+      )}
+
+      <Modal isOpen={isPreviewOpen} onClose={onPreviewClose}>
+        <ModalOverlay />
+        <ModalContent height={"100dvh"} width={"100%"} overflow={"hidden"} position={"fixed"}>
+          <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+            {capturedImages.map((image, index) => (
+              <Image
+                key={index}
+                src={image}
+                alt={`Captured ${index}`}
+                width={1080}
+                height={1920}
+                onClick={() => handleSelectImage(image)}
+                // border={
+                //   selectedImages.includes(image)
+                //     ? "2px solid blue"
+                //     : "2px solid transparent"
+                // }
+                cursor="pointer"
+              />
+            ))}
+          </Grid>
+          <Button
+            type={"button"}
+            variant={"defaultButton"}
+            onClick={onPreviewClose}
+          >
+            Close
+          </Button>
+          <Button
+            type={"button"}
+            variant={"defaultButton"}
+            onClick={onSubmitOpen}
+          >
+            Submit
+          </Button>
+        </ModalContent>
+      </Modal>
 
       {photosTaken === events.photosPerPerson && (
         <Modal isOpen={isOpen} onClose={onClose}>
