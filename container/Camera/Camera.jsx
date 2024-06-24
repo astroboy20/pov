@@ -273,7 +273,7 @@ const Camera = ({ events }) => {
         payload
       );
       toast.success("Images saved!");
-      router.push("/");
+      router.push("/success-page");
     } catch (error) {
       console.error("Error submitting images:", error);
       toast.error("Failed to submit images.");
