@@ -95,11 +95,9 @@ const Camera = ({ events }) => {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         const context = canvas.getContext("2d");
-
-      
-
+  
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
+  
         if (events?.event_image) {
           const filterImage = new Image();
           filterImage.crossOrigin = "anonymous";
@@ -113,12 +111,12 @@ const Camera = ({ events }) => {
             filterImage.onerror = reject;
           });
         }
-
+  
         const imageUrl = canvas.toDataURL("image/png");
-        setCapturedImages((prevImages) => [...prevImages, imageUrl]);
-        setPhotosTaken((prevCount) => prevCount + 1);
         audioRef.current.play();
-        uploadImage(imageUrl);
+        await uploadImage(imageUrl); // Upload the image immediately
+        setPhotosTaken((prevCount) => prevCount + 1);
+        toast.info(`You have ${events.photosPerPerson - photosTaken - 1} picture(s) left.`);
       } else {
         toast.warning("Maximum number of photos reached.");
       }
@@ -127,7 +125,7 @@ const Camera = ({ events }) => {
       setIsLoading(false);
     }
   };
-
+  
   const takePicture = async () => {
     try {
       if (typeof ImageCapture !== "undefined") {
@@ -136,20 +134,18 @@ const Camera = ({ events }) => {
         const imageCapture = new ImageCapture(tracks[0]);
         const blob = await imageCapture.takePhoto();
         audioRef.current.play();
-
+  
         const img = document.createElement("img");
         img.src = URL.createObjectURL(blob);
         await img.decode();
-
+  
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");
         canvas.width = img.width;
         canvas.height = img.height;
-
-      
-
+  
         context.drawImage(img, 0, 0, canvas.width, canvas.height);
-
+  
         if (events?.event_image) {
           const filterImage = new Image();
           filterImage.crossOrigin = "anonymous";
@@ -163,11 +159,11 @@ const Camera = ({ events }) => {
             filterImage.onerror = reject;
           });
         }
-
+  
         const imageUrl = canvas.toDataURL("image/png");
-        setCapturedImages((prevImages) => [...prevImages, imageUrl]);
+        await uploadImage(imageUrl); // Upload the image immediately
         setPhotosTaken((prevCount) => prevCount + 1);
-        uploadImage(imageUrl);
+        toast.info(`You have ${events.photosPerPerson - photosTaken - 1} picture(s) left.`);
       } else {
         takePictureFallback(); // Fallback for devices without ImageCapture support
       }
@@ -176,21 +172,15 @@ const Camera = ({ events }) => {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (photosTaken === events.photosPerPerson) {
-      submitModal.onOpen();
-    }
-  }, [photosTaken]);
-
+  
   const uploadImage = async (imageUrl) => {
     setUploading(true);
     try {
       const formData = new FormData();
       const blob = dataURLtoBlob(imageUrl);
-      formData.append("file", blob, `photo${photosTaken}.jpg`);
-      formData.append("upload_preset", "za8tsrje");
-
+      formData.append("file", blob, `photo${photosTaken + 1}.jpg`);
+      formData.append("upload_preset", "za8tsrje"); // Specify your upload preset here
+  
       const response = await axios.post(
         "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
         formData,
@@ -200,7 +190,7 @@ const Camera = ({ events }) => {
           },
         }
       );
-
+  
       setImageUrls((prevUrls) => [...prevUrls, response.data.secure_url]);
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -209,6 +199,16 @@ const Camera = ({ events }) => {
       setUploading(false);
     }
   };
+  
+  
+
+  useEffect(() => {
+    if (photosTaken === events.photosPerPerson) {
+      submitModal.onOpen();
+    }
+  }, [photosTaken]);
+
+  
 
   const handleSubmit = async () => {
     try {
@@ -278,8 +278,8 @@ const Camera = ({ events }) => {
         autoPlay
         playsInline
         style={{
-          transform:
-            facingMode === FACING_MODE_USER ? "scaleX(-1)" : "scaleX(1)",
+          transform: facingMode === FACING_MODE_USER ? "scaleX(-1)" : "none",
+      
         }}
       ></Video>
       <Buttons className="button">
@@ -316,16 +316,23 @@ const Camera = ({ events }) => {
           position={"fixed"}
           padding={"3%"}
         >
-          <span
-            style={{ marginLeft: "auto", cursor: "pointer" }}
-            onClick={previewModal.onClose}
-          >
-            <ImCancelCircle size={"30px"} />
-          </span>
-
           <div
             style={{ display: "flex", flexDirection: "column", gap: "20px" }}
           >
+            <span
+              style={{
+                marginLeft: "auto",
+                cursor: "pointer",
+                background: "#1d1465",
+                borderRadius: "2px",
+                padding: "4px 14px",
+                fontSize: "10px",
+                color: "#fff",
+              }}
+              onClick={previewModal.onClose}
+            >
+              Add Picture
+            </span>
             <div
               style={{
                 display: "grid",
@@ -339,8 +346,8 @@ const Camera = ({ events }) => {
                   src={imageUrl}
                   alt={`Uploaded ${index}`}
                   style={{
-                    width:"300px",
-                    height:"300px",
+                    width: "300px",
+                    height: "300px",
                     cursor: "pointer",
                     border: selectedImages.includes(imageUrl)
                       ? "2px solid blue"
@@ -353,7 +360,7 @@ const Camera = ({ events }) => {
             <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
               <Button
                 type={"button"}
-                variant={"defaultButton"}
+                variant={"transparent"}
                 onClick={handleDeleteSelectedImages}
                 disabled={selectedImages.length === 0}
               >
@@ -412,3 +419,4 @@ const Camera = ({ events }) => {
 };
 
 export { Camera };
+

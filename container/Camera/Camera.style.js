@@ -15,7 +15,7 @@ export const BackdropOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url(${props => props.backdropUrl});
+  background-image: url(${(props) => props.backdropUrl});
   background-size: cover;
   background-position: center;
   z-index: 2; /* Ensure BackdropOverlay is above the Container and Video */
@@ -43,12 +43,11 @@ export const Buttons = styled.div`
     flex: 1; /* Ensure the buttons take available space in the center */
     display: flex;
     justify-content: center;
-    align-items:center ;
-    margin:auto ;
+    align-items: center;
+    margin: auto;
     gap: 20px; /* Space between the buttons */
   }
 `;
-
 
 export const Video = styled.video`
   width: 100%;
