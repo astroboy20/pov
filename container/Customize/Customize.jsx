@@ -8,7 +8,7 @@ import { StepFour } from "./Steps/StepFour";
 import { useRouter } from "next/router";
 
 const Customize = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(4);
   const [blankCanvas, setBlankCanvas] = useState(false);
   const [cameFromNewTemplate, setCameFromNewTemplate] = useState(false);
   const router = useRouter();
@@ -22,6 +22,8 @@ const Customize = () => {
     if (cameFromNewTemplate && currentStep === 3) {
       setCurrentStep(1);
       setCameFromNewTemplate(false);
+    } else if (currentStep === 4) {
+      setCurrentStep(1);
     } else if (currentStep > 1) {
       setCurrentStep((prev) => prev - 1);
       setBlankCanvas(false);

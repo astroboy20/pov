@@ -128,7 +128,7 @@ const Hosting = ({ events, deleteEvent }) => {
                   <div className="text" onClick={()=>handleId(event?._id)}>
                     <Link
                       style={{ textDecoration: "none" }}
-                      href={`/album/${event?._id}`}
+                      href={`/album`}
                     >
                       <div className="a">{event?.eventName}</div>
                       <div className="b">{formatDate(event?.event_date)}</div>

@@ -244,7 +244,7 @@ const StepOne = ({
           size={"lg"}
         >
           <option value="" disabled hidden>
-            cliq reveal time?{" "}
+            Album reveal time?{" "}
           </option>
           {RevealData.map((reveal) => (
             <option key={reveal.id} value={reveal.value}>
@@ -256,7 +256,7 @@ const StepOne = ({
           onClick={handleNext}
           type={"submit"}
           variant={"defaultButton"}
-          disabled={!isStepOneValid()}
+          // disabled={!isStepOneValid()}
         >
           Continue
         </Button>

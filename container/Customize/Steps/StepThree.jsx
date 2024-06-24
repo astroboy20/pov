@@ -254,12 +254,19 @@ const StepThree = ({ handleNext, blankCanvas }) => {
   };
 
   const selectNewElement = () => {
-    if (eventName === "BIRTHDAY" || eventName === "WEDDING") {
+    if (
+      eventName === "BIRTHDAY" ||
+      eventName === "WEDDING" ||
+      eventName === "HANGOUT" ||
+      eventName === "COOPERATE" ||
+      eventName === "OTHERS"
+    ) {
       onOpen();
-    } else {
-      const fileInput = document.getElementById("elementInput");
-      fileInput.click();
     }
+    // else {
+    //   const fileInput = document.getElementById("elementInput");
+    //   fileInput.click();
+    // }
   };
 
   const handleFontChange = (e) => {
@@ -487,7 +494,7 @@ const StepThree = ({ handleNext, blankCanvas }) => {
         </ModalContent>
       </Modal>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal size={"lg"} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent width={"95%"} height={"90%"} overflow={"scroll"}>
           <ModalHeader>Select Item</ModalHeader>
@@ -513,12 +520,6 @@ const StepThree = ({ handleNext, blankCanvas }) => {
                 ))}
             </div>
           </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </div>

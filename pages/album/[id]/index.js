@@ -5,7 +5,6 @@ import { Album } from "@/container/Album";
 import { ProtectedRoute } from "@/container/ProtectedRoutes/ProtectedRoute";
 import useFetchItems from "@/hooks/useFetchItems";
 import { EventSpinner } from "@/components/Spinner/Spinner";
-import { BottomNav } from "@/components/BottomNav";
 import Head from "next/head";
 
 const EventID = () => {

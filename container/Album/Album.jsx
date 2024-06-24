@@ -16,7 +16,7 @@ const Album = ({ eventData }) => {
   const router = useRouter();
 
   const handleRoute = () => {
-    router.push("/event");
+    router.push("/view-album");
   };
 
   const eventId =

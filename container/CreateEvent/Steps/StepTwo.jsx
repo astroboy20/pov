@@ -68,7 +68,6 @@ const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
               margin: "2% 30%",
             }}
             alt="event-image"
-           
           />{" "}
           {/* <h1>{parsedData?.eventName}</h1> */}
         </div>
@@ -80,7 +79,7 @@ const StepTwo = ({ step, handlePrev, handleRoute, eventName }) => {
           <p>{parsedData?.location}</p>
           <p>Event Mode: {parsedData?.mode}</p>
           <p>{parsedData?.photosPerPerson} cliqs</p>
-          <p>cliq reveal after {parsedData?.revealTime} hours</p>
+          <p>Album reveal after {parsedData?.revealTime} hours</p>
         </div>
 
         <Button

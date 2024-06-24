@@ -312,6 +312,51 @@ export const items = [
     src: "/items/icons/9.png",
     alt: "item",
   },
+  {
+    id: 29,
+    src: "/items/vignette/1.png",
+    alt: "item",
+  },
+  {
+    id: 30,
+    src: "/items/vignette/2.png",
+    alt: "item",
+  },
+  {
+    id: 31,
+    src: "/items/vignette/3.png",
+    alt: "item",
+  },
+  {
+    id: 32,
+    src: "/items/vignette/4.png",
+    alt: "item",
+  },
+  {
+    id: 33,
+    src: "/items/vignette/5.png",
+    alt: "item",
+  },
+  {
+    id: 34,
+    src: "/items/vignette/6.png",
+    alt: "item",
+  },
+  {
+    id: 35,
+    src: "/items/vignette/7.png",
+    alt: "item",
+  },
+  {
+    id: 36,
+    src: "/items/vignette/8.png",
+    alt: "item",
+  },
+  {
+    id: 37,
+    src: "/items/vignette/9.png",
+    alt: "item",
+  },
 ];
 
 export const editActions = [
@@ -327,17 +372,17 @@ export const editActions = [
   },
   {
     id: 3,
-    label: "Uplaod Element",
+    label: "Add Element",
     icon: <UploadIcon />,
   },
   {
     id: 4,
-    label: "Change font",
+    label: "Change Font",
     icon: <ChangeFontIcon />,
   },
   {
     id: 5,
-    label: "BG color",
+    label: "BG Color",
     icon: <BackgroundIcon />,
   },
   {
@@ -409,5 +454,5 @@ export const popularFonts = [
   "Nordams",
   "Product Sans Black",
   "Steelfish Bold Italic",
-  "Tinkoff Sans Medium"
-]
+  "Tinkoff Sans Medium",
+];
