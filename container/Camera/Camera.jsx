@@ -87,6 +87,89 @@ const Camera = ({ events }) => {
     }
   };
 
+  // const takePicture = async () => {
+  //   try {
+  //     if (typeof ImageCapture !== "undefined") {
+  //       const stream = videoRef.current.srcObject;
+  //       const tracks = stream.getVideoTracks();
+  //       const imageCapture = new ImageCapture(tracks[0]);
+  //       const blob = await imageCapture.takePhoto();
+  //       audioRef.current.play();
+
+  //       const img = document.createElement("img");
+  //       img.src = URL.createObjectURL(blob);
+  //       await img.decode();
+
+  //       const canvas = document.createElement("canvas");
+  //       const context = canvas.getContext("2d");
+  //       canvas.width = img.width;
+  //       canvas.height = img.height;
+
+  //       context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+  //       if (events?.event_image) {
+  //         const filterImage = new Image();
+  //         filterImage.crossOrigin = "anonymous";
+  //         filterImage.src = events.event_image;
+  //         await new Promise((resolve, reject) => {
+  //           filterImage.onload = () => {
+  //             context.globalCompositeOperation = "source-over";
+  //             context.drawImage(filterImage, 0, 0, canvas.width, canvas.height);
+  //             resolve();
+  //           };
+  //           filterImage.onerror = reject;
+  //         });
+  //       }
+
+  //       const imageUrl = canvas.toDataURL("image/png");
+  //       await uploadImage(imageUrl); // Upload the image immediately
+  //       setPhotosTaken((prevCount) => prevCount + 1);
+  //       toast.info(`You have ${events.photosPerPerson - photosTaken - 1} picture(s) left.`);
+  //     } else {
+  //       takePictureFallback(); // Fallback for devices without ImageCapture support
+  //     }
+  //   } catch (error) {
+  //     console.error("Error taking picture:", error);
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  const uploadImage = async (imageUrl) => {
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      const blob = dataURLtoBlob(imageUrl);
+      formData.append("file", blob, `photo${photosTaken + 1}.jpg`);
+      formData.append("upload_preset", "za8tsrje"); // Specify your upload preset here
+  
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+  
+      setImageUrls((prevUrls) => [...prevUrls, response.data.secure_url]);
+      setPhotosTaken((prevCount) => {
+        const newCount = prevCount + 1;
+        toast.info(
+          `Picture taken successfully. ${
+            events.photosPerPerson - newCount
+          } pictures left.`
+        );
+        return newCount;
+      });
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error("Failed to upload image.");
+    } finally {
+      setUploading(false);
+    }
+  };
+  
   const takePictureFallback = async () => {
     try {
       if (photosTaken < events.photosPerPerson) {
@@ -115,8 +198,6 @@ const Camera = ({ events }) => {
         const imageUrl = canvas.toDataURL("image/png");
         audioRef.current.play();
         await uploadImage(imageUrl); // Upload the image immediately
-        setPhotosTaken((prevCount) => prevCount + 1);
-        toast.info(`You have ${events.photosPerPerson - photosTaken - 1} picture(s) left.`);
       } else {
         toast.warning("Maximum number of photos reached.");
       }
@@ -161,9 +242,7 @@ const Camera = ({ events }) => {
         }
   
         const imageUrl = canvas.toDataURL("image/png");
-        await uploadImage(imageUrl); // Upload the image immediately
-        setPhotosTaken((prevCount) => prevCount + 1);
-        toast.info(`You have ${events.photosPerPerson - photosTaken - 1} picture(s) left.`);
+        await uploadImage(imageUrl); // Ensure the image is uploaded before taking another picture
       } else {
         takePictureFallback(); // Fallback for devices without ImageCapture support
       }
@@ -173,42 +252,11 @@ const Camera = ({ events }) => {
     }
   };
   
-  const uploadImage = async (imageUrl) => {
-    setUploading(true);
-    try {
-      const formData = new FormData();
-      const blob = dataURLtoBlob(imageUrl);
-      formData.append("file", blob, `photo${photosTaken + 1}.jpg`);
-      formData.append("upload_preset", "za8tsrje"); // Specify your upload preset here
-  
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-  
-      setImageUrls((prevUrls) => [...prevUrls, response.data.secure_url]);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      toast.error("Failed to upload image.");
-    } finally {
-      setUploading(false);
-    }
-  };
-  
-  
-
   useEffect(() => {
     if (photosTaken === events.photosPerPerson) {
       submitModal.onOpen();
     }
   }, [photosTaken]);
-
-  
 
   const handleSubmit = async () => {
     try {
@@ -264,8 +312,10 @@ const Camera = ({ events }) => {
       toast.warning("No images selected for deletion.");
       return;
     }
-    setImageUrls((prevImageUrls) =>
-      prevImageUrls.filter((imageUrl) => !selectedImages.includes(imageUrl))
+    setImageUrls(
+      (prevImageUrls) =>
+        prevImageUrls.filter((imageUrl) => !selectedImages.includes(imageUrl)),
+      toast.success("Selected image deleted")
     );
     setSelectedImages([]);
   };
@@ -279,7 +329,6 @@ const Camera = ({ events }) => {
         playsInline
         style={{
           transform: facingMode === FACING_MODE_USER ? "scaleX(-1)" : "none",
-      
         }}
       ></Video>
       <Buttons className="button">
@@ -419,4 +468,3 @@ const Camera = ({ events }) => {
 };
 
 export { Camera };
-
