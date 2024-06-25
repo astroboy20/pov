@@ -8,7 +8,7 @@ import { StepFour } from "./Steps/StepFour";
 import { useRouter } from "next/router";
 
 const Customize = () => {
-  const [currentStep, setCurrentStep] = useState(4);
+  const [currentStep, setCurrentStep] = useState(1);
   const [blankCanvas, setBlankCanvas] = useState(false);
   const [cameFromNewTemplate, setCameFromNewTemplate] = useState(false);
   const router = useRouter();
