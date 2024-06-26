@@ -121,7 +121,7 @@ const Dashboard = () => {
                     <div className="text">
                       <h3>{event?.eventName}</h3>
                       <p>{formatDate(event?.event_date)}</p>
-                      <Link href={`/album/${event?._id}`}>
+                      <Link href={`/upcoming-event/${event?._id}`}>
                         <span>View Event</span>
                       </Link>
                     </div>

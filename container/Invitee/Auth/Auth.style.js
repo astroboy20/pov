@@ -26,14 +26,9 @@ export const AuthContainer = styled.div`
     font-size:14px ;
   }
   .image{
-    /* background-image: url(${props => props.background}); */
-    /* width:355px ; */
-    /* background-size:cover ; */
-    /* background-repeat:no-repeat ; */
     height:fit-content ;
     width:100% ;
     margin:auto ;
-    /* background-position: center; */
   }
 .info, .buttons{
   padding: 0 5%;

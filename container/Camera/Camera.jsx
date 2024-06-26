@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import axios from "axios";
 import {
   BackdropOverlay,
@@ -39,7 +39,7 @@ const Camera = ({ events }) => {
   const previewModal = useDisclosure();
   const submitModal = useDisclosure();
 
-  const switchCamera = React.useCallback(() => {
+  const switchCamera = useCallback(() => {
     setFacingMode((prevState) =>
       prevState === FACING_MODE_USER
         ? FACING_MODE_ENVIRONMENT
@@ -56,8 +56,6 @@ const Camera = ({ events }) => {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           facingMode,
-          width: { ideal: 1080 },
-          height: { ideal: 1920 },
         },
       });
       videoRef.current.srcObject = stream;
@@ -87,53 +85,6 @@ const Camera = ({ events }) => {
     }
   };
 
-  // const takePicture = async () => {
-  //   try {
-  //     if (typeof ImageCapture !== "undefined") {
-  //       const stream = videoRef.current.srcObject;
-  //       const tracks = stream.getVideoTracks();
-  //       const imageCapture = new ImageCapture(tracks[0]);
-  //       const blob = await imageCapture.takePhoto();
-  //       audioRef.current.play();
-
-  //       const img = document.createElement("img");
-  //       img.src = URL.createObjectURL(blob);
-  //       await img.decode();
-
-  //       const canvas = document.createElement("canvas");
-  //       const context = canvas.getContext("2d");
-  //       canvas.width = img.width;
-  //       canvas.height = img.height;
-
-  //       context.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-  //       if (events?.event_image) {
-  //         const filterImage = new Image();
-  //         filterImage.crossOrigin = "anonymous";
-  //         filterImage.src = events.event_image;
-  //         await new Promise((resolve, reject) => {
-  //           filterImage.onload = () => {
-  //             context.globalCompositeOperation = "source-over";
-  //             context.drawImage(filterImage, 0, 0, canvas.width, canvas.height);
-  //             resolve();
-  //           };
-  //           filterImage.onerror = reject;
-  //         });
-  //       }
-
-  //       const imageUrl = canvas.toDataURL("image/png");
-  //       await uploadImage(imageUrl); // Upload the image immediately
-  //       setPhotosTaken((prevCount) => prevCount + 1);
-  //       toast.info(`You have ${events.photosPerPerson - photosTaken - 1} picture(s) left.`);
-  //     } else {
-  //       takePictureFallback(); // Fallback for devices without ImageCapture support
-  //     }
-  //   } catch (error) {
-  //     console.error("Error taking picture:", error);
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const uploadImage = async (imageUrl) => {
     setUploading(true);
     try {
@@ -141,7 +92,7 @@ const Camera = ({ events }) => {
       const blob = dataURLtoBlob(imageUrl);
       formData.append("file", blob, `photo${photosTaken + 1}.jpg`);
       formData.append("upload_preset", "za8tsrje"); // Specify your upload preset here
-  
+
       const response = await axios.post(
         "https://api.cloudinary.com/v1_1/dm42ixhsz/image/upload",
         formData,
@@ -151,7 +102,7 @@ const Camera = ({ events }) => {
           },
         }
       );
-  
+
       setImageUrls((prevUrls) => [...prevUrls, response.data.secure_url]);
       setPhotosTaken((prevCount) => {
         const newCount = prevCount + 1;
@@ -169,7 +120,7 @@ const Camera = ({ events }) => {
       setUploading(false);
     }
   };
-  
+
   const takePictureFallback = async () => {
     try {
       if (photosTaken < events.photosPerPerson) {
@@ -178,9 +129,9 @@ const Camera = ({ events }) => {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         const context = canvas.getContext("2d");
-  
+
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-  
+
         if (events?.event_image) {
           const filterImage = new Image();
           filterImage.crossOrigin = "anonymous";
@@ -194,7 +145,7 @@ const Camera = ({ events }) => {
             filterImage.onerror = reject;
           });
         }
-  
+
         const imageUrl = canvas.toDataURL("image/png");
         audioRef.current.play();
         await uploadImage(imageUrl); // Upload the image immediately
@@ -206,7 +157,7 @@ const Camera = ({ events }) => {
       setIsLoading(false);
     }
   };
-  
+
   const takePicture = async () => {
     try {
       if (typeof ImageCapture !== "undefined") {
@@ -215,18 +166,18 @@ const Camera = ({ events }) => {
         const imageCapture = new ImageCapture(tracks[0]);
         const blob = await imageCapture.takePhoto();
         audioRef.current.play();
-  
+
         const img = document.createElement("img");
         img.src = URL.createObjectURL(blob);
         await img.decode();
-  
+
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");
         canvas.width = img.width;
         canvas.height = img.height;
-  
+
         context.drawImage(img, 0, 0, canvas.width, canvas.height);
-  
+
         if (events?.event_image) {
           const filterImage = new Image();
           filterImage.crossOrigin = "anonymous";
@@ -240,7 +191,7 @@ const Camera = ({ events }) => {
             filterImage.onerror = reject;
           });
         }
-  
+
         const imageUrl = canvas.toDataURL("image/png");
         await uploadImage(imageUrl); // Ensure the image is uploaded before taking another picture
       } else {
@@ -251,7 +202,7 @@ const Camera = ({ events }) => {
       setIsLoading(false);
     }
   };
-  
+
   useEffect(() => {
     if (photosTaken === events.photosPerPerson) {
       submitModal.onOpen();
@@ -312,11 +263,10 @@ const Camera = ({ events }) => {
       toast.warning("No images selected for deletion.");
       return;
     }
-    setImageUrls(
-      (prevImageUrls) =>
-        prevImageUrls.filter((imageUrl) => !selectedImages.includes(imageUrl)),
-      toast.success("Selected image deleted")
+    setImageUrls((prevImageUrls) =>
+      prevImageUrls.filter((imageUrl) => !selectedImages.includes(imageUrl))
     );
+    toast.success("Selected image deleted");
     setSelectedImages([]);
   };
 

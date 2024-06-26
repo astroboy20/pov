@@ -52,9 +52,11 @@ export const Buttons = styled.div`
 export const Video = styled.video`
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensure the video fills the container */
-  z-index: 1; /* Ensure Video is above the Container but below the BackdropOverlay */
+  object-fit: cover; /* Changed from cover to contain */
+  z-index: 1;
+  position: relative;
 `;
+
 
 export const Span = styled.span`
   color: #fff;
