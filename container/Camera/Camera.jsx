@@ -312,7 +312,6 @@ const Camera = ({ events }) => {
         <ModalContent
           width={"100%"}
           overflow={"scroll"}
-          position={"fixed"}
           padding={"3%"}
         >
           <div
@@ -337,6 +336,7 @@ const Camera = ({ events }) => {
                 display: "grid",
                 gridTemplateColumns: "repeat(2, 1fr)",
                 gap: "6px",
+                overflow:"scroll"
               }}
             >
               {imageUrls.map((imageUrl, index) => (

@@ -30,7 +30,7 @@ const StepFour = () => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-
+  
       const eventResponse = await axios.post(
         "https://api-cliqpod.koyeb.app/create-event",
         {
@@ -43,10 +43,19 @@ const StepFour = () => {
           },
         }
       );
-      console.log("heyy", eventResponse.data.data);
+  
+      console.log("Response:", eventResponse.data.data);
+      
       if (eventResponse) {
-        typeof window != "undefined" &&
-          localStorage.setItem("creatorId", eventResponse?.data?.data?._id);
+        // Check if running in the browser environment
+        if (typeof window !== "undefined") {
+          // Safely access data and store it in localStorage
+          const creatorId = eventResponse?.data?.data?._id;
+          if (creatorId) {
+            localStorage.setItem("creatorId", creatorId);
+          }
+        }
+  
         const userData = eventResponse.data;
         if (userData?.authorization_url) {
           router.push(userData.authorization_url);
@@ -62,6 +71,7 @@ const StepFour = () => {
       setLoading(false);
     }
   };
+  
 
   const price = priceData?.price?.price;
   const displayPrice = price === "free" ? "free" : `#${price}`;

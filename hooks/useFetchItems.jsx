@@ -9,14 +9,19 @@ const useFetchItems = ({ url, token }) => {
     queryKey: [url],
     queryFn: async () => {
       try {
-        const response = await axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        // Set up headers conditionally
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+        // Make the request with or without the Authorization header
+        const response = await axios.get(url, { headers });
+
         return response.data;
       } catch (error) {
+        // Handle 401 error or other errors accordingly
         if (error.response && error.response.status === 401) {
+          router.push("/login");
+        } else if (error.response && error.response.status === 403) {
+          console.error("Access forbidden:", error);
           router.push("/login");
         } else if (token === "") {
           router.push("/login");
@@ -25,7 +30,6 @@ const useFetchItems = ({ url, token }) => {
         }
       }
     },
-    // cacheTime:3000,
   });
 };
 

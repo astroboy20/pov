@@ -81,7 +81,7 @@ const Success = () => {
           </CustomText>
 
           <div>
-            <QRCode value={`https://cliqpod.co/invitee/${event?._id}`} />
+            <QRCode value={`https://cliqpod.co/invitee/${eventId}`} />
             <CustomText weight={"500"} type={"Htype"} variant={"h1"}>
               SCAN ME
             </CustomText>
