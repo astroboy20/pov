@@ -7,12 +7,13 @@ import { useRouter } from "next/router"; // Correct import for useRouter
 import useFetchItems from "@/hooks/useFetchItems";
 import { toast } from "react-toastify";
 import { EventSpinner } from "@/components/Spinner/Spinner";
+import event from "@/pages/event";
 
 const StepFour = () => {
-  let creatorId
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { user } = useSelector((state) => state.auth);
+  const [creatorId, setCreatorId] = useState("");
   const accessToken = user ? user.token : "";
   const data = JSON.parse(
     typeof window !== "undefined" && localStorage.getItem("data")
@@ -27,11 +28,12 @@ const StepFour = () => {
     url: `https://api-cliqpod.koyeb.app/price/${data?.expectedGuests}`,
     token: accessToken,
   });
+  typeof window != "undefined" && localStorage.setItem("creatorId", creatorId);
 
   const handleSubmit = async () => {
     try {
       setLoading(true);
-  
+
       const eventResponse = await axios.post(
         "https://api-cliqpod.koyeb.app/create-event",
         {
@@ -44,19 +46,9 @@ const StepFour = () => {
           },
         }
       );
-  
-      console.log("Response:", eventResponse.data.data);
-      
+      console.log("heyy", eventResponse.data.data);
       if (eventResponse) {
-        // Check if running in the browser environment
-        if (typeof window !== "undefined") {
-          // Safely access data and store it in localStorage
-           creatorId = eventResponse?.data?.data?._id;
-          if (creatorId) {
-            localStorage.setItem("creatorId", creatorId);
-          }
-        }
-  
+        setCreatorId(eventResponse?.data?.data?._id);
         const userData = eventResponse.data;
         if (userData?.authorization_url) {
           router.push(userData.authorization_url);
@@ -72,7 +64,6 @@ const StepFour = () => {
       setLoading(false);
     }
   };
-  
 
   const price = priceData?.price?.price;
   const displayPrice = price === "free" ? "free" : `#${price}`;
