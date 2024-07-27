@@ -14,7 +14,7 @@ const StepFour = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const [creatorId, setCreatorId] = useState(null);
-  console.log(creatorId)
+  console.log(creatorId);
   const accessToken = user ? user.token : "";
   const data = JSON.parse(
     typeof window !== "undefined" && localStorage.getItem("data")
@@ -48,11 +48,11 @@ const StepFour = () => {
         }
       );
       console.log("heyy", eventResponse.data);
-      const userData = eventResponse.data;
+      const userData = eventResponse?.data;
       if (eventResponse) {
-        if (userData?.paymentRef._id)
-        setCreatorId(userData?.paymentRef.creatorId);
-       
+        if (userData?.paymentRef?._id || userData?.data?._id)
+          setCreatorId(userData?.paymentRef?.creatorId || userData?.data?._id);
+
         if (userData?.authorization_url) {
           router.push(userData.authorization_url);
           toast.success("Please proceed to payment!");
