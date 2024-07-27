@@ -47,11 +47,11 @@ const StepFour = () => {
           },
         }
       );
-      console.log("heyy", eventResponse.data?.paymentRef?._id);
+      console.log("heyy", eventResponse.data);
       const userData = eventResponse.data;
       if (eventResponse) {
         if (userData?.paymentRef._id)
-        setCreatorId(userData?.paymentRef._id);
+        setCreatorId(userData?.paymentRef.creatorId);
        
         if (userData?.authorization_url) {
           router.push(userData.authorization_url);

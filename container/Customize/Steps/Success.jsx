@@ -59,7 +59,6 @@ const Success = () => {
 
   const { data, isLoading } = useFetchItems({
     url: `https://api-cliqpod.koyeb.app/event/${eventId}`,
-    token: accessToken,
   });
 
   useEffect(() => {
