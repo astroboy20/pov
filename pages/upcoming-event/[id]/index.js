@@ -4,6 +4,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import Head from "next/head";
 import Image from "next/image";
+import { BackIcon } from "@/assets";
+import { CustomText } from "@/components/CustomText";
 
 const UpcomingRoute = () => {
   const [events, setEvents] = useState([]); // Initialize as an array

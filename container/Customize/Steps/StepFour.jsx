@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { EventSpinner } from "@/components/Spinner/Spinner";
 
 const StepFour = () => {
+  let creatorId
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { user } = useSelector((state) => state.auth);
@@ -50,7 +51,7 @@ const StepFour = () => {
         // Check if running in the browser environment
         if (typeof window !== "undefined") {
           // Safely access data and store it in localStorage
-          const creatorId = eventResponse?.data?.data?._id;
+           creatorId = eventResponse?.data?.data?._id;
           if (creatorId) {
             localStorage.setItem("creatorId", creatorId);
           }
