@@ -7,14 +7,11 @@ import { useRouter } from "next/router"; // Correct import for useRouter
 import useFetchItems from "@/hooks/useFetchItems";
 import { toast } from "react-toastify";
 import { EventSpinner } from "@/components/Spinner/Spinner";
-import event from "@/pages/event";
 
 const StepFour = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { user } = useSelector((state) => state.auth);
-  const [creatorId, setCreatorId] = useState(null);
-  console.log(creatorId);
   const accessToken = user ? user.token : "";
   const data = JSON.parse(
     typeof window !== "undefined" && localStorage.getItem("data")
@@ -29,7 +26,6 @@ const StepFour = () => {
     url: `https://api-cliqpod.koyeb.app/price/${data?.expectedGuests}`,
     token: accessToken,
   });
-  typeof window != "undefined" && localStorage.setItem("creatorId", creatorId);
 
   const handleSubmit = async () => {
     try {
@@ -47,12 +43,11 @@ const StepFour = () => {
           },
         }
       );
-      console.log("heyy", eventResponse.data);
-      const userData = eventResponse?.data;
+      console.log("heyy", eventResponse.data.data);
       if (eventResponse) {
-        if (userData?.paymentRef?._id || userData?.data?._id)
-          setCreatorId(userData?.paymentRef?.creatorId || userData?.data?._id);
-
+        typeof window != "undefined" &&
+          localStorage.setItem("creatorId", eventResponse?.data?.data?._id);
+        const userData = eventResponse.data;
         if (userData?.authorization_url) {
           router.push(userData.authorization_url);
           toast.success("Please proceed to payment!");
