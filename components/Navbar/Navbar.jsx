@@ -1,3 +1,4 @@
+"use client"
 import { Logo } from "@/assets";
 import React from "react";
 import { NavContainer } from "./Navbar.style";

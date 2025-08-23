@@ -1,18 +1,18 @@
+"use client"
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar/Navbar";
-import { HomeContainer, HomePage } from "@/container/Home";
-import Head from "next/head";
+import { HomeContainer } from "@/container/Home";
  
 
 export default function Home() {
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>Welcome to Cliqpod</title>
         <meta name="description" content="Clipod" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/cliqpod.png" />
-      </Head>
+      </Head> */}
       <main className="landing-page">
         <Navbar />
         <HomeContainer />

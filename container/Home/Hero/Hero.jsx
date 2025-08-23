@@ -35,7 +35,7 @@ const Hero = () => {
 
   return (
     <HeroContainer>
-      <div className="text">
+      <div className="text border border-red-500">
         <h1>
         Capture Moments and Create Memories  of your Event In Real-time; <span>{typedName}.</span>
         </h1>
