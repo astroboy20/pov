@@ -1,7 +1,7 @@
 "use client"
-import { Footer } from "@/components/Footer";
-import { Navbar } from "@/components/Navbar/Navbar";
-import { HomeContainer } from "@/container/Home";
+import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/navbar";
+import { HomeContainer } from "@/container/Home/home-container";
  
 
 export default function Home() {

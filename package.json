@@ -8,7 +8,7 @@
     "start": "NODE_ENV=production node server.js"
   },
   "engines": {
-   "node": ">=20.11.0"
+    "node": ">=20.11.0"
   },
   "dependencies": {
     "@chakra-ui/accordion": "^2.3.1",
@@ -38,11 +38,11 @@
     "eslint-config-next": "15.5.0",
     "fabric": "^5.3.0",
     "formik": "^2.4.5",
-    "framer-motion": "^10.18.0",
     "html-to-image": "^1.11.11",
     "html2canvas": "^1.4.1",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
+    "motion": "^12.23.12",
     "next": "^15.5.0",
     "react": "^19.1.1",
     "react-calendar-datetime-picker": "^1.7.4",

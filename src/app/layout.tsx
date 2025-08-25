@@ -1,7 +1,7 @@
 import "./globals.css";
 // import { GlobalStyles, theme } from "@/theme";
 // import { ThemeProvider } from "styled-components";
-import { Poppins } from "next/font/google";
+import { Darker_Grotesque, Poppins } from "next/font/google";
 // import { Provider } from "react-redux";
 // import { ToastContainer } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
@@ -11,9 +11,9 @@ import { Poppins } from "next/font/google";
 // import { persistor, store } from "@/feature/store";
 // import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-const poppins = Poppins({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  style: ["normal", "italic"],
+const darker_grotesque = Darker_Grotesque({
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  style: ["normal"],
   subsets: ["latin"],
 });
 
@@ -38,11 +38,9 @@ export default function App({ children }: { children: React.ReactNode }) {
   //     </body>
   //   </html>
   // );
-  return(
+  return (
     <html>
-      <body>
-        {children}
-      </body>
+      <body className={darker_grotesque.className}>{children}</body>
     </html>
-  )
+  );
 }
