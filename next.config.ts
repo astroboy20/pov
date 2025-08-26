@@ -5,7 +5,8 @@ const nextConfig = {
     domains: [
       "res.cloudinary.com",
       "localhost",
-      "api-cliqpod.koyeb.app"
+      "api-cliqpod.koyeb.app",
+      "images.unsplash.com", 
     ],
   },
 };

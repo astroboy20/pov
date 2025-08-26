@@ -21,30 +21,31 @@ const HomeContainer = () => {
     <>
       <Hero />
       <Customize />
+      <Memories />
       {/* <motion.div
         id="memories"
         animate={controlsMemories}
         initial={{ opacity: 0, y: 50 }}
       >
-        <Memories />
-      </motion.div>
-      <motion.div
+     
+      </motion.div> */}
+      {/* <motion.div
         id="slider"
         animate={controlsSlider}
         initial={{ opacity: 0, y: 50 }}
       >
         <Slider />
-      </motion.div>
+      </motion.div> */}
 
-      <motion.div
+      {/* <motion.div
         id="work"
         animate={controlsWorks}
         initial={{ opacity: 0, y: 50 }}
       >
         <Work />
-      </motion.div>
+      </motion.div> */}
 
-      <motion.div
+      {/* <motion.div
         id="faq"
         animate={controlsFAQ}
         initial={{ opacity: 0, y: 50 }}

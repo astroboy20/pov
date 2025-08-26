@@ -39,8 +39,8 @@ export default function App({ children }: { children: React.ReactNode }) {
   //   </html>
   // );
   return (
-    <html>
-      <body className={darker_grotesque.className}>{children}</body>
+    <html lang="en" className={`${darker_grotesque.className} antialiased`}>
+      <body>{children}</body>
     </html>
   );
 }
