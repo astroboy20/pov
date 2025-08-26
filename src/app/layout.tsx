@@ -40,6 +40,12 @@ export default function App({ children }: { children: React.ReactNode }) {
   // );
   return (
     <html lang="en" className={`${darker_grotesque.className} antialiased`}>
+      <head>
+        <title>Welcome to Cliqpod</title>
+        <meta name="description" content="Clipod" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/images/cliqpod.png" />
+      </head>
       <body>{children}</body>
     </html>
   );

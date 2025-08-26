@@ -1,118 +1,75 @@
-// import React, { useState } from "react";
-// import { FAQSContainer } from "./FAQ.style";
-// import { Data } from "./data";
-// import { motion } from "framer-motion";
-
-// const FAQ = () => {
-//   const [selectedQuestion, setSelectedQuestion] = useState(null);
-
-//   const toggleExpansion = (index) => {
-//     setSelectedQuestion((prevIndex) => (prevIndex === index ? null : index));
-//   };
-
-//   return (
-//     <FAQSContainer>
-//       <span>Frequently Asked Questions</span>
-//       <hr className="hr" />
-//       <div className="box">
-//         <div className="question-section">
-//           {Data.map((data, index) => (
-//             <div className="sub-box" key={data.id}>
-//               <motion.div
-//                 className="header"
-//                 style={{
-//                   border:
-//                     selectedQuestion === index ? "1px solid #000" : "none",
-//                 }}
-//                 onClick={() => toggleExpansion(index)}
-//                 whileHover={{ scale: 1.1 }} // Example hover animation
-//                 transition={{ duration: 0.2 }}
-//               >
-//                 <p>{data.title}</p>
-//               </motion.div>
-//               <motion.div
-//                 className="answer-section-mobile"
-//                 style={{
-//                   maxHeight: selectedQuestion === index ? "1000px" : "0",
-//                   opacity: selectedQuestion === index ? 1 : 0,
-//                 }}
-//                 initial={{ opacity: 0, maxHeight: 0 }}
-//                 animate={{ opacity: selectedQuestion === index ? 1 : 0, maxHeight: selectedQuestion === index ? "1000px" : 0 }}
-//                 transition={{ duration: 0.5 }}
-//               >
-//                 <p className={"content-show"}>{data.content}</p>
-//               </motion.div>
-//             </div>
-//           ))}
-//         </div>
-//         <div className="answer-section">
-//           <span>Answers</span>
-//           {selectedQuestion !== null && (
-//             <p className={"content-show"}>{Data[selectedQuestion].content}</p>
-//           )}
-//         </div>
-//       </div>
-//     </FAQSContainer>
-//   );
-// };
-
-// export { FAQ };
-
+"use client";
 import React, { useState } from "react";
-import { FAQSContainer } from "./FAQ.style";
-import { Data } from "./data";
 import { motion } from "motion/react";
+import { Data } from "./data";
 
 const FAQ = () => {
-  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [selectedQuestion, setSelectedQuestion] = useState<number | null>(null);
 
-  const toggleExpansion = (index) => {
+  const toggleExpansion = (index: number) => {
     setSelectedQuestion((prevIndex) => (prevIndex === index ? null : index));
   };
 
   return (
-    <main className="mx-[5%] p-[3%] lg:p-[3%] flex flex-col gap-10 border-[3px] border-[#1d1465] rounded-[4px] lg:rounded-[28px] mb-[20%]">
-      <h1 className="text-4xl md:text-5xl lg:text-[72px] font-bold leading-tight text-left">Frequently Asked Questions</h1>
+    <motion.main
+      className="mx-[5%] p-[3%] lg:p-[3%] flex flex-col gap-10 border-[3px] border-[#1d1465] rounded-[4px] lg:rounded-[28px] mb-[20%] lg:mb-20"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay:0.3 }}
+      viewport={{ once: true }}
+    >
+      <h1 className="text-2xl lg:text-[72px] font-bold leading-tight text-left">
+        Frequently Asked Questions
+      </h1>
       <hr className="border border-[#1d1465] my-[1px] mx-auto lg:my-[10px] w-full" />
-      <div className="flex justify-between">
-        <div className="w-full lg:w-[49%] rounded-[16px] p-[2%] bg-[#f2f3f4] flex flex-col gap-5 cursor-pointer">
+
+      <div className="flex justify-between gap-6 flex-col md:flex-row">
+        {/* Question Section */}
+        <div className="flex flex-col gap-5 bg-[#f2f3f4] p-4 rounded-xl w-full md:w-1/2 cursor-pointer">
           {Data.map((data, index) => (
-            <div className="sub-box" key={data.id}>
+            <motion.div
+              key={data.id}
+              className="bg-white rounded-xl p-4 text-lg lg:text-[24px] font-medium shadow hover:shadow-md transition"
+              onClick={() => toggleExpansion(index)}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+            >
+              <p className="text-black">{data.title}</p>
+
               <motion.div
-                className="text-black bg-[#f2f3f4] lg:bg-white p-[5%] lg:py-[3%] lg:px-[2%] rounded-[4px] lg:rounded-[16px] text-[18px] lg:text-[24px] font-medium"
-                style={{
-                  border:
-                    selectedQuestion === index ? "1px solid #000" : "none",
-                }}
-                onClick={() => toggleExpansion(index)}
-                whileHover={{ scale: 1.1 }} // Example hover animation
-                transition={{ duration: 0.2 }}
-              >
-                <p>{data.title}</p>
-              </motion.div>
-              <motion.div
-                className="flex lg:hidden text-[18px] font-medium "
-                style={{
-                  maxHeight: selectedQuestion === index ? "1000px" : "0",
+                className="overflow-hidden md:hidden"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{
                   opacity: selectedQuestion === index ? 1 : 0,
+                  height: selectedQuestion === index ? "auto" : 0,
                 }}
-                initial={{ opacity: 0, maxHeight: 0 }}
-                animate={{ opacity: selectedQuestion === index ? 1 : 0, maxHeight: selectedQuestion === index ? "1000px" : 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.4 }}
               >
-                <p className={"content-show"}>{data.content}</p>
+                <p className="text-[18px] font-normal bg-[#1D14654D] rounded-md p-3 mt-2 duration-500">
+                  {data.content}
+                </p>
               </motion.div>
-            </div>
+            </motion.div>
           ))}
         </div>
-        <div className="hidden lg:flex w-[49%] rounded-[16px] p-[2%] bg-[#1d14654d]">
-          <h1 className="hidden lg:flex text-[24px] lg:text-[48px] font-bold" >Answers</h1>
+
+        {/* Desktop Answer Section */}
+        <div className="hidden md:block bg-[#1D14654D] rounded-xl p-6 w-1/2">
+          <span className="text-[48px] font-bold">Answers</span>
           {selectedQuestion !== null && (
-            <p className={"text-[24px] font-[400]"}>{Data[selectedQuestion].content}</p>
+            <motion.p
+              key={selectedQuestion}
+              className="mt-4 text-[24px] font-normal text-black leading-relaxed"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
+            >
+              {Data[selectedQuestion].content}
+            </motion.p>
           )}
         </div>
-      </div> 
-    </main>
+      </div>
+    </motion.main>
   );
 };
 

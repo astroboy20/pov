@@ -1,10 +1,8 @@
 "use client";
-import React from "react";
+import { useEffect, useState } from "react";
 import { Logo } from "@/assets";
 import Link from "next/link";
 import { motion } from "motion/react";
-
-
 
 const buttonVariants = {
   hover: {
@@ -18,12 +16,32 @@ const buttonVariants = {
 };
 
 const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // const scrollToSection = (sectionId: string) => {
+  //   document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+  // };
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
-      className="px-[5%] py-[2%]"
+      className={`px-[5%] py-[2%]  sticky top-0 z-50 transition-shadow ${
+        isScrolled
+          ? "bg-background/80 backdrop-blur-md lg:border-b"
+          : "bg-transparent"
+      }`}
     >
       <nav className="flex justify-between items-center">
         <Logo />

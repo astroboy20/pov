@@ -23,14 +23,14 @@ const Slider = () => {
       className="flex flex-col gap-8 lg:gap-20"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
       viewport={{ once: true }}
     >
       {/* Header */}
       <motion.header
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
         viewport={{ once: true }}
         className="flex flex-col gap-[5px] text-center "
       >
