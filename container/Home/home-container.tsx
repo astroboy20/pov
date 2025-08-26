@@ -1,13 +1,13 @@
-"use client"
+"use client";
 import React, { useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 
-import { Customize } from "@/container/Home/Customize/customize-section";
+import { Customize } from "@/container/Home/customize-section";
 import { FAQ } from "./FAQs";
-import { Memories } from "./Memories/Memorises";
 import { Work } from "./Work";
-import { Slider } from "./Slider";
+import { Slider } from "@/container/Home/slider-section";
 import { Hero } from "./hero-section";
+import { Memories } from "./memorises-section";
 
 const HomeContainer = () => {
   const controlsSlider = useAnimation();
@@ -16,25 +16,18 @@ const HomeContainer = () => {
   const controlsWorks = useAnimation();
   const controlsFAQ = useAnimation();
 
-
   return (
-    <>
+    <main className="flex flex-col gap-20">
       <Hero />
       <Customize />
       <Memories />
-      {/* <motion.div
-        id="memories"
-        animate={controlsMemories}
-        initial={{ opacity: 0, y: 50 }}
-      >
-     
-      </motion.div> */}
+      <Slider />
       {/* <motion.div
         id="slider"
         animate={controlsSlider}
         initial={{ opacity: 0, y: 50 }}
       >
-        <Slider />
+      
       </motion.div> */}
 
       {/* <motion.div
@@ -52,7 +45,7 @@ const HomeContainer = () => {
       >
         <FAQ />
       </motion.div> */}
-    </>
+    </main>
   );
 };
 

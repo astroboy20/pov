@@ -1,10 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "motion/react";
 
 const Customize = () => {
   return (
-    <main className="p-4 md:p-[5%] flex flex-col lg:flex-row items-center w-full  gap-8 lg:gap-0">
-      <div className="flex flex-col text-center lg:text-left gap-8 md:gap-[24px] w-full order-2 lg:order-1">
+    <motion.main
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="px-4 md:px-[5%] flex flex-col lg:flex-row items-center w-full  gap-8 lg:gap-0"
+    >
+      <motion.div
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="flex flex-col text-center lg:text-left gap-8 md:gap-[24px] w-full order-2 lg:order-1"
+      >
         <h1 className="text-4xl md:text-5xl lg:text-[72px] font-bold leading-tight">
           Customizable <br className="hidden md:block" /> templates <br />
           made for you!
@@ -20,17 +31,22 @@ const Customize = () => {
         >
           Customize
         </Link>
-      </div>
-      <div className="w-full lg:ml-auto order-1 lg:order-2">
+      </motion.div>
+      <motion.div
+        initial={{ x: 50, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="w-full lg:ml-auto order-1 lg:order-2"
+      >
         <Image
-          src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=620&h=640&fit=crop&crop=center"
+          src="/images/phone1.jpeg"
           width={620}
           height={640}
           className="phone2 object-cover w-full h-auto max-w-md mx-auto lg:max-w-none rounded"
           alt="phone mockup showing customizable templates"
         />
-      </div>
-    </main>
+      </motion.div>
+    </motion.main>
   );
 };
 
