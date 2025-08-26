@@ -1,16 +1,17 @@
+"use client"
 import React from "react";
 import { AuthContainer } from "./Auth.style";
 import Image from "next/image";
 import { CustomText } from "@/components/CustomText";
 import { Button } from "@/components/Button";
 import { Spinner } from "@/components/Spinner";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { login, reset, googleLogin } from "@/feature/slices/authSlice";
 import { Logo } from "@/assets";
 const Auth = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const handleRegisterRoute = () => {
     router.push("/register");
   };
