@@ -23,7 +23,7 @@ const FAQ = () => {
       </h1>
       <hr className="border border-[#1d1465] my-[1px] mx-auto lg:my-[10px] w-full" />
 
-      <div className="flex justify-between gap-6 flex-col md:flex-row">
+      <div className="flex justify-between gap-6 flex-colnmp md:flex-row">
         {/* Question Section */}
         <div className="flex flex-col gap-5 bg-[#f2f3f4] p-4 rounded-xl w-full md:w-1/2 cursor-pointer">
           {Data.map((data, index) => (
