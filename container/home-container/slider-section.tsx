@@ -50,6 +50,7 @@ const Slider = () => {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.4 }}
         viewport={{ once: true }}
+        className="lg:mx-[5%]"
       >
         <Swiper
           spaceBetween={20}
@@ -61,7 +62,7 @@ const Slider = () => {
           modules={[Navigation, Pagination, Autoplay]}
           autoplay={{ delay: 2000, disableOnInteraction: false }}
           loop={true}
-          className="mySwiper w-full"
+          className="mySwiper w-full "
         >
           {images.map((src, index) => (
             <SwiperSlide key={index}>
