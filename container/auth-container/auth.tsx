@@ -1,9 +1,7 @@
 "use client";
 import React from "react";
-import { AuthContainer } from "./Auth.style";
 import Image from "next/image";
 import { CustomText } from "@/components/CustomText";
-import { Spinner } from "@/components/Spinner";
 import { useRouter } from "next/navigation";
 // import { useSelector, useDispatch } from "react-redux";
 // import { login, reset, googleLogin } from "@/feature/slices/authSlice";
@@ -52,6 +50,7 @@ const Auth = () => {
               type={"button"}
               variant={"outline"}
               // onClick={handleGoogleLogin}
+              className="w-full flex justify-center items-center text-base font-[600] rounded-[4px] px-6 py-[14px] bg-white text-[#1D1465] border border-[#1D1465] h-[48px]"
             >
               <div className="button-style flex items-center gap-[5px] text-[13.3px] font-[600]">
                 <Image
@@ -66,11 +65,16 @@ const Auth = () => {
               </div>
             </Button>
           </div>
-          <div className="or">or</div>
+          <div className="flex items-center my-6">
+            <div className="flex-grow h-px bg-gray-300"></div>
+            <span className="px-4 text-gray-500">or</span>
+            <div className="flex-grow h-px bg-gray-300"></div>
+          </div>
           <Button
             onClick={handleRegisterRoute}
             type={"submit"}
             variant={"default"}
+            className="w-full flex justify-center items-center text-base font-[600] rounded-[4px] px-[24px] py-[14px] bg-[#1d1465] text-white h-[48px]"
           >
             Sign Up with password
           </Button>
