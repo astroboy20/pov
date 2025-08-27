@@ -1,14 +1,14 @@
-"use client"
+"use client";
 import React from "react";
 import { AuthContainer } from "./Auth.style";
 import Image from "next/image";
 import { CustomText } from "@/components/CustomText";
-import { Button } from "@/components/Button";
 import { Spinner } from "@/components/Spinner";
 import { useRouter } from "next/navigation";
 // import { useSelector, useDispatch } from "react-redux";
-import { login, reset, googleLogin } from "@/feature/slices/authSlice";
+// import { login, reset, googleLogin } from "@/feature/slices/authSlice";
 import { Logo } from "@/assets";
+import { Button } from "@/components/ui/button";
 const Auth = () => {
   const router = useRouter();
   // const dispatch = useDispatch();
@@ -19,14 +19,14 @@ const Auth = () => {
     router.push("/login");
   };
 
-  const handleGoogleLogin = async () => {
-    dispatch(googleLogin());
-  };
+  // const handleGoogleLogin = async () => {
+  //   dispatch(googleLogin());
+  // };
 
   return (
     <>
-      <AuthContainer>
-        <div className="header">
+      <main className="flex flex-col px-[5%] py-[2%] gap-[40px] mt-[3%] text-center">
+        <div className="header flex flex-col text-left text-[#1D1465] text-sm gap-[10px]">
           <Logo />
 
           <p>Share digital memories of your event...</p>
@@ -39,21 +39,21 @@ const Auth = () => {
             alt="welcome-image"
             src={"/images/auth.svg"}
             objectFit="contain"
-            className="image"
+            className="m-auto"
           />
         </div>
 
-       
         <div>
-        <h1>Welcome!</h1>
-          {" "}
-          <div className="login-with-google">
+          <h1 className="text-[40px] font-bold text-[#1D1465] text-left">
+            Welcome!
+          </h1>{" "}
+          <div className="login-with-google mt-[5%] text-center flex flex-col gap-[15px]">
             <Button
               type={"button"}
-              variant={"transparent"}
-              onClick={handleGoogleLogin}
+              variant={"outline"}
+              // onClick={handleGoogleLogin}
             >
-              <div className="button-style">
+              <div className="button-style flex items-center gap-[5px] text-[13.3px] font-[600]">
                 <Image
                   src="/images/google.svg"
                   width={25}
@@ -70,18 +70,23 @@ const Auth = () => {
           <Button
             onClick={handleRegisterRoute}
             type={"submit"}
-            variant={"defaultButton"}
+            variant={"default"}
           >
             Sign Up with password
           </Button>
-          <div style={{ marginTop: "10px" }}>
+          <div className="mt-[10px]">
             <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
               Already have an Account?{" "}
-              <span onClick={handleLoginRoute}>Sign In</span>
+              <span
+                className="text-[#1D1465] font-[600]"
+                onClick={handleLoginRoute}
+              >
+                Sign In
+              </span>
             </CustomText>
           </div>
         </div>
-      </AuthContainer>
+      </main>
     </>
   );
 };
