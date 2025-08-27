@@ -1,28 +1,32 @@
-📸 Real-Time Event Memory Sharing Platform
+# Cliqpod: Real-time Event Memory Sharing Platform
 
-A Next.js-powered platform that enables instant photo and video collaboration during events.
-Think of it like a modern disposable camera app — guests can capture moments, upload them securely, and view shared memories in real time.
+A platform that enables instant photo and video collaboration during events.  
+This project provides a **disposable camera-like experience**, allowing users to seamlessly upload and retrieve media in real-time.  
 
-✨ Features
+---
 
-📷 Event-based photo/video uploads — attendees can capture and instantly upload.
+## 🚀 Features
+- 📸 Real-time photo and video sharing  
+- 🔒 Secure upload and retrieval system  
+- 🎉 Event-based collaboration  
+- 📱 User-friendly, responsive interface  
 
-🔒 Secure storage & retrieval — privacy-first design with authenticated access.
+---
 
-🌍 Real-time collaboration — new photos/videos appear instantly for all participants.
+## 🛠️ Tech Stack
+### Frontend
+- [Next.js](https://nextjs.org/) – React framework for building fast and scalable apps  
+- [Tailwind CSS](https://tailwindcss.com/) – Utility-first CSS for styling  
+- [TypeScript]
 
-📱 Responsive UI — seamless experience on mobile, tablet, and desktop.
+### Backend
+- [Node.js](https://nodejs.org/) – JavaScript runtime  
+- [Express.js](https://expressjs.com/) – Backend framework  
+- [MongoDB](https://www.mongodb.com/) – Database for storing media and user data  
 
-🎉 Disposable camera experience — fun, spontaneous, and collaborative.
+---
 
-🛠️ Tech Stack
+## Deployment
+[Vercel Platform](https://camera-app-flame.vercel.app/)
 
-Framework: Next.js
 
-Frontend: React, Tailwind CSS / Shadcn UI (if you’re using it)
-
-Backend/Database: Firebase (Auth, Firestore, Storage) (or whatever you used)
-
-Realtime Updates: Firebase Realtime DB / Firestore snapshots / WebSockets
-
-Deployment: Vercel
