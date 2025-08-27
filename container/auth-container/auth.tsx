@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { CustomText } from "@/components/CustomText";
 import { useRouter } from "next/navigation";
 // import { useSelector, useDispatch } from "react-redux";
 // import { login, reset, googleLogin } from "@/feature/slices/authSlice";
@@ -59,9 +58,10 @@ const Auth = () => {
                   height={25}
                   alt={""}
                 />{" "}
-                <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+                <h4 className="text-[13.3px] font-normal">
+                  {" "}
                   Continue with Google
-                </CustomText>
+                </h4>
               </div>
             </Button>
           </div>
@@ -79,15 +79,15 @@ const Auth = () => {
             Sign Up with password
           </Button>
           <div className="mt-[10px]">
-            <CustomText weight={"500"} type={"Htype"} variant={"h4"}>
+            <h4 className="text-[13.3px] font-normal">
               Already have an Account?{" "}
               <span
-                className="text-[#1D1465] font-[600]"
+                className="font-bold text-[#1D1465]"
                 onClick={handleLoginRoute}
               >
                 Sign In
               </span>
-            </CustomText>
+            </h4>
           </div>
         </div>
       </main>

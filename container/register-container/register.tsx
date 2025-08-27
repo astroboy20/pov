@@ -2,7 +2,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { CustomText } from "@/components/CustomText";
-import { RegisterContainer, FormContainer, FormHeader } from "./Register.style";
 import { useRouter } from "next/navigation";
 // import { useSelector, useDispatch } from "react-redux";
 // import { register, reset } from "@/feature/slices/authSlice";
