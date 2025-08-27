@@ -6,7 +6,7 @@ import { CustomText } from "@/components/CustomText";
 import { Button } from "@/components/Button";
 import { Spinner } from "@/components/Spinner";
 import { useRouter } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 import { login, reset, googleLogin } from "@/feature/slices/authSlice";
 import { Logo } from "@/assets";
 const Auth = () => {

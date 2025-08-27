@@ -1,9 +1,9 @@
-import { TailSpin } from "react-loader-spinner";
+// import { TailSpin } from "react-loader-spinner";
 
 const Spinner = () => {
   return (
     <>
-      <TailSpin
+      {/* <TailSpin
         height="30"
         width="30"
         color="#fff"
@@ -12,7 +12,7 @@ const Spinner = () => {
         wrapperStyle={{}}
         wrapperClass=""
         visible={true}
-      />
+      /> */}
     </>
   );
 };
@@ -22,7 +22,7 @@ export { Spinner };
 const BlackSpinner = () => {
   return (
     <>
-      <TailSpin
+      {/* <TailSpin
         height="30"
         width="30"
         color="#000"
@@ -31,7 +31,7 @@ const BlackSpinner = () => {
         wrapperStyle={{}}
         wrapperClass=""
         visible={true}
-      />
+      /> */}
     </>
   );
 };
@@ -46,7 +46,7 @@ const EventSpinner = () => {
       alignItems:"center",
       height:"100dvh",
     }}>
-      <TailSpin
+      {/* <TailSpin
         height="30"
         width="30"
         color="#000"
@@ -55,7 +55,7 @@ const EventSpinner = () => {
         wrapperStyle={{}}
         wrapperClass=""
         visible={true}
-      />
+      /> */}
     </div>
   );
 };
@@ -65,7 +65,7 @@ export { EventSpinner };
 const PurpleSpinner = () => {
   return (
     <>
-      <TailSpin
+      {/* <TailSpin
         height="30"
         width="30"
         color="#1d1465"
@@ -74,7 +74,7 @@ const PurpleSpinner = () => {
         wrapperStyle={{}}
         wrapperClass=""
         visible={true}
-      />
+      /> */}
     </>
   );
 };

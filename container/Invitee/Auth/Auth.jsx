@@ -5,7 +5,7 @@ import { CustomText } from "@/components/CustomText";
 import { Button } from "@/components/Button";
 import { Spinner } from "@/components/Spinner";
 import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 import { Logo } from "@/assets";
 import Link from "next/link";
 
